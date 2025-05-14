@@ -121,7 +121,7 @@
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
 
     <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <p style="font-style: italic;">“Une pépite ! Un hote très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !”</p>
+      <p style="font-style: italic;">“Une pépite ! Un hote très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire.”</p>
       <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Emilie, mars 2025</p>
     </div>
 
