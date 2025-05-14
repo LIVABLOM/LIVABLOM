@@ -115,7 +115,7 @@
 </body>
 </html>
 
-## 💬 Ce que disent nos visiteurs
+💬 Ce que disent nos visiteurs
 
 <section id="avis-clients" style="background-color: #f9f9f9; padding: 40px 20px;">
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
