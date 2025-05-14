@@ -115,5 +115,24 @@
 </body>
 </html>
 
+## 💬 Ce que disent nos visiteurs
+
+<section id="avis-clients" style="background-color: #f9f9f9; padding: 40px 20px;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
+
+    <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <p style="font-style: italic;">“Séjour magnifique ! Le spa et la tranquillité des lieux ont rendu notre week-end inoubliable.”</p>
+      <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Marie, avril 2024</p>
+    </div>
+
+    <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <p style="font-style: italic;">“Hébergement très propre et cosy. Le petit déjeuner était délicieux, et l’arrivée autonome super pratique.”</p>
+      <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Julien, mars 2024</p>
+    </div>
+
+    <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <p style="font-style: italic;">“Un havre de paix ! On a adoré le lit king size et la vue depuis le salon.”</p>
+      <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Sophie, février 2024</p>
+    </div>
 ---
 
