@@ -8,5 +8,6 @@ title: Nos logements
 Bienvenue chez **BLōM & LIVA**, deux hébergements uniques pour des séjours inoubliables.
 
 ---
-## 🔹 [Découvrir BLōM](blom.md)
-## 🔹 [Découvrir LIVA](liva.md)
+## 🔹 [Découvrir BLōM](/LIVABLOM/blom)
+## 🔹 [Découvrir LIVA](/LIVABLOM/liva)
+
