@@ -9,8 +9,8 @@ Bienvenue chez **BLōM & LIVA**, deux hébergements uniques pour des séjours in
 
 ---
 
-## 🔹 [Découvrir BLōM](/blom)
+## 🔹 [Découvrir BLōM](/BLOM)
 Maison d’hôtes avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert.
 
-## 🔹 [Découvrir LIVA](/liva)
+## 🔹 [Découvrir LIVA](/LIVA)
 Appartement moderne avec vue nature, terrasse, cuisine équipée et déco contemporaine.
