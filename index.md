@@ -127,7 +127,7 @@
 
     <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
       <p style="font-style: italic;">“Tres bon moment passé dans ce logement pour une soiree romantique.
-Abdel est un hote tres attentionné et disponible.
+un hote tres attentionné et disponible.
 Toutes les communications se font par message au long du sejour pour passer un tres bon moment avec de nombreux services.
 Le logement est tres propre, le jaccuzzi nettoyé entre chaque locataire. Nous avons été tres contents.
 La table est mise pour un diner romantique et le petit dejeuner organisé pour l’intimite des locataires est parfait.
