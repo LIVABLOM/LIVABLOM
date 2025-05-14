@@ -1,4 +1,16 @@
 <title> LIVA BLOM
+  ---
+layout: default
+title: Nos logements
+---
+
+# Nos logements
+
+Bienvenue sur notre site ! Choisissez votre hébergement :
+
+- 🏡 [Découvrir BLōM](blom.md)
+- 🏡 [Découvrir LIVA](liva.md)
+
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
