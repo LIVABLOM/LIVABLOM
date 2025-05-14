@@ -136,8 +136,8 @@ Hote et logement a recommander.”</p>
     </div>
 
     <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <p style="font-style: italic;">“Un havre de paix ! On a adoré le lit king size et la vue depuis le salon.”</p>
-      <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Sophie, février 2024</p>
+      <p style="font-style: italic;">“Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable on avait envie d’y rester.. rien à dire à part merci ☺️.”</p>
+      <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Pilon, juin 2024</p>
     </div>
 ---
 
