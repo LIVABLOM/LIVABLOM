@@ -21,5 +21,18 @@ Logement lumineux avec terrasse, cuisine équipée, et décoration contemporaine
 ">
   🔑 Réserver sur Airbnb
 </a>
+<a href="https://wa.me/33XXXXXXXXX" target="_blank" style="
+  display: inline-block;
+  background-color: #25D366;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 10px;
+  font-size: 16px;
+">
+  📲 Réserver via WhatsApp
+</a>
 
 [⬅️ Retour à l’accueil](index.md)
