@@ -8,7 +8,7 @@ title: LIVA
 Logement lumineux avec terrasse, cuisine équipée, et décoration contemporaine. Parfait pour une escapade zen.
 ---
 
-<a href="https://www.airbnb.fr/rooms/TON_ID" target="_blank" style="
+<a href="https://[www.airbnb.fr/rooms/](https://www.airbnb.fr/hosting/listings/editor/985569147645507170/details/custom-link)" target="_blank" style="
   display: inline-block;
   background-color: #ff5a5f;
   color: white;
