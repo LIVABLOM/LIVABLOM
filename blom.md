@@ -6,8 +6,6 @@ title: BLōM
 # 🪷 BLōM – Petit dej offert
 
 Maison d’hôtes avec spa, salle de massage, lit king size, salon TV, petit déjeuner inclus, arrivée autonome.
-  </style>
-</head>
 <body>
   <header>
     <h1>BLōM – "Petit dej offert"</h1>
