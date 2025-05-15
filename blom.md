@@ -14,8 +14,6 @@ Maison d’hôtes avec spa, salle de massage, lit king size, salon TV, petit dé
 
   <div class="hero">
     <img src="image-jacuzzi.png" alt="Spa haut de gamme">
-    <img src="image-jacuzzi.png" alt="Jets et ambiance">
-    <img src="image-jacuzzi.png" alt="Jacuzzi BLōM">
   </div>
 
   <section>
