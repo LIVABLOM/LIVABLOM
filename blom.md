@@ -71,7 +71,7 @@ Hote et logement a recommander.”</p>
 ">
   🔑 Réserver sur Airbnb
 </a>
-<a href="https://wa.me/33XXXXXXXXX" target="_blank" style="
+<a href="https://wa.me/33649831838" target="_blank" style="
   display: inline-block;
   background-color: #25D366;
   color: white;
