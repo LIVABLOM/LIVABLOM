@@ -34,5 +34,22 @@ Logement lumineux avec terrasse, cuisine équipée, et décoration contemporaine
 ">
   📲 Réserver via WhatsApp
 </a>
+<form action="https://formspree.io/f/TON_CODE" method="POST" style="margin-top: 20px;">
+  <label>Nom :<br><input type="text" name="name" required></label><br><br>
+  <label>Email :<br><input type="email" name="_replyto" required></label><br><br>
+  <label>Message :<br><textarea name="message" rows="4" required></textarea></label><br><br>
+  <button type="submit" style="
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+  ">
+    Envoyer
+  </button>
+</form>
 
 [⬅️ Retour à l’accueil](index.md)
