@@ -6,19 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/LIVABLOM/assets/style.css">
 </head>
-
-<body class="{{ page.id }}">
+<body id="{{ page.id }}">
   <header>
     <div><strong>LIVABLOM</strong></div>
     <nav>
-      <a href="{{ '/' | relative_url }}">Accueil</a>
-      <a href="{{ '/blom' | relative_url }}">BLŌM</a>
-      <a href="{{ '/liva' | relative_url }}">LIVA</a>
+      <a href="{{ site.baseurl }}/">Accueil</a>
+      <a href="{{ site.baseurl }}/blom">BLŌM</a>
+      <a href="{{ site.baseurl }}/liva">LIVA</a>
     </nav>
   </header>
   <main>
     {{ content }}
   </main>
-<body id="{{ page.id }}">
-
+</body>
 </html>
