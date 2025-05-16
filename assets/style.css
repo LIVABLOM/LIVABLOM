@@ -43,12 +43,16 @@ h1, h2 {
 }
 
 body#index {
-  background: url("/LIVABLOM/assets/images/fondaccueil.jpg") no-repeat center top fixed;
-  background-size: contain; /* Contient l'image sans zoom */
+  background-color: #000; /* FOND NOIR pour tout l'espace autour */
+  background-image: url("/LIVABLOM/assets/images/fondaccueil.jpg");
   background-repeat: no-repeat;
-  background-position: top left;
+  background-position: center center;
+  background-size: contain;
+  background-attachment: fixed;
   position: relative;
   z-index: 0;
+}
+
 }
 
 }
