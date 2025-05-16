@@ -41,10 +41,14 @@ h1, h2 {
 }
 
 body#index {
-  background: url("/LIVABLOM/assets/images/fondaccueil.jpg") no-repeat center top fixed;
-  background-size: cover;
+  background: url("/LIVABLOM/assets/images/fondaccueil.jpg") no-repeat center center fixed;
+  background-size: contain; /* Contient l'image sans la déformer */
+  background-repeat: no-repeat;
+  background-position: center center;
   position: relative;
   z-index: 0;
+}
+
 }
 
 body#index::before {
