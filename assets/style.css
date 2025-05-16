@@ -26,12 +26,12 @@ nav a:hover {
 }
 
 main {
-  max-width: 600px; /* Réduction de largeur */
-  margin: 60px auto;
-  background: rgba(255, 255, 255, 0.85); /* Un peu plus transparent */
+  width: 400px;
+  margin: 40px 0 0 40px; /* en haut à gauche */
+  background: rgba(255, 255, 255, 0.85);
   padding: 1.5em;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 h1, h2 {
