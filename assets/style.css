@@ -39,7 +39,7 @@ h1, h2 {
   color: #333;
 }
 
-/* FOND pour la page d'accueil */
+/* ✅ FOND D'ÉCRAN POUR LA PAGE D'ACCUEIL */
 body#index {
   background: url("/LIVABLOM/assets/images/fondaccueil.jpg") no-repeat center center fixed;
   background-size: cover;
@@ -49,4 +49,3 @@ body#index main {
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
-
