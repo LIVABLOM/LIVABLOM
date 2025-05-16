@@ -3,8 +3,6 @@ layout: default
 title: Accueil
 id: index
 ---
----
-layout: default
 title: Nos logements
 ---
 
