@@ -6,7 +6,7 @@ title: LIVA
 # 🌿 LIVA – Vue nature & design
 
 <div class="hero">
-    <img src="liva.png" alt="Salon">
+    <img src="liva.jpg" alt="Salon">
   </div>
 
 Logement lumineux avec terrasse, cuisine équipée, et décoration contemporaine. Parfait pour une escapade zen.
