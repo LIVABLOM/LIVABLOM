@@ -1,5 +1,4 @@
 ---
----
 layout: default
 title: LIVABLOM
 id: index
