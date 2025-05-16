@@ -7,10 +7,10 @@ title: BLōM
 
 Maison d’hôtes avec spa, salle de massage, lit king size, salon TV, petit déjeuner inclus, arrivée autonome.
 <body>
-  <header>
+  <center>
     <h1>BLōM – "Petit dej offert"</h1>
     <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
-  </header>
+  </center>
 
   <div class="hero">
     <img src="image-jacuzzi.png" alt="Spa haut de gamme">
