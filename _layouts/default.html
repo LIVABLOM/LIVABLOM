@@ -5,15 +5,13 @@
   <title>{{ page.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    }
-
-   <body class="{{ page.id }}">
-
+    body {
       font-family: "Helvetica Neue", sans-serif;
       margin: 0;
       padding: 0;
       background: #f7f7f7;
     }
+
     header {
       background-color: #222;
       color: white;
@@ -22,15 +20,18 @@
       justify-content: space-between;
       align-items: center;
     }
+
     nav a {
       color: white;
       text-decoration: none;
       margin-left: 20px;
       font-weight: bold;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
     main {
       max-width: 800px;
       margin: auto;
@@ -40,24 +41,25 @@
       margin-top: 30px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
+
     h1, h2 {
       color: #333;
     }
+
+    /* ✅ Spécifique à la page d'accueil */
+    body#index {
+      background: url('{{ site.baseurl }}/assets/images/spa.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body#index main {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
   </style>
-  body#index {
-  background: url('{{ site.baseurl }}/assets/images/spa.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-
-body#index main {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
-}
-
 </head>
-<body>
+
+<body class="{{ page.id }}">
   <header>
     <div><strong>LIVABLOM</strong></div>
     <nav>
@@ -69,6 +71,5 @@ body#index main {
   <main>
     {{ content }}
   </main>
-<body class="{{ page.id }}">
-
+</body>
 </html>
