@@ -50,7 +50,16 @@ body#index main {
     h1, h2 {
       color: #333;
     }
-  </style>
+  </style>body#index {
+  background: url('{{ site.baseurl }}/assets/images/fondaccueil.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+body#index main {
+  background: rgba(255, 255, 255, 0.9); /* pour lisibilité */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
 </head>
 <body>
   <header>
@@ -64,5 +73,6 @@ body#index main {
   <main>
     {{ content }}
   </main>
-</body>
+<body class="{{ page.id }}">
+
 </html>
