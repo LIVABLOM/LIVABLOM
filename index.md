@@ -9,8 +9,8 @@ Bienvenue chez **LIVABLOM**, deux hébergements uniques pour des séjours inoubl
 
 ---
 
-## 🔹 [Découvrir BLŌM](/LIVABLOM/blom)
-Maison d’hôtes avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert.
-
 ## 🔹 [Découvrir LIVA](/LIVABLOM/liva)
 Appartement moderne avec vue nature, terrasse, cuisine équipée et déco contemporaine.
+
+## 🔹 [Découvrir BLŌM](/LIVABLOM/blom)
+Maison d’hôtes avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert.
