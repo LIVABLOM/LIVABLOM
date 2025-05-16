@@ -46,14 +46,14 @@
       color: #333;
     }
 
-    /* ✅ Spécifique à la page d'accueil */
+    /* ✅ FOND D'ÉCRAN POUR LA PAGE D'ACCUEIL */
     body#index {
-      background: url('{{ site.baseurl }}/assets/images/fondaccueil.jpg') no-repeat center center fixed;
+      background: url('{{ "/assets/images/fondaccueil.jpg" | relative_url }}') no-repeat center center fixed;
       background-size: cover;
     }
 
     body#index main {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     }
   </style>
@@ -63,9 +63,9 @@
   <header>
     <div><strong>LIVABLOM</strong></div>
     <nav>
-      <a href="{{ site.baseurl }}/">Accueil</a>
-      <a href="{{ site.baseurl }}/blom">BLŌM</a>
-      <a href="{{ site.baseurl }}/liva">LIVA</a>
+      <a href="{{ '/' | relative_url }}">Accueil</a>
+      <a href="{{ '/blom' | relative_url }}">BLŌM</a>
+      <a href="{{ '/liva' | relative_url }}">LIVA</a>
     </nav>
   </header>
   <main>
