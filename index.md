@@ -1,11 +1,7 @@
 ---
 layout: default
-title: LIVABLOM
-id: index
----
-
----
 title: Nos logements
+id: index
 ---
 
 # Nos logements 🌿
