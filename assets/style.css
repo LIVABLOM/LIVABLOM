@@ -42,9 +42,17 @@ h1, h2 {
 body#index {
   background: url("/LIVABLOM/assets/images/fondaccueil.jpg") no-repeat center center fixed;
   background-size: cover;
+  position: relative;
+  z-index: 0;
 }
 
-body#index main {
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+body#index::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Ombre foncée */
+  z-index: -1;
 }
