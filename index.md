@@ -5,7 +5,7 @@ id: index
 
 # Nos logements 🌿
 
-Bienvenue chez **BLōM & LIVA**, deux hébergements uniques pour des séjours inoubliables.
+Bienvenue chez **LIVABLOM**, deux hébergements uniques pour des séjours inoubliables.
 
 ---
 
