@@ -1,7 +1,10 @@
 ---
+---
 layout: default
-title: Accueil
+title: LIVABLOM
 id: index
+---
+
 ---
 title: Nos logements
 ---
