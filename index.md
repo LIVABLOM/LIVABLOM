@@ -1,6 +1,5 @@
 ---
 layout: default
-title: Nos logements
 id: index
 ---
 
