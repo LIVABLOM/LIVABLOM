@@ -23,7 +23,7 @@
         color: var(--text-color);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
         margin: 0;
-        padding: 0;
+        padding-top: 60px; /* espace pour la navbar */
         line-height: 1.6;
       }
 
@@ -34,6 +34,39 @@
 
       a:hover {
         text-decoration: underline;
+      }
+
+      nav {
+        background-color: #111;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+
+      nav .logo {
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      nav .menu a {
+        margin-left: 20px;
+        color: white;
+        font-weight: 500;
+      }
+
+      main {
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
       }
 
       section, h1, h2, p, ul, li {
@@ -75,12 +108,38 @@
         margin: 0 auto;
       }
 
-      form {
-        margin-top: 2em;
+      footer {
+        background-color: #111;
+        color: #999;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9em;
+        margin-top: 40px;
+      }
+
+      footer a {
+        color: var(--accent-color);
       }
     </style>
   </head>
   <body>
-    {{ content }}
+    <nav>
+      <div class="logo">LIVABLOM</div>
+      <div class="menu">
+        <a href="/index.html">Accueil</a>
+        <a href="/blom.html">BLōM</a>
+        <a href="/liva.html">LIVA</a>
+        <a href="https://wa.me/33649831838" target="_blank">Contact</a>
+      </div>
+    </nav>
+
+    <main>
+      {{ content }}
+    </main>
+
+    <footer>
+      © {{ "now" | date: "%Y" }} LIVABLOM – Tous droits réservés.<br />
+      Site conçu avec 💚 pour nos voyageurs.
+    </footer>
   </body>
 </html>
