@@ -4,142 +4,77 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-      :root {
-        --bg-color: #000;
-        --text-color: #fff;
-        --accent-color: #25D366;
-        --input-bg: #222;
-        --input-border: #555;
-        --button-bg: #333;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
       body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        background-color: black;
+        color: white;
+        font-family: sans-serif;
         margin: 0;
-        padding-top: 60px; /* espace pour la navbar */
-        line-height: 1.6;
-      }
-
-      a {
-        color: var(--accent-color);
-        text-decoration: none;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-
-      nav {
-        background-color: #111;
-        color: white;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        z-index: 999;
-      }
-
-      nav .logo {
-        font-weight: bold;
-        font-size: 1.2em;
-      }
-
-      nav .menu a {
-        margin-left: 20px;
-        color: white;
-        font-weight: 500;
-      }
-
-      main {
-        padding: 20px;
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-
-      section, h1, h2, p, ul, li {
-        color: var(--text-color);
-        margin: 0 0 1em 0;
         padding: 0;
       }
 
+      header {
+        text-align: center;
+        padding: 20px 0;
+        background-color: #111;
+        border-bottom: 1px solid #333;
+      }
+
+      .brand {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5em;
+        color: #FF5A5F;
+        letter-spacing: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .brand img {
+        height: 40px;
+      }
+
+      a {
+        color: #25D366;
+      }
+
+      section, h1, h2, p, ul, li {
+        color: white;
+      }
+
       input, textarea {
-        background-color: var(--input-bg);
-        color: var(--text-color);
-        border: 1px solid var(--input-border);
-        padding: 10px;
-        border-radius: 4px;
-        width: 100%;
-        max-width: 500px;
+        background-color: #333;
+        color: white;
+        border: 1px solid #666;
       }
 
       button {
-        background-color: var(--button-bg);
-        color: var(--text-color);
+        background-color: #222;
+        color: white;
         padding: 10px 20px;
         border: none;
         border-radius: 6px;
         font-size: 15px;
         font-weight: bold;
         cursor: pointer;
-        transition: background-color 0.3s;
-      }
-
-      button:hover {
-        background-color: #444;
       }
 
       img {
         max-width: 100%;
         height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-
-      footer {
-        background-color: #111;
-        color: #999;
-        text-align: center;
-        padding: 20px;
-        font-size: 0.9em;
-        margin-top: 40px;
-      }
-
-      footer a {
-        color: var(--accent-color);
       }
     </style>
   </head>
   <body>
-    <nav>
-      <div class="logo">LIVABLOM</div>
-      <div class="menu">
-        <a href="/index.html">Accueil</a>
-        <a href="/blom.html">BLōM</a>
-        <a href="/liva.html">LIVA</a>
-        <a href="https://wa.me/33649831838" target="_blank">Contact</a>
+    <header>
+      <div class="brand">
+        <!-- Ajoute ton logo ici quand tu l'auras -->
+        <!-- <img src="/assets/logo.png" alt="Logo LIVABLOM"> -->
+        LIVABLOM
       </div>
-    </nav>
-
-    <main>
-      {{ content }}
-    </main>
-
-    <footer>
-      © {{ "now" | date: "%Y" }} LIVABLOM – Tous droits réservés.<br />
-      Site conçu avec 💚 pour nos voyageurs.
-    </footer>
+    </header>
+    {{ content }}
   </body>
 </html>
