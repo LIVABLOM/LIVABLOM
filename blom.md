@@ -38,12 +38,12 @@ Maison d’hôtes avec spa, salle de massage, lit king size, salon TV, petit dé
 <section id="avis-clients" style="background-color: #f9f9f9; padding: 40px 20px;">
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
 
-    <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: black; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
       <p style="font-style: italic;">“Une pépite ! Un hote très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire.”</p>
       <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Emilie, mars 2025</p>
     </div>
 
-    <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: black; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
       <p style="font-style: italic;">“Tres bon moment passé dans ce logement pour une soiree romantique.
 un hote tres attentionné et disponible.
 Toutes les communications se font par message au long du sejour pour passer un tres bon moment avec de nombreux services.
@@ -53,7 +53,7 @@ Hote et logement a recommander.”</p>
       <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Melissa, janvier 2025</p>
     </div>
 
-    <div style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="background: black; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
       <p style="font-style: italic;">“Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable on avait envie d’y rester.. rien à dire à part merci ☺️.”</p>
       <p style="font-size: 0.9em; color: #555; margin-top: 10px;">– Pilon, juin 2024</p>
     </div>
@@ -62,7 +62,7 @@ Hote et logement a recommander.”</p>
 <a href="https://www.airbnb.fr/rooms/985569147645507170?adults=2&photo_id=1746486815&source_impression_id=p3_1747346181_P3eiLskLdFG2eIah&previous_page_section_name=1000" target="_blank" style="
   display: inline-block;
   background-color: #ff5a5f;
-  color: white;
+  color: black;
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: bold;
