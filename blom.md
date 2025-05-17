@@ -12,9 +12,10 @@ Maison d’hôtes avec spa, salle de massage, lit king size, salon TV, petit dé
     <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
   </center>
 
-  <div class="hero">
-    <img src="image-jacuzzi.png" alt="Spa haut de gamme">
-  </div>
+  <div style="text-align: center;">
+  <img src="image-jacuzzi.png" alt="Spa haut de gamme" style="width: 400px; max-width: 100%; height: auto;">
+</div>
+
 
   <section>
     <h2>Le logement</h2>
