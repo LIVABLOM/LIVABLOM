@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.title }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300&display=swap" rel="stylesheet">
     <style>
       body {
         background-color: black;
@@ -22,18 +22,24 @@
       }
 
       .brand {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.5em;
-        color: #FF5A5F;
-        letter-spacing: 2px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         gap: 10px;
+        padding: 20px 0;
       }
 
-      .brand img {
-        height: 40px;
+      .logo {
+        height: 80px; /* Ajuste la taille du logo ici */
+      }
+
+      .brand-text {
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.2em;
+        letter-spacing: 3px;
+        color: white;
+        font-weight: 300;
+        text-transform: uppercase;
       }
 
       a {
@@ -70,10 +76,9 @@
   <body>
     <header>
       <div class="brand">
-  <img src="{{ '/assets/images/Liva.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo">
-  <div class="brand-text">LIVABLOM</div>
-</div>
-
+        <img src="{{ '/assets/images/Liva.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo">
+        <div class="brand-text">LIVABLOM</div>
+      </div>
     </header>
     {{ content }}
   </body>
