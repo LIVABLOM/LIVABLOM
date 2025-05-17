@@ -34,11 +34,10 @@ title: BLōM
   <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
 </center>
 
-<div style="text-align: center;">
-  <img src="image-jacuzzi.png" alt="Spa haut de gamme" style="width: 400px; max-width: 100%; height: auto;">
-</div>
+<section style="display: flex; justify-content: center; align-items: center; min-height: 60vh; background-color: black;">
+  <img src="image-jacuzzi.png" alt="Spa haut de gamme" style="width: 400px; max-width: 90%; height: auto; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,0.1);">
+</section>
 
-<section>
   <h2>Le logement</h2>
   <p>Maison d'hôte avec accès sécurisé par digicode. Au rez-de-chaussée : jacuzzi, salon, salle à manger avec petit frigo et micro-ondes. À l'étage : grande chambre avec lit King Size, salle de massage et salle de douche.</p>
   <p>Salon avec canapé et TV Netflix. Petit déjeuner offert, servi en toute intimité. Logement non-fumeur (zone fumeurs à l'extérieur).</p>
