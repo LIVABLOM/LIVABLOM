@@ -9,7 +9,10 @@ title: LIVA
     <img src="liva.jpg" alt="Salon">
   </div>
 
-Logement lumineux avec terrasse, cuisine équipée, et décoration contemporaine. Parfait pour une escapade zen.
+Cet hébergement élégant est parfait pour les groupes et NON FUMEURS.
+Pour une réservation de plus de 3 nuits nous mettons a disposition un bip d'accès portail. Carrefour market est en face du logement GAYANT EXPO est a 10 minutes en voiture.
+De nombreux restaurants a 10 minutes du logement.( LE BUREAU, PANDA WOK, VOLFONI, GUR KEBAB, MC DO, QUICK ETC .)
+Une friterie est a côté du logement.
 ---
 
 <a href="https://www.airbnb.fr/rooms/41095534?adults=2&photo_id=1804275381&source_impression_id=p3_1747346189_P3eMp5U7zbyB4Y0I&previous_page_section_name=1000)" target="_blank" style="
