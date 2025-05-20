@@ -2,6 +2,9 @@
 layout: default
 id: index
 ---
+<div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
+  <img src="assets/images/lotus.jpg" alt="Logo Lotus" style="width: 100%; height: auto; display: block;">
+</div>
 
 # Nos logements 🌿
 
