@@ -3,7 +3,6 @@ layout: default
 title: BLōM
 ---
 
-<!-- Lien Accueil en haut à droite -->
 <div style="position: absolute; top: 20px; right: 20px; z-index: 999;">
   <a href="index.md" style="background-color: #222; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
     Accueil
