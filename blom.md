@@ -2,8 +2,9 @@
 layout: default
 title: BLōM
 ---
-<div id="logo-banner" style="width: 100%; max-height: 250px; overflow: hidden; margin-bottom: 20px;">
-  <img src="/assets/images/lotus.jpg" alt="Logo Lotus" style="width: 100%; height: auto; display: block; object-fit: cover;">
+<div style="margin: 0; padding: 0;">
+  <img src="/assets/images/lotus.jpg" alt="Logo Lotus"
+       style="display: block; width: 100vw; height: auto; max-height: 300px; object-fit: cover; margin: 0; padding: 0;">
 </div>
 
 
