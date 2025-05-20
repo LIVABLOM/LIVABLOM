@@ -2,11 +2,7 @@
 layout: default
 title: LIVA
 ---
-<div style=body {
-  margin: 0;
-  padding: 0;
-}
-"margin: 0; padding: 0;">
+<div style="margin: 0; padding: 0;">
   <img src="/assets/images/lotus.jpg" alt="Logo Lotus"
        style="display: block; width: 100vw; height: auto; max-height: 300px; object-fit: cover; margin: 0; padding: 0;">
 </div>
