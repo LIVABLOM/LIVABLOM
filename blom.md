@@ -4,6 +4,12 @@ title: BLōM
 ---
 
 <style>
+  <div style="position: absolute; top: 20px; right: 20px;">
+  <a href="index.md" style="background-color: #222; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
+    Accueil
+  </a>
+</div>
+
   body {
     background-color: black;
     color: white;
@@ -128,4 +134,3 @@ title: BLōM
   </button>
 </form>
 
-[⬅️ Retour à l’accueil](index.md)
