@@ -51,7 +51,7 @@ Une friterie est a côté du logement.</p>
 </center>
 
 <div style="text-align: center; position: relative; max-width: 100%; margin: auto;">
-  <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
+  <img id="carousel" src="assets/images/salon1.jpg" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
   <div style="margin-top: 10px;">
     <button onclick="prevImage()" style="background: #333; color: white; padding: 8px 16px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
     <button onclick="nextImage()" style="background: #333; color: white; padding: 8px 16px; border: none; border-radius: 6px;">➡️</button>
@@ -60,9 +60,9 @@ Une friterie est a côté du logement.</p>
 
 <script>
   const images = [
-    "assets/images/salon1.jpg",
     "assets/images/salon.jpg",
-    "assets/images/chaise.jpg"
+    "assets/images/chaise.jpg",
+    "assets/images/espacerepas.jpg"
 "
   ];
   let index = 0;
