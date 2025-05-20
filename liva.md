@@ -108,18 +108,18 @@ Une fois dans le logement vous vous sentirez chez vous que ce soit pour un court
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
 
     <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Une pépite ! Un hote très sympathique...”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Emilie, mars 2025</p>
+      <p style="font-style: italic;">“Conforme aux photos, très bien décoré, on se sent réellement chez soi. Literie confortable. Top! Rien à redire!...”</p>
+      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Joelle, Avril 2025</p>
     </div>
 
     <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Très bon moment passé...”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Melissa, janvier 2025</p>
+      <p style="font-style: italic;">“Charmante petite maison au calme, bonne literie,  hôte réactif, stationnement privé et sécurisé, commerce aux alentours,  séjour appréciée grâce à tout ces points positifs.”</p>
+      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– lelievre, Avril 2025</p>
     </div>
 
     <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Parfait ! La vidéo du changement...”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Pilon, juin 2024</p>
+      <p style="font-style: italic;">“Super logement !  J’ai passé une nuit dans cet Airbnb et tout s’est très bien déroulé. Le logement était propre, facile d’accès, et les instructions de l’hôte étaient claires. Je recommande sans hésiter !”</p>
+      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– vICtoire, Mars 2025</p>
     </div>
   </div>
 </section>
