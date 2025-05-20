@@ -56,7 +56,6 @@ Une friterie est a côté du logement.</p>
     "assets/images/salon.jpg",
     "assets/images/chaise.jpg",
     "assets/images/espacerepas.jpg"
-"
   ];
   let index = 0;
   const imgElement = document.getElementById("carousel");
