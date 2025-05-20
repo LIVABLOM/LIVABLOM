@@ -40,13 +40,14 @@ title: BLōM
   <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
 </center>
 
-<div style="text-align: center; position: relative; max-width: 100%; margin: auto;">
-  <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
-  <div style="margin-top: 10px;">
-    <button onclick="prevImage()" style="background: #333; color: white; padding: 8px 16px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
-    <button onclick="nextImage()" style="background: #333; color: white; padding: 8px 16px; border: none; border-radius: 6px;">➡️</button>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+  <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="max-height: 70vh; width: auto; border-radius: 12px; transition: opacity 0.5s ease;">
+  <div style="margin-top: 20px;">
+    <button onclick="prevImage()" style="background: #333; color: white; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
+    <button onclick="nextImage()" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 6px;">➡️</button>
   </div>
 </div>
+
 
 <script>
   const images = [
