@@ -40,10 +40,6 @@ title: BLōM
   <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
 </center>
 
-  <h1>BLōM – "Petit dej offert"</h1>
-  <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
-</center>
-
 <div style="text-align: center; position: relative; max-width: 100%; margin: auto;">
   <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
   <div style="margin-top: 10px;">
