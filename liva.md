@@ -2,8 +2,8 @@
 layout: default
 title: LIVA
 ---
-<div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
-  <img src="assets/images/lotus.jpg" alt="Logo Lotus" style="width: 100%; height: auto; display: block;">
+<div id="logo-banner" style="width: 100%; max-height: 250px; overflow: hidden; margin-bottom: 20px;">
+  <img src="/assets/images/lotus.jpg" alt="Logo Lotus" style="width: 100%; height: auto; display: block; object-fit: cover;">
 </div>
 
 <div style="position: absolute; top: 20px; right: 20px; z-index: 999;">
