@@ -55,7 +55,7 @@ title: BLōM
     "assets/images/femmemur.jpg",
     "assets/images/sceau.jpg"
   ];
-  let index = 0;
+   let index = 0;
   const imgElement = document.getElementById("carousel");
 
   function showImage(i) {
@@ -63,6 +63,7 @@ title: BLōM
     setTimeout(() => {
       imgElement.src = images[i];
       imgElement.style.opacity = 1;
+      scrollToImage(); // 👈 ajoute ce scroll après le changement
     }, 200);
   }
 
@@ -74,6 +75,11 @@ title: BLōM
   function prevImage() {
     index = (index - 1 + images.length) % images.length;
     showImage(index);
+  }
+
+  function scrollToImage() {
+    const imageContainer = imgElement.parentElement;
+    imageContainer.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 </script>
 
