@@ -2,6 +2,9 @@
 layout: default
 title: BLōM
 ---
+<div style="width: 100%; overflow: hidden; margin-bottom: 20px;">
+  <img src="assets/images/lotus.jpg" alt="Logo Lotus" style="width: 100%; height: auto; display: block;">
+</div>
 
 <div style="position: absolute; top: 20px; right: 20px; z-index: 999;">
   <a href="/LIVABLOM/" style="background-color: #222; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
