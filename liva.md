@@ -65,6 +65,7 @@ Une friterie est a côté du logement.</p>
     setTimeout(() => {
       imgElement.src = images[i];
       imgElement.style.opacity = 1;
+      scrollToImage(); // 👈 ajoute ce scroll après le changement
     }, 200);
   }
 
@@ -76,6 +77,11 @@ Une friterie est a côté du logement.</p>
   function prevImage() {
     index = (index - 1 + images.length) % images.length;
     showImage(index);
+  }
+
+  function scrollToImage() {
+    const imageContainer = imgElement.parentElement;
+    imageContainer.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 </script>
 
