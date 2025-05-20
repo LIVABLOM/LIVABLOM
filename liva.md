@@ -36,7 +36,7 @@ title: LIVA
 </style>
 
 <center> 
-  <h1>liva – "Maison avec parking sécurisé"</h1>
+  <h1>LIVA – "Maison avec parking sécurisé"</h1>
   <p>Cet hébergement élégant est parfait pour les groupes et NON FUMEURS.
 Pour une réservation de plus de 3 nuits nous mettons a disposition un bip d'accès portail. Carrefour market est en face du logement GAYANT EXPO est a 10 minutes en voiture.
 De nombreux restaurants a 10 minutes du logement.( LE BUREAU, PANDA WOK, VOLFONI, GUR KEBAB, MC DO, QUICK ETC .)
