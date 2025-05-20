@@ -46,7 +46,7 @@ title: BLōM
   const images = [
     "image-jacuzzi.png",
     "femmemur.jpg",
-    "table.jpg"
+    "sceau.jpg"
   ];
   let index = 0;
   const imgElement = document.getElementById("carousel");
