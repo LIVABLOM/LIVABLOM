@@ -35,7 +35,7 @@ title: BLōM
 </center>
 
 <div style="text-align: center; position: relative; max-width: 100%; margin: auto;">
-  <img id="carousel" src="image-jacuzzi.png" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
+  <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
   <div style="margin-top: 10px;">
     <button onclick="prevImage()" style="background: #333; color: white; padding: 8px 16px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
     <button onclick="nextImage()" style="background: #333; color: white; padding: 8px 16px; border: none; border-radius: 6px;">➡️</button>
@@ -44,9 +44,9 @@ title: BLōM
 
 <script>
   const images = [
-    "image-jacuzzi.png",
-    "femmemur.jpg",
-    "sceau.jpg"
+    "assets/images/image-jacuzzi.png",
+    "assets/images/femmemur.jpg",
+    "assets/images/sceau.jpg"
   ];
   let index = 0;
   const imgElement = document.getElementById("carousel");
@@ -69,6 +69,7 @@ title: BLōM
     showImage(index);
   }
 </script>
+
 
 
 <section>
