@@ -43,13 +43,6 @@ De nombreux restaurants a 10 minutes du logement.( LE BUREAU, PANDA WOK, VOLFONI
 Une friterie est a côté du logement.</p>
 </center>
 
-  <h1>liva – "Maison avec parking sécurisé"</h1>
-  <p>Cet hébergement élégant est parfait pour les groupes et NON FUMEURS.
-Pour une réservation de plus de 3 nuits nous mettons a disposition un bip d'accès portail. Carrefour market est en face du logement GAYANT EXPO est a 10 minutes en voiture.
-De nombreux restaurants a 10 minutes du logement.( LE BUREAU, PANDA WOK, VOLFONI, GUR KEBAB, MC DO, QUICK ETC .)
-Une friterie est a côté du logement.</p>
-</center>
-
 <div style="text-align: center; position: relative; max-width: 100%; margin: auto;">
   <img id="carousel" src="assets/images/salon1.jpg" alt="Diaporama" style="width: 400px; max-width: 100%; height: auto; border-radius: 12px; transition: opacity 0.5s ease;">
   <div style="margin-top: 10px;">
