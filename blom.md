@@ -3,13 +3,14 @@ layout: default
 title: BLōM
 ---
 
-<style>
-  <div style="position: absolute; top: 20px; right: 20px;">
+<!-- Lien Accueil en haut à droite -->
+<div style="position: absolute; top: 20px; right: 20px; z-index: 999;">
   <a href="index.md" style="background-color: #222; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
     Accueil
   </a>
 </div>
 
+<style>
   body {
     background-color: black;
     color: white;
@@ -36,6 +37,10 @@ title: BLōM
 </style>
 
 <center>
+  <h1>BLōM – "Petit dej offert"</h1>
+  <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
+</center>
+
   <h1>BLōM – "Petit dej offert"</h1>
   <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
 </center>
