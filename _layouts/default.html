@@ -29,7 +29,8 @@
 
       .logo-fullwidth {
         width: 100%;
-        height: auto;
+        max-height: 150px; /* Hauteur visuelle réduite du logo */
+        object-fit: contain;
         display: block;
       }
 
@@ -39,8 +40,8 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-family: 'Raleway', sans-serif;
-        font-size: 2rem;
-        letter-spacing: 3px;
+        font-size: 1.4rem; /* Taille du texte ajustée */
+        letter-spacing: 2px;
         color: white;
         font-weight: 300;
         text-transform: uppercase;
