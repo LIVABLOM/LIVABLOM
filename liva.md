@@ -2,12 +2,6 @@
 layout: default
 title: LIVA
 ---
-<div style="margin: 0; padding: 0;">
-  <img src="/assets/images/lotus.jpg" alt="Logo Lotus"
-       style="display: block; width: 100vw; height: auto; max-height: 300px; object-fit: cover; margin: 0; padding: 0;">
-</div>
-
-
 <div style="position: absolute; top: 20px; right: 20px; z-index: 999;">
   <a href="/LIVABLOM/" style="background-color: #222; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
     Accueil
