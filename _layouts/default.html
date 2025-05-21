@@ -29,4 +29,62 @@
 
       .logo-fullwidth {
         width: 100%;
-        height: 150px;         /* Hauteur fixe */
+        max-height: 150px; /* Hauteur visuelle réduite du logo */
+        object-fit: contain;
+        display: block;
+      }
+
+      .brand-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.4rem; /* Taille du texte ajustée */
+        letter-spacing: 2px;
+        color: white;
+        font-weight: 300;
+        text-transform: uppercase;
+      }
+
+      a {
+        color: #25D366;
+      }
+
+      section, h1, h2, p, ul, li {
+        color: white;
+      }
+
+      input, textarea {
+        background-color: #333;
+        color: white;
+        border: 1px solid #666;
+      }
+
+      button {
+        background-color: #222;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand-fullwidth">
+        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
+        <div class="brand-text">LIVABLOM</div>
+      </div>
+    </header>
+    {{ content }}
+  </body>
+</html>
