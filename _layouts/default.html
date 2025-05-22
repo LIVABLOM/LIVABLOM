@@ -15,22 +15,35 @@
       }
 
       header {
-        text-align: center;
-        padding: 0;
         background-color: #111;
         border-bottom: 1px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        height: 150px;
+        position: relative;
+      }
+
+      .header-link {
+        color: #25D366;
+        font-family: 'Raleway', sans-serif;
+        font-size: 1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 300;
       }
 
       .brand-fullwidth {
-        width: 100%;
-        position: relative;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
         text-align: center;
       }
 
       .logo-fullwidth {
-        width: 100%;
-        max-height: 150px; /* Hauteur visuelle réduite du logo */
-        object-fit: contain;
+        height: 150px;
+        object-fit: cover;
         display: block;
       }
 
@@ -40,7 +53,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-family: 'Raleway', sans-serif;
-        font-size: 1.4rem; /* Taille du texte ajustée */
+        font-size: 1.4rem;
         letter-spacing: 2px;
         color: white;
         font-weight: 300;
@@ -80,11 +93,19 @@
   </head>
   <body>
     <header>
+      <!-- Lien gauche -->
+      <a href="/LIVABLOM/liva" class="header-link">Découvrir LIVA</a>
+
+      <!-- Logo centré -->
       <div class="brand-fullwidth">
         <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
         <div class="brand-text">LIVABLOM</div>
       </div>
+
+      <!-- Lien droit -->
+      <a href="/LIVABLOM/blom" class="header-link">Découvrir BLŌM</a>
     </header>
+
     {{ content }}
   </body>
 </html>
