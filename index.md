@@ -11,6 +11,7 @@ id: index
     gap: 40px;
     padding: 40px 20px;
     text-align: center;
+    margin-top: 120px; /* Réduction du décalage haut */
   }
 
   .logement {
@@ -38,56 +39,4 @@ id: index
   .logement p {
     font-size: 0.95rem;
     color: #ccc;
-    margin: 10px 0;
-  }
-
-  .logement a.bouton {
-    display: inline-block;
-    margin-top: 10px;
-    background-color: #25D366;
-    color: black;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-
-  .logement a.bouton:hover {
-    background-color: #1da955;
-  }
-
-  @media (max-width: 600px) {
-    .logement {
-      max-width: 100%;
-    }
-
-    .logement p {
-      font-size: 0.9rem;
-    }
-  }
-</style>
-
-<section class="logements-container" style="margin-top: 160px;">
-
-  <!-- LIVA -->
-  <div class="logement">
-    <a href="/LIVABLOM/liva">
-      <img src="/LIVABLOM/assets/images/salon1.jpg" alt="LIVA appartement">
-    </a>
-    <h2>🔹 LIVA</h2>
-    <p>Appartement cosy et tout équipé, parfait pour les familles, couples ou télétravailleurs.</p>
-    <a href="/LIVABLOM/liva" class="bouton">Réserver LIVA</a>
-  </div>
-
-  <!-- BLOM -->
-  <div class="logement">
-    <a href="/LIVABLOM/blom">
-      <img src="/LIVABLOM/assets/images/image-jacuzzi.png" alt="BLŌM maison d’hôtes">
-    </a>
-    <h2>🔹 BLŌM</h2>
-    <p>Maison d’hôtes détente avec spa, lit king size, petit déjeuner et bien-être assuré.</p>
-    <a href="/LIVABLOM/blom" class="bouton">Réserver BLŌM</a>
-  </div>
-
-</section>
+    m
