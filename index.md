@@ -75,6 +75,9 @@ id: index
   <div class="logement">
     <a href="/LIVABLOM/liva">
       <img src="/LIVABLOM/assets/images/salon1.jpg" alt="LIVA appartement">
+      <a href="image1.jpg" data-lightbox="liva"></a>
+<a href="image2.jpg" data-lightbox="liva"></a>
+
     </a>
     <h2>🔹 LIVA</h2>
     <p>Appartement cosy et tout équipé, parfait pour les familles, couples ou télétravailleurs.</p>
