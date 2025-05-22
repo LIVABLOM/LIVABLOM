@@ -68,7 +68,7 @@ id: index
   }
 </style>
 
-<section class="logements-container">
+<section class="logements-container" style="margin-top: 160px;">
 
   <!-- LIVA -->
   <div class="logement">
