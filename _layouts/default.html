@@ -21,8 +21,9 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         text-align: center;
+        position: relative;
       }
 
       .header-section {
@@ -41,6 +42,7 @@
         height: 140px;
         object-fit: contain;
         margin-bottom: 10px;
+        transition: height 0.3s ease;
       }
 
       .brand-text {
@@ -87,16 +89,6 @@
         text-decoration: underline;
       }
 
-      section, h1, h2, p, ul, li {
-        color: white;
-      }
-
-      input, textarea {
-        background-color: #333;
-        color: white;
-        border: 1px solid #666;
-      }
-
       button {
         background-color: #222;
         color: white;
@@ -108,23 +100,69 @@
         cursor: pointer;
       }
 
-      img {
-        max-width: 100%;
-        height: auto;
+      /* Menu burger */
+      .menu-toggle {
+        display: none;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: white;
+        cursor: pointer;
       }
 
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .mobile-menu a {
+        padding: 10px 0;
+        border-top: 1px solid #333;
+      }
+
+      /* Responsive rules */
       @media (max-width: 768px) {
         .header-section {
           max-width: 100%;
-          text-align: center;
+        }
+
+        .logo-fullwidth {
+          height: 100px;
+        }
+
+        .desktop-only {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .mobile-menu.active {
+          display: flex;
         }
       }
     </style>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("active");
+      }
+    </script>
   </head>
   <body>
     <header>
-      <!-- Bloc gauche : LIVA -->
-      <div class="header-section">
+      <!-- Menu burger (mobile) -->
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+      <!-- Bloc gauche (Desktop uniquement) -->
+      <div class="header-section desktop-only">
         <div class="bloc">
           <h2><a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a></h2>
           <p>
@@ -133,7 +171,7 @@
         </div>
       </div>
 
-      <!-- Bloc centre : Logo + Texte -->
+      <!-- Bloc centre -->
       <div class="header-section header-center">
         <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
         <div class="brand-text">LIVABLOM</div>
@@ -143,14 +181,20 @@
         </div>
       </div>
 
-      <!-- Bloc droit : BLŌM -->
-      <div class="header-section">
+      <!-- Bloc droit (Desktop uniquement) -->
+      <div class="header-section desktop-only">
         <div class="bloc">
           <h2><a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a></h2>
           <p>
-            Maison d’hôtes idéale pour couple et passer un bon moment de détente avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert pour les nuitées.
+            Maison d’hôtes idéale pour couple et passer un bon moment de détente avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert.
           </p>
         </div>
+      </div>
+
+      <!-- Menu mobile -->
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a>
+        <a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a>
       </div>
     </header>
 
