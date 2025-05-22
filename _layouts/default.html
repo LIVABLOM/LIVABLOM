@@ -9,7 +9,7 @@
       body {
         background-color: black;
         color: white;
-        font-family: sans-serif;
+        font-family: 'Raleway', sans-serif;
         margin: 0;
         padding: 0;
       }
@@ -17,28 +17,23 @@
       header {
         background-color: #111;
         border-bottom: 1px solid #333;
+        padding: 20px;
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
-        height: 150px;
-        position: relative;
-      }
-
-      .header-link {
-        color: #25D366;
-        font-family: 'Raleway', sans-serif;
-        font-size: 1rem;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-weight: 300;
-      }
-
-      .brand-fullwidth {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        align-items: center;
+        flex-wrap: wrap;
         text-align: center;
+      }
+
+      .header-left, .header-center, .header-right {
+        flex: 1;
+        padding: 10px;
+      }
+
+      .header-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .logo-fullwidth {
@@ -48,20 +43,45 @@
       }
 
       .brand-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: 'Raleway', sans-serif;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         letter-spacing: 2px;
         color: white;
         font-weight: 300;
         text-transform: uppercase;
+        margin-top: -40px;
+      }
+
+      .intro {
+        font-size: 1rem;
+        color: #ccc;
+        margin-top: 10px;
+      }
+
+      .bloc {
+        text-align: left;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .bloc h2 {
+        color: #25D366;
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
+
+      .bloc p {
+        font-size: 0.9rem;
+        color: white;
+        margin: 0;
       }
 
       a {
         color: #25D366;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
 
       section, h1, h2, p, ul, li {
@@ -93,17 +113,35 @@
   </head>
   <body>
     <header>
-      <!-- Lien gauche -->
-      <a href="/LIVABLOM/liva" class="header-link">Découvrir LIVA</a>
-
-      <!-- Logo centré -->
-      <div class="brand-fullwidth">
-        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
-        <div class="brand-text">LIVABLOM</div>
+      <!-- Bloc LIVA à gauche -->
+      <div class="header-left">
+        <div class="bloc">
+          <h2><a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a></h2>
+          <p>
+            Appartement très pratique en famille, en couple ou même pour le travail. Le logement est tout équipé pour que vous passiez un court ou long séjour.
+          </p>
+        </div>
       </div>
 
-      <!-- Lien droit -->
-      <a href="/LIVABLOM/blom" class="header-link">Découvrir BLŌM</a>
+      <!-- Logo et texte au centre -->
+      <div class="header-center">
+        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
+        <div class="brand-text">LIVABLOM</div>
+        <div class="intro">
+          <h2>Nos logements 🌿</h2>
+          <p>Bienvenue chez <strong>LIVABLOM</strong>, deux hébergements uniques pour des séjours inoubliables.</p>
+        </div>
+      </div>
+
+      <!-- Bloc BLOM à droite -->
+      <div class="header-right">
+        <div class="bloc">
+          <h2><a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a></h2>
+          <p>
+            Maison d’hôtes idéale pour couple et passer un bon moment de détente avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert pour les nuitées.
+          </p>
+        </div>
+      </div>
     </header>
 
     {{ content }}
