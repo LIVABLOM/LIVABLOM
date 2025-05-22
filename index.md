@@ -3,14 +3,18 @@ layout: default
 id: index
 ---
 
+<section style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px 20px; text-align: center;">
 
-# Nos logements 🌿
+  <a href="/LIVABLOM/liva" style="flex: 1 1 300px; max-width: 500px; text-decoration: none; color: inherit;">
+    <img src="/LIVABLOM/assets/images/liva.jpg" alt="LIVA appartement" style="width: 100%; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <h2 style="margin-top: 15px;">🔹 LIVA</h2>
+    <p>Appartement cosy et tout équipé, parfait pour les familles, couples ou télétravailleurs.</p>
+  </a>
 
-Bienvenue chez **LIVABLOM**, deux hébergements uniques pour des séjours inoubliables.
+  <a href="/LIVABLOM/blom" style="flex: 1 1 300px; max-width: 500px; text-decoration: none; color: inherit;">
+    <img src="/LIVABLOM/assets/images/blom.jpg" alt="BLŌM maison d’hôtes" style="width: 100%; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <h2 style="margin-top: 15px;">🔹 BLŌM</h2>
+    <p>Maison d’hôtes détente avec spa, lit king size, petit déjeuner et bien-être assuré.</p>
+  </a>
 
----
-
-## 🔹 [Découvrir LIVA](/LIVABLOM/liva)
-Appartement très pratique en famille, en couple ou même pour le travail le logement est tout équipé pour que vous passiez un court ou long séjour.
-## 🔹 [Découvrir BLŌM](/LIVABLOM/blom)
-Maison d’hôtes idéal pour couple et passer un bon moment de détente  avec spa, lit king size, salle de massage, salon TV et petit déjeuner offert pour les nuitées 
+</section>
