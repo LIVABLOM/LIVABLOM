@@ -23,7 +23,9 @@
         justify-content: center;
         align-items: flex-start;
         text-align: center;
-        position: relative;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
       }
 
       .header-section {
@@ -64,6 +66,14 @@
         font-size: 0.95rem;
         margin-top: 5px;
         color: #ccc;
+      }
+
+      .bloc {
+        border: 1px solid #333;
+        background-color: #1a1a1a;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.4);
       }
 
       .bloc h2 {
