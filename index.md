@@ -71,6 +71,10 @@ id: index
     <a href="/LIVABLOM/assets/images/salon1.jpg" data-lightbox="logements" data-title="LIVA - Appartement cosy tout équipé">
       <img src="/LIVABLOM/assets/images/salon1.jpg" alt="LIVA appartement">
     </a>
+    <a href="/LIVABLOM/assets/images/chaise.jpg" data-lightbox="liva" data-title="LIVA - Cuisine toute équipée" class="lightbox-hidden"></a>
+    <a href="/LIVABLOM/assets/images/the.jpg" data-lightbox="liva" data-title="LIVA - Chambre confortable" class="lightbox-hidden"></a>
+    <a href="/LIVABLOM/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="LIVA - Cuisine toute équipée" class="lightbox-hidden"></a>
+   
     <h2>🔹 LIVA</h2>
     <p>Appartement cosy et tout équipé, parfait pour les familles, couples ou télétravailleurs.</p>
     <a href="/LIVABLOM/liva" class="bouton">Réserver LIVA</a>
@@ -81,6 +85,10 @@ id: index
     <a href="/LIVABLOM/assets/images/image-jacuzzi.png" data-lightbox="logements" data-title="BLŌM - Maison d’hôtes détente avec spa">
       <img src="/LIVABLOM/assets/images/image-jacuzzi.png" alt="BLŌM maison d’hôtes">
     </a>
+    <a href="/LIVABLOM/assets/images/femmemur.jpg" data-lightbox="liva" data-title="LIVA - Cuisine toute équipée" class="lightbox-hidden"></a>
+    <a href="/LIVABLOM/assets/images/sceau.jpg" data-lightbox="liva" data-title="LIVA - Chambre confortable" class="lightbox-hidden"></a>
+   <a href="/LIVABLOM/assets/images/table.jpg" data-lightbox="liva" data-title="LIVA - Cuisine toute équipée" class="lightbox-hidden"></a>
+    
     <h2>🔹 BLŌM</h2>
     <p>Maison d’hôtes détente avec spa, lit king size, petit déjeuner et bien-être assuré.</p>
     <a href="/LIVABLOM/blom" class="bouton">Réserver BLŌM</a>
