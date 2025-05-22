@@ -100,7 +100,7 @@ Une fois dans le logement vous vous sentirez chez vous que ce soit pour un court
   <h2>Infos pratiques</h2>
   <ul>
     <li>Nombre de voyageurs : 5 maximum</li>
-    <li>Prix par nuit : 160€</li>
+    <li>Prix par nuit : 89€/2 Personnes</li>
     <li>10 min de Douai et Gayant Expo</li>
     <li>Friterie juste à côté, nombreux restaurants à 5 min</li>
   </ul>
