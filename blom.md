@@ -102,6 +102,21 @@ title: BLōM
     <li>Friterie juste à côté, nombreux restaurants à 5 min</li>
   </ul>
 </section>
+<section>
+  <h2>Nos formules</h2>
+  <p>Découvrez nos différentes offres disponibles à la nuitée ou à la journée, du lundi au dimanche :</p>
+  
+  <ul>
+    <li><strong>Lundi au jeudi (nuitée) :</strong> à venir</li>
+    <li><strong>Vendredi (nuitée) :</strong> à venir</li>
+    <li><strong>Samedi (nuitée) :</strong> à venir</li>
+    <li><strong>Dimanche (journée ou nuitée) :</strong> à venir</li>
+    <li><strong>Formule journée (11h - 17h) :</strong> à venir</li>
+  </ul>
+
+  <p style="margin-top: 10px;">Les tarifs seront bientôt affichés ici. Pour toute réservation ou demande spécifique, contactez-nous directement via WhatsApp ou le formulaire ci-dessous.</p>
+</section>
+
 
 ## 💬 Ce que disent nos visiteurs
 
