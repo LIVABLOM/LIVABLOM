@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.title }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
     <style>
       body {
         background-color: black;
@@ -17,11 +18,11 @@
       header {
         background-color: rgba(0, 0, 0, 0.7);
         border-bottom: 1px solid #333;
-        padding: 20px;
+        padding: 10px 20px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         text-align: center;
         position: sticky;
         top: 0;
@@ -36,9 +37,9 @@
       }
 
       .header-section {
-        flex: 1 1 300px;
-        max-width: 400px;
-        padding: 15px;
+        flex: 1 1 250px;
+        max-width: 300px;
+        padding: 10px;
       }
 
       .header-center {
@@ -48,51 +49,44 @@
       }
 
       .logo-fullwidth {
-        height: 140px;
+        height: 100px;
         object-fit: contain;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         transition: height 0.3s ease;
       }
 
       .brand-text {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         letter-spacing: 2px;
-        color: white;
         font-weight: 300;
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        color: white;
       }
 
       .intro h2 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         margin: 0;
         color: #25D366;
       }
 
       .intro p {
-        font-size: 0.95rem;
-        margin-top: 5px;
+        font-size: 0.85rem;
+        margin-top: 4px;
         color: #ccc;
       }
 
       .bloc {
-        border: 1px solid #333;
         background-color: #1a1a1a;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.4);
       }
 
       .bloc h2 {
         color: #25D366;
-        font-size: 1rem;
-        margin-bottom: 6px;
-      }
-
-      .bloc p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         margin: 0;
-        color: #eee;
       }
 
       a {
@@ -109,19 +103,17 @@
       button {
         background-color: #222;
         color: white;
-        padding: 10px 20px;
+        padding: 8px 16px;
         border: none;
         border-radius: 6px;
-        font-size: 15px;
-        font-weight: bold;
+        font-size: 14px;
         cursor: pointer;
       }
 
-      /* Menu burger */
       .menu-toggle {
         display: none;
         position: absolute;
-        top: 15px;
+        top: 10px;
         right: 20px;
         background: none;
         border: none;
@@ -143,14 +135,13 @@
         border-top: 1px solid #333;
       }
 
-      /* Responsive rules */
       @media (max-width: 768px) {
         .header-section {
           max-width: 100%;
         }
 
         .logo-fullwidth {
-          height: 100px;
+          height: 80px;
         }
 
         .desktop-only {
@@ -168,39 +159,27 @@
     </style>
     <script>
       function toggleMenu() {
-        const menu = document.getElementById("mobileMenu");
-        menu.classList.toggle("active");
+        document.getElementById("mobileMenu").classList.toggle("active");
       }
 
       window.addEventListener('scroll', () => {
         const header = document.querySelector('header');
-        if (window.scrollY > 20) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
+        header.classList.toggle('scrolled', window.scrollY > 20);
       });
     </script>
-    <!-- Lightbox2 CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
-
   </head>
   <body>
     <header>
       <a href="./" class="header-link" style="position: absolute; top: 10px; left: 20px;">🏠 Accueil</a>
 
-      <!-- Menu burger (mobile) -->
       <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-      <!-- Bloc gauche (Desktop uniquement) -->
       <div class="header-section desktop-only">
         <div class="bloc">
-          <h2><a href="/LIVABLOM/liva">🔹LIVA</a></h2>
-      
+          <h2><a href="/LIVABLOM/liva">🔹 LIVA</a></h2>
         </div>
       </div>
 
-      <!-- Bloc centre -->
       <div class="header-section header-center">
         <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
         <div class="brand-text">LIVABLOM</div>
@@ -210,15 +189,12 @@
         </div>
       </div>
 
-      <!-- Bloc droit (Desktop uniquement) -->
       <div class="header-section desktop-only">
         <div class="bloc">
           <h2><a href="/LIVABLOM/blom">🔹 BLŌM</a></h2>
-        
         </div>
       </div>
 
-      <!-- Menu mobile -->
       <div class="mobile-menu" id="mobileMenu">
         <a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a>
         <a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a>
@@ -226,7 +202,7 @@
     </header>
 
     {{ content }}
-    <!-- Lightbox2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
   </body>
 </html>
