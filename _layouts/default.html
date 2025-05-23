@@ -1,212 +1,114 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accueil - LIVABLOM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300&display=swap" rel="stylesheet">
-    <style>
-      body {
-        background-color: black;
-        color: white;
-        font-family: 'Raleway', sans-serif;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page.title }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Raleway', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .header-link {
+      flex: 1;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 10px 0;
+    }
+
+    .header-link a {
+      color: #25D366;
+      text-decoration: none;
+      font-size: 1.4rem;
+    }
+
+    .header-logo {
+      flex: 1;
+      text-align: center;
+    }
+
+    .logo-img {
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 5px;
+    }
+
+    .brand-text {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .intro {
+      display: none; /* Supprimé pour gain de place */
+    }
+
+    a:hover {
+      color: #1da955;
+      text-decoration: underline;
+    }
+
+    .mobile-menu, .menu-toggle {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
       header {
-        background-color: rgba(0, 0, 0, 0.7);
-        border-bottom: 1px solid #333;
-        padding: 5px 10px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-      }
-
-      .header-section {
-        flex: 1;
-        padding: 4px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .header-center {
         flex-direction: column;
-        max-width: 260px;
       }
 
-      .logo-fullwidth {
+      .header-link {
+        width: 100%;
+        padding: 8px 0;
+      }
+
+      .header-logo {
+        order: -1;
+        margin-bottom: 5px;
+      }
+
+      .logo-img {
         height: 50px;
-        object-fit: contain;
-        margin-bottom: 4px;
       }
+    }
+  </style>
+</head>
+<body>
 
-      .brand-text {
-        font-size: 1rem;
-        letter-spacing: 2px;
-        font-weight: 300;
-        text-transform: uppercase;
-        margin-bottom: 2px;
-        color: white;
-      }
+  <header>
+    <div class="header-link"><a href="/LIVABLOM/liva">🔹 LIVA</a></div>
 
-      .intro h2 {
-        font-size: 0.85rem;
-        margin: 0;
-        color: #25D366;
-      }
+    <div class="header-logo">
+      <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-img">
+      <div class="brand-text">LIVABLOM</div>
+    </div>
 
-      .intro p {
-        font-size: 0.75rem;
-        margin-top: 2px;
-        color: #ccc;
-      }
+    <div class="header-link"><a href="/LIVABLOM/blom">🔹 BLŌM</a></div>
+  </header>
 
-      .bloc {
-        background-color: #1a1a1a;
-        padding: 6px;
-        border-radius: 6px;
-        width: 100%;
-        text-align: center;
-      }
+  {{ content }}
 
-      .bloc h2 {
-        color: #25D366;
-        font-size: 1.1rem;
-        margin: 0;
-      }
-
-      a {
-        color: #25D366;
-        text-decoration: none;
-      }
-
-      a:hover {
-        color: #1da955;
-        text-decoration: underline;
-      }
-
-      button {
-        background-color: #222;
-        color: white;
-        padding: 6px 12px;
-        border: none;
-        border-radius: 4px;
-        font-size: 14px;
-        cursor: pointer;
-      }
-
-      .menu-toggle {
-        display: none;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        background: none;
-        border: none;
-        font-size: 2rem;
-        color: white;
-        cursor: pointer;
-      }
-
-      .mobile-menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-      }
-
-      .mobile-menu a {
-        padding: 10px 0;
-        border-top: 1px solid #333;
-      }
-
-      @media (max-width: 768px) {
-        .header-section {
-          max-width: 100%;
-        }
-
-        .logo-fullwidth {
-          height: 40px;
-        }
-
-        .desktop-only {
-          display: none;
-        }
-
-        .menu-toggle {
-          display: block;
-        }
-
-        .mobile-menu.active {
-          display: flex;
-        }
-      }
-    </style>
-    <script>
-      function toggleMenu() {
-        document.getElementById("mobileMenu").classList.toggle("active");
-      }
-    </script>
-  </head>
-  <body>
-    <header>
-      <a href="./" class="header-link" style="position: absolute; top: 10px; left: 20px;">🏠 Accueil</a>
-      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-
-      <div class="header-section desktop-only">
-        <div class="bloc">
-          <h2><a href="/LIVABLOM/liva">🔹 LIVA</a></h2>
-        </div>
-      </div>
-
-      <div class="header-section header-center">
-        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
-        <div class="brand-text">LIVABLOM</div>
-        <div class="intro">
-          <h2>Nos logements 🌿</h2>
-          <p>Séjours inoubliables à LIVA et BLŌM</p>
-        </div>
-      </div>
-
-      <div class="header-section desktop-only">
-        <div class="bloc">
-          <h2><a href="/LIVABLOM/blom">🔹 BLŌM</a></h2>
-        </div>
-      </div>
-
-      <div class="mobile-menu" id="mobileMenu">
-        <a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a>
-        <a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a>
-      </div>
-    </header>
-
-    <!-- ✅ TEST CONTENU -->
-    <main style="padding: 20px;">
-      <h1>Bienvenue chez LIVABLOM</h1>
-      <p>Choisissez votre hébergement :</p>
-      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        <div style="flex: 1; background-color: #222; padding: 10px; border-radius: 8px;">
-          <img src="https://via.placeholder.com/300x200" style="width: 100%; border-radius: 6px;" alt="LIVA">
-          <h2>LIVA</h2>
-          <button onclick="location.href='/LIVABLOM/liva'">Réserver LIVA</button>
-        </div>
-        <div style="flex: 1; background-color: #222; padding: 10px; border-radius: 8px;">
-          <img src="https://via.placeholder.com/300x200" style="width: 100%; border-radius: 6px;" alt="BLŌM">
-          <h2>BLŌM</h2>
-          <button onclick="location.href='/LIVABLOM/blom'">Réserver BLŌM</button>
-        </div>
-      </div>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+</body>
 </html>
