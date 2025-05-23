@@ -134,7 +134,7 @@ title: BLōM
     </div>
 
     <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Parfait ! La vidéo du changement...”</p>
+      <p style="font-style: italic;">“Parfait ! Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable on avait envie d’y rester.. rien à dire à part merci ☺️”</p>
       <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Pilon, juin 2024</p>
     </div>
   </div>
