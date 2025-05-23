@@ -53,6 +53,7 @@ title: BLōM
   const images = [
     "assets/images/image-jacuzzi.png",
     "assets/images/femmemur.jpg",
+    "assets/images/table.jpg",
     "assets/images/sceau.jpg"
   ];
    let index = 0;
