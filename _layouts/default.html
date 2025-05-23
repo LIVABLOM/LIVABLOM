@@ -15,4 +15,149 @@
         padding: 0;
       }
 
-      head
+      header {
+        background-color: rgba(0, 0, 0, 0.7);
+        border-bottom: 1px solid #333;
+        padding: 5px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+
+      .header-section {
+        flex: 1;
+        padding: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header-center {
+        flex-direction: column;
+        max-width: 260px;
+      }
+
+      .logo-fullwidth {
+        height: 50px;
+        object-fit: contain;
+        margin-bottom: 4px;
+      }
+
+      .brand-text {
+        font-size: 1rem;
+        letter-spacing: 2px;
+        font-weight: 300;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+        color: white;
+      }
+
+      .intro h2 {
+        font-size: 0.85rem;
+        margin: 0;
+        color: #25D366;
+      }
+
+      .intro p {
+        font-size: 0.75rem;
+        margin-top: 2px;
+        color: #ccc;
+      }
+
+      .bloc {
+        background-color: #1a1a1a;
+        padding: 6px;
+        border-radius: 6px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .bloc h2 {
+        color: #25D366;
+        font-size: 1.1rem;
+        margin: 0;
+      }
+
+      a {
+        color: #25D366;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #1da955;
+        text-decoration: underline;
+      }
+
+      button {
+        background-color: #222;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .menu-toggle {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: white;
+        cursor: pointer;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .mobile-menu a {
+        padding: 10px 0;
+        border-top: 1px solid #333;
+      }
+
+      @media (max-width: 768px) {
+        .header-section {
+          max-width: 100%;
+        }
+
+        .logo-fullwidth {
+          height: 40px;
+        }
+
+        .desktop-only {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .mobile-menu.active {
+          display: flex;
+        }
+      }
+    </style>
+    <script>
+      function toggleMenu() {
+        document.getElementById("mobileMenu").classList.toggle("active");
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <a href="./" class="header-link" style="positi
