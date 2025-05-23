@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ page.title }}</title>
+    <title>Accueil - LIVABLOM</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
     <style>
       body {
         background-color: black;
@@ -160,4 +159,54 @@
   </head>
   <body>
     <header>
-      <a href="./" class="header-link" style="positi
+      <a href="./" class="header-link" style="position: absolute; top: 10px; left: 20px;">🏠 Accueil</a>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+      <div class="header-section desktop-only">
+        <div class="bloc">
+          <h2><a href="/LIVABLOM/liva">🔹 LIVA</a></h2>
+        </div>
+      </div>
+
+      <div class="header-section header-center">
+        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
+        <div class="brand-text">LIVABLOM</div>
+        <div class="intro">
+          <h2>Nos logements 🌿</h2>
+          <p>Séjours inoubliables à LIVA et BLŌM</p>
+        </div>
+      </div>
+
+      <div class="header-section desktop-only">
+        <div class="bloc">
+          <h2><a href="/LIVABLOM/blom">🔹 BLŌM</a></h2>
+        </div>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a>
+        <a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a>
+      </div>
+    </header>
+
+    <!-- ✅ TEST CONTENU -->
+    <main style="padding: 20px;">
+      <h1>Bienvenue chez LIVABLOM</h1>
+      <p>Choisissez votre hébergement :</p>
+      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; background-color: #222; padding: 10px; border-radius: 8px;">
+          <img src="https://via.placeholder.com/300x200" style="width: 100%; border-radius: 6px;" alt="LIVA">
+          <h2>LIVA</h2>
+          <button onclick="location.href='/LIVABLOM/liva'">Réserver LIVA</button>
+        </div>
+        <div style="flex: 1; background-color: #222; padding: 10px; border-radius: 8px;">
+          <img src="https://via.placeholder.com/300x200" style="width: 100%; border-radius: 6px;" alt="BLŌM">
+          <h2>BLŌM</h2>
+          <button onclick="location.href='/LIVABLOM/blom'">Réserver BLŌM</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  </body>
+</html>
