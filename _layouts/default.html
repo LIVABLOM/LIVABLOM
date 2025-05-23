@@ -24,38 +24,44 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        position: relative;
+        position: sticky;
+        top: 0;
         z-index: 1000;
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         transition: background-color 0.3s ease;
-        height: 100vh; /* Pleine hauteur écran */
+      }
+
+      header.scrolled {
+        background-color: rgba(0, 0, 0, 0.85);
       }
 
       .header-section {
-        flex: 1 1 200px;
-        max-width: 280px;
-        padding: 5px;
+        flex: 1 1 250px;
+        max-width: 300px;
+        padding: 10px;
       }
 
       .header-center {
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 300px;
       }
 
       .logo-fullwidth {
-        height: 60px;
-        margin-bottom: 5px;
+        height: 100px;
         object-fit: contain;
+        margin-bottom: 5px;
+        transition: height 0.3s ease;
       }
 
       .brand-text {
-        font-size: 1rem;
-        letter-spacing: 1px;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
         font-weight: 300;
-        margin-bottom: 4px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        color: white;
       }
 
       .intro h2 {
@@ -65,22 +71,22 @@
       }
 
       .intro p {
-        font-size: 0.75rem;
-        margin-top: 5px;
+        font-size: 0.85rem;
+        margin-top: 4px;
         color: #ccc;
       }
 
       .bloc {
         background-color: #1a1a1a;
-        padding: 8px;
+        padding: 10px;
         border-radius: 8px;
-        font-size: 0.9rem;
+        box-shadow: 0 0 8px rgba(0,0,0,0.4);
       }
 
       .bloc h2 {
-        font-size: 0.9rem;
-        margin: 0;
         color: #25D366;
+        font-size: 0.95rem;
+        margin: 0;
       }
 
       a {
@@ -94,14 +100,24 @@
         text-decoration: underline;
       }
 
-      button.menu-toggle {
+      button {
+        background-color: #222;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .menu-toggle {
         display: none;
         position: absolute;
         top: 10px;
         right: 20px;
-        font-size: 2rem;
         background: none;
         border: none;
+        font-size: 2rem;
         color: white;
         cursor: pointer;
       }
@@ -125,7 +141,7 @@
         }
 
         .logo-fullwidth {
-          height: 50px;
+          height: 80px;
         }
 
         .desktop-only {
@@ -139,18 +155,17 @@
         .mobile-menu.active {
           display: flex;
         }
-
-        header {
-          height: auto;
-          flex-direction: column;
-          padding-bottom: 20px;
-        }
       }
     </style>
     <script>
       function toggleMenu() {
         document.getElementById("mobileMenu").classList.toggle("active");
       }
+
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        header.classList.toggle('scrolled', window.scrollY > 20);
+      });
     </script>
   </head>
   <body>
