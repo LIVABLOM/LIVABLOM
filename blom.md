@@ -97,7 +97,6 @@ title: BLōM
   <h2>Infos pratiques</h2>
   <ul>
     <li>Nombre de voyageurs : 2 maximum</li>
-    <li>Prix par nuit : 160€</li>
     <li>10 min de Douai et Gayant Expo</li>
     <li>Friterie juste à côté, nombreux restaurants à 5 min</li>
   </ul>
@@ -112,6 +111,7 @@ title: BLōM
     <li><strong>Samedi (nuitée) :</strong> 180 euros</li>
     <li><strong>Dimanche (journée ou nuitée) :</strong> 200 euros</li>
     <li><strong>Formule journée (11h - 17h) :</strong> 150 euros</li>
+    <li><strong>Formule journée 4H) :</strong> 110 euros</li>
   </ul>
 
   <p style="margin-top: 10px;">Pour toute réservation ou demande spécifique, contactez-nous directement via WhatsApp ou le formulaire ci-dessous.</p>
