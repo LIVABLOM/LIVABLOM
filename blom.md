@@ -14,8 +14,6 @@ title: BLōM
     background-color: black;
     color: white;
     font-family: sans-serif;
-    margin: 0;
-    overflow: hidden;
   }
   a {
     color: #25D366;
@@ -35,20 +33,6 @@ title: BLōM
     color: white;
     border: 1px solid #666;
   }
-  .full-height-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    text-align: center;
-  }
-  @media (max-width: 768px) {
-    .full-height-section {
-      height: 100dvh;
-    }
-  }
 </style>
 
 <center>
@@ -56,13 +40,14 @@ title: BLōM
   <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
 </center>
 
-<div class="full-height-section">
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center;">
   <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="max-height: 70vh; width: auto; border-radius: 12px; transition: opacity 0.5s ease;">
   <div style="margin-top: 20px;">
     <button onclick="prevImage()" style="background: #333; color: white; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
     <button onclick="nextImage()" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 6px;">➡️</button>
   </div>
 </div>
+
 
 <script>
   const images = [
@@ -79,7 +64,7 @@ title: BLōM
     setTimeout(() => {
       imgElement.src = images[i];
       imgElement.style.opacity = 1;
-      scrollToImage();
+      scrollToImage(); // 👈 ajoute ce scroll après le changement
     }, 200);
   }
 
@@ -99,14 +84,13 @@ title: BLōM
   }
 </script>
 
+
+
 <section>
   <h2>Le logement</h2>
   <p>Maison d'hôte avec accès sécurisé par digicode. Au rez-de-chaussée : jacuzzi, salon, salle à manger avec petit frigo et micro-ondes. À l'étage : grande chambre avec lit King Size, salle de massage et salle de douche.</p>
   <p>Salon avec canapé et TV Netflix. Petit déjeuner offert, servi en toute intimité. Logement non-fumeur (zone fumeurs à l'extérieur).</p>
-  <p>Arrivée et départ en totale autonomie.</p>
-  <p style="font-weight: bold; font-size: 1.1em; color: #25D366; background-color: #111; padding: 10px; border-left: 4px solid #25D366; border-radius: 4px; margin-top: 10px;">
-    Jacuzzi vidé et rempli avec vidéo de preuve le jour de votre arrivée.
-  </p>
+  <p>Arrivée et départ en totale autonomie. Jacuzzi vidé et rempli avec vidéo de preuve le jour de votre arrivée.</p>
 </section>
 
 <section>
@@ -132,6 +116,7 @@ title: BLōM
 
   <p style="margin-top: 10px;">Pour toute réservation ou demande spécifique, contactez-nous directement via WhatsApp ou le formulaire ci-dessous.</p>
 </section>
+
 
 ## 💬 Ce que disent nos visiteurs
 
@@ -171,3 +156,4 @@ title: BLōM
     Envoyer
   </button>
 </form>
+
