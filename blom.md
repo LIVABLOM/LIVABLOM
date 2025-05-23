@@ -124,12 +124,17 @@ title: BLōM
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
 
     <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Une pépite ! Un hote très sympathique...”</p>
+      <p style="font-style: italic;">“Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !”</p>
       <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Emilie, mars 2025</p>
     </div>
 
     <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Très bon moment passé...”</p>
+      <p style="font-style: italic;">“Tres bon moment passé dans ce logement pour une soiree romantique.
+Abdel est un hote tres attentionné et disponible.
+Toutes les communications se font par message au long du sejour pour passer un tres bon moment avec de nombreux services.
+Le logement est tres propre, le jaccuzzi nettoyé entre chaque locataire. Nous avons été tres contents.
+La table est mise pour un diner romantique et le petit dejeuner organisé pour l’intimite des locataires est parfait.
+Hote et logement a recommande”</p>
       <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Melissa, janvier 2025</p>
     </div>
 
