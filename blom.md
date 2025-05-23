@@ -107,14 +107,14 @@ title: BLōM
   <p>Découvrez nos différentes offres disponibles à la nuitée ou à la journée, du lundi au dimanche :</p>
   
   <ul>
-    <li><strong>Lundi au jeudi (nuitée) :</strong> à venir</li>
-    <li><strong>Vendredi (nuitée) :</strong> à venir</li>
-    <li><strong>Samedi (nuitée) :</strong> à venir</li>
-    <li><strong>Dimanche (journée ou nuitée) :</strong> à venir</li>
-    <li><strong>Formule journée (11h - 17h) :</strong> à venir</li>
+    <li><strong>Lundi au jeudi (nuitée) :</strong> 140 euros</li>
+    <li><strong>Vendredi (nuitée) :</strong> 180 euros</li>
+    <li><strong>Samedi (nuitée) :</strong> 180 euros</li>
+    <li><strong>Dimanche (journée ou nuitée) :</strong> 200 euros</li>
+    <li><strong>Formule journée (11h - 17h) :</strong> 150 euros</li>
   </ul>
 
-  <p style="margin-top: 10px;">Les tarifs seront bientôt affichés ici. Pour toute réservation ou demande spécifique, contactez-nous directement via WhatsApp ou le formulaire ci-dessous.</p>
+  <p style="margin-top: 10px;">Pour toute réservation ou demande spécifique, contactez-nous directement via WhatsApp ou le formulaire ci-dessous.</p>
 </section>
 
 
