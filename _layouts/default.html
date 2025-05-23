@@ -18,7 +18,7 @@
       header {
         background-color: rgba(0, 0, 0, 0.7);
         border-bottom: 1px solid #333;
-        padding: 8px 15px;
+        padding: 6px 10px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -29,17 +29,12 @@
         z-index: 1000;
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
-        transition: background-color 0.3s ease;
-      }
-
-      header.scrolled {
-        background-color: rgba(0, 0, 0, 0.85);
       }
 
       .header-section {
-        flex: 1 1 250px;
+        flex: 1 1 200px;
         max-width: 280px;
-        padding: 5px;
+        padding: 4px;
       }
 
       .header-center {
@@ -49,23 +44,20 @@
       }
 
       .logo-fullwidth {
-        height: 60px;
-        object-fit: contain;
-        margin-bottom: 2px;
-        transition: height 0.3s ease;
+        height: 50px;
+        margin-bottom: 4px;
       }
 
       .brand-text {
         font-size: 1rem;
         letter-spacing: 1px;
-        font-weight: 300;
         text-transform: uppercase;
         margin-bottom: 2px;
         color: white;
       }
 
       .intro h2 {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         margin: 0;
         color: #25D366;
       }
@@ -78,21 +70,20 @@
 
       .bloc {
         background-color: #1a1a1a;
-        padding: 8px;
+        padding: 6px;
         border-radius: 6px;
-        box-shadow: 0 0 8px rgba(0,0,0,0.4);
+        box-shadow: 0 0 6px rgba(0,0,0,0.3);
       }
 
       .bloc h2 {
         color: #25D366;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         margin: 0;
       }
 
       a {
         color: #25D366;
         text-decoration: none;
-        transition: color 0.3s;
       }
 
       a:hover {
@@ -103,3 +94,106 @@
       button {
         background-color: #222;
         color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .menu-toggle {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        color: white;
+        cursor: pointer;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .mobile-menu a {
+        padding: 10px 0;
+        border-top: 1px solid #333;
+      }
+
+      @media (max-width: 768px) {
+        .header-section {
+          max-width: 100%;
+        }
+
+        .logo-fullwidth {
+          height: 40px;
+        }
+
+        .desktop-only {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .mobile-menu.active {
+          display: flex;
+        }
+      }
+    </style>
+    <script>
+      function toggleMenu() {
+        document.getElementById("mobileMenu").classList.toggle("active");
+      }
+
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        header.classList.toggle('scrolled', window.scrollY > 20);
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <a href="./" class="header-link" style="position: absolute; top: 10px; left: 10px;">🏠 Accueil</a>
+
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+      <div class="header-section desktop-only">
+        <div class="bloc">
+          <h2><a href="/LIVABLOM/liva">🔹 LIVA</a></h2>
+        </div>
+      </div>
+
+      <div class="header-section header-center">
+        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-fullwidth">
+        <div class="brand-text">LIVABLOM</div>
+        <div class="intro">
+          <h2>Nos logements 🌿</h2>
+          <p>Deux hébergements pour un séjour inoubliable</p>
+        </div>
+      </div>
+
+      <div class="header-section desktop-only">
+        <div class="bloc">
+          <h2><a href="/LIVABLOM/blom">🔹 BLŌM</a></h2>
+        </div>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/LIVABLOM/liva">🔹 Découvrir LIVA</a>
+        <a href="/LIVABLOM/blom">🔹 Découvrir BLŌM</a>
+      </div>
+    </header>
+
+    {{ content }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  </body>
+</html>
