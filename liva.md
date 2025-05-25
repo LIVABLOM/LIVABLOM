@@ -13,6 +13,9 @@ title: LIVA
     background-color: black;
     color: white;
     font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
   a {
     color: #25D366;
@@ -23,9 +26,14 @@ title: LIVA
   #avis-clients {
     background-color: #111;
   }
-  #avis-clients div {
+  #avis-clients .avis-item {
     background-color: #222 !important;
     color: white !important;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    transition: opacity 0.5s ease;
+    min-height: 160px;
   }
   input, textarea {
     background-color: #333;
@@ -64,7 +72,7 @@ Une friterie est a côté du logement.</p>
     setTimeout(() => {
       imgElement.src = images[i];
       imgElement.style.opacity = 1;
-      scrollToImage(); // 👈 ajoute ce scroll après le changement
+      scrollToImage();
     }, 200);
   }
 
@@ -83,8 +91,6 @@ Une friterie est a côté du logement.</p>
     imageContainer.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 </script>
-
-
 
 <section>
   <h2>Le logement</h2>
@@ -108,25 +114,55 @@ Une fois dans le logement vous vous sentirez chez vous que ce soit pour un court
 
 ## 💬 Ce que disent nos visiteurs
 
-<section id="avis-clients" style="padding: 40px 20px;">
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
-
-    <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Conforme aux photos, très bien décoré, on se sent réellement chez soi. Literie confortable. Top! Rien à redire!...”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Joelle, Avril 2025</p>
-    </div>
-
-    <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Charmante petite maison au calme, bonne literie,  hôte réactif, stationnement privé et sécurisé, commerce aux alentours,  séjour appréciée grâce à tout ces points positifs.”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– lelievre, Avril 2025</p>
-    </div>
-
-    <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Super logement !  J’ai passé une nuit dans cet Airbnb et tout s’est très bien déroulé. Le logement était propre, facile d’accès, et les instructions de l’hôte étaient claires. Je recommande sans hésiter !”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– vICtoire, Mars 2025</p>
+<section id="avis-clients" style="padding: 40px 20px; text-align: center;">
+  <div id="avis-container" style="max-width: 600px; margin: 0 auto; position: relative;">
+    <div class="avis-item" id="avis-slide"></div>
+    <div style="margin-top: 20px;">
+      <button onclick="prevAvis()" style="background: #333; color: white; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
+      <button onclick="nextAvis()" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 6px;">➡️</button>
     </div>
   </div>
 </section>
+
+<script>
+  const avisList = [
+    {
+      texte: "“Conforme aux photos, très bien décoré, on se sent réellement chez soi. Literie confortable. Top! Rien à redire!...”",
+      auteur: "– Joelle, Avril 2025"
+    },
+    {
+      texte: "“Charmante petite maison au calme, bonne literie,  hôte réactif, stationnement privé et sécurisé, commerce aux alentours,  séjour appréciée grâce à tout ces points positifs.”",
+      auteur: "– Lelievre, Avril 2025"
+    },
+    {
+      texte: "“Super logement !  J’ai passé une nuit dans cet Airbnb et tout s’est très bien déroulé. Le logement était propre, facile d’accès, et les instructions de l’hôte étaient claires. Je recommande sans hésiter !”",
+      auteur: "– Victoire, Mars 2025"
+    }
+  ];
+
+  let avisIndex = 0;
+  const avisSlide = document.getElementById("avis-slide");
+
+  function renderAvis(i) {
+    avisSlide.style.opacity = 0;
+    setTimeout(() => {
+      avisSlide.innerHTML = `<p style="font-style: italic;">${avisList[i].texte}</p><p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">${avisList[i].auteur}</p>`;
+      avisSlide.style.opacity = 1;
+    }, 200);
+  }
+
+  function nextAvis() {
+    avisIndex = (avisIndex + 1) % avisList.length;
+    renderAvis(avisIndex);
+  }
+
+  function prevAvis() {
+    avisIndex = (avisIndex - 1 + avisList.length) % avisList.length;
+    renderAvis(avisIndex);
+  }
+
+  renderAvis(avisIndex);
+</script>
 
 <a href="https://www.airbnb.fr/rooms/985569147645507170" target="_blank" style="display: inline-block; background-color: #ff5a5f; color: black; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; margin-top: 20px; font-size: 16px;">
   🔑 Réserver sur Airbnb
@@ -144,4 +180,3 @@ Une fois dans le logement vous vous sentirez chez vous que ce soit pour un court
     Envoyer
   </button>
 </form>
-
