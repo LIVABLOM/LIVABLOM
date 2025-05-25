@@ -10,12 +10,13 @@ title: BLōM
 </div>
 
 <style>
-  html, body {
-    max-width: 100%;
-    overflow-x: hidden;
+  body {
     background-color: black;
     color: white;
     font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
   a {
     color: #25D366;
@@ -25,10 +26,6 @@ title: BLōM
   }
   #avis-clients {
     background-color: #111;
-  }
-  #avis-clients div {
-    background-color: #222 !important;
-    color: white !important;
   }
   input, textarea {
     background-color: #333;
@@ -42,8 +39,8 @@ title: BLōM
   <p>Maison d'hôte avec spa privatif, salle de massage, lit King Size et petit déjeuner offert</p>
 </center>
 
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding: 0 10px; box-sizing: border-box;">
-  <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="max-height: 70vh; max-width: 100%; height: auto; width: auto; border-radius: 12px; transition: opacity 0.5s ease;">
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+  <img id="carousel" src="assets/images/image-jacuzzi.png" alt="Diaporama" style="max-height: 70vh; width: auto; border-radius: 12px; transition: opacity 0.5s ease;">
   <div style="margin-top: 20px;">
     <button onclick="prevImage()" style="background: #333; color: white; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
     <button onclick="nextImage()" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 6px;">➡️</button>
@@ -117,35 +114,78 @@ title: BLōM
   <p style="margin-top: 10px;">Pour toute réservation ou demande spécifique, contactez-nous directement via WhatsApp ou le formulaire ci-dessous.</p>
 </section>
 
-## 💬 Ce que disent nos visiteurs
-
-<section id="avis-clients" style="padding: 40px 20px;">
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto;">
-
-    <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Emilie, mars 2025</p>
+<section id="avis-clients" style="padding: 40px 20px; background-color: #111; text-align: center;">
+  <h2 style="margin-bottom: 20px;">💬 Ce que disent nos visiteurs</h2>
+  <div id="carousel-avis" style="max-width: 600px; margin: 0 auto; position: relative;">
+    <div id="avis-slide" style="transition: opacity 0.5s ease;"></div>
+    <div style="margin-top: 20px;">
+      <button onclick="prevAvis()" style="background: #333; color: white; padding: 10px 16px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
+      <button onclick="nextAvis()" style="background: #333; color: white; padding: 10px 16px; border: none; border-radius: 6px;">➡️</button>
     </div>
-
-    <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Très bon moment passé dans ce logement pour une soirée romantique. Abdel est un hôte très attentionné et disponible. Toutes les communications se font par message au long du séjour pour passer un très bon moment avec de nombreux services. Le logement est très propre, le jacuzzi nettoyé entre chaque locataire. Nous avons été très contents. La table est mise pour un dîner romantique et le petit déjeuner organisé pour l’intimité des locataires est parfait. Hôte et logement à recommander.”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Melissa, janvier 2025</p>
-    </div>
-
-    <div style="border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.1);">
-      <p style="font-style: italic;">“Parfait ! Parfait ! La vidéo du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester... rien à dire à part merci ☺️”</p>
-      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Pilon, juin 2024</p>
-    </div>
-
   </div>
 </section>
 
-<a href="https://www.airbnb.fr/rooms/985569147645507170" target="_blank" style="display: inline-block; background-color: #ff5a5f; color: black; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; margin-top: 20px; font-size: 16px;">
-  🔑 Réserver sur Airbnb
-</a>
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+  <a href="https://www.airbnb.fr/rooms/985569147645507170" target="_blank" style="display: inline-block; background-color: #ff5a5f; color: black; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px; margin-bottom: 10px;">
+    🔑 Réserver sur Airbnb
+  </a>
 
-<a href="https://wa.me/33649831838" target="_blank" style="display: inline-block; background-color: #25D366; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; margin-top: 10px; font-size: 16px;">
-  📲 Réserver via WhatsApp
-</a>
+  <a href="https://wa.me/33649831838" target="_blank" style="display: inline-block; background-color: #25D366; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px;">
+    📲 Réserver via WhatsApp
+  </a>
+</div>
 
-<form action="https://formspree.io/f/mrbqrnav" method="POST" style="m
+<form action="https://formspree.io/f/mrbqrnav" method="POST" style="margin-top: 30px; text-align: center;">
+  <label>Nom :<br><input type="text" name="name" required></label><br><br>
+  <label>Email :<br><input type="email" name="_replyto" required></label><br><br>
+  <label>Message :<br><textarea name="message" rows="4" required></textarea></label><br><br>
+  <button type="submit" style="background-color: #222; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer;">
+    Envoyer
+  </button>
+</form>
+
+<script>
+  const avisList = [
+    {
+      texte: "“Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !”",
+      auteur: "– Emilie, mars 2025"
+    },
+    {
+      texte: "“Très bon moment passé dans ce logement pour une soirée romantique. Abdel est un hôte très attentionné et disponible. Toutes les communications se font par message au long du séjour pour passer un très bon moment avec de nombreux services. Le logement est très propre, le jacuzzi nettoyé entre chaque locataire. Nous avons été très contents. La table est mise pour un dîner romantique et le petit déjeuner organisé pour l’intimité des locataires est parfait. Hôte et logement à recommander.”",
+      auteur: "– Melissa, janvier 2025"
+    },
+    {
+      texte: "“Parfait ! Parfait ! La vidéo du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester... rien à dire à part merci ☺️”",
+      auteur: "– Pilon, juin 2024"
+    }
+  ];
+
+  let currentAvis = 0;
+  const avisContainer = document.getElementById("avis-slide");
+
+  function renderAvis(index) {
+    const avis = avisList[index];
+    avisContainer.style.opacity = 0;
+    setTimeout(() => {
+      avisContainer.innerHTML = `
+        <div style="border-radius: 16px; padding: 20px; background-color: #222; color: white;">
+          <p style="font-style: italic;">${avis.texte}</p>
+          <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">${avis.auteur}</p>
+        </div>
+      `;
+      avisContainer.style.opacity = 1;
+    }, 200);
+  }
+
+  function nextAvis() {
+    currentAvis = (currentAvis + 1) % avisList.length;
+    renderAvis(currentAvis);
+  }
+
+  function prevAvis() {
+    currentAvis = (currentAvis - 1 + avisList.length) % avisList.length;
+    renderAvis(currentAvis);
+  }
+
+  renderAvis(currentAvis);
+</script>
