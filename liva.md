@@ -9,31 +9,40 @@ title: LIVA
 </div>
 
 <style>
-  body {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
     background-color: black;
     color: white;
     font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
   }
   a {
     color: #25D366;
   }
   section, h1, h2, p, ul, li {
     color: white;
+    box-sizing: border-box;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
   #avis-clients {
     background-color: #111;
+    overflow: hidden;
   }
-  #avis-clients .avis-item {
-    background-color: #222 !important;
-    color: white !important;
-    border-radius: 16px;
+  #avis-carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  .avis {
+    min-width: 100%;
+    box-sizing: border-box;
     padding: 20px;
+    background-color: #222;
+    border-radius: 16px;
     box-shadow: 0 2px 8px rgba(255,255,255,0.1);
-    transition: opacity 0.5s ease;
-    min-height: 160px;
   }
   input, textarea {
     background-color: #333;
@@ -114,54 +123,44 @@ Une fois dans le logement vous vous sentirez chez vous que ce soit pour un court
 
 ## 💬 Ce que disent nos visiteurs
 
-<section id="avis-clients" style="padding: 40px 20px; text-align: center;">
-  <div id="avis-container" style="max-width: 600px; margin: 0 auto; position: relative;">
-    <div class="avis-item" id="avis-slide"></div>
-    <div style="margin-top: 20px;">
-      <button onclick="prevAvis()" style="background: #333; color: white; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
-      <button onclick="nextAvis()" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 6px;">➡️</button>
+<section id="avis-clients" style="padding: 40px 20px; max-width: 100vw;">
+  <div id="avis-carousel">
+    <div class="avis">
+      <p style="font-style: italic;">“Conforme aux photos, très bien décoré, on se sent réellement chez soi. Literie confortable. Top! Rien à redire!...”</p>
+      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Joelle, Avril 2025</p>
     </div>
+    <div class="avis">
+      <p style="font-style: italic;">“Charmante petite maison au calme, bonne literie,  hôte réactif, stationnement privé et sécurisé, commerce aux alentours,  séjour appréciée grâce à tout ces points positifs.”</p>
+      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Lelievre, Avril 2025</p>
+    </div>
+    <div class="avis">
+      <p style="font-style: italic;">“Super logement !  J’ai passé une nuit dans cet Airbnb et tout s’est très bien déroulé. Le logement était propre, facile d’accès, et les instructions de l’hôte étaient claires. Je recommande sans hésiter !”</p>
+      <p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">– Victoire, Mars 2025</p>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="prevAvis()" style="background: #333; color: white; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 6px;">⬅️</button>
+    <button onclick="nextAvis()" style="background: #333; color: white; padding: 10px 20px; border: none; border-radius: 6px;">➡️</button>
   </div>
 </section>
 
 <script>
-  const avisList = [
-    {
-      texte: "“Conforme aux photos, très bien décoré, on se sent réellement chez soi. Literie confortable. Top! Rien à redire!...”",
-      auteur: "– Joelle, Avril 2025"
-    },
-    {
-      texte: "“Charmante petite maison au calme, bonne literie,  hôte réactif, stationnement privé et sécurisé, commerce aux alentours,  séjour appréciée grâce à tout ces points positifs.”",
-      auteur: "– Lelievre, Avril 2025"
-    },
-    {
-      texte: "“Super logement !  J’ai passé une nuit dans cet Airbnb et tout s’est très bien déroulé. Le logement était propre, facile d’accès, et les instructions de l’hôte étaient claires. Je recommande sans hésiter !”",
-      auteur: "– Victoire, Mars 2025"
-    }
-  ];
-
+  const avisCarousel = document.getElementById("avis-carousel");
   let avisIndex = 0;
-  const avisSlide = document.getElementById("avis-slide");
 
-  function renderAvis(i) {
-    avisSlide.style.opacity = 0;
-    setTimeout(() => {
-      avisSlide.innerHTML = `<p style="font-style: italic;">${avisList[i].texte}</p><p style="font-size: 0.9em; color: #ccc; margin-top: 10px;">${avisList[i].auteur}</p>`;
-      avisSlide.style.opacity = 1;
-    }, 200);
+  function updateAvisPosition() {
+    avisCarousel.style.transform = `translateX(-${avisIndex * 100}%)`;
   }
 
   function nextAvis() {
-    avisIndex = (avisIndex + 1) % avisList.length;
-    renderAvis(avisIndex);
+    avisIndex = (avisIndex + 1) % avisCarousel.children.length;
+    updateAvisPosition();
   }
 
   function prevAvis() {
-    avisIndex = (avisIndex - 1 + avisList.length) % avisList.length;
-    renderAvis(avisIndex);
+    avisIndex = (avisIndex - 1 + avisCarousel.children.length) % avisCarousel.children.length;
+    updateAvisPosition();
   }
-
-  renderAvis(avisIndex);
 </script>
 
 <a href="https://www.airbnb.fr/rooms/985569147645507170" target="_blank" style="display: inline-block; background-color: #ff5a5f; color: black; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; margin-top: 20px; font-size: 16px;">
