@@ -82,9 +82,10 @@ button {
     <strong>BLŌM</strong> est un logement élégant pour deux, avec lit king-size, spa privatif, salle de massage, salon TV et petit déjeuner offert. Idéal pour une escapade romantique en toute autonomie.
   </p>
 
-  <p style="font-size: 1.2rem; background: linear-gradient(90deg, #ff9a9e, #fad0c4); -webkit-background-clip: text; color: transparent;">
-    Jacuzzi, massage, détente...
+  <p style="background: linear-gradient(90deg, #ff5a5f, #ffb347); color: black; font-weight: bold; padding: 12px 16px; border-radius: 8px; font-size: 16px; text-align: center; margin: 20px 0;">
+    ✅ Votre jacuzzi est vidé et re-rempli le jour de votre arrivée. Une vidéo vous est transmise pour preuve.
   </p>
+<
 
   <div>
     <a href="https://airbnb.com" target="_blank"><button>Réserver sur Airbnb</button></a>
