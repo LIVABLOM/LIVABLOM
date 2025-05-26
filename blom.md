@@ -73,7 +73,7 @@ button {
   <p><em>Un moment suspendu entre détente et raffinement.</em></p>
 
   <div id="image-slider">
-    <img id="slider-image" src="/images/Spa.jpg" alt="Image de BLŌM" />
+    <img id="slider-image" src="assets/images/Spa.jpg" alt="Image de BLŌM" />
     <button id="prev" onclick="changeImage(-1)">‹</button>
     <button id="next" onclick="changeImage(1)">›</button>
   </div>
@@ -91,11 +91,14 @@ button {
     <a href="https://wa.me/123456789" target="_blank"><button>Réserver en direct</button></a>
   </div>
 
-  <h2>Nos formules</h2>
+  <h2>Nos formules à la nuitée ou journée</h2>
   <ul>
-    <li>Massage en duo</li>
-    <li>Formule gourmande avec champagne</li>
-    <li>Soins à la demande</li>
+    <li><strong>Lundi au jeudi (nuitée) :</strong> 140 euros</li>
+    <li><strong>Vendredi (nuitée) :</strong> 180 euros</li>
+    <li><strong>Samedi (nuitée) :</strong> 180 euros</li>
+    <li><strong>Dimanche (journée ou nuitée) :</strong> 200 euros</li>
+    <li><strong>Formule journée (11h - 17h) :</strong> 150 euros</li>
+    <li><strong>Formule journée 4H :</strong> 110 euros</li>
   </ul>
 </section>
 
