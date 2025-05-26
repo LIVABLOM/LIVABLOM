@@ -49,11 +49,12 @@ title: BLōM
 
 <script>
   const images = [
-    "assets/images/image-jacuzzi.png",
-    "assets/images/femmemur.jpg",
-    "assets/images/table.jpg",
-    "assets/images/sceau.jpg"
-  ];
+  "assets/images/Spa.jpg",
+  "assets/images/image-jacuzzi.png",
+  "assets/images/femmemur.jpg",
+  "assets/images/table.jpg",
+  "assets/images/sceau.jpg"
+];
   let index = 0;
   const imgElement = document.getElementById("carousel");
 
