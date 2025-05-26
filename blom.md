@@ -73,7 +73,7 @@ button {
   <p><em>Un moment suspendu entre détente et raffinement.</em></p>
 
   <div id="image-slider">
-    <img id="slider-image" src="/images/blom-1.jpg" alt="Image de BLŌM" />
+    <img id="slider-image" src="/images/Spa.jpg" alt="Image de BLŌM" />
     <button id="prev" onclick="changeImage(-1)">‹</button>
     <button id="next" onclick="changeImage(1)">›</button>
   </div>
@@ -110,9 +110,9 @@ button {
 
 <script>
 const images = [
-  "/images/blom-1.jpg",
-  "/images/blom-2.jpg",
-  "/images/blom-3.jpg",
+  "/images/femmemur.jpg",
+  "/images/sceau.jpg",
+  "/images/table.jpg",
 ];
 let currentIndex = 0;
 const sliderImage = document.getElementById("slider-image");
