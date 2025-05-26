@@ -1,116 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ page.title }}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIVABLŌM</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      background-color: black;
-      color: white;
-      font-family: 'Raleway', sans-serif;
+    body, html {
       margin: 0;
       padding: 0;
-    }
-
-    header {
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-
-    .header-link {
-      flex: 1;
-      text-align: center;
-      font-size: 1.3rem;
-      font-weight: bold;
-      padding: 10px 0;
-    }
-
-    .header-link a {
-      color: #25D366;
-      text-decoration: none;
-      font-size: 1.4rem;
-    }
-
-    .header-logo {
-      flex: 1;
-      text-align: center;
-    }
-
-    .logo-img {
-      height: 60px;
-      object-fit: contain;
-      margin-bottom: 5px;
-    }
-
-    .brand-text {
-      font-size: 1.1rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: white;
-    }
-
-    .intro {
-      display: none;
-    }
-
-    a:hover {
-      color: #1da955;
-      text-decoration: underline;
-    }
-
-    .mobile-menu, .menu-toggle {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: row !important;
-      }
-
-      .logo-img {
-        height: 50px;
-      }
-
-      .header-link {
-        font-size: 1rem;
-        padding: 5px;
-      }
-
-      .brand-text {
-        font-size: 0.9rem;
-      }
+      height: 100%;
+      font-family: 'Helvetica Neue', sans-serif;
     }
   </style>
 </head>
-<body>
+<body class="h-screen w-screen overflow-hidden">
+  <div class="relative flex h-full">
 
-  <header>
-    <div class="header-link"><a href="/LIVABLOM/liva">🔹 LIVA</a></div>
-
-    <div class="header-logo">
-      <img src="{{ '/assets/images/lotus.jpg' | relative_url }}" alt="Logo LIVABLOM" class="logo-img">
-      <div class="brand-text">LIVABLOM</div>
-      <div style="margin-top: 5px;">
-        <a href="https://livablom.github.io/LIVABLOM/" style="color:#25D366; font-size: 0.95rem;">🏠 Accueil</a>
-      </div>
+    <!-- Partie LIVA -->
+    <div class="w-1/2 bg-gray-100 flex flex-col items-center justify-center p-6 text-center">
+      <h2 class="text-3xl font-bold mb-4">LIVA – Logement tout confort</h2>
+      <p class="mb-6 text-lg max-w-xs">Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</p>
+      <a href="liva.html" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full transition">Découvrir LIVA</a>
     </div>
 
-    <div class="header-link"><a href="/LIVABLOM/blom">🔹 BLŌM</a></div>
-  </header>
+    <!-- Centre logo + nom -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
+      <img src="lotus.jpg" alt="Logo Lotus" class="mx-auto w-24 h-24 mb-2">
+      <h1 class="text-4xl font-extrabold tracking-wide">LIVABLŌM</h1>
+    </div>
 
-  {{ content }}
+    <!-- Partie BLŌM -->
+    <div class="w-1/2 bg-black text-white flex flex-col items-center justify-center p-6 text-center">
+      <h2 class="text-3xl font-bold mb-4">BLŌM – Évasion romantique</h2>
+      <p class="mb-6 text-lg max-w-xs">Conçu pour les couples en quête de détente. Spa privatif, lit king-size, petit-déjeuner inclus.</p>
+      <a href="blom.html" class="bg-white text-black hover:bg-gray-200 px-6 py-3 rounded-full transition">Découvrir BLŌM</a>
+    </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  </div>
+
+  <!-- Responsive Mobile Layout -->
+  <style>
+    @media (max-width: 768px) {
+      .flex {
+        flex-direction: column;
+      }
+      .w-1/2 {
+        width: 100%;
+      }
+      .absolute {
+        position: static;
+        transform: none;
+        margin: 2rem 0;
+      }
+    }
+  </style>
 </body>
 </html>
