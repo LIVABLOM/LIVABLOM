@@ -1,7 +1,7 @@
 ---
 title: "BLŌM – Petit dej offert"
 description: "Logement avec spa, salle de massage, lit king size, salon TV, petit déjeuner inclus, et arrivée autonome."
-image: /images/blom-1.jpg
+image: /images/Spa.jpg
 ---
 
 <style>
