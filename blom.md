@@ -48,39 +48,48 @@ title: BLōM
 </div>
 
 <script>
-  const images = [
-  "assets/images/Spa.jpg",
-  "assets/images/image-jacuzzi.png",
-  "assets/images/femmemur.jpg",
-  "assets/images/table.jpg",
-  "assets/images/sceau.jpg"
-];
-  let index = 0;
-  const imgElement = document.getElementById("carousel");
+  document.addEventListener("DOMContentLoaded", function () {
+    const images = [
+      "assets/images/Spa.jpg",
+      "assets/images/image-jacuzzi.png",
+      "assets/images/femmemur.jpg",
+      "assets/images/table.jpg",
+      "assets/images/sceau.jpg"
+    ];
+    let index = 0;
+    const imgElement = document.getElementById("carousel");
 
-  function showImage(i) {
-    imgElement.style.opacity = 0;
-    setTimeout(() => {
-      imgElement.src = images[i];
-      imgElement.style.opacity = 1;
-      scrollToImage();
-    }, 200);
-  }
+    function showImage(i) {
+      imgElement.style.opacity = 0;
+      setTimeout(() => {
+        imgElement.src = images[i];
+        imgElement.style.opacity = 1;
+        scrollToImage();
+      }, 200);
+    }
 
-  function nextImage() {
-    index = (index + 1) % images.length;
+    function nextImage() {
+      index = (index + 1) % images.length;
+      showImage(index);
+    }
+
+    function prevImage() {
+      index = (index - 1 + images.length) % images.length;
+      showImage(index);
+    }
+
+    function scrollToImage() {
+      const imageContainer = imgElement.parentElement;
+      imageContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    // Initialisation à l'arrivée
     showImage(index);
-  }
 
-  function prevImage() {
-    index = (index - 1 + images.length) % images.length;
-    showImage(index);
-  }
-
-  function scrollToImage() {
-    const imageContainer = imgElement.parentElement;
-    imageContainer.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
+    // Rendre les fonctions accessibles globalement (pour les boutons)
+    window.nextImage = nextImage;
+    window.prevImage = prevImage;
+  });
 </script>
 
 <section>
