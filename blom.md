@@ -85,7 +85,6 @@ button {
   <p style="background: linear-gradient(90deg, #ff5a5f, #ffb347); color: black; font-weight: bold; padding: 12px 16px; border-radius: 8px; font-size: 16px; text-align: center; margin: 20px 0;">
     ✅ Votre jacuzzi est vidé et re-rempli le jour de votre arrivée. Une vidéo vous est transmise pour preuve.
   </p>
-<
 
   <div>
     <a href="https://airbnb.com" target="_blank"><button>Réserver sur Airbnb</button></a>
