@@ -87,8 +87,8 @@ button {
   </p>
 
   <div>
-    <a href="https://airbnb.com" target="_blank"><button>Réserver sur Airbnb</button></a>
-    <a href="https://wa.me/123456789" target="_blank"><button>Réserver en direct</button></a>
+    href="https://www.airbnb.fr/rooms/985569147645507170" target="_blank" style="display: inline-block; background-color: #ff5a5f; color: black; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 16px; margin-bottom: 10px;">
+    🔑 Réserver sur Airbnb
   </div>
 
   <h2>Nos formules à la nuitée ou journée</h2>
