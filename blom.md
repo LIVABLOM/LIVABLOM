@@ -87,7 +87,7 @@ button {
   </p>
 
   <div>
-  <a href="[https://airbnb.com](https://www.airbnb.fr/rooms/985569147645507170)" target="_blank"><button>Réserver sur Airbnb</button></a>
+  <a href="(https://www.airbnb.fr/rooms/985569147645507170)" target="_blank"><button>Réserver sur Airbnb</button></a>
     <a href="https://wa.me/123456789" target="_blank"><button>Réserver en direct</button></a>
   </div>
 
