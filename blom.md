@@ -1,7 +1,7 @@
 ---
 title: "BLŌM – Petit dej offert"
 description: "Logement avec spa, salle de massage, lit king size, salon TV, petit déjeuner inclus, et arrivée autonome."
-image: /images/Spa.jpg
+image: assets/images/Spa.jpg
 ---
 
 <style>
@@ -110,9 +110,9 @@ button {
 
 <script>
 const images = [
-  "/images/femmemur.jpg",
-  "/images/sceau.jpg",
-  "/images/table.jpg",
+  "assets/images/femmemur.jpg",
+  "assets/images/sceau.jpg",
+  "assets/images/table.jpg",
 ];
 let currentIndex = 0;
 const sliderImage = document.getElementById("slider-image");
