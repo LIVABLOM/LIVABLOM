@@ -1,113 +1,84 @@
-/* Police élégante par défaut */
 body {
-  font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #fff;
-  color: #111;
+  font-family: Arial, sans-serif;
 }
 
-/* Conteneur principal avec affichage en deux colonnes */
 .home-container {
   display: flex;
-  flex-direction: row;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Bloc LIVA (fond clair) */
-.section-liva {
-  flex: 1;
-  background-color: #f7f7f7;
-  color: #000;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-/* Bloc BLŌM (fond noir) */
-.section-blom {
-  flex: 1;
-  background-color: #000;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Titre principal */
-.site-title {
-  font-size: 4rem;
   text-align: center;
-  margin: 2rem 0;
-  font-weight: bold;
-  letter-spacing: 2px;
 }
 
-/* Scission du mot LIVABLŌM */
+.logo-header {
+  margin-top: 20px;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+.site-title {
+  font-size: 2.5em;
+  margin: 0.5em 0;
+}
+
 .liva-part {
-  color: #000;
-  background-color: #fff;
-  padding: 0.2em 0.4em;
-  border-radius: 0.3em 0 0 0.3em;
+  color: black;
+  background-color: white;
+  padding: 0 5px;
 }
 
 .blom-part {
-  color: #fff;
-  background-color: #000;
-  padding: 0.2em 0.4em;
-  border-radius: 0 0.3em 0.3em 0;
+  color: white;
+  background-color: black;
+  padding: 0 5px;
 }
 
-/* Boutons */
+.section-wrapper {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 200px);
+}
+
+.section-liva,
+.section-blom {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: inherit;
+  padding: 2em;
+}
+
+.section-liva {
+  background-color: white;
+  color: black;
+}
+
+.section-blom {
+  background-color: black;
+  color: white;
+}
+
 .btn {
+  margin-top: 1em;
   padding: 0.8em 1.5em;
-  font-size: 1.2rem;
+  border: none;
+  font-size: 1em;
   text-decoration: none;
-  border-radius: 8px;
-  margin-top: 1rem;
-  transition: background-color 0.3s;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn-liva {
-  background-color: #000;
-  color: #fff;
-}
-
-.btn-liva:hover {
-  background-color: #333;
+  background-color: black;
+  color: white;
 }
 
 .btn-blom {
-  background-color: #fff;
-  color: #000;
+  background-color: white;
+  color: black;
 }
-
-.btn-blom:hover {
-  background-color: #ddd;
-}
-
-/* Logo */
-.logo {
-  max-width: 100px;
-  margin-bottom: 1rem;
-}
-
-/* Responsive pour mobile */
-@media (max-width: 768px) {
-  .home-container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .site-title {
-    font-size: 2.5rem;
-  }
-
-  .section-liva, .section-blom {
-    padding: 2rem;
-  }
-}
-
