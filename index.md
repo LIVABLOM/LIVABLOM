@@ -14,7 +14,7 @@ title: LIVABLŌM
 
   <!-- Centre logo + nom -->
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
-    <img src="{{ site.baseurl }}/assets/images/lotus.jpg" alt="Logo Lotus" class="mx-auto w-24 h-24 mb-2">
+    <img src="https://livablom.github.io/LIVABLOM/assets/images/lotus.jpg" alt="Logo Lotus" class="mx-auto w-24 h-24 mb-2">
 
     <h1 class="text-4xl font-extrabold tracking-wide">
       <span class="text-black">LIVA</span><span class="text-white">BLŌM</span>
