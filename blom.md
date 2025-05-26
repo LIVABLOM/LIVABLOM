@@ -51,7 +51,6 @@ title: BLōM
   document.addEventListener("DOMContentLoaded", function () {
     const images = [
       "assets/images/Spa.jpg",
-      "assets/images/image-jacuzzi.png",
       "assets/images/femmemur.jpg",
       "assets/images/table.jpg",
       "assets/images/sceau.jpg"
