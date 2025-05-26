@@ -105,7 +105,7 @@ button {
 <section class="avis">
   <h2>Avis de nos visiteurs</h2>
   <div id="avis-carousel">
-    <div class="avis-item">“Un havre de paix avec un jacuzzi parfait !” – Alice</div>
+    <div class="avis-item">“Parfait ! Parfait ! La vidéo du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester... rien à dire à part merci ☺️”" – Alice</div>
     <div class="avis-item">“Séjour inoubliable, tout était impeccable.” – Karim</div>
     <div class="avis-item">“Le petit déjeuner au lit, un vrai plus !” – Sophie</div>
   </div>
