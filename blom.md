@@ -1,20 +1,18 @@
 ---
 layout: default
-title: BLŌM
+title: BLŌM – Évasion romantique
 ---
 
-<h1>BLŌM – Parenthèse bien-être pour couples</h1>
-<p>
-BLŌM est une invitation au lâcher-prise, pensée exclusivement pour les couples. Détente, confort et intimité sont les maîtres-mots.
-Profitez d’un spa privatif dans un logement chaleureux et élégant.
-</p>
+<div class="bg-black text-white min-h-screen text-center py-12 px-4">
+  <h1 class="text-4xl font-bold mb-4">BLŌM – Évasion romantique</h1>
+  <p class="text-lg max-w-xl mx-auto mb-8">
+    BLŌM est un cocon dédié aux couples, avec spa privatif, lit king-size, petit-déjeuner offert
+    et ambiance cocooning. Un lieu parfait pour se ressourcer à deux.
+  </p>
+  
+  <img src="{{ site.baseurl }}/assets/images/blom.jpg" alt="Photo du logement BLŌM" class="mx-auto rounded-lg shadow-lg mb-8 max-w-full">
 
-<ul>
-  <li>Lit king size</li>
-  <li>Jacuzzi / spa privatif</li>
-  <li>Douche à l'italienne</li>
-  <li>Petit déjeuner offert</li>
-  <li>Arrivée autonome</li>
-</ul>
-
-<a href="https://tonliendereservation.com/blom" class="btn btn-blom">Réserver BLŌM</a>
+  <a href="https://www.airbnb.fr/rooms/87654321" class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition">
+    Réserver BLŌM
+  </a>
+</div>
