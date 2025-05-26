@@ -87,7 +87,7 @@ id: index
   <!-- BLOM -->
   <div class="logement">
     <a href="/LIVABLOM/blom">
-      <img src="/LIVABLOM/assets/images/image-jacuzzi.png" alt="BLŌM maison d’hôtes">
+      <img src="/LIVABLOM/assets/images/Spa.jpg" alt="BLŌM maison d’hôtes">
     </a>
     <h2>🔹 BLŌM</h2>
     <p>Maison d’hôtes détente avec spa, lit king size, petit déjeuner et bien-être assuré.</p>
