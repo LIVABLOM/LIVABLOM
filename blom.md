@@ -94,8 +94,8 @@ button {
   <h2>Nos formules à la nuitée ou journée</h2>
   <ul>
     <li><strong>Lundi au jeudi (nuitée) :</strong> 140 euros</li>
-    <li><strong>Vendredi (nuitée) :</strong> 180 euros</li>
-    <li><strong>Samedi (nuitée) :</strong> 180 euros</li>
+    <li><strong>Vendredi (nuitée) :</strong> 170 euros</li>
+    <li><strong>Samedi (nuitée) :</strong> 170 euros</li>
     <li><strong>Dimanche (journée ou nuitée) :</strong> 200 euros</li>
     <li><strong>Formule journée (11h - 17h) :</strong> 150 euros</li>
     <li><strong>Formule journée 4H :</strong> 110 euros</li>
@@ -105,7 +105,7 @@ button {
 <section class="avis">
   <h2>Avis de nos visiteurs</h2>
   <div id="avis-carousel">
-    <div class="avis-item">“Parfait ! Parfait ! La vidéo du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester... rien à dire à part merci ☺️”" – Alice</div>
+    <div class="avis-item">“Parfait ! Parfait ! La vidéo du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester... rien à dire à part merci ☺️”" – Pilon, juin 2024 </div>
     <div class="avis-item">“Séjour inoubliable, tout était impeccable.” – Karim</div>
     <div class="avis-item">“Le petit déjeuner au lit, un vrai plus !” – Sophie</div>
   </div>
