@@ -1,84 +1,118 @@
-body {
+/* Réinitialisation et style de base */
+body, html {
   margin: 0;
-  font-family: Arial, sans-serif;
+  padding: 0;
+  height: 100%;
+  font-family: 'Helvetica Neue', sans-serif;
+  overflow: hidden;
 }
 
-.home-container {
+/* Conteneur principal plein écran */
+.full-screen-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* Moitié gauche (LIVA) et droite (BLŌM) */
+.half {
+  width: 50%;
+  padding: 2rem;
   text-align: center;
-}
-
-.logo-header {
-  margin-top: 20px;
-}
-
-.logo {
-  width: 80px;
-  height: auto;
-}
-
-.site-title {
-  font-size: 2.5em;
-  margin: 0.5em 0;
-}
-
-.liva-part {
-  color: black;
-  background-color: white;
-  padding: 0 5px;
-}
-
-.blom-part {
-  color: white;
-  background-color: black;
-  padding: 0 5px;
-}
-
-.section-wrapper {
-  display: flex;
-  width: 100%;
-  height: calc(100vh - 200px);
-}
-
-.section-liva,
-.section-blom {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  color: inherit;
-  padding: 2em;
 }
 
-.section-liva {
-  background-color: white;
-  color: black;
+/* Style côté LIVA */
+.left {
+  background-color: #f3f4f6; /* gris clair */
 }
 
-.section-blom {
-  background-color: black;
+/* Style côté BLŌM */
+.right {
+  background-color: #000;
   color: white;
 }
 
-.btn {
-  margin-top: 1em;
-  padding: 0.8em 1.5em;
-  border: none;
-  font-size: 1em;
+/* Bloc du logo + nom centré */
+.center-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.center-logo img {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+/* Pour rendre LŌM visible sur fond noir */
+.blom-part {
+  color: white;
+}
+
+/* Boutons */
+.btn-liva, .btn-blom {
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: bold;
   text-decoration: none;
-  border-radius: 5px;
-  cursor: pointer;
+  transition: 0.3s;
 }
 
+/* Bouton LIVA */
 .btn-liva {
-  background-color: black;
+  background-color: #3b82f6;
   color: white;
 }
+.btn-liva:hover {
+  background-color: #2563eb;
+}
 
+/* Bouton BLŌM */
 .btn-blom {
   background-color: white;
   color: black;
+}
+.btn-blom:hover {
+  background-color: #e5e7eb;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  .full-screen-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .half {
+    width: 100%;
+  }
+
+  .center-logo {
+    position: static;
+    transform: none;
+    margin: 2rem 0;
+  }
+
+  .center-logo img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
 }
