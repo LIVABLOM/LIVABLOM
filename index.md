@@ -8,9 +8,8 @@
       <a href="{{ site.baseurl }}/liva" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full transition">Découvrir LIVA</a>
     </div>
 
-    <!-- Centre logo + nom -->
-    <div class="center-logo">
-      <img src="{{ site.baseurl }}/assets/images/lotus.jpg" alt="Logo Lotus">
+    <!-- Centre nom -->
+    <div class="center-nom">
       <h1>LIVABLŌM</h1>
     </div>
 
