@@ -1,7 +1,10 @@
 ---
 layout: default
 title: LIVA – Logement tout confort
+permalink: /liva
 ---
+
+
 
 <div class="bg-gray-100 min-h-screen text-center py-12 px-4">
   <h1 class="text-4xl font-bold mb-4">LIVA – Logement tout confort</h1>
