@@ -8,10 +8,16 @@
   <!-- Tailwind CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+
+  <!-- Favicon (optionnel) -->
+  <link rel="icon" href="{{ site.baseurl }}/assets/images/favicon.ico" type="image/x-icon">
 </head>
-<body class="bg-white text-gray-900">
-  <main>
-    {{ content }}
-  </main>
+<body class="h-screen w-screen overflow-hidden font-sans">
+
+  <!-- Contenu principal injecté par Jekyll -->
+  {{ content }}
+
 </body>
 </html>
