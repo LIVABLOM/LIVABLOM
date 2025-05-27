@@ -12,7 +12,7 @@ permalink: /blom
   </p>
 
   <!-- PHRASE ACCROCHE HYGIÈNE SPA -->
-  <div class="bg-white text-black font-semibold text-lg py-4 px-6 rounded-lg shadow-lg max-w-2xl mx-auto mb-10">
+  div class="bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-full mb-6 shadow-lg animate-pulse">
     🛁 Le spa est vidé, désinfecté et rempli pour chaque nouveau client.
     Une <strong>vidéo de preuve vous est envoyée le jour de votre arrivée</strong>.
   </div>
