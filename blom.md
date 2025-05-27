@@ -11,7 +11,7 @@ permalink: /blom
     et ambiance cocooning. Un lieu parfait pour se ressourcer à deux.
   </p>
   
-  <img src="{{ site.baseurl }}/assets/images/spa.jpg" alt="Photo du logement BLŌM" class="mx-auto rounded-lg shadow-lg mb-8 max-w-full">
+  <img src="{{ site.baseurl }}/assets/images/Spa.jpg" alt="Photo du logement BLŌM" class="mx-auto rounded-lg shadow-lg mb-8 max-w-full">
 
   <a href="https://www.airbnb.fr/rooms/87654321" class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition">
     Réserver BLŌM
