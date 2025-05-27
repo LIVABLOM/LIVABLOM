@@ -34,7 +34,7 @@ permalink: /blom
 
   <!-- TÉMOIGNAGES -->
   <div class="my-16">
-  <h2 class="text-2xl font-bold mb-6">ce qu'en disent nos visiteurs/h2>
+  <h2 class="text-2xl font-bold mb-6">ce qu'en disent nos visiteurs</h2>
   <div class="relative w-full max-w-2xl mx-auto overflow-hidden">
     <div id="testimonial-carousel" class="whitespace-nowrap transition-transform duration-700 ease-in-out">
       <div class="inline-block w-full px-4">
