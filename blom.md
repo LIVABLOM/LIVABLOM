@@ -33,19 +33,8 @@ permalink: /blom
   </div>
 
   <!-- TÉMOIGNAGES -->
-  <div class="max-w-2xl mx-auto text-left mb-12">
-    <h2 class="text-2xl font-bold mb-4 text-white">Ce qu'en disent nos visiteurs :</h2>
-    <blockquote class="italic border-l-4 border-pink-400 pl-4 mb-4">
-      “Un week-end magique dans un lieu cocooning, tout était parfait. On reviendra !”<br/>
-      <span class="text-sm text-gray-300">— Camille & Hugo</span>
-    </blockquote>
-    <blockquote class="italic border-l-4 border-pink-400 pl-4 mb-4">
-      “Le spa privatif est un vrai plus. Le lieu est encore mieux que sur les photos.”<br/>
-      <span class="text-sm text-gray-300">— Léa D.</span>
-    </blockquote>
-  </div>
   <div class="my-16">
-  <h2 class="text-2xl font-bold mb-6">Ils ont adoré leur séjour</h2>
+  <h2 class="text-2xl font-bold mb-6">ce que disent nos clients/h2>
   <div class="relative w-full max-w-2xl mx-auto overflow-hidden">
     <div id="testimonial-carousel" class="whitespace-nowrap transition-transform duration-700 ease-in-out">
       <div class="inline-block w-full px-4">
@@ -72,7 +61,7 @@ permalink: /blom
   setInterval(() => {
     index = (index + 1) % slideCount;
     carousel.style.transform = `translateX(-${index * 100}%)`;
-  }, 5000); // Changement toutes les 5 secondes
+  }, 5000); // Changement toutes les 7 secondes
 </script>
 
 
