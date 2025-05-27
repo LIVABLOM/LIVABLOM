@@ -1,118 +1,65 @@
-/* Réinitialisation et style de base */
+/* Général */
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Empêche le scroll inutile */
+body {
   overflow: hidden;
 }
 
-/* Conteneur principal plein écran */
-.full-screen-container {
+/* Conteneur principal */
+.home-container {
   display: flex;
   height: 100vh;
   width: 100vw;
   position: relative;
 }
 
-/* Moitié gauche (LIVA) et droite (BLŌM) */
-.half {
+/* Sections LIVA et BLŌM */
+.section-liva,
+.section-blom {
   width: 50%;
-  padding: 2rem;
-  text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  padding: 2rem;
+  text-align: center;
 }
 
-/* Style côté LIVA */
-.left {
-  background-color: #f3f4f6; /* gris clair */
+.section-liva {
+  background-color: #f7f7f7;
+  color: #000;
 }
 
-/* Style côté BLŌM */
-.right {
+.section-blom {
   background-color: #000;
-  color: white;
+  color: #fff;
 }
 
-/* Bloc du logo + nom centré */
-.center-logo {
+/* Logo central */
+.logo-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
   z-index: 10;
+  text-align: center;
 }
 
-.center-logo img {
-  width: 96px;
-  height: 96px;
+.logo-center img {
+  width: 100px;
+  height: 100px;
   margin-bottom: 1rem;
 }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-/* Pour rendre LŌM visible sur fond noir */
-.blom-part {
-  color: white;
-}
-
-/* Boutons */
-.btn-liva, .btn-blom {
-  padding: 0.75rem 2rem;
-  border-radius: 9999px;
+.logo-center h1 {
+  font-size: 2rem;
   font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
 }
 
-/* Bouton LIVA */
-.btn-liva {
-  background-color: #3b82f6;
-  color: white;
-}
-.btn-liva:hover {
-  background-color: #2563eb;
-}
-
-/* Bouton BLŌM */
-.btn-blom {
-  background-color: white;
-  color: black;
-}
-.btn-blom:hover {
-  background-color: #e5e7eb;
-}
-
-/* Responsive mobile */
-@media (max-width: 768px) {
-  .full-screen-container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .half {
-    width: 100%;
-  }
-
-  .center-logo {
-    position: static;
-    transform: none;
-    margin: 2rem 0;
-  }
-
-  .center-logo img {
-    width: 72px;
-    height: 72px;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-}
+/* LIVA / BLŌM stylisé dans le titre *
