@@ -18,13 +18,13 @@ permalink: /liva
   <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA">
     <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
   </a>
-  <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Cuisine LIVA">
+  <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="salon LIVA">
     <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="salon LIVA" class="h-48 rounded shadow" />
   </a>
-  <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Chambre LIVA">
+  <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="coin repas LIVA">
     <img src="{{ site.baseurl }}/assets/images/espacerepas.jpg" alt="coin repas LIVA" class="h-48 rounded shadow" />
   </a>
-  <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="Chambre LIVA">
+  <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="table LIVA">
     <img src="{{ site.baseurl }}/assets/images/the.jpg" alt="the LIVA" class="h-48 rounded shadow" />
   </a>  
 </div>
