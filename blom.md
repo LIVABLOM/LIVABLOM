@@ -44,6 +44,37 @@ permalink: /blom
       <span class="text-sm text-gray-300">— Léa D.</span>
     </blockquote>
   </div>
+  <div class="my-16">
+  <h2 class="text-2xl font-bold mb-6">Ils ont adoré leur séjour</h2>
+  <div class="relative w-full max-w-2xl mx-auto overflow-hidden">
+    <div id="testimonial-carousel" class="whitespace-nowrap transition-transform duration-700 ease-in-out">
+      <div class="inline-block w-full px-4">
+        <p class="text-lg italic mb-2">"Une bulle de douceur. Le spa privatif est un vrai plus !"</p>
+        <p class="text-sm text-gray-300">— Laura & Mathieu</p>
+      </div>
+      <div class="inline-block w-full px-4">
+        <p class="text-lg italic mb-2">"Tout était parfait, du lit ultra confortable au petit-déj délicieux."</p>
+        <p class="text-sm text-gray-300">— Claire</p>
+      </div>
+      <div class="inline-block w-full px-4">
+        <p class="text-lg italic mb-2">"Propreté irréprochable, ambiance zen, on reviendra."</p>
+        <p class="text-sm text-gray-300">— Nicolas & Léa</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let index = 0;
+  const carousel = document.getElementById('testimonial-carousel');
+  const slideCount = carousel.children.length;
+
+  setInterval(() => {
+    index = (index + 1) % slideCount;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }, 5000); // Changement toutes les 5 secondes
+</script>
+
 
   <!-- BOUTON RÉSERVATION -->
   <a href="https://www.airbnb.fr/rooms/87654321"
