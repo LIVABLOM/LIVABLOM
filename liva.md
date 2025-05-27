@@ -11,7 +11,7 @@ permalink: /livaa
     Il comprend une cuisine équipée, un salon avec TV, un lit king-size et une salle de bain confortable.
   </p>
   
-  <img src="{{ site.baseurl }}/assets/images/liva.jpg" alt="Photo du logement LIVA" class="mx-auto rounded-lg shadow-lg mb-8 max-w-full">
+  <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Photo du logement LIVA" class="mx-auto rounded-lg shadow-lg mb-8 max-w-full">
 
   <a href="https://www.airbnb.fr/rooms/12345678" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full transition">
     Réserver LIVA
