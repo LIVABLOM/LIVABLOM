@@ -6,13 +6,13 @@ title: LIVABLŌM
 <div class="relative flex flex-col md:flex-row h-screen w-screen overflow-hidden">
 
   <!-- Partie LIVA -->
-  <div class="w-full md:w-1/2 bg-cover bg-center flex flex-col items-center justify-center p-6 text-center text-black" style="background-image: url('{{ site.baseurl }}/assets/images/salon1.jpg');">
-    <div class="bg-white/70 p-4 rounded-lg">
-      <h2 class="text-3xl font-bold mb-4">LIVA – Logement tout confort</h2>
-      <p class="mb-6 text-lg max-w-xs">Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</p>
-      <a href="{{ site.baseurl }}/liva" class="bg-black text-white py-2 px-4 rounded hover:bg-gray-800">Découvrir LIVA</a>
-    </div>
+<div class="w-full md:w-1/2 bg-cover bg-center flex flex-col items-center justify-center p-6 text-center text-black" style="background-image: url('{{ site.baseurl }}/assets/images/liva-bg.jpg');">
+  <div class="bg-white/80 backdrop-blur-md p-6 rounded-lg shadow-lg max-w-sm">
+    <h2 class="text-3xl font-bold mb-4">LIVA – Logement tout confort</h2>
+    <p class="mb-6 text-lg">Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</p>
+    <a href="{{ site.baseurl }}/liva" class="bg-black text-white py-2 px-4 rounded hover:bg-gray-800">Découvrir LIVA</a>
   </div>
+</div>
 
   <!-- Logo + Titre au centre -->
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
