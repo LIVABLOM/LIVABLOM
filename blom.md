@@ -73,7 +73,7 @@ permalink: /blom
 
   <!-- BANDEAU SPÉCIAL -->
   <div class="bg-pink-600 text-white py-4 px-6 rounded-lg shadow-lg max-w-xl mx-auto mt-8">
-    ❤️ Offre spéciale : une surprise romantique offerte pour toute réservation ce mois-ci !
+    ❤️ Offre spéciale : si vous amenez un repas nous vous dresserons une trés jolie table romantique !
   </div>
 
 </div>
