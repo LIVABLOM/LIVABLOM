@@ -2,7 +2,7 @@ title: LIVABLŌM
 description: "Location de logements haut de gamme : LIVA pour familles et pros, BLŌM pour les couples."
 url: "https://livablom.github.io" # Adresse principale
 baseurl: "/LIVABLOM"              # Nom du dépôt GitHub Pages
-
+permalink: pretty
 markdown: kramdown
 theme: minima
 plugins:
