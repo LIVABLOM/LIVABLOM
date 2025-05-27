@@ -1,3 +1,4 @@
 markdown: kramdown
 theme: null
 baseurl: "/LIVABLOM"
+url: "https://livablom.github.io"
