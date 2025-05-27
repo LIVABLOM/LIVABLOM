@@ -6,7 +6,7 @@ title: LIVABLŌM
 <div class="relative flex flex-col md:flex-row h-screen w-screen overflow-hidden">
 
   <!-- Partie LIVA -->
-  <div class="w-full md:w-1/2 bg-cover bg-center flex flex-col items-center justify-center p-6 text-center text-black" style="background-image: url('{{ site.baseurl }}/assets/images/liva-bg.jpg');">
+  <div class="w-full md:w-1/2 bg-cover bg-center flex flex-col items-center justify-center p-6 text-center text-black" style="background-image: url('{{ site.baseurl }}/assets/images/salon1.jpg');">
     <div class="bg-white/70 p-4 rounded-lg">
       <h2 class="text-3xl font-bold mb-4">LIVA – Logement tout confort</h2>
       <p class="mb-6 text-lg max-w-xs">Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</p>
