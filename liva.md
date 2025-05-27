@@ -29,8 +29,7 @@ permalink: /liva
   </a>  
 </div>
 
-
-  <a href="[https://www.airbnb.fr/rooms/12345678](https://www.airbnb.fr/rooms/41095534?adults=2&check_in=2025-09-04&check_out=2025-09-05&guests=2&search_mode=regular_search&source_impression_id=p3_1748372770_P3HON4fM1yYyFg5Z&previous_page_section_name=1000&federated_search_id=aae40bda-3110-4f16-af61-a3ae4db03005)" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full transition">
+  <a href="[https://www.airbnb.fr/rooms/87654321](https://www.airbnb.fr/rooms/41095534?guests=1&adults=2&s=67&unique_share_id=e0082f3f-afbb-4a7f-8e36-141205d4c373)" class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition">
     Réserver LIVA
   </a>
 </div>
