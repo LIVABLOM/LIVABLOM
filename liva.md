@@ -12,8 +12,8 @@ permalink: /liva
   </p>
   
   <div class="flex flex-wrap justify-center gap-4">
-  <a href="{{ site.baseurl }}/assets/images/liva.jpg" data-lightbox="liva" data-title="Salon LIVA">
-    <img src="{{ site.baseurl }}/assets/images/liva.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
+  <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA">
+    <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
   </a>
   <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Cuisine LIVA">
     <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="Cuisine LIVA" class="h-48 rounded shadow" />
