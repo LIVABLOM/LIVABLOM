@@ -12,12 +12,6 @@ plugins:
 # Permet de générer des liens propres (sans .html)
 permalink: pretty
 
-# Pour s'assurer que tous les fichiers sont pris en compte
-include:
-  - index.md
-  - liva.md
-  - blom.md
-
 # Exclure les fichiers inutiles pour le build
 exclude:
   - README.md
