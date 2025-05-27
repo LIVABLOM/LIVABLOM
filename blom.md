@@ -1,6 +1,7 @@
 ---
 layout: default
 title: BLŌM – Évasion romantique
+permalink: /blom
 ---
 
 <div class="bg-black text-white min-h-screen text-center py-12 px-4">
