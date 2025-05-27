@@ -11,9 +11,20 @@ permalink: /liva
     Il comprend une cuisine équipée, un salon avec TV, un lit king-size et une salle de bain confortable.
   </p>
   
-  <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Photo du logement LIVA" class="mx-auto rounded-lg shadow-lg mb-8 max-w-full">
+  <div class="flex flex-wrap justify-center gap-4">
+  <a href="{{ site.baseurl }}/assets/images/liva.jpg" data-lightbox="liva" data-title="Salon LIVA">
+    <img src="{{ site.baseurl }}/assets/images/liva.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
+  </a>
+  <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Cuisine LIVA">
+    <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="Cuisine LIVA" class="h-48 rounded shadow" />
+  </a>
+  <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Chambre LIVA">
+    <img src="{{ site.baseurl }}/assets/images/espacerepas.jpg" alt="Chambre LIVA" class="h-48 rounded shadow" />
+  </a>
+</div>
 
-  <a href="https://www.airbnb.fr/rooms/12345678" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full transition">
+
+  <a href="[https://www.airbnb.fr/rooms/12345678](https://www.airbnb.fr/rooms/41095534?adults=2&check_in=2025-09-04&check_out=2025-09-05&guests=2&search_mode=regular_search&source_impression_id=p3_1748372770_P3HON4fM1yYyFg5Z&previous_page_section_name=1000&federated_search_id=aae40bda-3110-4f16-af61-a3ae4db03005)" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full transition">
     Réserver LIVA
   </a>
 </div>
