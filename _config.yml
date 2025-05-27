@@ -1,4 +1,24 @@
+title: LIVABLŌM
+description: "Location de logements haut de gamme : LIVA pour familles et pros, BLŌM pour les couples."
+url: "https://livablom.github.io" # Adresse principale
+baseurl: "/LIVABLOM"              # Nom du dépôt GitHub Pages
+
 markdown: kramdown
-theme: null
-baseurl: "/LIVABLOM"
-url: "https://livablom.github.io"
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Permet de générer des liens propres (sans .html)
+permalink: pretty
+
+# Pour s'assurer que tous les fichiers sont pris en compte
+include:
+  - index.md
+  - liva.md
+  - blom.md
+
+# Exclure les fichiers inutiles pour le build
+exclude:
+  - README.md
+  - .gitignore
