@@ -10,7 +10,7 @@
 
     <!-- Centre nom -->
     <div class="center-nom">
-      <h1>LIVABLŌMMM</h1>
+      <h1>LIVABLŌM</h1>
     </div>
 
     <!-- Partie BLŌM -->
