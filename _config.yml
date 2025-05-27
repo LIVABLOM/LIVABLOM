@@ -5,6 +5,7 @@ baseurl: "/LIVABLOM"              # Nom du dépôt GitHub Pages
 permalink: pretty
 markdown: kramdown
 theme: minima
+# Force rebuild
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
