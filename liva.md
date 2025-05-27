@@ -12,15 +12,21 @@ permalink: /liva
   </p>
   
   <div class="flex flex-wrap justify-center gap-4">
+    <a href="{{ site.baseurl }}/assets/images/salon1.jpg" data-lightbox="liva" data-title="Salon LIVA">
+    <img src="{{ site.baseurl }}/assets/images/salon1.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
+     </a> 
   <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA">
     <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
   </a>
   <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Cuisine LIVA">
-    <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="Cuisine LIVA" class="h-48 rounded shadow" />
+    <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="salon LIVA" class="h-48 rounded shadow" />
   </a>
   <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Chambre LIVA">
-    <img src="{{ site.baseurl }}/assets/images/espacerepas.jpg" alt="Chambre LIVA" class="h-48 rounded shadow" />
+    <img src="{{ site.baseurl }}/assets/images/espacerepas.jpg" alt="coin repas LIVA" class="h-48 rounded shadow" />
   </a>
+  <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="Chambre LIVA">
+    <img src="{{ site.baseurl }}/assets/images/the.jpg" alt="the LIVA" class="h-48 rounded shadow" />
+  </a>  
 </div>
 
 
