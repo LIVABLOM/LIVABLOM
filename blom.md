@@ -8,7 +8,7 @@ permalink: /blom
 
   <!-- MENU DE NAVIGATION -->
   <nav class="flex justify-center space-x-6 py-6 text-sm font-semibold uppercase tracking-wide">
-    <a href="#accueil" class="hover:underline">Accueil</a>
+    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
     <a href="#galerie" class="hover:underline">Galerie</a>
     <a href="#prestations" class="hover:underline">Prestations</a>
     <a href="#contact" class="hover:underline">Contact</a>
