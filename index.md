@@ -18,7 +18,7 @@ title: LIVABLŌM
 
 
   <!-- Titre au centre -->
-  <div class="absolute top-1/2 md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
+  <div class="absolute top-1/4 md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
     <h1 class="text-4xl font-extrabold tracking-wide text-white drop-shadow-md">LIVABLŌM</h1>
   </div>
 
