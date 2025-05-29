@@ -89,7 +89,7 @@ permalink: /liva
   <p class="text-lg mb-4">
     Vous souhaitez réserver ou poser une question ? Contactez-nous via le formulaire ci-dessous.
   </p>
-  <<form action="https://formspree.io/f/mwkgrvlw" method="POST" class="max-w-xl mx-auto text-left space-y-4">
+  <<form action="https://formspree.io/f/mblyrrna" method="POST" class="max-w-xl mx-auto text-left space-y-4">
   <label class="block">
     <span class="text-white">Nom</span>
     <input type="text" name="nom" required class="mt-1 block w-full rounded border-gray-300 text-black" />
