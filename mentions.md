@@ -4,77 +4,58 @@ title: Mentions légales & CGV
 permalink: /mentions
 ---
 
+<div class="bg-white text-black min-h-screen py-12 px-6 max-w-4xl mx-auto">
 
-# Mentions légales
+  <h1 class="text-3xl font-bold mb-8 text-center">Mentions légales & Conditions Générales de Vente</h1>
 
-Conformément aux dispositions des articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, nous informons les utilisateurs du site **LIVABLŌM** des informations suivantes :
+  <!-- Informations légales -->
+  <section class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4">Identité</h2>
+    <p><strong>Nom de la société :</strong> LIVABLŌM</p>
+    <p><strong>Gérant :</strong> BENHDACH Abdelkader</p>
+    <p><strong>SIRET :</strong> 953 343 019 00014</p>
+    <p><strong>Adresse :</strong> 338 boulevard Ambroise Croizat, 59287 GUESNAIN</p>
+  </section>
 
-## Éditeur du site
+  <!-- Règlement intérieur -->
+  <section class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4">Règlement intérieur</h2>
+    <ul class="list-disc list-inside space-y-2">
+      <li>Petit déjeuner toujours inclus pour les nuitées.</li>
+      <li>Heures d'arrivée : entre 19h00 et 22h00.</li>
+      <li>Heure de départ : avant 11h00.</li>
+      <li>Photographie commerciale et tournages non autorisés.</li>
+      <li>Animaux non acceptés.</li>
+      <li>Interdiction de fumer ou vapoter à l’intérieur.</li>
+      <li>Espace fumeur disponible à l’extérieur avec cendrier.</li>
+    </ul>
+  </section>
 
-* **Nom de l’entreprise** : LIVABLOM
-* **Forme juridique** : Entreprise individuelle
-* **Gérant** : Abdelkader BENHDACH
-* **SIRET** : 953 343 019 00014
-* **Adresse** : 338 boulevard Ambroise Croizat, 59287 GUESNAIN
-* **Email de contact** : \[à compléter]
+  <!-- Conditions d'annulation -->
+  <section class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4">Conditions d’annulation</h2>
+    <p>Les annulations doivent être effectuées au minimum 10 jours avant la date d’arrivée prévue.</p>
+  </section>
 
-## Hébergement
+  <!-- Prestations et tarifs -->
+  <section class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4">Tarifs et formules</h2>
+    <ul class="list-disc list-inside space-y-2">
+      <li><strong>Nuitée :</strong> Vendredi & samedi : 169 €</li>
+      <li><strong>Nuitée :</strong> Dimanche : 190 €</li>
+      <li><strong>Nuitée :</strong> Lundi à jeudi : 150 €</li>
+      <li><strong>Formule journée :</strong> 11h00 à 16h00 – 130 € (sur demande et après validation)</li>
+      <li><strong>Formule 4h :</strong> sur demande uniquement</li>
+    </ul>
+  </section>
 
-* **Hébergeur** : \[Nom de l'hébergeur du site web]
-* **Adresse de l’hébergeur** : \[à compléter selon l'hébergeur choisi]
-* **Téléphone** : \[à compléter]
+  <!-- Données personnelles -->
+  <section class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4">Données personnelles & RGPD</h2>
+    <p>Nous ne collectons aucune donnée personnelle en dehors de celles transmises via la plateforme de réservation Airbnb. Pour toute demande relative à vos données, merci de nous contacter directement via Airbnb.</p>
+  </section>
 
-## Responsabilité
-
-Le gérant s’efforce de fournir des informations aussi précises que possible. Toutefois, il ne pourra être tenu responsable des omissions, des inexactitudes et des carences dans la mise à jour du site.
-
-## Propriété intellectuelle
-
-Toute reproduction, représentation, modification, publication ou adaptation des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l’autorisation écrite préalable de LIVABLŌM.
-
-# Conditions générales de vente (CGV)
-
-## Réservation
-
-Les réservations sont effectuées via la plateforme Airbnb. Le règlement complet des nuits réservées est exigé à la réservation.
-
-## Tarifs
-
-* Nuitée vendredi et samedi : 169 €
-* Nuitée dimanche : 190 €
-* Nuitée du lundi au jeudi : 150 €
-* Formule journée (11h – 16h) : 130 € (soumise à validation après contact)
-* Formules 4h : sur demande
-
-## Annulation
-
-Toute annulation doit être effectuée au minimum 10 jours avant la date d’arrivée prévue pour prétendre à un remboursement intégral.
-
-## Règlement intérieur
-
-* Le petit déjeuner est inclus pour toutes les nuitées.
-* Heures d’arrivée : entre 19:00 et 22:00.
-* Heure de départ : avant 11:00.
-* Animaux non acceptés.
-* Interdiction de fumer ou vapoter à l’intérieur. Un espace extérieur avec cendrier est prévu.
-* Photographies commerciales et tournages non autorisés sans accord préalable.
-
-# Politique de confidentialité (RGPD)
-
-Conformément au Règlement Général sur la Protection des Données (RGPD), nous nous engageons à garantir la protection des données personnelles des utilisateurs du site.
-
-## Données collectées
-
-Nous ne collectons aucune donnée personnelle via ce site. Les réservations se font exclusivement via Airbnb, qui dispose de sa propre politique de confidentialité.
-
-## Droits des utilisateurs
-
-Conformément à la loi « Informatique et Libertés », vous disposez d’un droit d’accès, de rectification et de suppression de vos données personnelles. Pour exercer ce droit, veuillez nous contacter par email.
-
-## Cookies
-
-Le site n’utilise pas de cookies à des fins de suivi ou de publicité.
-
----
-
-Pour toute question relative à ces mentions légales, aux CGV ou à la politique de confidentialité, veuillez nous contacter à l’adresse indiquée ci-dessus.
+  <p class="text-sm text-center text-gray-500 mt-12">
+    Dernière mise à jour : mai 2025
+  </p>
+</div>
