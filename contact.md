@@ -11,7 +11,7 @@ permalink: /contact
   </p>
 
   <form action="https://formspree.io/f/mblyrrna" method="GET"> class="space-y-6 max-w-md mx-auto">
-    <input type="hidden" name="_redirect" value="{{ site.baseurl }}/merci" />
+    <input type="hidden" name="_redirect" value="https://livablom.github.io/LIVABLOM/merci" />
 
     <div>
       <label for="name" class="block text-left text-sm font-medium mb-1">Nom</label>
