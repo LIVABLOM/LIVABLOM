@@ -46,18 +46,35 @@ permalink: /blom
 
   <!-- SECTION PRESTATIONS -->
   <section id="prestations" class="text-center py-12">
-    <h2 class="text-2xl font-bold mb-6">Nos prestations</h2>
-    <p class="max-w-xl mx-auto text-lg mb-6">
-      BLŌM propose une expérience haut de gamme avec un spa privatif toujours impeccable, une literie king-size, une décoration soignée et un petit-déjeuner maison offert.
-    </p>
-    <a href="https://www.airbnb.fr/rooms/87654321"
-       class="bg-white text-black hover:bg-gray-200 font-semibold py-3 px-6 rounded-full transition mb-8 inline-block">
-      Réserver BLŌM
-    </a>
-    <div class="bg-pink-600 text-white py-4 px-6 rounded-lg shadow-lg max-w-xl mx-auto mt-8">
-      ❤️ Offre spéciale : si vous amenez un repas, nous vous dresserons une très jolie table romantique !
-    </div>
-  </section>
+  <h2 class="text-2xl font-bold mb-6">Nos prestations</h2>
+  <p class="max-w-xl mx-auto text-lg mb-6">
+    BLŌM propose une expérience haut de gamme avec un spa privatif toujours impeccable, une literie king-size, une décoration soignée et un petit-déjeuner maison offert.
+  </p>
+  <div class="text-left max-w-xl mx-auto text-lg space-y-3 mb-8">
+    <p><strong>🛌 Nuitée :</strong></p>
+    <ul class="list-disc list-inside">
+      <li>Vendredi & samedi : <strong>169 €</strong></li>
+      <li>Dimanche : <strong>190 €</strong></li>
+      <li>Du lundi au jeudi : <strong>150 €</strong></li>
+    </ul>
+
+    <p><strong>☀️ Formules journée (11h – 16h) :</strong> <strong>130 €</strong><br>
+    <span class="text-sm text-red-500">⚠️ Réservation uniquement après validation par message</span></p>
+
+    <p><strong>⏳ Formules 4h :</strong> sur demande, selon vos besoins<br>
+    <span class="text-sm text-red-500">⚠️ Soumises à validation après contact</span></p>
+  </div>
+
+  <a href="https://www.airbnb.fr/rooms/87654321"
+     class="bg-white text-black hover:bg-gray-200 font-semibold py-3 px-6 rounded-full transition inline-block">
+    Réserver BLŌM
+  </a>
+
+  <div class="bg-pink-600 text-white py-4 px-6 rounded-lg shadow-lg max-w-xl mx-auto mt-8">
+    ❤️ Offre spéciale : si vous amenez un repas, nous vous dresserons une très jolie table romantique !
+  </div>
+</section>
+
 
   <!-- SECTION TÉMOIGNAGES -->
   <section class="py-12">
