@@ -85,12 +85,15 @@ permalink: /liva
 
   <!-- SECTION CONTACT -->
   <section id="contact" class="text-center py-12">
-    <h2 class="text-2xl font-bold mb-4">Contact</h2>
-    <p class="text-lg mb-4">Des questions ? Vous pouvez nous écrire directement sur Airbnb :</p>
-    <a href="https://www.airbnb.fr/rooms/41095534?guests=1&adults=2&s=67&unique_share_id=e0082f3f-afbb-4a7f-8e36-141205d4c373"
-       class="bg-black text-white hover:bg-gray-800 font-semibold py-3 px-6 rounded-full transition inline-block">
-      Contacter sur Airbnb
-    </a>
-  </section>
+  <h2 class="text-2xl font-bold mb-4">Contact</h2>
+  <p class="text-lg mb-4">
+    Vous souhaitez réserver ou poser une question ? Contactez-nous via le formulaire ci-dessous.
+  </p>
+  <a href="mailto:contact@livablom.fr"
+     class="bg-black text-white hover:bg-gray-800 font-semibold py-3 px-6 rounded-full transition inline-block">
+    Nous écrire
+  </a>
+</section>
+
 
 </div>
