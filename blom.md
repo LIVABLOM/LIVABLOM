@@ -109,13 +109,16 @@ permalink: /blom
   </script>
 
   <!-- SECTION CONTACT -->
-  <section id="contact" class="text-center py-12">
-    <h2 class="text-2xl font-bold mb-4">Contact</h2>
-    <p class="text-lg mb-4">Vous avez une question ? Écrivez-nous sur Airbnb via le bouton ci-dessous :</p>
-    <a href="https://www.airbnb.fr/rooms/87654321"
-       class="bg-white text-black hover:bg-gray-200 font-semibold py-3 px-6 rounded-full transition inline-block">
-      Contacter sur Airbnb
-    </a>
-  </section>
+ <section id="contact" class="text-center py-12">
+  <h2 class="text-2xl font-bold mb-4">Contact</h2>
+  <p class="text-lg mb-4">
+    Vous souhaitez réserver ou poser une question ? Contactez-nous via le formulaire ci-dessous.
+  </p>
+  <a href="mailto:contact@livablom.fr"
+     class="bg-black text-white hover:bg-gray-800 font-semibold py-3 px-6 rounded-full transition inline-block">
+    Nous écrire
+  </a>
+</section>
+
 
 </div>
