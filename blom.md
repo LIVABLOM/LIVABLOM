@@ -30,19 +30,17 @@ permalink: /blom
   <!-- SECTION GALERIE -->
   <section id="galerie" class="text-center py-8">
     <h2 class="text-2xl font-bold mb-6">Galerie</h2>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="{{ site.baseurl }}/assets/images/Spa.jpg" data-lightbox="blom" data-title="Spa BLŌM">
-        <img src="{{ site.baseurl }}/assets/images/Spa.jpg" alt="Spa BLŌM" class="h-56 rounded shadow" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/femmemur.jpg" data-lightbox="blom" data-title="Déco salon BLŌM">
-        <img src="{{ site.baseurl }}/assets/images/femmemur.jpg" alt="Déco mur" class="h-56 rounded shadow" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/sceau.jpg" data-lightbox="blom" data-title="Ambiance romantique">
-        <img src="{{ site.baseurl }}/assets/images/sceau.jpg" alt="Ambiance romantique" class="h-56 rounded shadow" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/table.jpg" data-lightbox="blom" data-title="Table romantique">
-        <img src="{{ site.baseurl }}/assets/images/table.jpg" alt="Table romantique" class="h-56 rounded shadow" />
-      </a>
+
+    <!-- Image visible -->
+    <a href="{{ site.baseurl }}/assets/images/Spa.jpg" data-lightbox="blom" data-title="Spa BLŌM">
+      <img src="{{ site.baseurl }}/assets/images/Spa.jpg" alt="Spa BLŌM" class="h-56 rounded shadow mx-auto" />
+    </a>
+
+    <!-- Images masquées pour Lightbox -->
+    <div class="hidden">
+      <a href="{{ site.baseurl }}/assets/images/femmemur.jpg" data-lightbox="blom" data-title="Déco salon BLŌM"></a>
+      <a href="{{ site.baseurl }}/assets/images/sceau.jpg" data-lightbox="blom" data-title="Ambiance romantique"></a>
+      <a href="{{ site.baseurl }}/assets/images/table.jpg" data-lightbox="blom" data-title="Table romantique"></a>
     </div>
   </section>
 
