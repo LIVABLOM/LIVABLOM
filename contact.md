@@ -10,7 +10,8 @@ permalink: /contact
     Une question, une demande de réservation ou de renseignement ? Écrivez-nous via ce formulaire, nous vous répondrons rapidement.
   </p>
 
-  <form action="https://formspree.io/f/mblyrrna" method="GET"> class="space-y-6 max-w-md mx-auto">
+  <form action="https://formspree.io/f/mblyrrna" method="POST" class="space-y-6 max-w-md mx-auto">
+    <!-- Redirection corrigée avec URL absolue -->
     <input type="hidden" name="_redirect" value="https://livablom.github.io/LIVABLOM/merci" />
 
     <div>
