@@ -11,7 +11,7 @@ permalink: /liva
     <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
     <a href="#galerie" class="hover:underline">Galerie</a>
     <a href="#prestations" class="hover:underline">Prestations</a>
-    <a href="#contact" class="hover:underline">Contact</a>
+    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
   </nav>
 
   <!-- SECTION ACCUEIL -->
@@ -45,7 +45,7 @@ permalink: /liva
     <p class="max-w-xl mx-auto text-lg mb-6">
       LIVA vous accueille dans un logement spacieux, lumineux et moderne avec une cuisine équipée, une literie confortable et un espace de vie chaleureux.
     </p>
-    <a href="https://www.airbnb.fr/rooms/41095534?guests=1&adults=2&s=67&unique_share_id=e0082f3f-afbb-4a7f-8e36-141205d4c373"
+    <a href="{{ site.baseurl }}/contact"
        class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition inline-block">
       Réserver LIVA
     </a>
@@ -82,31 +82,5 @@ permalink: /liva
       carouselLiva.style.transform = `translateX(-${indexLiva * 100}%)`;
     }, 5000);
   </script>
-
-  <!-- SECTION CONTACT -->
-  <section id="contact" class="text-center py-12">
-  <h2 class="text-2xl font-bold mb-4">Contact</h2>
-  <p class="text-lg mb-4">
-    Vous souhaitez réserver ou poser une question ? Contactez-nous via le formulaire ci-dessous.
-  </p>
-  <<form action="https://formspree.io/f/mblyrrna" method="POST" class="max-w-xl mx-auto text-left space-y-4">
-  <label class="block">
-    <span class="text-white">Nom</span>
-    <input type="text" name="nom" required class="mt-1 block w-full rounded border-gray-300 text-black" />
-  </label>
-  <label class="block">
-    <span class="text-white">Email</span>
-    <input type="email" name="email" required class="mt-1 block w-full rounded border-gray-300 text-black" />
-  </label>
-  <label class="block">
-    <span class="text-white">Message</span>
-    <textarea name="message" required class="mt-1 block w-full rounded border-gray-300 text-black"></textarea>
-  </label>
-  <button type="submit" class="bg-white text-black hover:bg-gray-300 font-semibold py-2 px-4 rounded">
-    Envoyer
-  </button>
-</form>
-</section>
-
 
 </div>
