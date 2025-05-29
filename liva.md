@@ -106,7 +106,6 @@ permalink: /liva
     Envoyer
   </button>
 </form>
-  </a>
 </section>
 
 
