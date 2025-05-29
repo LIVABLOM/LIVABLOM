@@ -89,8 +89,24 @@ permalink: /liva
   <p class="text-lg mb-4">
     Vous souhaitez réserver ou poser une question ? Contactez-nous via le formulaire ci-dessous.
   </p>
-  <a href="mailto:contact@livablom.fr"
-     class="bg-black text-white hover:bg-gray-800 font-semibold py-3 px-6 rounded-full transition inline-block">
+  <<form action="https://formspree.io/f/mwkgrvlw" method="POST" class="max-w-xl mx-auto text-left space-y-4">
+  <label class="block">
+    <span class="text-white">Nom</span>
+    <input type="text" name="nom" required class="mt-1 block w-full rounded border-gray-300 text-black" />
+  </label>
+  <label class="block">
+    <span class="text-white">Email</span>
+    <input type="email" name="email" required class="mt-1 block w-full rounded border-gray-300 text-black" />
+  </label>
+  <label class="block">
+    <span class="text-white">Message</span>
+    <textarea name="message" required class="mt-1 block w-full rounded border-gray-300 text-black"></textarea>
+  </label>
+  <button type="submit" class="bg-white text-black hover:bg-gray-300 font-semibold py-2 px-4 rounded">
+    Envoyer
+  </button>
+</form>
+
     Nous écrire
   </a>
 </section>
