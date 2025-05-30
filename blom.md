@@ -31,8 +31,15 @@ permalink: /blom
   </section>    <!-- SECTION PRESTATIONS -->    <section id="prestations" class="py-12">  
     <h2 class="text-2xl font-bold mb-6">Nos prestations</h2>  
     <p class="max-w-xl mx-auto text-lg mb-6">  
-      BLŌM vous propose une expérience bien-être inoubliable : spa privatif, chambre avec lit king size, salle de massage, ambiance zen, salon TV et petit déjeuner inclus.  
-    </p>  
+      <h2 class="text-2xl font-bold mb-6">Nos prestations</h2>
+
+<div class="bg-red-600 text-white font-bold py-3 px-6 mb-6 animate-pulse rounded shadow-md max-w-xl mx-auto">
+  🔴 Le spa est vidé, désinfecté et rempli pour chaque réservation 🔴
+</div>
+
+<p class="max-w-xl mx-auto text-lg mb-6">
+  BLŌM vous propose une expérience bien-être inoubliable : spa privatif, chambre avec lit king size, salle de massage, ambiance zen, salon TV et petit déjeuner inclus.
+</p>
     <div class="text-left max-w-md mx-auto mb-6">  
       <ul class="list-disc list-inside space-y-2 text-white">  
         <li><strong>Vendredi & samedi :</strong> 169 € / nuit</li>  
