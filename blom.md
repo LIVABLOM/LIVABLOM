@@ -1,5 +1,4 @@
 ---
-
 layout: default
 title: BLŌM – Spa et bien-être
 permalink: /blom
