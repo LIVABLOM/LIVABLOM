@@ -13,14 +13,14 @@ title: LIVA
   <section class="px-4 py-8">
     <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-center">Galerie</h2>
     <div class="flex overflow-x-auto space-x-4 snap-x snap-mandatory py-4">
-      <a href="/assets/img/salon1.jpg" data-lightbox="liva">
-        <img src="/assets/img/salon1.jpg" alt="LIVA 1" class="h-48 w-full max-w-xs rounded shadow snap-center" />
+      <a href="/assets/images/salon1.jpg" data-lightbox="liva">
+        <img src="/assets/images/salon1.jpg" alt="LIVA 1" class="h-48 w-full max-w-xs rounded shadow snap-center" />
       </a>
-      <a href="/assets/img/liva.jpg" data-lightbox="liva">
-        <img src="/assets/img/liva.jpg" alt="LIVA 2" class="h-48 w-full max-w-xs rounded shadow snap-center" />
+      <a href="/assets/images/liva.jpg" data-lightbox="liva">
+        <img src="/assets/images/liva.jpg" alt="LIVA 2" class="h-48 w-full max-w-xs rounded shadow snap-center" />
       </a>
-      <a href="/assets/img/chaise.jpg" data-lightbox="liva">
-        <img src="/assets/img/chaise.jpg" alt="LIVA 3" class="h-48 w-full max-w-xs rounded shadow snap-center" />
+      <a href="/assets/images/chaise.jpg" data-lightbox="liva">
+        <img src="/assets/images/chaise.jpg" alt="LIVA 3" class="h-48 w-full max-w-xs rounded shadow snap-center" />
       </a>
     </div>
   </section>
