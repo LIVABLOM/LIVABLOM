@@ -22,6 +22,11 @@ permalink: /blom
         Une escapade idéale pour les couples. Spa privatif, ambiance zen, confort haut de gamme.
       </strong>
     </p>
+
+    <!-- PHRASE ACCROCHE HYGIÈNE SPA -->
+    <div class="bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded-full mb-6 shadow-lg animate-pulse max-w-lg mx-auto">
+      Le spa est vidé, désinfecté et rempli pour chaque nouveau client – Vidéo de preuve envoyée le jour de votre arrivée 📹
+    </div>
   </section>
 
   <!-- SECTION GALERIE -->
