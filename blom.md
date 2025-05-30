@@ -3,7 +3,7 @@
 layout: default
 title: BLŌM – Spa et bien-être
 permalink: /blom
-
+---
 <div class="bg-black text-white min-h-screen px-4 text-center">    <!-- MENU DE NAVIGATION -->    <nav class="flex justify-center space-x-6 py-6 text-sm font-semibold uppercase tracking-wide text-white">  
     <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>  
     <a href="#galerie" class="hover:underline">Galerie</a>  
