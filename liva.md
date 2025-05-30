@@ -1,86 +1,36 @@
 ---
 layout: default
-title: LIVA – Logement tout confort
-permalink: /liva
+title: LIVA
 ---
 
-<div class="bg-gray-100 min-h-screen px-4 text-center">
+<div class="bg-black text-white min-h-[100dvh] flex flex-col items-center justify-center">
 
-  <!-- MENU DE NAVIGATION -->
-  <nav class="flex justify-center space-x-6 py-6 text-sm font-semibold uppercase tracking-wide">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-    <a href="#galerie" class="hover:underline">Galerie</a>
-    <a href="#prestations" class="hover:underline">Prestations</a>
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </nav>
-
-  <!-- SECTION ACCUEIL -->
-  <section id="accueil" class="py-6">
-    <h1 class="text-4xl font-bold mb-4">LIVA – Logement tout confort</h1>
-    <p class="text-lg max-w-xl mx-auto mb-6">
-      <strong class="text-black">
-        Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.
-      </strong>
-    </p>
+  <section class="text-center px-4 py-8">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-wide">LIVA</h1>
+    <p class="text-lg md:text-xl max-w-xl mx-auto">Logement tout équipé pour familles, couples ou entreprises.</p>
   </section>
 
-  <!-- SECTION GALERIE -->
-  <section id="galerie" class="py-8">
-    <h2 class="text-2xl font-bold mb-6">Galerie</h2>
-    <div class="flex justify-center">
-      <a href="{{ site.baseurl }}/assets/images/salon1.jpg" data-lightbox="liva" data-title="Salon LIVA">
-        <img src="{{ site.baseurl }}/assets/images/salon1.jpg" alt="Salon LIVA" class="h-48 rounded shadow" />
+  <section class="px-4 py-8">
+    <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-center">Galerie</h2>
+    <div class="flex overflow-x-auto space-x-4 snap-x snap-mandatory py-4">
+      <a href="/assets/img/salon1.jpg" data-lightbox="liva">
+        <img src="/assets/img/salon1.jpg" alt="LIVA 1" class="h-48 w-full max-w-xs rounded shadow snap-center" />
       </a>
-      <!-- Images masquées -->
-      <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA" style="display: none;"></a>
-      <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Salon LIVA" style="display: none;"></a>
-      <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Coin repas LIVA" style="display: none;"></a>
-      <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="Table LIVA" style="display: none;"></a>
+      <a href="/assets/img/liva.jpg" data-lightbox="liva">
+        <img src="/assets/img/liva.jpg" alt="LIVA 2" class="h-48 w-full max-w-xs rounded shadow snap-center" />
+      </a>
+      <a href="/assets/img/chaise.jpg" data-lightbox="liva">
+        <img src="/assets/img/chaise.jpg" alt="LIVA 3" class="h-48 w-full max-w-xs rounded shadow snap-center" />
+      </a>
     </div>
   </section>
 
-  <!-- SECTION PRESTATIONS -->
-  <section id="prestations" class="py-12">
-    <h2 class="text-2xl font-bold mb-6">Nos prestations</h2>
-    <p class="max-w-xl mx-auto text-lg mb-6">
-      LIVA vous accueille dans un logement spacieux, lumineux et moderne avec une cuisine équipée, une literie confortable et un espace de vie chaleureux.
-    </p>
-    <a href="{{ site.baseurl }}/contact"
-       class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition inline-block">
-      Réserver LIVA
-    </a>
+  <section class="px-4 py-8 text-center">
+    <a href="#contact" class="inline-block bg-white text-black px-6 py-3 rounded-lg text-lg font-semibold shadow hover:bg-gray-200 transition">Réserver</a>
   </section>
 
-  <!-- AVIS CLIENTS -->
-  <section class="py-12">
-    <h2 class="text-2xl font-bold mb-6">Ce qu’en disent nos visiteurs</h2>
-    <div class="relative w-full max-w-2xl mx-auto overflow-hidden">
-      <div id="testimonial-carousel-liva" class="whitespace-nowrap transition-transform duration-700 ease-in-out">
-        <div class="inline-block w-full px-4">
-          <p class="text-lg italic mb-2">"Très bien situé, calme et parfaitement équipé."</p>
-          <p class="text-sm text-gray-600">— Julien</p>
-        </div>
-        <div class="inline-block w-full px-4">
-          <p class="text-lg italic mb-2">"Propre, moderne, idéal pour notre séjour professionnel."</p>
-          <p class="text-sm text-gray-600">— Marion & Thierry</p>
-        </div>
-        <div class="inline-block w-full px-4">
-          <p class="text-lg italic mb-2">"L’appartement est spacieux, tout était conforme à l’annonce."</p>
-          <p class="text-sm text-gray-600">— Élise</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    let indexLiva = 0;
-    const carouselLiva = document.getElementById('testimonial-carousel-liva');
-    const slideCountLiva = carouselLiva.children.length;
-
-    setInterval(() => {
-      indexLiva = (indexLiva + 1) % slideCountLiva;
-      carouselLiva.style.transform = `translateX(-${indexLiva * 100}%)`;
-    }, 5000);
-  </script>
+  <footer class="bg-black text-white text-center py-6 mt-12 px-4">
+    <p class="text-sm">&copy; 2025 LIVABLŌM. Tous droits réservés.</p>
+  </footer>
 
 </div>
