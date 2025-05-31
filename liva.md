@@ -79,7 +79,7 @@ permalink: /liva
 
     setInterval(() => {
       indexLiva = (indexLiva + 1) % slideCountLiva;
-      carouselLiva.style.transform = translateX(-${indexLiva * 100}%);
+      carouselLiva.style.transform = `translateX(-${indexLiva * 100}%)`;
     }, 5000);
   </script>
 
