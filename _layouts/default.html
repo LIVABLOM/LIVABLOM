@@ -1,18 +1,53 @@
-<!-- En-tête commun (identique mobile & desktop) -->
-<header class="bg-black text-white w-full px-6 py-4 flex justify-between items-center">
-  
-  <!-- Logo + Titre -->
-  <div class="flex items-center space-x-4">
-    <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="h-10 w-auto">
-    <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
-  </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | LIVABLŌM</title>
 
-  <!-- Menu -->
-  <nav class="flex space-x-4 text-sm">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </nav>
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-</header>
+  <!-- Lightbox2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/css/lightbox.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden flex flex-col min-h-screen">
+
+  <!-- Header : logo + titre + menu -->
+  <header class="bg-black text-white w-full px-6 py-4 flex justify-between items-center">
+    <!-- Logo + Titre -->
+    <div class="flex items-center space-x-4">
+      <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="h-10 w-auto">
+      <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
+    </div>
+
+    <!-- Menu -->
+    <nav class="flex space-x-4 text-sm">
+      <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+      <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="flex-grow">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white text-center py-6">
+    <div class="text-sm space-y-2">
+      <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
+      <a href="{{ site.baseurl }}/mentions" class="underline hover:text-gray-300 transition">
+        Mentions légales & CGV
+      </a>
+    </div>
+  </footer>
+
+  <!-- Lightbox2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
+
+</body>
+</html>
