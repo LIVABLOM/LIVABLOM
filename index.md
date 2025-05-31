@@ -21,10 +21,14 @@ title: LIVABLŌM
     </div>
   </div>
 
-  <!-- Titre centré uniquement sur mobile -->
-  <div class="block md:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
-    <h1 class="text-4xl font-extrabold tracking-wide text-white drop-shadow-md">LIVABLŌM</h1>
+  <!-- Logo + Titre au centre, alignés côte à côte en desktop -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+  <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+    <img src="{{ site.baseurl }}/assets/images/logolivablom.png" alt="Logo LIVABLŌM" class="h-20 md:h-24 w-auto">
+    <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide text-white drop-shadow-md">LIVABLŌM</h1>
   </div>
+</div>
+
 
   <!-- Partie BLŌM -->
   <div class="w-full md:w-1/2 h-1/2 md:h-screen bg-cover bg-center text-white flex flex-col items-center justify-center p-6 text-center" style="background-image: url('{{ site.baseurl }}/assets/images/tableromantique.jpg');">
