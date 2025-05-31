@@ -4,7 +4,7 @@ title: Mentions légales & CGV
 permalink: /mentions
 ---
 
-<div class="bg-white text-black min-h-screen py-12 px-6 max-w-4xl mx-auto">
+<div class="bg-black text-yellow-400 min-h-screen py-12 px-6 max-w-4xl mx-auto">
 
   <h1 class="text-3xl font-bold mb-8 text-center">Mentions légales & Conditions Générales de Vente</h1>
 
@@ -55,7 +55,7 @@ permalink: /mentions
     <p>Nous ne collectons aucune donnée personnelle en dehors de celles transmises via la plateforme de réservation Airbnb. Pour toute demande relative à vos données, merci de nous contacter directement via Airbnb.</p>
   </section>
 
-  <p class="text-sm text-center text-gray-500 mt-12">
+  <p class="text-sm text-center text-yellow-300 mt-12">
     Dernière mise à jour : mai 2025
   </p>
 </div>
