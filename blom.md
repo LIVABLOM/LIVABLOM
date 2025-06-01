@@ -30,9 +30,9 @@ permalink: /blom
 
       </a>
       <!-- Images masquées -->
-      <a href="{{ site.baseurl }}/assets/images/blom2.jpg" data-lightbox="blom" data-title="Salle de bain" style="display: none;"></a>
-      <a href="{{ site.baseurl }}/assets/images/blom3.jpg" data-lightbox="blom" data-title="Lit king size" style="display: none;"></a>
-      <a href="{{ site.baseurl }}/assets/images/blom4.jpg" data-lightbox="blom" data-title="Espace salon" style="display: none;"></a>
+      <a href="{{ site.baseurl }}/assets/images/femmemur.jpg" data-lightbox="blom" data-title="Salle de bain" style="display: none;"></a>
+      <a href="{{ site.baseurl }}/assets/images/sceau.jpg" data-lightbox="blom" data-title="Lit king size" style="display: none;"></a>
+      <a href="{{ site.baseurl }}/assets/images/tableromantique.jpg" data-lightbox="blom" data-title="Espace salon" style="display: none;"></a>
     </div>
   </section>
 
