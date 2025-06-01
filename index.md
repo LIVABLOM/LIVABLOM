@@ -3,12 +3,6 @@ layout: default
 title: LIVABLŌM
 ---
 
-<!-- En-tête avec logo et titre sur fond noir -->
-<header class="bg-black text-white flex items-center justify-between px-6 py-4 w-full h-20">
-  <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="h-12 w-auto">
-  <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide">LIVABLŌM</h1>
-</header>
-
 <!-- Contenu principal pleine hauteur (moins header) -->
 <div class="flex flex-col md:flex-row w-screen overflow-hidden" style="height: calc(100vh - 80px);">
 
