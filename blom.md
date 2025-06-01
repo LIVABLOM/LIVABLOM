@@ -6,14 +6,6 @@ permalink: /blom
 
 <div class="bg-black text-white min-h-screen px-4 text-center">
 
-  <!-- MENU DE NAVIGATION -->
-  <nav class="flex justify-center space-x-6 py-6 text-sm font-semibold uppercase tracking-wide text-white">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-    <a href="#galerie" class="hover:underline">Galerie</a>
-    <a href="#prestations" class="hover:underline">Prestations</a>
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </nav>
-
   <!-- SECTION ACCUEIL -->
   <section id="accueil" class="py-6">
     <h1 class="text-4xl font-bold mb-4">BLŌM – Spa et bien-être</h1>
