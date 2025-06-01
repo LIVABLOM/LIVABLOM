@@ -34,7 +34,8 @@ permalink: /blom
     <h2 class="text-2xl font-bold mb-6">Galerie</h2>
     <div class="flex justify-center">
       <a href="{{ site.baseurl }}/assets/images/Spa.jpg" data-lightbox="blom" data-title="Spa BLŌM">
-        <img src="{{ site.baseurl }}/assets/images/Spa.jpg" alt="Spa BLŌM" class="h-48 rounded shadow" />
+        <img src="{{ site.baseurl }}/assets/images/Spa.jpg" alt="Spa BLŌM" class="h-64 md:h-[28rem] w-auto max-w-full rounded shadow" />
+
       </a>
       <!-- Images masquées -->
       <a href="{{ site.baseurl }}/assets/images/blom2.jpg" data-lightbox="blom" data-title="Salle de bain" style="display: none;"></a>
