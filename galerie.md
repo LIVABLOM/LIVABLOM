@@ -60,6 +60,60 @@ permalink: /galerie
     <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine6.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
       <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine6.jpg" alt="Cuisine LIVA" class="rounded shadow" />
     </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre1.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre1.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre2.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre2.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre3.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre3.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre4.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre4.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre5.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre5.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre6.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre6.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre7.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre7.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/chambre8.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/chambre8.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb1.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb1.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb2.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb2.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb3.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb3.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb4.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb4.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb5.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb5.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/sdb6.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/sdb6.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/escalier.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/escalier.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/facade.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/facade1.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/portail.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/portail.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
     <!-- BLŌM -->
     <a href="{{ site.baseurl }}/assets/galerie/blom/Spa.jpg" data-lightbox="galerie" data-title="Spa BLŌM" class="gallery-item blom">
       <img src="{{ site.baseurl }}/assets/galerie/blom/Spa.jpg" alt="Spa BLŌM" class="rounded shadow" />
