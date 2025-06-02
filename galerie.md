@@ -109,6 +109,9 @@ permalink: /galerie
       <img src="{{ site.baseurl }}/assets/galerie/liva/escalier.jpg" alt="Cuisine LIVA" class="rounded shadow" />
     </a>
     <a href="{{ site.baseurl }}/assets/galerie/liva/facade.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/facade.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/facade1.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
       <img src="{{ site.baseurl }}/assets/galerie/liva/facade1.jpg" alt="Cuisine LIVA" class="rounded shadow" />
     </a>
     <a href="{{ site.baseurl }}/assets/galerie/liva/portail.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
