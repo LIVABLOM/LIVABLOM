@@ -21,8 +21,8 @@ permalink: /galerie
     <a href="{{ site.baseurl }}/assets/galerie/liva/salon1.jpg" data-lightbox="galerie" data-title="Salon LIVA" class="gallery-item liva">
       <img src="{{ site.baseurl }}/assets/galerie/liva/salon1.jpg" alt="Salon LIVA" class="rounded shadow" />
     </a>
-    <a href="{{ site.baseurl }}/assets/galerie/liva/chaise.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
-      <img src="{{ site.baseurl }}/assets/galerie/liva/chaise.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    <a href="{{ site.baseurl }}/assets/galerie/liva/salon2.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/salon2.jpg" alt="Cuisine LIVA" class="rounded shadow" />
     </a>
 
     <!-- BLŌM -->
