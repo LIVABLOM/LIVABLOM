@@ -6,13 +6,7 @@ permalink: /liva
 
 <div class="bg-gray-100 min-h-screen px-4 text-center">
 
-  <!-- MENU DE NAVIGATION -->
-  <nav class="flex justify-center space-x-6 py-6 text-sm font-semibold uppercase tracking-wide">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-    <a href="#galerie" class="hover:underline">Galerie</a>
-    <a href="#prestations" class="hover:underline">Prestations</a>
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </nav>
+  
 
   <!-- SECTION ACCUEIL -->
   <section id="accueil" class="py-6">
