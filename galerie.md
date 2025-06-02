@@ -39,6 +39,27 @@ permalink: /galerie
      <a href="{{ site.baseurl }}/assets/galerie/liva/salon7.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
       <img src="{{ site.baseurl }}/assets/galerie/liva/salon7.jpg" alt="Cuisine LIVA" class="rounded shadow" />
     </a>
+     <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine1.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine1.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine2.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine2.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine3.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine3.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine4.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine4.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine5.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine5.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/liva/cuisine6.jpg" data-lightbox="galerie" data-title="Cuisine LIVA" class="gallery-item liva">
+      <img src="{{ site.baseurl }}/assets/galerie/liva/cuisine6.jpg" alt="Cuisine LIVA" class="rounded shadow" />
+    </a>
     <!-- BLŌM -->
     <a href="{{ site.baseurl }}/assets/galerie/blom/Spa.jpg" data-lightbox="galerie" data-title="Spa BLŌM" class="gallery-item blom">
       <img src="{{ site.baseurl }}/assets/galerie/blom/Spa.jpg" alt="Spa BLŌM" class="rounded shadow" />
