@@ -12,7 +12,7 @@
   <div id="gallery" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     <!-- LIVA images -->
     {% for i in (1..6) %}
-      <img src="{{ site.baseurl }}/assets/galerie/liva/{{ i }}.jpg"
+      <img src="{{ site.baseurl }}/assets/galerie/liva/salon1.jpg"
            alt="LIVA {{ i }}"
            class="gallery-item liva w-full h-48 object-cover rounded shadow"
       />
@@ -20,7 +20,7 @@
 
     <!-- BLOM images -->
     {% for i in (1..6) %}
-      <img src="{{ site.baseurl }}/assets/galerie/blom/{{ i }}.jpg"
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg"
            alt="BLŌM {{ i }}"
            class="gallery-item blom w-full h-48 object-cover rounded shadow"
       />
