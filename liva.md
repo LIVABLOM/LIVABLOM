@@ -33,12 +33,7 @@ permalink: /liva
     </div>
   </section>
 
-  <!-- SECTION PRESTATIONS -->
-  <section id="prestations" class="py-12">
-    <h2 class="text-2xl font-bold mb-6">Nos prestations</h2>
-    <p class="max-w-xl mx-auto text-lg mb-6">
-      LIVA vous accueille dans un logement spacieux, lumineux et moderne avec une cuisine équipée, une literie confortable et un espace de vie chaleureux.
-    </p>
+  
     <a href="{{ site.baseurl }}/contact"
        class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition inline-block">
       Réserver LIVA
