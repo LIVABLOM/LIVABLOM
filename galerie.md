@@ -118,11 +118,11 @@ permalink: /galerie
       <img src="{{ site.baseurl }}/assets/galerie/liva/portail.jpg" alt="Cuisine LIVA" class="rounded shadow" />
     </a>
     <!-- BLŌM -->
-    <a href="{{ site.baseurl }}/assets/galerie/blom/Spa.jpg" data-lightbox="galerie" data-title="Spa BLŌM" class="gallery-item blom">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/Spa.jpg" alt="Spa BLŌM" class="rounded shadow" />
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom22.jpg" data-lightbox="galerie" data-title="Spa BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom22.jpg" alt="Spa BLŌM" class="rounded shadow" />
     </a>
-    <a href="{{ site.baseurl }}/assets/galerie/blom/femmemur.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/femmemur.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg" alt="Chambre BLŌM" class="rounded shadow" />
     </a>
   </div>
 
