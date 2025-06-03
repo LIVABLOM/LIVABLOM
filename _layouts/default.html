@@ -23,26 +23,25 @@
     </div>
 
     <!-- Menu desktop -->
-<nav class="hidden sm:flex space-x-4 text-sm">
-  <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+    <nav class="hidden sm:flex space-x-4 text-sm">
+      <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
 
-  {% if page.url == "/liva" %}
-    <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-  {% elsif page.url == "/blom" %}
-    <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-  {% else %}
-    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-  {% endif %}
+      {% if page.url contains 'liva' %}
+        <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+      {% elsif page.url contains 'blom' %}
+        <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+      {% else %}
+        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+      {% endif %}
 
-  <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-</nav>
-
+      <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+    </nav>
 
     <!-- Hamburger button -->
-    <div class="relative sm:hidden">
+    <div class="sm:hidden relative">
       <button id="menu-toggle" class="focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,46 +50,41 @@
       </button>
 
       <!-- Menu mobile dropdown -->
-<nav id="mobile-menu" class="hidden absolute right-0 mt-2 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
-  <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+      <div id="mobile-menu" class="hidden absolute right-0 top-10 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
+        <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
 
-  {% if page.url == "/liva" %}
-    <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-  {% elsif page.url == "/blom" %}
-    <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-  {% else %}
-    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-  {% endif %}
+        {% if page.url contains 'liva' %}
+          <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
+          <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+        {% elsif page.url contains 'blom' %}
+          <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
+          <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+        {% else %}
+          <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+          <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+        {% endif %}
 
-  <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-</nav>
-
+        <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+      </div>
     </div>
   </div>
 </header>
 
-  </header>
+<main class="flex-grow">
+  {{ content }}
+</main>
 
-  <!-- Contenu principal -->
-  <main class="flex-grow">
-    {{ content }}
-  </main>
+<footer class="bg-black text-white text-center py-6">
+  <div class="text-sm space-y-2">
+    <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
+    <a href="{{ site.baseurl }}/mentions" class="underline hover:text-gray-300 transition">
+      Mentions légales & CGV
+    </a>
+  </div>
+</footer>
 
-  <!-- Footer -->
-  <footer class="bg-black text-white text-center py-6">
-    <div class="text-sm space-y-2">
-      <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
-      <a href="{{ site.baseurl }}/mentions" class="underline hover:text-gray-300 transition">
-        Mentions légales & CGV
-      </a>
-    </div>
-  </footer>
-
-  <!-- Lightbox2 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
+<!-- Lightbox2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
 <script>
   const toggleButton = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
@@ -100,7 +94,6 @@
     mobileMenu.classList.toggle("flex");
   });
 </script>
-
 
 </body>
 </html>
