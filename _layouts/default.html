@@ -22,7 +22,7 @@
       <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
     </div>
 
-    <!-- Bouton Hamburger -->
+    <!-- Hamburger button -->
     <button id="menu-toggle" class="sm:hidden focus:outline-none">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -30,18 +30,38 @@
       </svg>
     </button>
 
-    <!-- Menu desktop -->
-    <nav id="menu" class="hidden sm:flex space-x-4 text-sm">
+    <!-- Menu (desktop) -->
+    <nav class="hidden sm:flex space-x-4 text-sm">
       <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
 
-      {% unless page.url == "/" %}
-        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+      {% if page.url == "/liva" %}
+        <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+      {% elsif page.url == "/blom" %}
+        <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+      {% else %}
         <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-      {% endunless %}
+      {% endif %}
 
       <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
     </nav>
   </div>
+
+  <!-- Menu (mobile) -->
+  <nav id="mobile-menu" class="sm:hidden hidden flex-col mt-4 space-y-2 text-sm">
+    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+
+    {% if page.url == "/liva" %}
+      <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+    {% elsif page.url == "/blom" %}
+      <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+    {% else %}
+      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+    {% endif %}
+
+    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+  </nav>
 </header>
 
 
@@ -64,6 +84,15 @@
 
   <!-- Lightbox2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
+<script>
+  const toggleButton = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  toggleButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+    mobileMenu.classList.toggle("flex");
+  });
+</script>
 
 </body>
 </html>
