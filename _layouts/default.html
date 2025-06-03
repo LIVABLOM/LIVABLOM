@@ -14,7 +14,7 @@
 
 <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden flex flex-col min-h-screen">
 
-<header class="bg-black text-white w-full px-6 py-4">
+<header class="bg-black text-white w-full px-6 py-4 relative z-50">
   <div class="flex justify-between items-center">
     <!-- Logo + Titre -->
     <div class="flex items-center space-x-4">
@@ -22,15 +22,7 @@
       <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
     </div>
 
-    <!-- Hamburger button -->
-    <button id="menu-toggle" class="sm:hidden focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-
-    <!-- Menu (desktop) -->
+    <!-- Menu desktop -->
     <nav class="hidden sm:flex space-x-4 text-sm">
       <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
       <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
@@ -45,25 +37,34 @@
 
       <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
     </nav>
+
+    <!-- Hamburger button -->
+    <div class="relative sm:hidden">
+      <button id="menu-toggle" class="focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <!-- Menu mobile dropdown -->
+      <nav id="mobile-menu" class="hidden absolute right-0 mt-2 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
+        <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+
+        {% if page.url == "/liva" %}
+          <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+        {% elsif page.url == "/blom" %}
+          <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+        {% else %}
+          <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+        {% endif %}
+
+        <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+      </nav>
+    </div>
   </div>
-
-  <!-- Menu (mobile) -->
-  <nav id="mobile-menu" class="sm:hidden hidden flex-col mt-4 space-y-2 text-sm">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-
-    {% if page.url == "/liva" %}
-      <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-    {% elsif page.url == "/blom" %}
-      <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-    {% else %}
-      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-    {% endif %}
-
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </nav>
 </header>
-
 
   </header>
 
@@ -93,6 +94,7 @@
     mobileMenu.classList.toggle("flex");
   });
 </script>
+
 
 </body>
 </html>
