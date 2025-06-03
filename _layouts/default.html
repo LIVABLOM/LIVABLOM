@@ -14,7 +14,7 @@
 
 <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden flex flex-col min-h-screen">
 
-  <header class="bg-black text-white w-full px-6 py-4">
+<header class="bg-black text-white w-full px-6 py-4">
   <div class="flex justify-between items-center">
     <!-- Logo + Titre -->
     <div class="flex items-center space-x-4">
@@ -29,20 +29,21 @@
               d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
+
+    <!-- Menu desktop -->
+    <nav id="menu" class="hidden sm:flex space-x-4 text-sm">
+      <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+
+      {% unless page.url == "/" %}
+        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+      {% endunless %}
+
+      <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+    </nav>
   </div>
-
-  <!-- Menu navigation -->
-  <nav id="menu" class="mt-4 sm:mt-0 sm:flex sm:space-x-4 text-sm hidden sm:block">
-    <a href="{{ site.baseurl }}/" class="block py-2 sm:py-0 hover:underline">Accueil</a>
-
-    {% unless page.url == "/" %}
-      <a href="{{ site.baseurl }}/galerie" class="block py-2 sm:py-0 hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations" class="block py-2 sm:py-0 hover:underline">Prestations</a>
-    {% endunless %}
-
-    <a href="{{ site.baseurl }}/contact" class="block py-2 sm:py-0 hover:underline">Contact</a>
-  </nav>
 </header>
+
 
   </header>
 
