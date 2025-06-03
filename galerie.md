@@ -1,3 +1,10 @@
+---
+layout: default
+title: Galerie
+permalink: /galerie
+---
+
+
 <div class="px-4 py-8 bg-white">
   <h2 class="text-2xl font-bold text-center mb-6">Galerie</h2>
 
