@@ -124,6 +124,87 @@ permalink: /galerie
     <a href="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
       <img src="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg" alt="Chambre BLŌM" class="rounded shadow" />
     </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom3.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom3.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom4.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom4.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom5.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom5.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom6.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom6.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom11.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom11.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom12.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom12.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom14.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom14.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom15.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom15.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom16.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom16.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom17.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom17.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom18.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom18.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom1.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom19.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom19.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom25.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom25.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom26.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom26.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom27.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom27.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom28.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom28.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom29.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom29.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom30.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom30.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom32.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom32.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom33.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom33.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom34.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom34.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom35.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom35.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
+    <a href="{{ site.baseurl }}/assets/galerie/blom/blom36.jpg" data-lightbox="galerie" data-title="Chambre BLŌM" class="gallery-item blom">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom36.jpg" alt="Chambre BLŌM" class="rounded shadow" />
+    </a>
   </div>
 
 </div>
