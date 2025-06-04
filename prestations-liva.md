@@ -4,13 +4,6 @@ title: Prestations LIVA
 permalink: /prestations-liva
 ---
 
----
-
-layout: default
-title: Prestations LIVA
-permalink: /prestations-liva
-----------------------------
-
 <div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-4xl mx-auto">
     <h1 class="text-3xl font-bold mb-8 text-center">Nos prestations – LIVA</h1>
