@@ -1,36 +1,50 @@
 ---
 layout: default
-title: Contactez-nous
+title: Contact
 permalink: /contact
 ---
 
-<div class="min-h-screen bg-white text-black px-4 py-12 text-center">
-  <h1 class="text-3xl font-bold mb-6">Nous contacter</h1>
-  <p class="text-lg mb-8 max-w-xl mx-auto">
-    Une question, une demande de réservation ou de renseignement ? Écrivez-nous via ce formulaire, nous vous répondrons rapidement.
-  </p>
+<section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-2xl mx-auto">
 
-  <form action="https://formspree.io/f/mblyrrna" method="POST" class="space-y-6 max-w-md mx-auto">
-    <!-- Redirection corrigée avec URL absolue -->
-    <input type="hidden" name="_redirect" value="https://livablom.github.io/LIVABLOM/merci" />
+    <h2 class="text-3xl font-bold mb-8 text-center">Nous contacter</h2>
 
-    <div>
-      <label for="name" class="block text-left text-sm font-medium mb-1">Nom</label>
-      <input type="text" id="name" name="name" required class="w-full px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-black" />
-    </div>
+    <p class="text-center mb-6">
+      Une question ? Une demande de réservation ? N'hésitez pas à nous écrire via ce formulaire.
+    </p>
 
-    <div>
-      <label for="email" class="block text-left text-sm font-medium mb-1">Email</label>
-      <input type="email" id="email" name="email" required class="w-full px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-black" />
-    </div>
+    <form action="https://formspree.io/f/xbjnyojp" method="POST" class="space-y-6">
 
-    <div>
-      <label for="message" class="block text-left text-sm font-medium mb-1">Message</label>
-      <textarea id="message" name="message" rows="5" required class="w-full px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-black"></textarea>
-    </div>
+      <div>
+        <label for="name" class="block text-sm font-semibold mb-1">Nom</label>
+        <input type="text" id="name" name="name" required
+               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+      </div>
 
-    <button type="submit" class="bg-black text-white py-2 px-6 rounded-full hover:bg-gray-800 transition">
-      Envoyer
-    </button>
-  </form>
-</div>
+      <div>
+        <label for="email" class="block text-sm font-semibold mb-1">Email</label>
+        <input type="email" id="email" name="_replyto" required
+               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm font-semibold mb-1">Message</label>
+        <textarea id="message" name="message" rows="6" required
+                  class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"></textarea>
+      </div>
+
+      <div class="text-center">
+        <button type="submit"
+                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
+          Envoyer
+        </button>
+      </div>
+    </form>
+
+    <p class="text-sm text-center text-yellow-300 mt-8">
+      Vous pouvez aussi nous écrire directement à : <br />
+      <a href="mailto:livablom59@gmail.com" class="underline hover:text-yellow-200">livablom59@gmail.com</a>
+    </p>
+
+  </div>
+</section>
