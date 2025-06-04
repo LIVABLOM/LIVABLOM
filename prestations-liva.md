@@ -4,26 +4,48 @@ title: Prestations LIVA
 permalink: /prestations-liva
 ---
 
-<section class="p-6 max-w-4xl mx-auto">
-  <h2 class="text-3xl font-bold mb-6 text-center">Nos prestations – LIVA</h2>
+---
 
-  <div class="space-y-4 text-lg leading-relaxed">
-    <p>Le logement <strong>LIVA</strong> est un cocon tout confort, idéal pour les familles, couples ou professionnels en déplacement. Il est entièrement équipé pour vous offrir un séjour pratique et agréable.</p>
+layout: default
+title: Prestations LIVA
+permalink: /prestations-liva
+----------------------------
 
-    <ul class="list-disc pl-6">
-      <li>Capacité : 2 à 4 personnes</li>
-      <li>1 lit king size + 1 canapé convertible</li>
-      <li>Salon TV avec accès Netflix et Wi-Fi</li>
-      <li>Grande cuisine toute équipée</li>
-      <li>Douche à l'italienne</li>
-      <li>Machine à laver et sèche-linge</li>
-      <li>Stationnement gratuit à proximité</li>
-    </ul>
+<div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8 text-center">Nos prestations – LIVA</h1>
 
-    <p class="mt-4">Le logement est disponible à la nuitée avec une arrivée totalement autonome.</p>
-
-    <p class="mt-4 text-center">
-      <a href="/contact" class="inline-block bg-black text-white px-6 py-3 mt-4 rounded hover:bg-gray-800 transition">Réserver ou nous contacter</a>
-    </p>
-  </div>
+```
+<section class="mb-10">
+  <h2 class="text-2xl font-semibold mb-4">Confort & équipements</h2>
+  <ul class="list-disc list-inside space-y-2">
+    <li>Logement tout équipé de 45 m²</li>
+    <li>Lit king size</li>
+    <li>Salon avec TV connectée</li>
+    <li>Wifi fibre gratuit</li>
+    <li>Cuisine équipée (micro-ondes, frigo, plaque, etc.)</li>
+    <li>Machine à laver et sèche-cheveux</li>
+    <li>Autonomie totale grâce à la boîte à clés sécurisée</li>
+  </ul>
 </section>
+
+<section class="mb-10">
+  <h2 class="text-2xl font-semibold mb-4">Tarifs</h2>
+  <ul class="list-disc list-inside space-y-2">
+    <li>À partir de 85 €/nuit</li>
+    <li>Tarifs ajustables selon la durée du séjour et le nombre de personnes</li>
+  </ul>
+</section>
+
+<section class="mb-10">
+  <h2 class="text-2xl font-semibold mb-4">Accès</h2>
+  <p>LIVA est situé à Douai, avec stationnement gratuit dans la rue. Idéal pour les professionnels ou les familles en déplacement.</p>
+</section>
+
+<p class="text-sm text-center text-yellow-300 mt-12">
+  Pour toute demande spécifique, contactez-nous directement.
+</p>
+```
+
+  </div>
+</div>
