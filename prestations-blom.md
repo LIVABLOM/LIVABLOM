@@ -14,11 +14,11 @@ permalink: /prestations-blom
 
       <ul class="list-disc list-inside space-y-2">
         <li>Jacuzzi privatif intérieur</li>
-        <li>Hammam + salle de massage</li>
+        <li>salle de massage</li>
         <li>Lit king size + coin salon</li>
         <li>Ambiance tamisée et haut-parleurs Bluetooth</li>
-        <li>Arrivée autonome 100% privée</li>
-        <li>Petit déjeuner offert</li>
+        <li>Arrivée et départ en toute autonome</li>
+        <li>Petit déjeuner offert et servi dans la plus stricte intimité</li>
       </ul>
 
       <p class="mt-4 font-semibold">Tarifs :</p>
