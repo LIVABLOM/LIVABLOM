@@ -1,33 +1,17 @@
 title: LIVABLŌM
-description: Hébergements LIVA & BLŌM – Confort et bien-être
-baseurl: "" # si ton site est à la racine (ex: tonsite.fr), sinon mets "/nomdusite"
-url: "https://tonsite.fr" # remplace par ton vrai domaine
-
-# Chemins personnalisés pour les assets
-defaults:
-  - scope:
-      path: "assets/galerie/blom"
-    values:
-      image: true
-  - scope:
-      path: "assets/galerie/liva"
-    values:
-      image: true
-
-# Activer l'inclusion des fichiers statiques dans ces dossiers
-include:
-  - assets/galerie/blom
-  - assets/galerie/liva
-
-# Exclure les fichiers inutiles
-exclude:
-  - node_modules
-  - README.md
-
-# Plugins si tu en utilises (lightbox, etc.)
-plugins:
-  - jekyll-seo-tag
-  - jekyll-sitemap
-
+description: "Location de logements haut de gamme : LIVA pour familles et pros, BLŌM pour les couples."
+url: "https://livablom.github.io"
+baseurl: "/LIVABLOM"
 markdown: kramdown
 theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+permalink: pretty
+include:
+  - index.md
+  - liva.md
+  - blom.md
+exclude:
+  - README.md
+  - .gitignore
