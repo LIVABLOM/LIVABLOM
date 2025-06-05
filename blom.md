@@ -4,7 +4,6 @@ title: BLŌM
 permalink: /blom
 ---
 
-
 <section class="bg-black text-yellow-400 py-12 px-6 w-full">
   <div class="max-w-6xl mx-auto space-y-16">
 
