@@ -1,4 +1,4 @@
----
+ ---
 layout: default
 title: BLŌM
 permalink: /blom
@@ -26,7 +26,7 @@ permalink: /blom
 
     <!-- Bloc 2 -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-8">
-      <img src="/assets/galerie/blom/hamman.jpg" alt="Hammam et salle de massage" class="w-full md:w-1/2 rounded-xl shadow-lg" />
+      <img src="/assets/galerie/blom/blom31.jpg" alt="Hammam et salle de massage" class="w-full md:w-1/2 rounded-xl shadow-lg" />
       <div class="md:w-1/2 text-lg">
         <h2 class="text-2xl font-semibold mb-2">Hammam & Salle de massage</h2>
         <p>Un véritable espace bien-être équipé d’un hammam et d’une table de massage pour une relaxation complète.</p>
@@ -35,7 +35,7 @@ permalink: /blom
 
     <!-- Bloc 3 -->
     <div class="flex flex-col md:flex-row items-center gap-8">
-      <img src="/assets/galerie/blom/lit.jpg" alt="Lit king size et coin salon" class="w-full md:w-1/2 rounded-xl shadow-lg" />
+      <img src="/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon" class="w-full md:w-1/2 rounded-xl shadow-lg" />
       <div class="md:w-1/2 text-lg">
         <h2 class="text-2xl font-semibold mb-2">Lit King Size & coin salon</h2>
         <p>Un lit spacieux et confortable accompagné d’un coin salon pour partager un moment à deux en toute intimité.</p>
