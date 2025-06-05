@@ -45,7 +45,7 @@ permalink: /blom
     <div class="flex flex-col md:flex-row items-center gap-8">
       <img src="{{ site.baseurl }}/assets/galerie/blom/blom19.jpg" alt="Lit king size et coin salon" class="w-full md:w-1/2 rounded-xl shadow-lg" />
       <div class="md:w-1/2 text-lg">
-        <h2 class="text-2xl font-semibold mb-2">Lit King Size & coin salon</h2>
+        <h2 class="text-2xl font-semibold mb-2">La touche romantique & 🤩</h2>
         <p>Une table romantique soigneusement dressé pour partager un repas à deux en toute intimité. ( prenez votre repas à emporter ) .</p>
       </div>
       </div>
