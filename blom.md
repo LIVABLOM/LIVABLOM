@@ -16,8 +16,8 @@ permalink: /blom
 
     <!-- Bloc 1 -->
     <div class="flex flex-col md:flex-row items-center gap-8">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/blom22.jpg" alt="Jacuzzi privatif" class="w-full md:w-1/2 rounded-xl shadow-lg" />
-      <div class="md:w-1/2 text-lg">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif" class="w-full md:w-[45%] max-h-[400px] object-cover rounded-xl shadow-lg" />
+      <div class="md:w-[55%] text-lg">
         <h2 class="text-2xl font-semibold mb-2">Jacuzzi privatif</h2>
         <p>Profitez d’un jacuzzi intérieur à température idéale, parfait pour un moment de détente à deux.</p>
       </div>
@@ -25,32 +25,21 @@ permalink: /blom
 
     <!-- Bloc 2 -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-8">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Hammam et salle de massage" class="w-full md:w-1/2 rounded-xl shadow-lg" />
-      <div class="md:w-1/2 text-lg">
-        <h2 class="text-2xl font-semibold mb-2">HSalle de massage</h2>
-        <p>Un véritable espace bien-être équipé d’une table de massage pour une relaxation complète.</p>
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Hammam et salle de massage" class="w-full md:w-[45%] max-h-[400px] object-cover rounded-xl shadow-lg" />
+      <div class="md:w-[55%] text-lg">
+        <h2 class="text-2xl font-semibold mb-2">Hammam & Salle de massage</h2>
+        <p>Un véritable espace bien-être équipé d’un hammam et d’une table de massage pour une relaxation complète.</p>
       </div>
     </div>
 
     <!-- Bloc 3 -->
     <div class="flex flex-col md:flex-row items-center gap-8">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon" class="w-full md:w-1/2 rounded-xl shadow-lg" />
-      <div class="md:w-1/2 text-lg">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon" class="w-full md:w-[45%] max-h-[400px] object-cover rounded-xl shadow-lg" />
+      <div class="md:w-[55%] text-lg">
         <h2 class="text-2xl font-semibold mb-2">Lit King Size & coin salon</h2>
-        <p>Un lit spacieux qui vous assure une nuitée reposante.</p>
+        <p>Un lit spacieux et confortable accompagné d’un coin salon pour partager un moment à deux en toute intimité.</p>
       </div>
     </div>
-
-    <!-- Bloc 4 -->
-    <div class="flex flex-col md:flex-row items-center gap-8">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/blom19.jpg" alt="Lit king size et coin salon" class="w-full md:w-1/2 rounded-xl shadow-lg" />
-      <div class="md:w-1/2 text-lg">
-        <h2 class="text-2xl font-semibold mb-2">La touche romantique & 🤩</h2>
-        <p>Une table romantique soigneusement dressé pour partager un repas à deux en toute intimité. ( prenez votre repas à emporter ) .</p>
-      </div>
-      </div>
-
-    <!-- Ajouter d'autres blocs si tu veux -->
 
     <!-- Bouton Réserver -->
     <div class="text-center">
