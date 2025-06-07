@@ -39,17 +39,6 @@ permalink: /blom
         <p>Espace bien-être équipé d’un hammam et d’une table de massage. Parfait pour une évasion sensorielle.</p>
       </div>
       
-<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
-      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="salle de massage"
-             class="w-full h-auto max-w-full object-cover filter brightness-75" />
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-      </div>
-      <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Hammam & Massage</h2>
-        <p>Espace bien-être équipé d’un hammam et d’une table de massage. Parfait pour une évasion sensorielle.</p>
-      </div>
-  
     </div>
 
     
