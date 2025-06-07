@@ -27,19 +27,26 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Bloc 2 -->
-    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
-      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="salle de massage"
-             class="w-full h-auto max-w-full object-cover filter brightness-75" />
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-      </div>
-      <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Hammam & Massage</h2>
-        <p>Espace bien-être équipé d’un hammam et d’une table de massage. Parfait pour une évasion sensorielle.</p>
-      </div>
-      
+   <!-- Bloc 2 – Espace massage -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
+  <!-- Première image : table manuelle -->
+  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+    <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage pour duo"
+         class="w-full h-auto max-w-full object-cover filter brightness-75" />
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  </div>
+  <div class="w-full md:w-1/2 text-lg space-y-4">
+    <h2 class="text-2xl font-semibold">Espace massage</h2>
+    <p>Un véritable cocon de bien-être vous attend. Profitez d’une table de massage classique pour un moment à partager en duo.</p>
+    <p>Vous êtes seul(e) ? Une table de massage électrique chauffante vous offre un massage autonome avec 16 programmes de relaxation ciblée.</p>
+    <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
+      <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
+           class="w-full h-auto max-w-full object-cover filter brightness-75 mt-4" />
+      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
     </div>
+  </div>
+</div>
+
 
     
 
