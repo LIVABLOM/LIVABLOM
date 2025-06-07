@@ -30,7 +30,7 @@ permalink: /blom
     <!-- Bloc 2 -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Hammam et salle de massage"
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="salle de massage"
              class="w-full h-auto max-w-full object-cover filter brightness-75" />
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
@@ -61,10 +61,9 @@ permalink: /blom
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Table dressée pour deux</h2>
-<p>Apportez votre repas, nous nous occupons du reste : une table élégamment préparée, une ambiance tamisée, et tout le charme d’un dîner romantique dans un cadre intime.</p>
+        <h2 class="text-2xl font-semibold">Dîner romantique</h2>
+<p>Apportez votre repas, nous créons l’ambiance : une table dressée avec soin, bougies, vaisselle élégante et lumière tamisée. L’endroit parfait pour savourer un moment à deux, en toute intimité.</p>
 
-      </div>
     </div>
 
   </div>
