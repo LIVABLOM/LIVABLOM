@@ -37,8 +37,8 @@ permalink: /blom
   </div>
   <div class="w-full md:w-1/2 text-lg space-y-4">
     <h2 class="text-2xl font-semibold">Espace massage</h2>
-    <p>Un véritable cocon de bien-être vous attend. Profitez d’une table de massage classique pour un moment à partager en duo.</p>
-    <p>Vous êtes seul(e) ? Une table de massage électrique chauffante vous offre un massage autonome avec 16 programmes de relaxation ciblée.</p>
+    <p>Offrez-vous une parenthèse relaxante avec deux types de massages à votre disposition.</p>
+    <p>Une table classique idéale pour un moment complice à deux, et une table de massage électrique, chauffante, avec 16 programmes de relaxation ciblée – à utiliser seul(e) ou en alternance pour une expérience sur mesure.</p>
     <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
       <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
            class="w-full h-auto max-w-full object-cover filter brightness-75 mt-4" />
@@ -46,6 +46,7 @@ permalink: /blom
     </div>
   </div>
 </div>
+
 
 
     
