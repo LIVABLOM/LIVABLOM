@@ -87,21 +87,50 @@ permalink: /blom
 
   </div>
 
-  <!-- Bloc Témoignages -->
+  <!-- Bloc Témoignages en carrousel -->
 <div class="mt-16 bg-white text-black py-10 px-6 rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-500">
   <h3 class="text-2xl md:text-3xl font-bold text-center mb-6">Ils ont vécu l’expérience BLŌM</h3>
-  
-  <div class="text-sm md:text-base italic space-y-4">
-    <p>
-      <strong>Melissa – Janvier 2025</strong><br />
-      “Très bon moment passé dans ce logement pour une soirée romantique.  
-      Abdel est un hôte très attentionné et disponible, avec un suivi discret et bienveillant tout au long du séjour.  
-      Le logement est impeccable, le jacuzzi parfaitement propre.  
-      La table dressée pour le dîner romantique et le petit-déjeuner pensé pour préserver l’intimité ont vraiment fait la différence.  
-      Un lieu et un hôte à recommander sans hésitation !”
-    </p>
+
+  <div class="relative overflow-hidden">
+    <div id="carousel" class="whitespace-nowrap transition-transform duration-500">
+      <!-- Témoignage 1 -->
+      <div class="inline-block w-full align-top px-2">
+        <div class="text-sm md:text-base italic space-y-4">
+          <p>
+            <strong>Melissa – Janvier 2025</strong><br />
+            “Très bon moment passé dans ce logement pour une soirée romantique.  
+            Abdel est un hôte très attentionné et disponible, avec un suivi discret et bienveillant tout au long du séjour.  
+            Le logement est impeccable, le jacuzzi parfaitement propre.  
+            La table dressée pour le dîner romantique et le petit-déjeuner pensé pour préserver l’intimité ont vraiment fait la différence.  
+            Un lieu et un hôte à recommander sans hésitation !”
+          </p>
+        </div>
+      </div>
+
+      <!-- Témoignage 2 (exemple futur) -->
+      <div class="inline-block w-full align-top px-2 hidden">
+        <div class="text-sm md:text-base italic space-y-4">
+          <p>
+            <strong>Nom – Mois année</strong><br />
+            “Texte du témoignage à ajouter ici...”
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boutons navigation -->
+    <div class="flex justify-between mt-4">
+      <button onclick="prevTestimonial()" class="text-black hover:text-gray-600">&#8592; Précédent</button>
+      <button onclick="nextTestimonial()" class="text-black hover:text-gray-600">Suivant &#8594;</button>
+    </div>
+
+    <!-- Lien vers tous les commentaires -->
+    <div class="mt-6 text-center">
+      <a href="{{ site.baseurl }}/temoignages" class="text-blue-600 hover:underline">Voir tous les avis</a>
+    </div>
   </div>
 </div>
+
 
 
   <!-- Bandeau réserver maintenant -->
