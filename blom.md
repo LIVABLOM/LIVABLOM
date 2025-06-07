@@ -107,7 +107,7 @@ permalink: /blom
         </div>
       </div>
 
-      <!-- Témoignage 2 (exemple futur) -->
+      <!-- Témoignage 2 (exemple à compléter plus tard) -->
       <div class="inline-block w-full align-top px-2 hidden">
         <div class="text-sm md:text-base italic space-y-4">
           <p>
@@ -129,8 +129,29 @@ permalink: /blom
       <a href="{{ site.baseurl }}/temoignages" class="text-blue-600 hover:underline">Voir tous les avis</a>
     </div>
   </div>
-</div>
 
+  <!-- Script carousel -->
+  <script>
+    let index = 0;
+    const carousel = document.getElementById('carousel');
+    const slides = carousel.children;
+    const total = slides.length;
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function nextTestimonial() {
+      index = (index + 1) % total;
+      updateCarousel();
+    }
+
+    function prevTestimonial() {
+      index = (index - 1 + total) % total;
+      updateCarousel();
+    }
+  </script>
+</div>
 
 
   <!-- Bandeau réserver maintenant -->
