@@ -53,6 +53,10 @@ permalink: /blom
              class="w-full h-auto max-w-full object-cover filter brightness-75" />
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
+    </div>
+  </div>
+</div>
+
      
 
     <!-- Bloc 3 -->
