@@ -53,14 +53,7 @@ permalink: /blom
              class="w-full h-auto max-w-full object-cover filter brightness-75" />
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-    
+     
 
     <!-- Bloc 3 -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
