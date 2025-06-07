@@ -53,6 +53,19 @@ permalink: /blom
       </div>
     </div>
 
+     <!-- Bloc 4 -->
+    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Lit king size et coin salon"
+             class="w-full h-auto max-w-full object-cover filter brightness-75" />
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Lit King Size & Salon</h2>
+        <p>Vous amenez votre repas ? on vous dressera une très jolie table romantique.</p>
+      </div>
+    </div>
+
   </div>
 
   <!-- Bandeau réserver maintenant -->
