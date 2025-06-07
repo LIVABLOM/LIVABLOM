@@ -61,8 +61,9 @@ permalink: /blom
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Lit King Size & Salon</h2>
-        <p>Vous amenez votre repas ? on vous dressera une très jolie table romantique.</p>
+        <h2 class="text-2xl font-semibold">Table dressée pour deux</h2>
+<p>Apportez votre repas, nous nous occupons du reste : une table élégamment préparée, une ambiance tamisée, et tout le charme d’un dîner romantique dans un cadre intime.</p>
+
       </div>
     </div>
 
