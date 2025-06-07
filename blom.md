@@ -35,17 +35,28 @@ permalink: /blom
          class="w-full h-auto max-w-full object-cover filter brightness-75" />
     <div class="absolute inset-0 bg-black bg-opacity-30"></div>
   </div>
+  
   <div class="w-full md:w-1/2 text-lg space-y-4">
     <h2 class="text-2xl font-semibold">Espace massage</h2>
-    <p>Offrez-vous une parenthèse relaxante avec deux types de massages à votre disposition.</p>
-    <p>Une table classique idéale pour un moment complice à deux, et une table de massage électrique, chauffante, avec 16 programmes de relaxation ciblée – à utiliser seul(e) ou en alternance pour une expérience sur mesure.</p>
-    <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
-      <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
-           class="w-full h-auto max-w-full object-cover filter brightness-75 mt-4" />
-      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+    
+    <div>
+      <h3 class="text-xl font-semibold">Massage en duo</h3>
+      <p>Profitez d’une table de massage classique, idéale pour un instant complice et relaxant à deux. Un moment de partage tout en douceur.</p>
+    </div>
+    
+    <div>
+      <h3 class="text-xl font-semibold mt-4">Massage ciblé électrique</h3>
+      <p>Découvrez notre table de massage électrique, chauffante et équipée de 16 programmes automatiques. Parfaite pour une session de relaxation solo ou en alternance selon vos envies.</p>
+      
+      <div class="relative w-full rounded-xl overflow-hidden shadow-lg mt-4">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
+             class="w-full h-auto max-w-full object-cover filter brightness-75" />
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
     </div>
   </div>
 </div>
+
 
 
 
