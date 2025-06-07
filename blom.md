@@ -87,6 +87,23 @@ permalink: /blom
 
   </div>
 
+  <!-- Bloc Témoignages -->
+<div class="mt-16 bg-white text-black py-10 px-6 rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-500">
+  <h3 class="text-2xl md:text-3xl font-bold text-center mb-6">Ils ont vécu l’expérience BLŌM</h3>
+  
+  <div class="text-sm md:text-base italic space-y-4">
+    <p>
+      <strong>Melissa – Janvier 2025</strong><br />
+      “Très bon moment passé dans ce logement pour une soirée romantique.  
+      Abdel est un hôte très attentionné et disponible, avec un suivi discret et bienveillant tout au long du séjour.  
+      Le logement est impeccable, le jacuzzi parfaitement propre.  
+      La table dressée pour le dîner romantique et le petit-déjeuner pensé pour préserver l’intimité ont vraiment fait la différence.  
+      Un lieu et un hôte à recommander sans hésitation !”
+    </p>
+  </div>
+</div>
+
+
   <!-- Bandeau réserver maintenant -->
   <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-500">
     <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
