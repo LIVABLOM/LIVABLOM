@@ -97,15 +97,14 @@ permalink: /blom
 </div> <!-- ✅ Fermeture manquante ici -->
 
 <!-- Bandeau réserver maintenant -->
+<p>FIN DU CONTENU</p>
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
   <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
   <a href="{{ site.baseurl }}/contact"
      class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
     Réserver maintenant
-    <p>FIN DU CONTENU</p>
-<p>FIN DU CONTENU</p>
-
+    
   </a>
 </div>
 
