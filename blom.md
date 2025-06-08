@@ -94,6 +94,8 @@ permalink: /blom
         <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
         <p id="modalText" class="text-lg leading-relaxed"></p>
       </div>
+      </div>
+      
       <!-- Bouton vers les avis Airbnb -->
 <div class="mt-8 text-center">
   <a href="https://www.airbnb.fr/rooms/985569147645507170/reviews?adults=2&photo_id=1746486815&source_impression_id=p3_1749410070_P3-YZjjoUqFqYCHl&previous_page_section_name=1000"
