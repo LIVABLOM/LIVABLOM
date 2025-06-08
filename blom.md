@@ -96,14 +96,6 @@ permalink: /blom
       </div>
       </div>
       
-      <!-- Bouton vers les avis Airbnb -->
-<div class="mt-8 text-center">
-  <a href="https://www.airbnb.fr/rooms/985569147645507170/reviews?adults=2&photo_id=1746486815&source_impression_id=p3_1749410070_P3-YZjjoUqFqYCHl&previous_page_section_name=1000"
-     target="_blank"
-     class="inline-block bg-red-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-red-700 transition">
-    Voir tous les avis sur Airbnb
-  </a>
-</div>
 
     </div>
 
