@@ -103,6 +103,9 @@ permalink: /blom
   <a href="{{ site.baseurl }}/contact"
      class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
     Réserver maintenant
+    <p>FIN DU CONTENU</p>
+<p>FIN DU CONTENU</p>
+
   </a>
 </div>
 
