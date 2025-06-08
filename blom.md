@@ -106,7 +106,7 @@ permalink: /blom
       </a>
     </div>
 
-  </div>
+  
 </section>
 
 <script>
