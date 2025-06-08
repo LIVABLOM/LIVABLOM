@@ -73,28 +73,28 @@ permalink: /blom
       </div>
     </div>
 
-   <!-- Bloc témoignages dynamique -->
-<div class="mt-20">
-  <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
-  <div class="relative max-w-3xl mx-auto overflow-hidden">
-    <div id="carousel" class="flex transition-transform duration-700">
-      {% for temoignage in site.data.temoignages %}
-      <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
-        <p class="italic text-lg truncate">“{{ temoignage.texte | truncate: 100 }}”</p>
-        <span class="block mt-2 text-sm text-gray-400">– {{ temoignage.auteur }}</span>
+    <!-- Bloc témoignages dynamique -->
+    <div class="mt-20">
+      <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
+      <div class="relative max-w-3xl mx-auto overflow-hidden">
+        <div id="carousel" class="flex transition-transform duration-700">
+          {% for temoignage in site.data.temoignages %}
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
+            <p class="italic text-lg truncate">“{{ temoignage.texte | truncate: 100 }}”</p>
+            <span class="block mt-2 text-sm text-gray-400">– {{ temoignage.auteur }}</span>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      {% endfor %}
     </div>
-  </div>
-</div>
 
-<!-- Modal -->
-<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
-    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-    <p id="modalText" class="text-lg leading-relaxed"></p>
-  </div>
-</div>
+    <!-- Modal -->
+    <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+      <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+        <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+        <p id="modalText" class="text-lg leading-relaxed"></p>
+      </div>
+    </div>
 
     <!-- Bandeau réserver maintenant -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
@@ -107,8 +107,6 @@ permalink: /blom
     </div>
 
   </div>
-
-  
 </section>
 
 <script>
@@ -126,7 +124,6 @@ permalink: /blom
     updateCarousel();
   }, 5000);
 
-  // Les témoignages sont injectés par Liquid dans ce tableau JS
   const fullTestimonials = [
     {% for temoignage in site.data.temoignages %}
     `{{ temoignage.texte | strip_newlines | replace: "`", "\\`" }}`{% unless forloop.last %},{% endunless %}
