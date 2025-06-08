@@ -89,23 +89,23 @@ permalink: /blom
     </div>
 
     <!-- Modal -->
-    <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-      <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
-        <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-        <p id="modalText" class="text-lg leading-relaxed"></p>
-      </div>
-      </div>
-  
+<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+    <p id="modalText" class="text-lg leading-relaxed"></p>
+  </div>
+</div> <!-- ✅ Fermeture manquante ici -->
 
-    <!-- Bandeau réserver maintenant -->
-    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-      <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
-      <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
-      <a href="{{ site.baseurl }}/contact"
-         class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-        Réserver maintenant
-      </a>
-    </div>
+<!-- Bandeau réserver maintenant -->
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+  <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
+  <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
+  <a href="{{ site.baseurl }}/contact"
+     class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+    Réserver maintenant
+  </a>
+</div>
+
 
   
 </section>
