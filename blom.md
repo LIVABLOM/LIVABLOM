@@ -94,7 +94,7 @@ permalink: /blom
         <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
         <p id="modalText" class="text-lg leading-relaxed"></p>
       </div>
-      </div>
+      
       
 
     <!-- Bandeau réserver maintenant -->
