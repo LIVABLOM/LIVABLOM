@@ -27,43 +27,31 @@ permalink: /blom
       </div>
     </div>
 
-   <!-- Bloc 2 – Espace massage -->
-<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
-  <!-- Première image : table manuelle -->
-  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-    <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage pour duo"
-         class="w-full h-auto max-w-full object-cover filter brightness-75" />
-    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-  </div>
-  
-  <div class="w-full md:w-1/2 text-lg space-y-4">
-    <h2 class="text-2xl font-semibold">Espace massage</h2>
-    
-    <div>
-      <h3 class="text-xl font-semibold">Massage en duo</h3>
-      <p>Profitez d’une table de massage classique, idéale pour un instant complice et relaxant à deux. Un moment de partage tout en douceur.</p>
-    </div>
-    
-    <div>
-      <h3 class="text-xl font-semibold mt-4">Massage ciblé électrique</h3>
-      <p>Découvrez notre table de massage électrique, chauffante et équipée de 16 programmes automatiques. Parfaite pour une session de relaxation solo ou en alternance selon vos envies.</p>
-      
-      <div class="relative w-full rounded-xl overflow-hidden shadow-lg mt-4">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
-             class="w-full h-auto max-w-full object-cover filter brightness-75" />
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+    <!-- Bloc 2 (Massage manuel + table électrique) -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
+      <div class="w-full md:w-1/2 flex flex-col gap-4">
+        <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
+          <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage manuelle"
+               class="w-full h-auto object-cover filter brightness-75" />
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+        <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
+          <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
+               class="w-full h-auto object-cover filter brightness-75" />
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Espace Massage</h2>
+        <p>Deux types de massage : manuel à partager en duo, ou table de massage électrique avec 16 programmes et fonction chauffante, parfaite pour un moment de détente en solo ou à deux.</p>
       </div>
     </div>
-  </div>
-</div>
-
-     
 
     <!-- Bloc 3 -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon"
-             class="w-full h-auto max-w-full object-cover filter brightness-75" />
+             class="w-full h-auto object-cover filter brightness-75" />
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
@@ -72,96 +60,91 @@ permalink: /blom
       </div>
     </div>
 
-     <!-- Bloc 4 -->
-    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
+    <!-- Bloc 4 -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Lit king size et coin salon"
-             class="w-full h-auto max-w-full object-cover filter brightness-75" />
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Table romantique dressée"
+             class="w-full h-auto object-cover filter brightness-75" />
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Dîner romantique</h2>
-<p>Apportez votre repas, nous créons l’ambiance : une table dressée avec soin, bougies, vaisselle élégante et lumière tamisée. L’endroit parfait pour savourer un moment à deux, en toute intimité.</p>
-
+        <h2 class="text-2xl font-semibold">Table Romantique</h2>
+        <p>Vous souhaitez apporter votre dîner ? Une table romantique vous attend, dressée avec soin pour sublimer votre soirée.</p>
+      </div>
     </div>
 
-  </div>
-
-  <!-- Bloc Témoignages en carrousel -->
-<div class="mt-16 bg-white text-black py-10 px-6 rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-500">
-  <h3 class="text-2xl md:text-3xl font-bold text-center mb-6">Ils ont vécu l’expérience BLŌM</h3>
-
-  <div class="relative overflow-hidden">
-    <div id="carousel" class="whitespace-nowrap transition-transform duration-500">
-      <!-- Témoignage 1 -->
-      <div class="inline-block w-full align-top px-2">
-        <div class="text-sm md:text-base italic space-y-4">
-          <p>
-            <strong>Melissa – Janvier 2025</strong><br />
-            “Très bon moment passé dans ce logement pour une soirée romantique.  
-            Abdel est un hôte très attentionné et disponible, avec un suivi discret et bienveillant tout au long du séjour.  
-            Le logement est impeccable, le jacuzzi parfaitement propre.  
-            La table dressée pour le dîner romantique et le petit-déjeuner pensé pour préserver l’intimité ont vraiment fait la différence.  
-            Un lieu et un hôte à recommander sans hésitation !”
-          </p>
-        </div>
-      </div>
-
-      <!-- Témoignage 2 (exemple à compléter plus tard) -->
-      <div class="inline-block w-full align-top px-2 hidden">
-        <div class="text-sm md:text-base italic space-y-4">
-          <p>
-            <strong>Nom – Mois année</strong><br />
-            “Texte du témoignage à ajouter ici...”
-          </p>
+    <!-- Bloc témoignages -->
+    <div class="mt-20">
+      <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
+      <div class="relative max-w-3xl mx-auto overflow-hidden">
+        <div id="carousel" class="flex transition-transform duration-700">
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(0)">
+            <p class="italic text-lg truncate">“Très bon moment passé dans ce logement pour une soirée romantique...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Melissa</span>
+          </div>
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(1)">
+            <p class="italic text-lg truncate">“Tout était parfait, propre, bien pensé. Nous reviendrons avec plaisir...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Hugo</span>
+          </div>
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(2)">
+            <p class="italic text-lg truncate">“Super expérience, très relaxant et bien organisé...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Laura</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Boutons navigation -->
-    <div class="flex justify-between mt-4">
-      <button onclick="prevTestimonial()" class="text-black hover:text-gray-600">&#8592; Précédent</button>
-      <button onclick="nextTestimonial()" class="text-black hover:text-gray-600">Suivant &#8594;</button>
+    <!-- Bandeau réserver maintenant -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+      <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
+      <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
+      <a href="{{ site.baseurl }}/contact"
+         class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+        Réserver maintenant
+      </a>
     </div>
 
-    <!-- Lien vers tous les commentaires -->
-    <div class="mt-6 text-center">
-      <a href="{{ site.baseurl }}/temoignages" class="text-blue-600 hover:underline">Voir tous les avis</a>
-    </div>
   </div>
 
-  <!-- Script carousel -->
-  <script>
-    let index = 0;
-    const carousel = document.getElementById('carousel');
-    const slides = carousel.children;
-    const total = slides.length;
-
-    function updateCarousel() {
-      carousel.style.transform = `translateX(-${index * 100}%)`;
-    }
-
-    function nextTestimonial() {
-      index = (index + 1) % total;
-      updateCarousel();
-    }
-
-    function prevTestimonial() {
-      index = (index - 1 + total) % total;
-      updateCarousel();
-    }
-  </script>
-</div>
-
-
-  <!-- Bandeau réserver maintenant -->
-  <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-500">
-    <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
-    <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
-    <a href="{{ site.baseurl }}/contact"
-       class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-      Réserver maintenant
-    </a>
+  <!-- Modal -->
+  <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+    <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+      <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+      <p id="modalText" class="text-lg leading-relaxed"></p>
+    </div>
   </div>
 
 </section>
+
+<script>
+  let index = 0;
+  const carousel = document.getElementById('carousel');
+  const slides = carousel.children;
+  const total = slides.length;
+
+  function updateCarousel() {
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  setInterval(() => {
+    index = (index + 1) % total;
+    updateCarousel();
+  }, 5000);
+
+  const fullTestimonials = [
+    "Très bon moment passé dans ce logement pour une soirée romantique. Abdel est un hôte très attentionné et disponible. Le logement est très propre, le jacuzzi nettoyé entre chaque locataire. La table est mise pour un dîner romantique et le petit déjeuner organisé pour l’intimité des locataires est parfait.",
+    "Tout était parfait, propre, bien pensé. Nous reviendrons avec plaisir. Merci pour ce beau moment de détente.",
+    "Super expérience, très relaxant et bien organisé. Hôte réactif, lieu calme et très propre."
+  ];
+
+  function openModal(i) {
+    document.getElementById("modalText").innerText = fullTestimonials[i];
+    document.getElementById("testimonialModal").classList.remove("hidden");
+    document.getElementById("testimonialModal").classList.add("flex");
+  }
+
+  function closeModal() {
+    document.getElementById("testimonialModal").classList.add("hidden");
+    document.getElementById("testimonialModal").classList.remove("flex");
+  }
+</script>
