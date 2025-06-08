@@ -73,26 +73,28 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Bloc témoignages -->
-    <div class="mt-20">
-      <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
-      <div class="relative max-w-3xl mx-auto overflow-hidden">
-        <div id="carousel" class="flex transition-transform duration-700">
-          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(0)">
-            <p class="italic text-lg truncate">“Très bon moment passé dans ce logement pour une soirée romantique...”</p>
-            <span class="block mt-2 text-sm text-gray-400">– Melissa</span>
-          </div>
-          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(1)">
-            <p class="italic text-lg truncate">“Tout était parfait, propre, bien pensé. Nous reviendrons avec plaisir...”</p>
-            <span class="block mt-2 text-sm text-gray-400">– Hugo</span>
-          </div>
-          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(2)">
-            <p class="italic text-lg truncate">“Super expérience, très relaxant et bien organisé...”</p>
-            <span class="block mt-2 text-sm text-gray-400">– Laura</span>
-          </div>
-        </div>
+   <!-- Bloc témoignages dynamique -->
+<div class="mt-20">
+  <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
+  <div class="relative max-w-3xl mx-auto overflow-hidden">
+    <div id="carousel" class="flex transition-transform duration-700">
+      {% for temoignage in site.data.temoignages %}
+      <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
+        <p class="italic text-lg truncate">“{{ temoignage.texte | truncate: 100 }}”</p>
+        <span class="block mt-2 text-sm text-gray-400">– {{ temoignage.auteur }}</span>
       </div>
+      {% endfor %}
     </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+    <p id="modalText" class="text-lg leading-relaxed"></p>
+  </div>
+</div>
 
     <!-- Bandeau réserver maintenant -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
@@ -131,10 +133,11 @@ permalink: /blom
     updateCarousel();
   }, 5000);
 
+  // Les témoignages sont injectés par Liquid dans ce tableau JS
   const fullTestimonials = [
-    "Très bon moment passé dans ce logement pour une soirée romantique. Abdel est un hôte très attentionné et disponible. Le logement est très propre, le jacuzzi nettoyé entre chaque locataire. La table est mise pour un dîner romantique et le petit déjeuner organisé pour l’intimité des locataires est parfait.",
-    "Tout était parfait, propre, bien pensé. Nous reviendrons avec plaisir. Merci pour ce beau moment de détente.",
-    "Super expérience, très relaxant et bien organisé. Hôte réactif, lieu calme et très propre."
+    {% for temoignage in site.data.temoignages %}
+    `{{ temoignage.texte | strip_newlines | replace: "`", "\\`" }}`{% unless forloop.last %},{% endunless %}
+    {% endfor %}
   ];
 
   function openModal(i) {
