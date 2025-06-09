@@ -88,15 +88,18 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Modal -->
-<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+    <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
   <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
     <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-    <p id="modalText" class="text-lg leading-relaxed"></p>
+    <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
+    
+    <!-- Navigation boutons -->
+    <div class="flex justify-between mt-4">
+      <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
+      <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
+    </div>
   </div>
-  
-</div> 
-
+</div>
 <!-- Bandeau réserver maintenant -->
 
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
@@ -111,34 +114,31 @@ permalink: /blom
 
 
 <script>
-  let index = 0;
-  const carousel = document.getElementById('carousel');
-  const slides = carousel.children;
-  const total = slides.length;
+let currentIndex = 0;
 
-  function updateCarousel() {
-    carousel.style.transform = `translateX(-${index * 100}%)`;
-  }
+function openModal(i) {
+  currentIndex = i;
+  updateModalText();
+  document.getElementById("testimonialModal").classList.remove("hidden");
+  document.getElementById("testimonialModal").classList.add("flex");
+}
 
-  setInterval(() => {
-    index = (index + 1) % total;
-    updateCarousel();
-  }, 5000);
+function closeModal() {
+  document.getElementById("testimonialModal").classList.add("hidden");
+  document.getElementById("testimonialModal").classList.remove("flex");
+}
 
-  const fullTestimonials = [
-    {% for temoignage in site.data.temoignages %}
-    `{{ temoignage.texte | strip_newlines | replace: "`", "\\`" }}`{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
+function updateModalText() {
+  document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+}
 
-  function openModal(i) {
-    document.getElementById("modalText").innerText = fullTestimonials[i];
-    document.getElementById("testimonialModal").classList.remove("hidden");
-    document.getElementById("testimonialModal").classList.add("flex");
-  }
+function prevTestimonial() {
+  currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+  updateModalText();
+}
 
-  function closeModal() {
-    document.getElementById("testimonialModal").classList.add("hidden");
-    document.getElementById("testimonialModal").classList.remove("flex");
-  }
+function nextTestimonial() {
+  currentIndex = (currentIndex + 1) % fullTestimonials.length;
+  updateModalText();
+}
 </script>
