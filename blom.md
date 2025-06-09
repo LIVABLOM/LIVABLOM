@@ -94,9 +94,8 @@ permalink: /blom
     <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
     <p id="modalText" class="text-lg leading-relaxed"></p>
   
-</div> <!-- ✅ Fermeture manquante ici -->
+</div> 
 
-p>FIN DU CONTENU</p>
 <!-- Bandeau réserver maintenant -->
 
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
