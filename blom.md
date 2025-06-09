@@ -150,3 +150,18 @@ const fullTestimonials = [
   {% endfor %}
 ];
 </script>
+<script>
+let carouselIndex = 0;
+const carousel = document.getElementById("carousel");
+const totalItems = {{ site.data.temoignages | size }};
+
+function showCarouselSlide(index) {
+  const offset = -index * 100;
+  carousel.style.transform = `translateX(${offset}%)`;
+}
+
+setInterval(() => {
+  carouselIndex = (carouselIndex + 1) % totalItems;
+  showCarouselSlide(carouselIndex);
+}, 4000); // Change toutes les 4 secondes
+</script>
