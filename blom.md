@@ -110,9 +110,6 @@ permalink: /blom
 </div>
 
 
-  
-</section>
-
 <script>
   let index = 0;
   const carousel = document.getElementById('carousel');
