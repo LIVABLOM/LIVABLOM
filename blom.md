@@ -93,6 +93,7 @@ permalink: /blom
   <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
     <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
     <p id="modalText" class="text-lg leading-relaxed"></p>
+  </div>
   
 </div> 
 
