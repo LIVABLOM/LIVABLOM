@@ -142,3 +142,11 @@ function nextTestimonial() {
   updateModalText();
 }
 </script>
+
+<script>
+const fullTestimonials = [
+  {% for temoignage in site.data.temoignages %}
+    `{{ temoignage.texte | strip_newlines | escape }}`,
+  {% endfor %}
+];
+</script>
