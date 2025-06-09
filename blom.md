@@ -98,7 +98,7 @@ permalink: /blom
 
 p>FIN DU CONTENU</p>
 <!-- Bandeau réserver maintenant -->
-<
+
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
   <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
