@@ -27,7 +27,7 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Bloc 2 (Massage manuel + table électrique) -->
+    <!-- Bloc 2 -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
       <div class="w-full md:w-1/2 flex flex-col gap-4">
         <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
@@ -73,7 +73,7 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Bloc témoignages dynamique -->
+    <!-- Bloc témoignages -->
     <div class="mt-20">
       <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
       <div class="relative max-w-3xl mx-auto overflow-hidden">
@@ -88,33 +88,39 @@ permalink: /blom
       </div>
     </div>
 
+    <!-- Modal témoignage -->
     <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
-    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-    <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
-    
-    <!-- Navigation boutons -->
-    <div class="flex justify-between mt-4">
-      <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
-      <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
+      <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+        <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+        <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
+        <div class="flex justify-between mt-4">
+          <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
+          <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
+        </div>
+      </div>
     </div>
+
+    <!-- Appel à l'action -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+      <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
+      <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
+      <a href="{{ site.baseurl }}/contact"
+         class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+        Réserver maintenant
+      </a>
+    </div>
+
   </div>
-</div>
-<!-- Bandeau réserver maintenant -->
+</section>
 
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
-  <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
-  <a href="{{ site.baseurl }}/contact"
-     class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-    Réserver maintenant
-    
-  </a>
-</div>
-
-
+<!-- Scripts -->
 <script>
 let currentIndex = 0;
+const fullTestimonials = [
+  {% for temoignage in site.data.temoignages %}
+    `{{ temoignage.texte | strip_newlines | escape }}`,
+  {% endfor %}
+];
 
 function openModal(i) {
   currentIndex = i;
@@ -141,19 +147,11 @@ function nextTestimonial() {
   currentIndex = (currentIndex + 1) % fullTestimonials.length;
   updateModalText();
 }
-</script>
 
-<script>
-const fullTestimonials = [
-  {% for temoignage in site.data.temoignages %}
-    `{{ temoignage.texte | strip_newlines | escape }}`,
-  {% endfor %}
-];
-</script>
-<script>
-let carouselIndex = 0;
+// Carrousel automatique
 const carousel = document.getElementById("carousel");
 const totalItems = {{ site.data.temoignages | size }};
+let carouselIndex = 0;
 
 function showCarouselSlide(index) {
   const offset = -index * 100;
@@ -163,5 +161,5 @@ function showCarouselSlide(index) {
 setInterval(() => {
   carouselIndex = (carouselIndex + 1) % totalItems;
   showCarouselSlide(carouselIndex);
-}, 4000); // Change toutes les 4 secondes
+}, 4000);
 </script>
