@@ -1,12 +1,7 @@
- ---
-
+---
 layout: default
-
 title: BLŌM
-
 permalink: /blom
-
-
 ---
 
 <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">  <div class="max-w-6xl mx-auto space-y-16"><h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
