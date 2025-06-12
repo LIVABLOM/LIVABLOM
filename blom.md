@@ -71,11 +71,19 @@ permalink: /blom
         <h2 class="text-2xl font-semibold">Table Romantique</h2>
         <p>Vous souhaitez apporter votre dîner ? Une table romantique vous attend, dressée avec soin pour sublimer votre soirée.</p>
       </div>
-    </div>
+    </div>  
 
-    <!-- Bloc témoignages -->
+<!-- Bloc témoignages dynamique -->
     <div class="mt-20">
+      <!-- Étoiles dorées -->
+      <div class="flex justify-center mb-2">
+        {% for i in (1..5) %}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.848L19.335 24 12 20.201 4.665 24 6 15.596 0 9.748l8.332-1.73z"/></svg>
+        {% endfor %}
+      </div>
+
       <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
+
       <div class="relative max-w-3xl mx-auto overflow-hidden">
         <div id="carousel" class="flex transition-transform duration-700">
           {% for temoignage in site.data.temoignages %}
@@ -88,11 +96,20 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Modal témoignage -->
+    <!-- Modal avec étoiles ajoutées -->
     <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
       <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
         <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+
+        <!-- Étoiles dans la popup -->
+        <div class="flex justify-center mb-4">
+          {% for i in (1..5) %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.848L19.335 24 12 20.201 4.665 24 6 15.596 0 9.748l8.332-1.73z"/></svg>
+          {% endfor %}
+        </div>
+
         <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
+
         <div class="flex justify-between mt-4">
           <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
           <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
@@ -100,7 +117,7 @@ permalink: /blom
       </div>
     </div>
 
-    <!-- Appel à l'action -->
+    <!-- Réserver -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
       <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
       <p class="mb-4">Spa privatif, massage et confort haut de gamme vous attendent</p>
@@ -109,18 +126,12 @@ permalink: /blom
         Réserver maintenant
       </a>
     </div>
-
   </div>
 </section>
 
 <!-- Scripts -->
 <script>
 let currentIndex = 0;
-const fullTestimonials = [
-  {% for temoignage in site.data.temoignages %}
-    `{{ temoignage.texte | strip_newlines | escape }}`,
-  {% endfor %}
-];
 
 function openModal(i) {
   currentIndex = i;
@@ -147,11 +158,20 @@ function nextTestimonial() {
   currentIndex = (currentIndex + 1) % fullTestimonials.length;
   updateModalText();
 }
+</script>
 
-// Carrousel automatique
+<script>
+const fullTestimonials = [
+  {% for temoignage in site.data.temoignages %}
+    `{{ temoignage.texte | strip_newlines | escape }}`,
+  {% endfor %}
+];
+</script>
+
+<script>
+let carouselIndex = 0;
 const carousel = document.getElementById("carousel");
 const totalItems = {{ site.data.temoignages | size }};
-let carouselIndex = 0;
 
 function showCarouselSlide(index) {
   const offset = -index * 100;
