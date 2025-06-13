@@ -9,6 +9,10 @@ permalink: /blom
 
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
 
+    <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
+  BLŌM se déploie sur deux étages comme un refuge intime, où chaque espace a son moment à offrir : en bas, un salon chaleureux, un spa enveloppant et une table dressée pour les instants à deux ; à l’étage, une salle de massage apaisante, une douche élégante et une chambre spacieuse où le repos prend tout son sens.
+</p>
+
     <!-- Bandeau hygiène -->
     <div class="bg-red-600 text-white text-sm px-6 py-3 rounded-full shadow-md text-center max-w-md mx-auto mb-6 animate-fadeIn delay-100">
       Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
