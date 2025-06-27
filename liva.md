@@ -38,8 +38,7 @@ permalink: /liva
        class="bg-white text-black hover:bg-gray-300 font-semibold py-3 px-6 rounded-full transition inline-block">
       Réserver LIVA
     </a>
-  </section>
-
+  
   <!-- AVIS CLIENTS -->
   <section class="py-12">
     <h2 class="text-2xl font-bold mb-6">Ce qu’en disent nos visiteurs</h2>
