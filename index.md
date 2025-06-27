@@ -9,11 +9,11 @@ title: LIVABLŌM
   <!-- Partie LIVA -->
   <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center text-white flex flex-col items-center justify-center p-6 text-center" style="background-image: url('{{ site.baseurl }}/assets/galerie/liva/salon1.jpg');">
     <div class="bg-black/70 p-4 rounded-lg">
-      <h2 class="text-3xl font-bold mb-4">LIVA – Logement tout confort</h2>
+      <h2 class="text-3xl font-bold mb-4">liva – Logement tout confort</h2>
       <p class="mb-6 text-lg max-w-xs">
         <strong>Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</strong>
       </p>
-      <a href="{{ site.baseurl }}/Liva" class="bg-white text-black py-2 px-4 rounded hover:bg-gray-200">Découvrir Liva</a>
+      <a href="{{ site.baseurl }}/liva" class="bg-white text-black py-2 px-4 rounded hover:bg-gray-200">Découvrir Liva</a>
     </div>
   </div>
 
