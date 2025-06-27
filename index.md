@@ -13,7 +13,7 @@ title: LIVABLŌM
       <p class="mb-6 text-lg font-semibold text-black">
         <strong>Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</strong>
       </p>
-      <a href="{{ site.baseurl }}/liva" class="bg-black text-white py-2 px-4 rounded hover:bg-gray-800">Découvrir LIVA</a>
+      <a href="{{ site.baseurl }}/Liva" class="bg-white text-black py-2 px-4 rounded hover:bg-gray-200">Découvrir Liva</a>
     </div>
   </div>
 
