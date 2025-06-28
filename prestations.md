@@ -1,21 +1,22 @@
 ---
 layout: default
-title: Choisissez votre hébergement
+title: Prestations
 permalink: /prestations
 ---
 
-<div class="min-h-screen flex flex-col justify-center items-center bg-white text-center px-4">
-  <h1 class="text-3xl font-bold mb-8">Choisissez un hébergement</h1>
+<section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-4xl mx-auto">
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl w-full">
-    <a href="{{ site.baseurl }}/prestations-liva" class="bg-gray-100 hover:bg-gray-200 p-8 rounded-lg shadow-lg transition">
-      <h2 class="text-xl font-semibold mb-2">LIVA</h2>
-      <p>Prestations pour les familles, couples ou professionnels</p>
-    </a>
+    <h2 class="text-3xl font-bold mb-8 text-center">Choisissez votre logement</h2>
 
-    <a href="{{ site.baseurl }}/prestations-blom" class="bg-gray-100 hover:bg-gray-200 p-8 rounded-lg shadow-lg transition">
-      <h2 class="text-xl font-semibold mb-2">BLŌM</h2>
-      <p>Prestations bien-être, spa et détente pour les couples</p>
-    </a>
+    <div class="space-y-6 text-lg leading-relaxed text-center">
+      <p>Vous souhaitez découvrir nos prestations ? Sélectionnez le logement qui vous correspond :</p>
+
+      <div class="flex flex-col md:flex-row justify-center items-center gap-6 mt-6">
+        <a href="{{ site.baseurl }}/prestations-liva" class="inline-block bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">Prestations LIVA</a>
+        <a href="{{ site.baseurl }}/prestations-blom" class="inline-block bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">Prestations BLŌM</a>
+      </div>
+    </div>
+
   </div>
-</div>
+</section>
