@@ -13,7 +13,7 @@ permalink: /contact
       Une question ? Une demande de réservation ? N'hésitez pas à nous écrire via ce formulaire.
     </p>
 
-    <form action="https://formspree.io/f/xbjnyojp" method="POST" class="space-y-6">
+    <form action="https://formspree.io/f/mblyrrna" method="POST" class="space-y-6">
 
       <div>
         <label for="name" class="block text-sm font-semibold mb-1">Nom</label>
