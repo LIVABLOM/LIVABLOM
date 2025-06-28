@@ -38,23 +38,26 @@
     </div>
 
     <!-- Menu desktop -->
-    <nav class="hidden sm:flex space-x-4 text-sm">
-      <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+<nav class="hidden sm:flex space-x-4 text-sm">
+  <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
 
-      {% if page.url contains 'liva' %}
-        <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-        <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-      {% elsif page.url contains 'blom' %}
-        <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-        <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-      {% else %}
-        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-        <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-      {% endif %}
+  {% if page.url contains 'liva' %}
+    <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
+    <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+  {% elsif page.url contains 'blom' %}
+    <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
+    <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+  {% elsif page.url == '/' %}
+    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+    <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+  {% else %}
+    <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+    <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+  {% endif %}
 
-      <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-    </nav>
-
+  <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+</nav>
+    
     <!-- Hamburger button -->
     <div class="sm:hidden relative">
       <button id="menu-toggle" class="focus:outline-none">
