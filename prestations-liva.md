@@ -8,7 +8,7 @@ permalink: /prestations-liva
   <div class="max-w-4xl mx-auto">
     <h1 class="text-3xl font-bold mb-8 text-center">Nos prestations – LIVA</h1>
 
-```
+
 <section class="mb-10">
   <h2 class="text-2xl font-semibold mb-4">Confort & équipements</h2>
   <ul class="list-disc list-inside space-y-2">
