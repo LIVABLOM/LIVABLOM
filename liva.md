@@ -20,6 +20,7 @@ permalink: /liva
   <section id="galerie" class="mb-12 max-w-5xl mx-auto">
     <h2 class="text-3xl font-semibold mb-8 text-gray-900">Galerie</h2>
     <div class="flex flex-wrap justify-center gap-6">
+      <!-- Images comme avant -->
       <a href="{{ site.baseurl }}/assets/images/salon1.jpg" data-lightbox="liva" data-title="Salon LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
         <img src="{{ site.baseurl }}/assets/images/salon1.jpg" alt="Salon LIVA" class="w-full h-40 object-cover" />
       </a>
@@ -60,22 +61,7 @@ permalink: /liva
   <!-- AVIS CLIENTS -->
   <section class="mb-12 max-w-3xl mx-auto text-left px-4">
     <h2 class="text-3xl font-semibold mb-6 text-gray-900">Ce qu’en disent nos visiteurs</h2>
-    <div class="relative overflow-hidden rounded-lg shadow-md">
-      <div id="carousel-liva" class="flex transition-transform duration-700">
-        <div class="min-w-full px-6 py-8 cursor-pointer bg-white" onclick="openModalLiva(0)">
-          <p class="italic text-lg text-gray-700 truncate">"Très bien situé, calme et parfaitement équipé."</p>
-          <p class="text-sm text-gray-500 mt-2">— Julien</p>
-        </div>
-        <div class="min-w-full px-6 py-8 cursor-pointer bg-white" onclick="openModalLiva(1)">
-          <p class="italic text-lg text-gray-700 truncate">"Propre, moderne, idéal pour notre séjour professionnel."</p>
-          <p class="text-sm text-gray-500 mt-2">— Marion & Thierry</p>
-        </div>
-        <div class="min-w-full px-6 py-8 cursor-pointer bg-white" onclick="openModalLiva(2)">
-          <p class="italic text-lg text-gray-700 truncate">"L’appartement est spacieux, tout était conforme à l’annonce."</p>
-          <p class="text-sm text-gray-500 mt-2">— Élise</p>
-        </div>
-      </div>
-    </div>
+    <div id="testimonial-list" class="relative overflow-hidden rounded-lg shadow-md bg-white flex gap-4 px-4 py-6 justify-center"></div>
   </section>
 
   <!-- MODALE AVIS -->
@@ -93,22 +79,34 @@ permalink: /liva
 </div>
 
 <script>
-  let indexLiva = 0;
-  const carouselLiva = document.getElementById('carousel-liva');
-  const slideCountLiva = carouselLiva.children.length;
-
-  setInterval(() => {
-    indexLiva = (indexLiva + 1) % slideCountLiva;
-    carouselLiva.style.transform = `translateX(-${indexLiva * 100}%)`;
-  }, 4000);
-
-  const fullTestimonialsLiva = [
-    `Très bien situé, calme et parfaitement équipé.`,
-    `Propre, moderne, idéal pour notre séjour professionnel.`,
-    `L’appartement est spacieux, tout était conforme à l’annonce.`
-  ];
-
+  let testimonialsLiva = [];
   let currentLiva = 0;
+
+  // Charger les témoignages JSON
+  fetch('{{ site.baseurl }}/assets/data/temoignages-liva.json')
+    .then(response => response.json())
+    .then(data => {
+      testimonialsLiva = data;
+      renderTestimonials();
+    })
+    .catch(error => {
+      console.error("Erreur chargement témoignages :", error);
+      document.getElementById('testimonial-list').innerText = "Impossible de charger les témoignages.";
+    });
+
+  function renderTestimonials() {
+    const container = document.getElementById('testimonial-list');
+    container.innerHTML = '';
+    testimonialsLiva.forEach((t, i) => {
+      // On affiche un extrait (max 80 caractères) avec "..." si trop long
+      const excerpt = t.texte.length > 80 ? t.texte.substring(0, 77) + "..." : t.texte;
+      const div = document.createElement('div');
+      div.className = "min-w-[250px] cursor-pointer px-4 py-6 border rounded shadow hover:shadow-lg transition";
+      div.innerHTML = `<p class="italic text-gray-700">${excerpt}</p><p class="text-sm text-gray-500 mt-2">— ${t.auteur}</p>`;
+      div.onclick = () => openModalLiva(i);
+      container.appendChild(div);
+    });
+  }
 
   function openModalLiva(i) {
     currentLiva = i;
@@ -125,16 +123,17 @@ permalink: /liva
   }
 
   function updateModalTextLiva() {
-    document.getElementById("modalTextLiva").innerText = fullTestimonialsLiva[currentLiva];
+    const modalText = document.getElementById("modalTextLiva");
+    modalText.innerHTML = `<em>"${testimonialsLiva[currentLiva].texte}"</em><br><br><strong>— ${testimonialsLiva[currentLiva].auteur}</strong>`;
   }
 
   function prevTestimonialLiva() {
-    currentLiva = (currentLiva - 1 + fullTestimonialsLiva.length) % fullTestimonialsLiva.length;
+    currentLiva = (currentLiva - 1 + testimonialsLiva.length) % testimonialsLiva.length;
     updateModalTextLiva();
   }
 
   function nextTestimonialLiva() {
-    currentLiva = (currentLiva + 1) % fullTestimonialsLiva.length;
+    currentLiva = (currentLiva + 1) % testimonialsLiva.length;
     updateModalTextLiva();
   }
 </script>
