@@ -41,7 +41,7 @@ permalink: /prestations-liva
 <p class="text-sm text-center text-yellow-300 mt-12">
   Pour toute demande spécifique, contactez-nous directement.
 </p>
-```
+
 
   </div>
 </div>
