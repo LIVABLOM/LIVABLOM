@@ -25,7 +25,7 @@
   .delay-300 { animation-delay: 0.3s; }
   .delay-400 { animation-delay: 0.4s; }
   .delay-500 { animation-delay: 0.5s; }
-</style>
+  </style>
 
 </head>
   <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden ...">
@@ -38,71 +38,52 @@
     </div>
 
     <!-- Menu desktop -->
-<nav class="hidden sm:flex space-x-4 text-sm">
-  <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+    <nav class="hidden sm:flex space-x-4 text-sm">
+      <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
 
-  {% if page.url contains 'liva' %}
-    <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-  {% elsif page.url contains 'blom' %}
-    <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-    <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-  {% elsif page.url == '/' %}
-   
-  <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-</nav>
+      {% if page.url contains 'liva' %}
+        <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+      {% elsif page.url contains 'blom' %}
+        <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+      {% elsif page.url == '/' %}
+        <!-- Pas de lien Galerie sur la page d'accueil -->
+        <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+      {% else %}
+        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+        <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+      {% endif %}
+    </nav>
     
-   <!-- Hamburger + Menu mobile -->
-<div class="sm:hidden relative">
-  <button id="menu-toggle" class="focus:outline-none">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"/>
-    </svg>
-  </button>
+    <!-- Hamburger + Menu mobile -->
+    <div class="sm:hidden relative">
+      <button id="menu-toggle" class="focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
 
-  <div id="mobile-menu" class="hidden absolute right-0 top-10 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+      <div id="mobile-menu" class="hidden absolute right-0 top-10 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
+        <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
 
-    {% if page.url contains 'liva' %}
-      <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-    {% elsif page.url contains 'blom' %}
-      <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-    {% elsif page.url == '/' %}
-      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-    {% else %}
-      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-    {% endif %}
-
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </div>
-</div>
-
-
-  <div id="mobile-menu" class="hidden absolute right-0 top-10 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
-    <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-
-    {% if page.url contains 'liva' %}
-      <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-    {% elsif page.url contains 'blom' %}
-      <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-    {% elsif page.url == '/' %}
-      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-    {% else %}
-      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-    {% endif %}
-
-    <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-  </div>
-</div>
+        {% if page.url contains 'liva' %}
+          <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
+          <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
+        {% elsif page.url contains 'blom' %}
+          <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
+          <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
+        {% elsif page.url == '/' %}
+          <!-- Pas de lien Galerie sur la page d'accueil -->
+          <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+          <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+        {% else %}
+          <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+          <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+          <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 </header>
