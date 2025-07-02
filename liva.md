@@ -58,82 +58,79 @@ permalink: /liva
     </a>
   </div>
 
-  <!-- AVIS CLIENTS -->
-  <section class="mb-12 max-w-3xl mx-auto text-left px-4">
-    <h2 class="text-3xl font-semibold mb-6 text-gray-900">Ce qu’en disent nos visiteurs</h2>
-    <div id="testimonial-list" class="relative overflow-hidden rounded-lg shadow-md bg-white flex gap-4 px-4 py-6 justify-center"></div>
-  </section>
-
-  <!-- MODALE AVIS -->
-  <div id="testimonialModalLiva" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-    <div class="bg-white text-black max-w-xl p-6 rounded-xl relative shadow-lg">
-      <button onclick="closeModalLiva()" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-gray-900">&times;</button>
-      <p id="modalTextLiva" class="text-lg leading-relaxed mb-4 text-gray-800"></p>
-      <div class="flex justify-between mt-4">
-        <button onclick="prevTestimonialLiva()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
-        <button onclick="nextTestimonialLiva()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
+ <!-- Bloc témoignages -->
+<div class="mt-20">
+  <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez LIVA</h2>
+  <div class="relative max-w-3xl mx-auto overflow-hidden">
+    <div id="carousel" class="flex transition-transform duration-700">
+      {% for temoignage in site.data.temoignages-liva %}
+      <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
+        <p class="italic text-lg truncate">“{{ temoignage.texte | truncate: 100 }}”</p>
+        <span class="block mt-2 text-sm text-gray-400">– {{ temoignage.auteur }}</span>
       </div>
+      {% endfor %}
     </div>
   </div>
+</div>
 
+<!-- Modal témoignage -->
+<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+    <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
+    <div class="flex justify-between mt-4">
+      <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
+      <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
+    </div>
+  </div>
 </div>
 
 <script>
-  let testimonialsLiva = [];
-  let currentLiva = 0;
+let currentIndex = 0;
+const fullTestimonials = [
+  {% for temoignage in site.data.temoignages-liva %}
+    `{{ temoignage.texte | strip_newlines | escape }}`,
+  {% endfor %}
+];
 
-  // Charger les témoignages JSON
-  fetch('{{ site.baseurl }}/assets/data/temoignages-liva.json')
-    .then(response => response.json())
-    .then(data => {
-      testimonialsLiva = data;
-      renderTestimonials();
-    })
-    .catch(error => {
-      console.error("Erreur chargement témoignages :", error);
-      document.getElementById('testimonial-list').innerText = "Impossible de charger les témoignages.";
-    });
+function openModal(i) {
+  currentIndex = i;
+  updateModalText();
+  document.getElementById("testimonialModal").classList.remove("hidden");
+  document.getElementById("testimonialModal").classList.add("flex");
+}
 
-  function renderTestimonials() {
-    const container = document.getElementById('testimonial-list');
-    container.innerHTML = '';
-    testimonialsLiva.forEach((t, i) => {
-      // On affiche un extrait (max 80 caractères) avec "..." si trop long
-      const excerpt = t.texte.length > 80 ? t.texte.substring(0, 77) + "..." : t.texte;
-      const div = document.createElement('div');
-      div.className = "min-w-[250px] cursor-pointer px-4 py-6 border rounded shadow hover:shadow-lg transition";
-      div.innerHTML = `<p class="italic text-gray-700">${excerpt}</p><p class="text-sm text-gray-500 mt-2">— ${t.auteur}</p>`;
-      div.onclick = () => openModalLiva(i);
-      container.appendChild(div);
-    });
-  }
+function closeModal() {
+  document.getElementById("testimonialModal").classList.add("hidden");
+  document.getElementById("testimonialModal").classList.remove("flex");
+}
 
-  function openModalLiva(i) {
-    currentLiva = i;
-    updateModalTextLiva();
-    const modal = document.getElementById("testimonialModalLiva");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-  }
+function updateModalText() {
+  document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+}
 
-  function closeModalLiva() {
-    const modal = document.getElementById("testimonialModalLiva");
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
+function prevTestimonial() {
+  currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+  updateModalText();
+}
 
-  function updateModalTextLiva() {
-    const modalText = document.getElementById("modalTextLiva");
-    modalText.innerHTML = `<em>"${testimonialsLiva[currentLiva].texte}"</em><br><br><strong>— ${testimonialsLiva[currentLiva].auteur}</strong>`;
-  }
+function nextTestimonial() {
+  currentIndex = (currentIndex + 1) % fullTestimonials.length;
+  updateModalText();
+}
 
-  function prevTestimonialLiva() {
-    currentLiva = (currentLiva - 1 + testimonialsLiva.length) % testimonialsLiva.length;
-    updateModalTextLiva();
-  }
+// Carrousel automatique
+const carousel = document.getElementById("carousel");
+const totalItems = {{ site.data.temoignages-liva | size }};
+let carouselIndex = 0;
 
-  function nextTestimonialLiva() {
-    currentLiva = (currentLiva + 1) % testimonialsLiva.length;
-    updateModalTextLiva();
-  }
+function showCarouselSlide(index) {
+  const offset = -index * 100;
+  carousel.style.transform = `translateX(${offset}%)`;
+}
+
+setInterval(() => {
+  carouselIndex = (carouselIndex + 1) % totalItems;
+  showCarouselSlide(carouselIndex);
+}, 4000);
 </script>
