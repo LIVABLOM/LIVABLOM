@@ -3,7 +3,7 @@ layout: default
 title: Contact
 permalink: /contact
 ---
-<a href="https://m.me/livablom59" target="_blank" class="fixed top-6 right-6 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition">
+<a href="https://m.me/livablom59" target="_blank" class="fixed top-20 right-6 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition">
   💬 Messenger
 </a>
 
