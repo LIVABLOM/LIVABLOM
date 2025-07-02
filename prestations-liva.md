@@ -35,6 +35,9 @@ permalink: /prestations-liva
   <p>LIVA est situé à Guesnain à 10 minutes de Douai, 30 minutes de Lille, avec stationnement gratuit dans notre parking securisée. Idéal pour les professionnels ou les familles en déplacement.</p>
 </section>
 
+ <p class="mt-6 text-center">
+        <a href="/contact" class="inline-block bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">Demander une réservation</a>
+      </p>
 <p class="text-sm text-center text-yellow-300 mt-12">
   Pour toute demande spécifique, contactez-nous directement.
 </p>
