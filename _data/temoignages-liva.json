@@ -1,1 +1,14 @@
-test
+[
+  {
+    "auteur": "Julien",
+    "texte": "Très bien situé, calme et parfaitement équipé. Nous avons passé un excellent séjour, tout était conforme à la description."
+  },
+  {
+    "auteur": "Marion & Thierry",
+    "texte": "Propre, moderne, idéal pour notre séjour professionnel. L’appartement dispose de tout le nécessaire et la communication a été très facile."
+  },
+  {
+    "auteur": "Élise",
+    "texte": "L’appartement est spacieux, tout était conforme à l’annonce. Nous recommandons vivement ce logement pour un séjour confortable."
+  }
+]
