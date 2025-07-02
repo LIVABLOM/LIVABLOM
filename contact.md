@@ -9,7 +9,7 @@ permalink: /contact
 
 <section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-2xl mx-auto">
-  ...
+
 <section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-2xl mx-auto">
 
