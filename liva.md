@@ -2,7 +2,7 @@
 layout: default
 title: "LIVA – Hébergement haut de gamme pour familles & professionnels"
 description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, spa, parking et petit‑déjeuner inclus."
-image: "/assets/images/liva-hero.webp"
+image: "/assets/images/salon1.webp"
 permalink: /liva/
 ---
 
