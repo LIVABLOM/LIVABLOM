@@ -1,8 +1,11 @@
 ---
 layout: default
-title: LIVA – Logement tout confort
-permalink: /liva
+title: "LIVA – Hébergement haut de gamme pour familles & professionnels"
+description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, spa, parking et petit‑déjeuner inclus."
+image: "/assets/images/liva-hero.webp"
+permalink: /liva/
 ---
+
 
 <div class="bg-gray-100 min-h-screen px-6 py-8 text-center flex flex-col">
 
