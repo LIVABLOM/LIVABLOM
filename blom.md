@@ -2,7 +2,7 @@
 layout: default
 title: "BLŌM – Escapade romantique avec spa pour couples"
 description: "Offrez-vous une parenthèse romantique à BLŌM : logement de charme, spa privatif, détente et petit‑déjeuner inclus."
-image: "/assets/images/blom.jpg"
+image: "/assets/galerie/blom.jpg"
 permalink: /blom/
 ---
 
