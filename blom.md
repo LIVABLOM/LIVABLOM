@@ -1,11 +1,10 @@
 ---
 layout: default
-title: "BLŌM – Évasion romantique
-description: "Conçu pour les couples en quête de détente. Spa privatif, lit king-size, petit-déjeuner inclus."
-image: "/assets/images/lblom-hero.webp"
+title: "BLŌM – Escapade romantique avec spa pour couples"
+description: "Offrez-vous une parenthèse romantique à BLŌM : logement de charme, spa privatif, détente et petit‑déjeuner inclus."
+image: "/assets/images/blom-hero.webp"
 permalink: /blom/
 ---
-
 
 <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
   <div class="max-w-6xl mx-auto space-y-16">
