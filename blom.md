@@ -1,8 +1,11 @@
 ---
 layout: default
-title: BLŌM
-permalink: /blom
+title: "BLŌM – Évasion romantique
+description: "Conçu pour les couples en quête de détente. Spa privatif, lit king-size, petit-déjeuner inclus."
+image: "/assets/images/lblom-hero.webp"
+permalink: /blom/
 ---
+
 
 <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
   <div class="max-w-6xl mx-auto space-y-16">
