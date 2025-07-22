@@ -1,0 +1,13 @@
+.share-widget a {
+  display: inline-block;
+  background-color: #3b5998;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.share-widget a:hover {
+  background-color: #2d4373;
+}
