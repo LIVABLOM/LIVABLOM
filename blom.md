@@ -12,7 +12,9 @@ permalink: /blom/
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
 
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
-  BLŌM se déploie sur deux étages comme un refuge intime, où chaque espace a son moment à offrir : en bas, un salon chaleureux, un spa enveloppant et une table dressée pour les instants à deux ; à l’étage, une salle de massage apaisante, une douche élégante et une chambre spacieuse où le repos prend tout son sens.
+ Découvrez BLŌM, un refuge romantique où le bien‑être prend tout son sens
+· Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux.
+· À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
 </p>
 
     <!-- Bandeau hygiène -->
