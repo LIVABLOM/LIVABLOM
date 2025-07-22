@@ -76,6 +76,9 @@ permalink: /liva/
   </div>
 </div>
 
+{% include share.html %}
+
+
 <!-- Modal témoignage -->
 <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
   <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
