@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  {% include google-analytics.html %}
-  {% seo %}
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | LIVABLŌM</title>
@@ -115,6 +114,60 @@
     mobileMenu.classList.toggle("hidden");
     mobileMenu.classList.toggle("flex");
   });
+</script>
+<!-- CookieConsent by Osano -->
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script>
+window.addEventListener("load", function(){
+  window.cookieconsent.initialise({
+    palette: {
+      popup: {
+        background: "#000"
+      },
+      button: {
+        background: "#fbbf24",
+        text: "#000"
+      }
+    },
+    theme: "classic",
+    type: "opt-in",
+    content: {
+      message: "Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous l’utilisation des cookies analytiques ?",
+      allow: "Accepter",
+      deny: "Refuser",
+      link: "En savoir plus",
+      href: "/politique-confidentialite"  // À adapter selon ton URL réelle
+    },
+    onInitialise: function (status) {
+      if (status == cookieconsent.status.allow) {
+        // L'utilisateur a accepté, on charge Google Analytics
+        loadGoogleAnalytics();
+      }
+    },
+    onStatusChange: function(status, chosenBefore) {
+      if (status == cookieconsent.status.allow) {
+        loadGoogleAnalytics();
+      }
+      if (status == cookieconsent.status.denied) {
+        // L'utilisateur refuse, ne rien faire
+      }
+    }
+  });
+});
+
+function loadGoogleAnalytics() {
+  // Ton code de tracking GA à placer ici, par exemple :
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-34YPEPJ0WQ'; // Remplace par ton ID
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-34YPEPJ0WQ', { 'anonymize_ip': true }); // Remplace par ton ID GA et active anonymisation
+}
 </script>
 
 </body>
