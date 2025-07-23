@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "LIVA – Hébergement haut de gamme pour familles & professionnels"
-description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, spa, parking et petit‑déjeuner inclus."
+title: LIVA – Maison tout équipée à Guesnain pour couples, familles, ou dans le cadre d'une activité pro
+description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, parking privé et securisée."
 image: "/assets/images/salon1.jpg"
 permalink: /liva/
 ---
