@@ -4,109 +4,99 @@ title: Politique de confidentialité
 permalink: /politique-confidentialite
 ---
 
-# Politique de confidentialité
+<div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-4xl mx-auto">
 
-Chez **LIVABLŌM**, nous accordons une grande importance à la protection de vos données personnelles. Cette politique vise à vous informer de manière claire sur les données collectées, leur usage, et vos droits.
+    <h1 class="text-3xl font-bold mb-8 text-center">Politique de confidentialité</h1>
 
----
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">1. Responsable du traitement</h2>
+      <p><strong>LIVABLŌM</strong><br>
+      338 boulevard Ambroise Croizat<br>
+      59287 Guesnain – France<br>
+      Email : <a href="mailto:livablom59@gmail.com" class="underline text-yellow-300">livablom59@gmail.com</a></p>
+    </section>
 
-## 1. Responsable du traitement
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">2. Données collectées</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Nom et prénom</li>
+        <li>Adresse email</li>
+        <li>Numéro de téléphone (si fourni)</li>
+        <li>Dates de réservation demandées</li>
+        <li>Message du formulaire de contact</li>
+        <li>Consentement aux cookies (via la bannière CookieConsent)</li>
+      </ul>
+      <p class="mt-2">Nous ne collectons <strong>aucune donnée sensible</strong>.</p>
+    </section>
 
-Le responsable du traitement des données est :
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">3. Finalité des traitements</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Répondre aux demandes envoyées via le formulaire de contact</li>
+        <li>Gérer les réservations</li>
+        <li>Améliorer le site (statistiques anonymisées via Google Analytics)</li>
+        <li>Respecter les obligations légales</li>
+      </ul>
+    </section>
 
-**LIVABLŌM**  
-338 boulevard Ambroise Croizat  
-59287 Guesnain – France  
-Email : [livablom59@gmail.com](mailto:livablom59@gmail.com)
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">4. Base légale</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Consentement explicite (cookies)</li>
+        <li>Exécution d’un contrat (réservation)</li>
+        <li>Intérêt légitime pour le bon fonctionnement du site</li>
+      </ul>
+    </section>
 
----
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">5. Destinataires des données</h2>
+      <p>Les données sont accessibles uniquement par <strong>LIVABLŌM</strong> et ne sont <strong>jamais vendues ni partagées</strong>, sauf obligation légale.</p>
+    </section>
 
-## 2. Données collectées
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">6. Durée de conservation</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Formulaires de contact : 12 mois</li>
+        <li>Cookies : 6 mois</li>
+        <li>Statistiques anonymisées : 14 mois</li>
+      </ul>
+    </section>
 
-Nous pouvons être amenés à collecter les données suivantes :
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">7. Cookies</h2>
+      <p>Des cookies peuvent être déposés lors de votre visite. Vous pouvez <strong>accepter ou refuser</strong> leur utilisation via la bannière de consentement.</p>
+      <p class="mt-2"><a href="#" class="underline text-yellow-300">Gérer mes cookies</a></p>
+      <p class="mt-2">Voir aussi notre <a href="/politique-cookies" class="underline text-yellow-300">politique sur les cookies</a>.</p>
+    </section>
 
-- Nom et prénom
-- Adresse email
-- Numéro de téléphone (si fourni)
-- Dates de réservation demandées
-- Message du formulaire de contact
-- Consentement au dépôt de cookies (à travers la bannière CookieConsent)
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">8. Vos droits</h2>
+      <p>Conformément au RGPD, vous pouvez exercer les droits suivants :</p>
+      <ul class="list-disc list-inside space-y-2 mt-2">
+        <li>Droit d’accès</li>
+        <li>Droit de rectification</li>
+        <li>Droit à l’effacement</li>
+        <li>Droit à la limitation</li>
+        <li>Droit d’opposition</li>
+        <li>Droit à la portabilité</li>
+      </ul>
+      <p class="mt-2">Pour exercer vos droits, contactez-nous à : <a href="mailto:livablom59@gmail.com" class="underline text-yellow-300">livablom59@gmail.com</a></p>
+    </section>
 
-Nous ne collectons **aucune donnée sensible**.
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">9. Sécurité</h2>
+      <p>Nous mettons en place toutes les mesures nécessaires pour assurer la confidentialité et la sécurité de vos données.</p>
+    </section>
 
----
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">10. Réclamations</h2>
+      <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez contacter la <a href="https://www.cnil.fr" class="underline text-yellow-300">CNIL</a>.</p>
+    </section>
 
-## 3. Finalité des traitements
+    <p class="text-sm text-center text-yellow-300 mt-12">
+      Dernière mise à jour : juillet 2025
+    </p>
 
-Les données sont utilisées uniquement pour :
-
-- Répondre aux demandes envoyées via le formulaire de contact
-- Gérer les réservations
-- Améliorer le site grâce aux statistiques anonymisées (Google Analytics)
-- Respecter les obligations légales
-
----
-
-## 4. Base légale
-
-Le traitement repose sur :
-
-- Votre **consentement explicite** (notamment pour les cookies)
-- L’**exécution d’un contrat** ou de mesures précontractuelles (réservation)
-- L’**intérêt légitime** pour le bon fonctionnement du site
-
----
-
-## 5. Destinataires des données
-
-Les données sont exclusivement accessibles par **LIVABLŌM** et ne sont **jamais vendues ni partagées** avec des tiers, sauf obligation légale.
-
----
-
-## 6. Durée de conservation
-
-- Formulaires de contact : conservés 12 mois
-- Cookies de consentement : 6 mois
-- Statistiques anonymisées : 14 mois (via Google Analytics)
-
----
-
-## 7. Cookies
-
-Lors de votre visite, des cookies peuvent être déposés. Vous pouvez **accepter ou refuser** leur utilisation grâce à la bannière de consentement.
-
-→ [Gérer mes cookies](#) <!-- Tu pourras remplacer ce lien par un lien ou script réel -->
-
-Pour en savoir plus, voir notre [politique sur les cookies](/politique-cookies) (si page distincte).
-
----
-
-## 8. Vos droits
-
-Conformément au RGPD, vous disposez des droits suivants :
-
-- Droit d’accès
-- Droit de rectification
-- Droit à l’effacement (droit à l’oubli)
-- Droit à la limitation du traitement
-- Droit d’opposition
-- Droit à la portabilité
-
-Pour exercer vos droits, contactez-nous à [livablom59@gmail.com](mailto:livablom59@gmail.com).
-
----
-
-## 9. Sécurité
-
-Nous mettons tout en œuvre pour assurer la confidentialité et la sécurité de vos données.
-
----
-
-## 10. Réclamations
-
-Si vous estimez que vos droits ne sont pas respectés, vous pouvez contacter la **CNIL** :  
-[www.cnil.fr](https://www.cnil.fr)
-
----
-
-*Dernière mise à jour : juillet 2025*
+  </div>
+</div>
