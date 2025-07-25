@@ -5,11 +5,13 @@
   <meta name="description" content="{{ page.description | default: site.description | escape }}">
   
   <!-- Balises Open Graph (Facebook & LinkedIn) -->
-  <meta property="og:title" content="{{ page.title }}">
-  <meta property="og:description" content="{{ page.description }}">
-  <meta property="og:image" content="{{ site.url }}{{ page.image }}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <!-- Balises Open Graph -->
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
+<meta property="og:image" content="{{ page.image | prepend: site.url }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
