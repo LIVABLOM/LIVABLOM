@@ -121,11 +121,6 @@ permalink: /blom/
     </a>
 
     {% include share.html %}
-  </div>
-</div>
-
-     
-    </div>
 
   </div>
 </section>
