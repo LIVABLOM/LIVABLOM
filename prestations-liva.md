@@ -18,14 +18,14 @@ permalink: /prestations-liva
     <li>Wifi fibre gratuit</li>
     <li>Cuisine équipée (micro-ondes, frigo, plaque, etc.)</li>
     <li>Machine à laver et sèche-cheveux</li>
-    <li>Arrivée et départ en toute autnomie</li>
+    <li>Arrivée et départ en toute autonomie</li>
   </ul>
 </section>
 
 <section class="mb-10">
   <h2 class="text-2xl font-semibold mb-4">Tarifs</h2>
   <ul class="list-disc list-inside space-y-2">
-    <li>À partir de 85 €/nuit pour deux personnes</li>
+    <li>À partir de 79 €/nuit pour deux personnes</li>
     <li>Tarifs ajustables selon la durée du séjour et le nombre de personnes</li>
   </ul>
 </section>
