@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Deux logements à Guesnain (Douaisis) LIVA pour les séjours pratiques, BLŌM pour une parenthèse bien-être à deux.
+title: Confort moderne ou spa privé, choisissez votre séjour.
 image: /assets/images/photolivablom1.png
 permalink: /
 ---
