@@ -1,6 +1,8 @@
 ---
 layout: default
 title: LIVABLŌM – Logements haut de gamme à Guesnain (Douaisis)
+image: /assets/images/photolivablom.jpg
+permalink: /
 ---
 
 <!-- Contenu principal pleine hauteur (moins header) -->
