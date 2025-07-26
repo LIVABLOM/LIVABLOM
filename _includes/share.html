@@ -1,7 +1,6 @@
 <div class="share-widget mt-8">
-  <a href="https://www.facebook.com/sharer.php?u={{ site.url }}{{ page.url | relative_url }}&title={{ page.title | uri_escape }}"
-     title="Partager sur Facebook"
-     target="_blank" rel="noopener noreferrer">
-    Partager sur Facebook
-  </a>
+ <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url | append: page.url | uri_escape }}"
+   target="_blank" rel="noopener noreferrer" title="Partager sur Facebook">
+   Partager sur Facebook
+</a>
 </div>
