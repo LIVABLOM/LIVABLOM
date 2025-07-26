@@ -14,7 +14,7 @@ permalink: /prestations-liva
   <ul class="list-disc list-inside space-y-2">
     <li>Logement tout équipé de 68 m²</li>
     <li>Lit king size</li>
-    <li>Salon avec TV connectée</li>
+    <li>Salon avec grand TV </li>
     <li>Wifi fibre gratuit</li>
     <li>Cuisine équipée (micro-ondes, frigo, plaque, etc.)</li>
     <li>Machine à laver et sèche-cheveux</li>
