@@ -41,6 +41,8 @@ permalink: /mentions
     <!-- Prestations et tarifs -->
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">Tarifs et formules</h2>
+
+      <h3 class="text-xl font-semibold mt-4">BLŌM (logement spa pour couples)</h3>
       <ul class="list-disc list-inside space-y-2">
         <li><strong>Nuitée :</strong> Vendredi & samedi : 169 €</li>
         <li><strong>Nuitée :</strong> Dimanche : 190 €</li>
@@ -48,16 +50,24 @@ permalink: /mentions
         <li><strong>Formule journée :</strong> 11h00 à 16h00 – 130 € (sur demande et après validation)</li>
         <li><strong>Formule 4h :</strong> sur demande uniquement</li>
       </ul>
+
+      <h3 class="text-xl font-semibold mt-6">LIVA (logement tout confort pour couples, familles ou pros)</h3>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>Tarifs :</strong> variables selon la période, à consulter sur demande ou via le formulaire de contact</li>
+        <li><strong>Équipements :</strong> 2 chambres, cuisine équipée, salon TV, wifi, parking gratuit</li>
+        <li><strong>Utilisation :</strong> nuitée, moyen séjour, déplacement professionnel</li>
+      </ul>
     </section>
 
     <!-- Données personnelles -->
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">Données personnelles & RGPD</h2>
-      <p>Nous ne collectons aucune donnée personnelle en dehors de celles transmises via la plateforme de réservation Airbnb. Pour toute demande relative à vos données, merci de nous contacter directement via Airbnb.</p>
+      <p>Nous collectons uniquement les données nécessaires au traitement des réservations et aux échanges via notre formulaire de contact (nom, email, message).</p>
+      <p>Aucune donnée n’est revendue. Pour toute demande de suppression ou de modification de vos données, veuillez nous contacter à l'adresse : <a href="mailto:livablom59@gmail.com" class="underline hover:text-yellow-200">livablom59@gmail.com</a>.</p>
     </section>
 
     <p class="text-sm text-center text-yellow-300 mt-12">
-      Dernière mise à jour : mai 2025
+      Dernière mise à jour : juillet 2025
     </p>
 
   </div>
