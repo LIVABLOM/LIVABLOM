@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Logements haut de gamme à Guesnain (Douaisis)
-image: /assets/images/photolivablom.jpg
+image: /assets/images/photolivablom1.jpg
 permalink: /
 ---
 
