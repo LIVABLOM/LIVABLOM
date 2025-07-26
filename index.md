@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Logements haut de gamme à Guesnain (Douaisis)
+title: Deux logements à Guesnain (Douaisis) : LIVA pour les séjours pratiques, BLŌM pour une parenthèse bien-être à deux.
 image: /assets/images/photolivablom1.png
 permalink: /
 ---
