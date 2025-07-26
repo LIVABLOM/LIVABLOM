@@ -108,7 +108,7 @@ permalink: /blom/
       </div>
     </div>
 
-   <!-- Appel à l'action -->
+  <!-- Appel à l'action -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez votre escapade bien-être</h3>
   <p class="mb-4">Spa privatif, massage et confort apaisant vous attendent</p>
@@ -121,9 +121,8 @@ permalink: /blom/
     </a>
 
     {% include share.html %}
-
   </div>
-</section>
+</div>
 
 <!-- Scripts -->
 <script>
