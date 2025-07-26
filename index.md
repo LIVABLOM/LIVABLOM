@@ -1,6 +1,6 @@
 ---
 layout: default
-title: LIVABLŌM – Logements haut de gamme à Guesnain (Douaisis)
+title: LIVABLŌM – Deux logements à Guesnain (Douaisis) : LIVA pour les séjours pratiques, BLŌM pour une parenthèse bien-être à deux 
 image: /assets/images/photolivablom.jpg
 permalink: /
 ---
