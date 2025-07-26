@@ -53,15 +53,7 @@ permalink: /liva/
     </p>
   </section>
 
-  <!-- BOUTON RÉSERVER -->
-  <div class="mb-12">
-    <a href="{{ site.baseurl }}/contact"
-       class="bg-blue-600 text-white font-semibold py-4 px-8 rounded-full hover:bg-blue-700 transition inline-block shadow-lg">
-      Réserver LIVA
-    </a>
-  </div>
-
- <!-- Bloc témoignages -->
+  <!-- Bloc témoignages -->
 <div class="mt-20">
   <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez LIVA</h2>
   <div class="relative max-w-3xl mx-auto overflow-hidden">
@@ -76,9 +68,7 @@ permalink: /liva/
   </div>
 </div>
 
-{% include share.html %}
-
-
+  
 <!-- Modal témoignage -->
 <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
   <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
@@ -90,6 +80,17 @@ permalink: /liva/
     </div>
   </div>
 </div>
+
+<!-- Appel à l'action -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+      <h3 class="text-2xl font-bold mb-2">Réservez LIVA et poser votre valise</h3>
+      <p class="mb-4">Logement tout équipée avec parking privée et sécurisée</p>
+      <a href="{{ site.baseurl }}/contact"
+         class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+        Réserver maintenant
+      </a>
+
+{% include share.html %}
 
 <script>
 let currentIndex = 0;
