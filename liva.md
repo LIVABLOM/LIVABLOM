@@ -46,7 +46,7 @@ permalink: /liva/
   <section id="tarifs" class="mb-12 max-w-3xl mx-auto text-left px-4">
     <h2 class="text-3xl font-semibold mb-6 text-gray-900">Tarifs</h2>
     <p class="text-xl">
-      Tarif unique : <span class="font-bold text-blue-600">75 € par nuit</span>
+      Tarif unique : <span class="font-bold text-blue-600">79 € par nuit</span>
     </p>
     <p class="mt-3 italic text-sm text-gray-600">
       Tarifs dégressifs possibles pour les séjours longs. Contactez-nous pour plus d'informations.
