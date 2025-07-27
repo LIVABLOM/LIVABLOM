@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Confort moderne ou spa privé, choisissez votre séjour.
-image: /assets/images/photolivablomco.jpg
+image: /assets/images/photolivablo.jpg
 permalink: /
 ---
 
