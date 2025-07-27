@@ -1,262 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <title>{{ page.title | default: site.title }}</title>
-  <meta name="description" content="{{ page.description | default: site.description | escape }}">
-  
-  <!-- Balises Open Graph (Facebook & LinkedIn) -->
-  <!-- Balises Open Graph -->
-<meta property="og:title" content="{{ page.title | default: site.title }}">
-<meta property="og:description" content="{{ page.description | default: site.description }}">
-<meta property="og:image" content="{{ site.url }}{{ page.image | default: '/assets/images/photolivablom.jpg' }}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ page.title }} | LIVABLŌM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{ page.description | default: site.description }}" />
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+    <link rel="icon" href="{{ '/assets/images/favicon.ico' | relative_url }}" type="image/x-icon" />
+  </head>
 
+  <body class="bg-black text-white">
+    <header role="banner" class="py-4 text-center">
+      <a href="{{ site.baseurl }}/">
+        <img src="{{ '/assets/images/lotus.jpg' | relative_url }}"
+             alt="Logo LIVABLŌM"
+             class="mx-auto w-24 h-auto rounded-full" />
+        <h1 class="text-3xl font-bold mt-2">LIVABLŌM</h1>
+      </a>
+    </header>
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ page.title }}">
-  <meta name="twitter:description" content="{{ page.description }}">
-  <meta name="twitter:image" content="{{ site.url }}{{ page.image }}">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LodgingBusiness",
-  "name": "LIVA",
-  "description": "Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne. à Guesnain (Douaisis).",
-  "url": "https://livablom.github.io/LIVABLOM",
-  "logo": "https://livablom.github.io/LIVABLOM/assets/images/lotus.jpg",
-  "image": "https://livablom.github.io/LIVABLOM/assets/images/salon1.jpg",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "338 boulevard Ambroise Croizat",
-    "addressLocality": "Guesnain",
-    "postalCode": "59287",
-    "addressCountry": "FR"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 50.3645,
-    "longitude": 3.1198
-  },
-  "telephone": "+33 6 49 83 18 38",
-  "priceRange": "75 € – 105 €",
-  "amenityFeature": [
-    { "@type": "LocationFeatureSpecification", "name": "cuisine équipée", "value": true },
-    { "@type": "LocationFeatureSpecification", "name": "2 chambres jusqu'à 5 couchages", "value": true },
-    { "@type": "LocationFeatureSpecification", "name": "Parking privée sécurisée", "value": true }
-  ]
-}
-</script>
-
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LodgingBusiness",
-  "name": "BLŌM",
-  "description": "Logement haut de gamme avec spa privatif à Guesnain.",
-  "url": "https://livablom.github.io/LIVABLOM/blom",
-  "logo": "https://livablom.github.io/LIVABLOM/assets/img/lotus.jpg",
-  "image": "https://livablom.github.io/LIVABLOM/assets/galerie/blom/blom1.jpg",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "338 boulevard Ambroise Croizat",
-    "addressLocality": "Guesnain",
-    "postalCode": "59287",
-    "addressCountry": "FR"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 50.3645,
-    "longitude": 3.1198
-  },
-  "telephone": "+33 6 49 83 18 38",
-  "priceRange": "150 € – 190 €",
-  "amenityFeature": [
-    { "@type": "LocationFeatureSpecification", "name": "Spa privatif", "value": true },
-    { "@type": "LocationFeatureSpecification", "name": "Petit déjeuner inclus", "value": true }
-  ]
-}
-
-</script>
-
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} | LIVABLŌM</title>
-
-  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/share.css">
-  
-  <!-- Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-  <!-- Lightbox2 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/css/lightbox.min.css" rel="stylesheet" />
-  <style>
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 1s ease-out both;
-  }
-
-  .delay-100 { animation-delay: 0.1s; }
-  .delay-200 { animation-delay: 0.2s; }
-  .delay-300 { animation-delay: 0.3s; }
-  .delay-400 { animation-delay: 0.4s; }
-  .delay-500 { animation-delay: 0.5s; }
-  </style>
-
-</head>
-  <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden ...">
-<header class="bg-black text-white w-full px-6 py-4 relative z-50">
-  <div class="flex justify-between items-center">
-    <!-- Logo + Titre -->
-    <div class="flex items-center space-x-4">
-      <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="h-10 w-auto">
-      <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
-    </div>
-
-    <!-- Menu desktop -->
-    <nav class="hidden sm:flex space-x-4 text-sm">
-      <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-
-      {% if page.url contains 'liva' %}
-        <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-        <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-      {% elsif page.url contains 'blom' %}
-        <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-        <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-      {% elsif page.url == '/' %}
-        <!-- Pas de lien Galerie sur la page d'accueil -->
-        <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-      {% else %}
-        <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-        <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-      {% endif %}
+    <nav role="navigation" aria-label="Menu principal" class="text-center mb-6">
+      <ul class="flex justify-center gap-4">
+        <li><a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a></li>
+        <li><a href="{{ site.baseurl }}/liva" class="hover:underline">LIVA</a></li>
+        <li><a href="{{ site.baseurl }}/blom" class="hover:underline">BLŌM</a></li>
+        <li><a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a></li>
+        <li><a href="{{ site.baseurl }}/politique-confidentialite" class="hover:underline">Confidentialité</a></li>
+      </ul>
     </nav>
-    
-    <!-- Hamburger + Menu mobile -->
-    <div class="sm:hidden relative">
-      <button id="menu-toggle" class="focus:outline-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
 
-      <div id="mobile-menu" class="hidden absolute right-0 top-10 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50">
-        <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
+    <main id="contenu" role="main" class="px-4">
+      {{ content }}
+    </main>
 
-        {% if page.url contains 'liva' %}
-          <a href="{{ site.baseurl }}/galerie-liva" class="hover:underline">Galerie</a>
-          <a href="{{ site.baseurl }}/prestations-liva" class="hover:underline">Prestations</a>
-        {% elsif page.url contains 'blom' %}
-          <a href="{{ site.baseurl }}/galerie-blom" class="hover:underline">Galerie</a>
-          <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
-        {% elsif page.url == '/' %}
-          <!-- Pas de lien Galerie sur la page d'accueil -->
-          <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-          <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-        {% else %}
-          <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-          <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
-          <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</header>
-
-<main class="flex-grow">
-  {{ content }}
-</main>
-
-<footer class="bg-black text-white text-center py-6">
-  <div class="text-sm space-y-2">
-    <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
-    <div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-  <a href="{{ site.baseurl }}/mentions" class="underline hover:text-gray-300 transition">
-    Mentions légales & CGV
-  </a>
-  <a href="{{ site.baseurl }}/politique-confidentialite" class="underline hover:text-gray-300 transition">
-    Politique de confidentialité
-  </a>
-  <a href="{{ site.baseurl }}/politique-cookies" class="underline hover:text-gray-300 transition">
-    Politique cookies
-  </a>
-</div>
-
-</footer>
-
-
-<!-- Lightbox2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
-<script>
-  const toggleButton = document.getElementById("menu-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  toggleButton.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-    mobileMenu.classList.toggle("flex");
-  });
-</script>
-<!-- CookieConsent by Osano -->
-<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-<script>
-window.addEventListener("load", function(){
-  window.cookieconsent.initialise({
-    palette: {
-      popup: {
-        background: "#000"
-      },
-      button: {
-        background: "#fbbf24",
-        text: "#000"
-      }
-    },
-    theme: "classic",
-    type: "opt-in",
-    content: {
-      message: "Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous l’utilisation des cookies analytiques ?",
-      allow: "Accepter",
-      deny: "Refuser",
-      link: "En savoir plus",
-      href: "/politique-confidentialite"  // À adapter selon ton URL réelle
-    },
-    onInitialise: function (status) {
-      if (status == cookieconsent.status.allow) {
-        // L'utilisateur a accepté, on charge Google Analytics
-        loadGoogleAnalytics();
-      }
-    },
-    onStatusChange: function(status, chosenBefore) {
-      if (status == cookieconsent.status.allow) {
-        loadGoogleAnalytics();
-      }
-      if (status == cookieconsent.status.denied) {
-        // L'utilisateur refuse, ne rien faire
-      }
-    }
-  });
-});
-
-function loadGoogleAnalytics() {
-  // Ton code de tracking GA à placer ici, par exemple :
-  var script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-34YPEPJ0WQ'; // Remplace par ton ID
-  document.head.appendChild(script);
-
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-34YPEPJ0WQ', { 'anonymize_ip': true }); // Remplace par ton ID GA et active anonymisation
-}
-</script>
-
-</body>
+    <footer role="contentinfo" class="text-center text-sm mt-12 mb-4 text-gray-400">
+      <p>&copy; {{ site.time | date: "%Y" }} LIVABLŌM. Tous droits réservés.</p>
+      <p>
+        <a href="{{ site.baseurl }}/politique-confidentialite" class="hover:underline">Politique de confidentialité</a> |
+        <a href="{{ site.baseurl }}/politique-cookies" class="hover:underline">Cookies</a>
+      </p>
+    </footer>
+  </body>
 </html>
