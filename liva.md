@@ -1,83 +1,47 @@
 ---
 layout: default
-title: LIVA – Maison tout équipée à Guesnain pour couples, familles, ou dans le cadre d'une activité pro
-description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, parking privé et securisée."
-image: "/assets/galerie/liva/salon1.jpg"
-permalink: /liva/
+title: LIVA – Logement moderne et tout équipé à Guesnain
+image: /assets/images/photolivablom1.png
+permalink: /liva
 ---
 
+<section class="text-center mt-12 max-w-4xl mx-auto px-4 animate-fadeIn delay-300">
+  <h1 class="text-4xl font-bold mb-4">LIVA – Logement tout confort</h1>
+  <p class="text-lg mb-6">Espace moderne, cuisine équipée, parking sécurisé. Idéal pour les couples, familles ou professionnels.</p>
+</section>
 
-<div class="bg-gray-100 min-h-screen px-6 py-8 text-center flex flex-col">
+<!-- Galerie d’images -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-2 p-4 animate-fadeIn delay-500">
+  {% assign images = site.static_files | where_exp:"file","file.path contains '/assets/galerie/liva/'" %}
+  {% for image in images %}
+  <a href="{{ image.path }}" class="lightbox-trigger" role="button" tabindex="0" aria-label="Voir l'image en grand">
+    <img src="{{ image.path }}" alt="Vue de LIVA - {{ forloop.index }}" class="object-cover w-full h-48 rounded shadow hover:scale-105 transition" loading="lazy">
+  </a>
+  {% endfor %}
+</section>
 
-  <!-- SECTION ACCUEIL -->
-  <section id="accueil" class="mb-12 max-w-3xl mx-auto">
-    <h1 class="text-5xl font-extrabold mb-6 text-gray-900">LIVA – Logement tout confort</h1>
-    <p class="text-xl text-gray-800 max-w-xl mx-auto">
-      <strong>
-        Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.
-      </strong>
-    </p>
-  </section>
-
-  <!-- SECTION GALERIE -->
-  <section id="galerie" class="mb-12 max-w-5xl mx-auto">
-    <h2 class="text-3xl font-semibold mb-8 text-gray-900">Galerie</h2>
-    <div class="flex flex-wrap justify-center gap-6">
-      <!-- Images comme avant -->
-      <a href="{{ site.baseurl }}/assets/images/salon1.jpg" data-lightbox="liva" data-title="Salon LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
-        <img src="{{ site.baseurl }}/assets/images/salon1.jpg" alt="Salon LIVA" class="w-full h-40 object-cover" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
-        <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Salon LIVA" class="w-full h-40 object-cover" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Chaise design LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
-        <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="Chaise design LIVA" class="w-full h-40 object-cover" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Coin repas LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
-        <img src="{{ site.baseurl }}/assets/images/espacerepas.jpg" alt="Coin repas LIVA" class="w-full h-40 object-cover" />
-      </a>
-      <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="Table LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
-        <img src="{{ site.baseurl }}/assets/images/the.jpg" alt="Table LIVA" class="w-full h-40 object-cover" />
-      </a>
-    </div>
-  </section>
-
-  <!-- SECTION TARIFS -->
-  <section id="tarifs" class="mb-12 max-w-3xl mx-auto text-left px-4">
-    <h2 class="text-3xl font-semibold mb-6 text-gray-900">Tarifs</h2>
-    <p class="text-xl">
-      Tarif unique : <span class="font-bold text-blue-600">79 € par nuit</span>
-    </p>
-    <p class="mt-3 italic text-sm text-gray-600">
-      Tarifs dégressifs possibles pour les séjours longs. Contactez-nous pour plus d'informations.
-    </p>
-  </section>
-
-  <!-- Bloc témoignages -->
-<div class="mt-20">
-  <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez LIVA</h2>
-  <div class="relative max-w-3xl mx-auto overflow-hidden">
-    <div id="carousel" class="flex transition-transform duration-700">
-      {% for temoignage in site.data.temoignages-liva %}
-      <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
-        <p class="italic text-lg truncate">“{{ temoignage.texte | truncate: 100 }}”</p>
-        <span class="block mt-2 text-sm text-gray-400">– {{ temoignage.auteur }}</span>
+<!-- Témoignages clients -->
+<section class="mt-16 px-4 text-center animate-fadeIn delay-600">
+  <h2 class="text-3xl font-bold mb-4">Ils ont séjourné à LIVA</h2>
+  <div id="testimonialCarousel" class="overflow-hidden relative max-w-3xl mx-auto" role="region" aria-label="Témoignages clients">
+    <div class="flex transition-transform duration-500 ease-in-out" id="testimonialTrack">
+      {% for testimonial in site.data.avis.liva %}
+      <div class="min-w-full px-4 py-6">
+        <div class="bg-white text-black rounded-lg shadow p-4 relative">
+          <p class="text-lg italic">"{{ testimonial.extrait }}"</p>
+          <button class="text-blue-500 underline mt-2 open-modal" data-index="{{ forloop.index0 }}" aria-label="Lire le témoignage complet">Lire plus</button>
+        </div>
       </div>
       {% endfor %}
     </div>
   </div>
-</div>
+</section>
 
-  
-<!-- Modal témoignage -->
-<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
-    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-    <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
-    <div class="flex justify-between mt-4">
-      <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
-      <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
-    </div>
+<!-- Modal témoignages -->
+<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50" role="dialog" aria-modal="true">
+  <div class="bg-white text-black p-6 rounded max-w-xl mx-auto relative shadow-xl" tabindex="-1">
+    <button id="closeModal" class="absolute top-2 right-2 text-2xl text-gray-700 hover:text-black" aria-label="Fermer le témoignage">&times;</button>
+    <div id="modalContent"></div>
   </div>
 </div>
 
@@ -85,64 +49,29 @@ permalink: /liva/
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
   <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
-
-  <!-- Bloc boutons responsive -->
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
     <a href="{{ site.baseurl }}/contact"
        class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
     </a>
-
     {% include share.html %}
   </div>
 </div>
 
 <script>
-let currentIndex = 0;
-const fullTestimonials = [
-  {% for temoignage in site.data.temoignages-liva %}
-    `{{ temoignage.texte | strip_newlines | escape }}`,
-  {% endfor %}
-];
+document.querySelectorAll('.open-modal').forEach((button, index) => {
+  button.addEventListener('click', () => {
+    const testimonials = {{ site.data.avis.liva | jsonify }};
+    document.getElementById('modalContent').innerHTML = `
+      <h3 class="text-xl font-bold mb-2">${testimonials[index].nom}</h3>
+      <p>${testimonials[index].texte}</p>
+    `;
+    document.getElementById('testimonialModal').classList.remove('hidden');
+    document.getElementById('testimonialModal').focus();
+  });
+});
 
-function openModal(i) {
-  currentIndex = i;
-  updateModalText();
-  document.getElementById("testimonialModal").classList.remove("hidden");
-  document.getElementById("testimonialModal").classList.add("flex");
-}
-
-function closeModal() {
-  document.getElementById("testimonialModal").classList.add("hidden");
-  document.getElementById("testimonialModal").classList.remove("flex");
-}
-
-function updateModalText() {
-  document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-}
-
-function prevTestimonial() {
-  currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-  updateModalText();
-}
-
-function nextTestimonial() {
-  currentIndex = (currentIndex + 1) % fullTestimonials.length;
-  updateModalText();
-}
-
-// Carrousel automatique
-const carousel = document.getElementById("carousel");
-const totalItems = {{ site.data.temoignages-liva | size }};
-let carouselIndex = 0;
-
-function showCarouselSlide(index) {
-  const offset = -index * 100;
-  carousel.style.transform = `translateX(${offset}%)`;
-}
-
-setInterval(() => {
-  carouselIndex = (carouselIndex + 1) % totalItems;
-  showCarouselSlide(carouselIndex);
-}, 4000);
+document.getElementById('closeModal').addEventListener('click', () => {
+  document.getElementById('testimonialModal').classList.add('hidden');
+});
 </script>
