@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Confort moderne ou spa privé, choisissez votre séjour.
-image: /assets/images/photolivablomwebp.webp
+image: /assets/images/photolivablom1.jpg
 permalink: /
 ---
 
