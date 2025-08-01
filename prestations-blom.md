@@ -17,25 +17,4 @@ permalink: /prestations-blom
         <li>salle de massage</li>
         <li>Lit king size + coin salon</li>
         <li>Ambiance tamisée et haut-parleurs Bluetooth</li>
-        <li>Arrivée et départ en toute autonome</li>
-        <li>Petit déjeuner offert et servi dans la plus stricte intimité</li>
-      </ul>
-
-      <p class="mt-4 font-semibold">Tarifs :</p>
-      <ul class="list-disc list-inside space-y-2">
-        <li>Vendredi & samedi : 169 €/nuit</li>
-        <li>Dimanche : 190 €/nuit</li>
-        <li>Lundi à jeudi : 150 €/nuit</li>
-        <li>Formule journée (11h–16h) : 130 € (sur demande)</li>
-        <li>Formule 4h : sur demande uniquement</li>
-      </ul>
-
-      <p class="mt-4 text-red-500">⚠️ Les formules journée et 4h nécessitent une validation préalable par message.</p>
-
-      <p class="mt-6 text-center">
-        <a href="/contact" class="inline-block bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">Demander une réservation</a>
-      </p>
-    </div>
-
-  </div>
-</section>
+        <li>Arrivée et départ en toute autonome</li
