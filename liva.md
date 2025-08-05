@@ -42,18 +42,23 @@ permalink: /liva/
     </div>
   </section>
   <!-- SECTION DISPONIBILITÉS -->
-<section id="disponibilites" class="mb-12 max-w-3xl mx-auto text-left px-4">
+  <section id="disponibilites" class="mb-12 max-w-3xl mx-auto text-left px-4">
   <h2 class="text-3xl font-semibold mb-6 text-gray-900">Disponibilités</h2>
   <p class="mb-4 text-gray-700">
-    Consultez les dates disponibles via le calendrier ci-dessous.<br>
-    Les réservations sur Airbnb et Booking sont automatiquement synchronisées.
+    Consultez les dates disponibles. Les réservations sur Airbnb ou Booking sont automatiquement synchronisées.
   </p>
   <div class="overflow-hidden rounded-xl shadow-lg border border-gray-300">
-    <div data-tockify-component="calendar" data-tockify-calendar="livablom"></div>
+    <iframe 
+      src="https://calendar.google.com/calendar/embed?src=livablom59%40gmail.com&ctz=Europe%2FParis"
+      style="border: 0"
+      width="100%" 
+      height="600" 
+      frameborder="0" 
+      scrolling="no">
+    </iframe>
   </div>
 </section>
 
-<script data-cfasync="false" data-tockify-script="embed" src="https://public.tockify.com/browser/embed.js"></script>
 
 
   <!-- SECTION TARIFS -->
