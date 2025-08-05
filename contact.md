@@ -21,31 +21,50 @@ permalink: /contact
 
     <form action="https://formspree.io/f/mblyrrna" method="POST" class="space-y-6">
 
-      <div>
-        <label for="name" class="block text-sm font-semibold mb-1">Nom</label>
-        <input type="text" id="name" name="name" required
-               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
-      </div>
+  <div>
+    <label for="name" class="block text-sm font-semibold mb-1">Nom</label>
+    <input type="text" id="name" name="name" required
+           class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+  </div>
 
-      <div>
-        <label for="email" class="block text-sm font-semibold mb-1">Email</label>
-        <input type="email" id="email" name="_replyto" required
-               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
-      </div>
+  <div>
+    <label for="email" class="block text-sm font-semibold mb-1">Email</label>
+    <input type="email" id="email" name="_replyto" required
+           class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+  </div>
 
-      <div>
-        <label for="message" class="block text-sm font-semibold mb-1">Message</label>
-        <textarea id="message" name="message" rows="6" required
-                  class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"></textarea>
-      </div>
+  <div>
+    <label for="date" class="block text-sm font-semibold mb-1">Date souhaitée</label>
+    <input type="text" id="datepicker" name="date"
+           class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+  </div>
 
-      <div class="text-center">
-        <button type="submit"
-                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
-          Envoyer
-        </button>
-      </div>
-    </form>
+  <div>
+    <label for="formule" class="block text-sm font-semibold mb-1">Formule</label>
+    <select id="formule" name="formule"
+            class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+      <option value="nuitée">Nuitée</option>
+      <option value="journée">Formule Journée (11h–16h)</option>
+      <option value="4h">Formule 4h (sur demande)</option>
+      <option value="autre">Autre</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="block text-sm font-semibold mb-1">Message</label>
+    <textarea id="message" name="message" rows="6" required
+              class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"></textarea>
+  </div>
+
+  <div class="text-center">
+    <button type="submit"
+            class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
+      Envoyer
+    </button>
+  </div>
+
+</form>
+
 
     <p class="text-sm text-center text-yellow-300 mt-8">
       Vous pouvez aussi nous écrire directement à : <br />
