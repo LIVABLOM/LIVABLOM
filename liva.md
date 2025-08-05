@@ -66,6 +66,23 @@ permalink: /liva/
       Tarifs dégressifs possibles pour les séjours longs. Contactez-nous pour plus d'informations.
     </p>
   </section>
+<!-- SECTION DISPONIBILITÉS -->
+<section id="disponibilites" class="mb-12 max-w-4xl mx-auto px-6 py-10 bg-white rounded-xl shadow-xl">
+  <h2 class="text-3xl font-semibold mb-4 text-gray-900 text-center">Disponibilités</h2>
+  <p class="mb-6 text-gray-700 text-center text-lg">
+    Consultez les dates disponibles. Les réservations sur Airbnb ou Booking sont automatiquement synchronisées.
+  </p>
+
+  <div class="overflow-hidden rounded-xl shadow-lg border border-gray-300">
+    <iframe 
+      src="https://calendar.google.com/calendar/ical/livablom59%40gmail.com/public/basic.ics"
+      class="w-full h-[600px] border-0"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
+</section>
+
 
   <!-- Bloc témoignages -->
 <div class="mt-20">
