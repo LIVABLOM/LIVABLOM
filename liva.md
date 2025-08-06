@@ -50,18 +50,6 @@ permalink: /liva/
 
   <div class="overflow-hidden rounded-xl shadow-lg border border-gray-300">
     <iframe 
-      <div class="mt-4 text-sm text-gray-700">
-  <h3 class="font-semibold mb-2">Légende des couleurs :</h3>
-  <ul class="space-y-1">
-    <li><span class="inline-block w-4 h-4 align-middle rounded-sm mr-2" style="background-color: #1a73e8;"></span> LIVA – Google Calendar principal</li>
-    <li><span class="inline-block w-4 h-4 align-middle rounded-sm mr-2" style="background-color: #34a853;"></span> LIVA – Booking.com</li>
-    <li><span class="inline-block w-4 h-4 align-middle rounded-sm mr-2" style="background-color: #fbbc04;"></span> LIVA – Airbnb</li>
-    <li><span class="inline-block w-4 h-4 align-middle rounded-sm mr-2" style="background-color: #d93025;"></span> BLŌM – Google Calendar principal</li>
-    <li><span class="inline-block w-4 h-4 align-middle rounded-sm mr-2" style="background-color: #ff6d01;"></span> BLŌM – Booking.com</li>
-    <li><span class="inline-block w-4 h-4 align-middle rounded-sm mr-2" style="background-color: #46bdc6;"></span> BLŌM – Airbnb</li>
-  </ul>
-</div>
-
       src="https://calendar.google.com/calendar/embed?src=25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com&src=hmtqpabhudvckhdt21tct8qi1qdmofg5%40import.calendar.google.com&src=b8uo9em2kb7mdeg5s6ca8926vfiucrka%40import.calendar.google.com&ctz=Europe/Paris" 
       style="border: 0" 
       width="100%" 
