@@ -42,15 +42,17 @@ permalink: /liva/
     </div>
   </section>
   <!-- SECTION DISPONIBILITÉS -->
-  <section id="disponibilites" class="mb-12 max-w-3xl mx-auto text-left px-4">
+<section id="disponibilites" class="mb-12 max-w-4xl mx-auto text-left px-4">
   <h2 class="text-3xl font-semibold mb-6 text-gray-900">Disponibilités</h2>
   <p class="mb-4 text-gray-700">
-    Consultez les dates disponibles. Les réservations sur Airbnb ou Booking sont automatiquement synchronisées.
+    Consultez les dates disponibles via le calendrier ci-dessous.<br>
+    Les réservations sur Airbnb et Booking sont automatiquement synchronisées pour LIVA et BLŌM.
   </p>
+
   <div class="overflow-hidden rounded-xl shadow-lg border border-gray-300">
     <iframe 
-      src="https://calendar.google.com/calendar/embed?src=livablom59%40gmail.com&ctz=Europe%2FParis"
-      style="border: 0"
+      src="https://calendar.google.com/calendar/embed?src=25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com&src=c686866e780e72a89dd094dedc492475386f2e6ee8e22b5a63efe7669d52621b%40group.calendar.google.com&src=hmtqpabhudvckhdt21tct8qi1qdmofg5%40import.calendar.google.com&src=hopd1ooabqsindu1n8d19kf4r4bji29g%40import.calendar.google.com&src=b8uo9em2kb7mdeg5s6ca8926vfiucrka%40import.calendar.google.com&src=9lqfrrkgng43e6vvomqlijjgcrohsqh2%40import.calendar.google.com&ctz=Europe/Paris" 
+      style="border: 0" 
       width="100%" 
       height="600" 
       frameborder="0" 
@@ -58,6 +60,7 @@ permalink: /liva/
     </iframe>
   </div>
 </section>
+
 
 
 
