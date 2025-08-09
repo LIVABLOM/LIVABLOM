@@ -26,8 +26,7 @@ permalink: /prestations-blom
         <li>Vendredi & samedi : 169 €/nuit</li>
         <li>Dimanche : 190 €/nuit</li>
         <li>Lundi à jeudi : 150 €/nuit</li>
-        <li>Formule journée (11h–16h) : 130 € (sur demande)</li>
-        <li>Formule 4h : sur demande uniquement</li>
+        <li>Formule journée 4h : 130 € (sur demande)</li>
       </ul>
 
       <p class="mt-4 text-red-500">⚠️ Les formules journée et 4h nécessitent une validation préalable par message.</p>
