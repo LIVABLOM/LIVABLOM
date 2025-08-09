@@ -10,9 +10,6 @@ permalink: /contact
 <section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-2xl mx-auto">
 
-<section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
-  <div class="max-w-2xl mx-auto">
-
     <h2 class="text-3xl font-bold mb-8 text-center">Nous contacter</h2>
 
     <p class="text-center mb-6">
@@ -31,6 +28,15 @@ permalink: /contact
         <label for="email" class="block text-sm font-semibold mb-1">Email</label>
         <input type="email" id="email" name="_replyto" required
                class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+      </div>
+
+      <!-- 📅 Sélecteur de date -->
+      <div>
+        <label for="date" class="block text-sm font-semibold mb-1">Dates souhaitées</label>
+        <input type="text" id="date" name="dates" required
+               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+               placeholder="Cliquez pour choisir" readonly />
+        <div id="calendar" class="mt-3"></div>
       </div>
 
       <div>
@@ -54,3 +60,20 @@ permalink: /contact
 
   </div>
 </section>
+
+<!-- 📅 Script Calendrier -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  // On initialise le calendrier
+  flatpickr("#date", {
+    mode: "range",
+    dateFormat: "d/m/Y",
+    minDate: "today",
+    disable: [
+      // Ici on mettra les dates bloquées depuis tes iCal
+      "2025-08-15",
+      "2025-08-16"
+    ]
+  });
+</script>
