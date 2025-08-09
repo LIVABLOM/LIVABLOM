@@ -1,7 +1,7 @@
 title: LIVABLŌM
 description: "Logements haut de gamme à Guesnain (Douaisis) : spa romantique BLŌM pour les couples & maison LIVA pour familles ou pros."
-url: "https://livablom.github.io/LIVABLOM"
-baseurl: "/LIVABLOM"
+url: "https://www.livablom.fr"
+baseurl: ""
 markdown: kramdown
 theme: minima
 plugins:
