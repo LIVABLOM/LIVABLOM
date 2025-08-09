@@ -3,12 +3,10 @@ layout: default
 title: Contact
 permalink: /contact
 ---
+
 <a href="https://m.me/livablom59" target="_blank" class="fixed top-20 right-6 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition">
   💬 Messenger
 </a>
-
-<section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
-  <div class="max-w-2xl mx-auto">
 
 <section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-2xl mx-auto">
@@ -33,6 +31,14 @@ permalink: /contact
                class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
       </div>
 
+      <!-- Sélecteur de dates (Flatpickr) -->
+      <div>
+        <label for="dates" class="block text-sm font-semibold mb-1">Dates souhaitées</label>
+        <input type="text" id="dates" name="dates" required placeholder="Cliquez pour choisir" readonly
+               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+        <p class="text-xs text-yellow-300 mt-2">Sélectionnez une plage (arrivée → départ).</p>
+      </div>
+
       <div>
         <label for="message" class="block text-sm font-semibold mb-1">Message</label>
         <textarea id="message" name="message" rows="6" required
@@ -54,3 +60,20 @@ permalink: /contact
 
   </div>
 </section>
+
+<!-- Flatpickr (CSS + JS) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  // Init calendrier (style et comportement)
+  flatpickr("#dates", {
+    mode: "range",
+    dateFormat: "d/m/Y",
+    minDate: "today",
+    // disable: [] --> on ajoutera ensuite les dates indisponibles via script si tu veux
+    locale: {
+      firstDayOfWeek: 1
+    }
+  });
+</script>
