@@ -1,59 +1,56 @@
-<h2>Réserver votre séjour</h2>
+---
+layout: default
+title: Contact
+permalink: /contact
+---
+<a href="https://m.me/livablom59" target="_blank" class="fixed top-20 right-6 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition">
+  💬 Messenger
+</a>
 
-<form action="https://formspree.io/f/xxxxxxxx" method="POST">
-  <label for="liva-dates">Dates LIVA :</label>
-  <input id="liva-dates" name="dates-liva" placeholder="Choisir vos dates pour LIVA">
+<section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-2xl mx-auto">
 
-  <label for="blom-dates">Dates BLŌM :</label>
-  <input id="blom-dates" name="dates-blom" placeholder="Choisir vos dates pour BLŌM">
+<section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-2xl mx-auto">
 
-  <label for="message">Votre message :</label>
-  <textarea name="message" id="message" required></textarea>
+    <h2 class="text-3xl font-bold mb-8 text-center">Nous contacter</h2>
 
-  <button type="submit">Envoyer</button>
-</form>
+    <p class="text-center mb-6">
+      Une question ? Une demande de réservation ? N'hésitez pas à nous écrire via ce formulaire.
+    </p>
 
-<!-- Flatpickr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/ical.js"></script>
-<script>
-async function getUnavailableDates(icalUrl) {
-  const response = await fetch(icalUrl);
-  const text = await response.text();
-  const jcalData = ICAL.parse(text);
-  const comp = new ICAL.Component(jcalData);
-  const events = comp.getAllSubcomponents("vevent");
-  let dates = [];
+    <form action="https://formspree.io/f/mblyrrna" method="POST" class="space-y-6">
 
-  events.forEach(event => {
-    const e = new ICAL.Event(event);
-    const start = e.startDate.toJSDate();
-    const end = e.endDate.toJSDate();
-    let current = new Date(start);
-    while (current < end) {
-      dates.push(current.toISOString().split('T')[0]);
-      current.setDate(current.getDate() + 1);
-    }
-  });
+      <div>
+        <label for="name" class="block text-sm font-semibold mb-1">Nom</label>
+        <input type="text" id="name" name="name" required
+               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+      </div>
 
-  return dates;
-}
+      <div>
+        <label for="email" class="block text-sm font-semibold mb-1">Email</label>
+        <input type="email" id="email" name="_replyto" required
+               class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+      </div>
 
-(async () => {
-  const livaDates = await getUnavailableDates("https://calendar.google.com/calendar/ical/25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com/private-13c805a19f362002359c4036bf5234d6/basic.ics");
-  const blomDates = await getUnavailableDates("https://calendar.google.com/calendar/ical/c686866e780e72a89dd094dedc492475386f2e6ee8e22b5a63efe7669d52621b%40group.calendar.google.com/private-a78ad751bafd3b6f19cf5874453e6640/basic.ics");
+      <div>
+        <label for="message" class="block text-sm font-semibold mb-1">Message</label>
+        <textarea id="message" name="message" rows="6" required
+                  class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"></textarea>
+      </div>
 
-  flatpickr("#liva-dates", {
-    mode: "range",
-    dateFormat: "Y-m-d",
-    disable: livaDates
-  });
+      <div class="text-center">
+        <button type="submit"
+                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
+          Envoyer
+        </button>
+      </div>
+    </form>
 
-  flatpickr("#blom-dates", {
-    mode: "range",
-    dateFormat: "Y-m-d",
-    disable: blomDates
-  });
-})();
-</script>
+    <p class="text-sm text-center text-yellow-300 mt-8">
+      Vous pouvez aussi nous écrire directement à : <br />
+      <a href="mailto:livablom59@gmail.com" class="underline hover:text-yellow-200">livablom59@gmail.com</a>
+    </p>
+
+  </div>
+</section>
