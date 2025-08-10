@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Confort moderne ou spa privé, choisissez votre séjour.
+description:"LIVABLŌM à Guesnain : deux logements haut de gamme pour tous vos séjours. BLŌM, escapade romantique avec spa privatif et petit-déjeuner inclus. LIVA, hébergement moderne tout équipé pour familles, couples et professionnels."
 image: /assets/images/photolivablom1.png
 permalink: /
 ---
