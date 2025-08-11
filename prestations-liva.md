@@ -3,24 +3,6 @@ layout: default
 title: Prestations LIVA
 permalink: /prestations-liva
 ---
-<!-- Bouton hamburger visible uniquement sur mobile -->
-<button id="menu-toggle" aria-label="Ouvrir le menu" style="display:none; position: fixed; top: 1rem; left: 1rem; z-index: 1001; background: #FFD600; border: none; padding: 0.5rem 1rem; border-radius: 4px; font-weight: bold;">
-  ☰ Menu
-</button>
-
-<!-- Menu latéral caché -->
-<nav id="side-menu" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100vh; background: #111; color: #FFD600; padding: 2rem 1rem; box-shadow: 2px 0 8px rgba(0,0,0,0.7); transition: left 0.3s ease; z-index: 1000;">
-  <button id="menu-close" aria-label="Fermer le menu" style="background: none; border: none; color: #FFD600; font-size: 1.5rem; font-weight: bold; position: absolute; top: 1rem; right: 1rem; cursor: pointer;">×</button>
-  <ul style="list-style: none; padding: 0; margin-top: 3rem;">
-    <li style="margin-bottom: 1rem;"><a href="{{ '/prestations' | relative_url }}" style="color: #FFD600; text-decoration: none; font-weight: 600;">← Retour aux prestations</a></li>
-    <li style="margin-bottom: 1rem;"><a href="{{ '/prestations-liva' | relative_url }}" style="color: #FFD600; text-decoration: none;">Prestations LIVA</a></li>
-    <li><a href="{{ '/prestations-blom' | relative_url }}" style="color: #FFD600; text-decoration: none;">Prestations BLŌM</a></li>
-  </ul>
-</nav>
-
-<p class="mb-6">
-  <a href="{{ '/prestations' | relative_url }}" class="text-yellow-400 hover:underline">← Retour aux prestations</a>
-</p>
 
 <section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-4xl mx-auto">
