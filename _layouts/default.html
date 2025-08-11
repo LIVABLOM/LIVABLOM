@@ -269,6 +269,13 @@ function loadGoogleAnalytics() {
   gtag('config', 'G-34YPEPJ0WQ', { 'anonymize_ip': true }); // Remplace par ton ID GA et active anonymisation
 }
 </script>
+// Fermeture du menu quand on clique sur un lien
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+  });
+});
 
 </body>
 </html>
