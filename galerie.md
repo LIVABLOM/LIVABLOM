@@ -52,16 +52,8 @@ permalink: /galerie
     }
   }
 
-  // Au chargement, filtre selon la query string "filter"
+  // Au chargement, on affiche tout par défaut et active bouton 'Tous'
   document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get('filter') || 'all';
-    filterGallery(category);
-    // Active le bouton correspondant visuellement
-    const activeBtn = document.querySelector(`[onclick*="${category}"]`);
-    if (activeBtn) {
-      activeBtn.classList.add('bg-black');
-      activeBtn.classList.remove('bg-gray-700');
-    }
+    filterGallery('all');
   });
 </script>
