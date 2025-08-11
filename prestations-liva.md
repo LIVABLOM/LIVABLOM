@@ -4,6 +4,10 @@ title: Prestations LIVA
 permalink: /prestations-liva
 ---
 
+<p class="mb-6">
+  <a href="{{ '/prestations' | relative_url }}" class="text-yellow-400 hover:underline">← Retour aux prestations</a>
+</p>
+
 <section class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
   <div class="max-w-4xl mx-auto">
 
