@@ -1,5 +1,6 @@
 <header class="bg-black text-white px-4 py-4">
   <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+
     <!-- Logo -->
     <div class="text-center md:text-left mb-4 md:mb-0">
       <a href="{{ site.baseurl }}/" class="text-2xl font-bold tracking-widest hover:underline">
@@ -7,12 +8,21 @@
       </a>
     </div>
 
-    <!-- Menu -->
-    <nav class="flex justify-center space-x-6 text-sm font-semibold uppercase tracking-wide">
+    <!-- Menu desktop -->
+    <nav class="main-menu hidden md:flex justify-center space-x-6 text-sm font-semibold uppercase tracking-wide">
       <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
-      <a href="#galerie" class="hover:underline">Galerie</a>
-      <a href="#prestations" class="hover:underline">Prestations</a>
+      <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
+      <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
       <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
     </nav>
+
+    <!-- Bouton hamburger mobile -->
+    <button id="hamburger-btn" class="md:hidden text-white text-3xl focus:outline-none">
+      ☰
+    </button>
+
   </div>
-</header>
+
+  <!-- Menu mobile (caché par défaut) -->
+  <nav id="mobile-menu" class="hidden flex-col space-y-4 uppercase text-sm font-semibold bg-black p-4 mt-4">
+    <a href="{{ site.b
