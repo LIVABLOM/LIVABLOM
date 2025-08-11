@@ -35,17 +35,33 @@ permalink: /galerie
     const items = document.querySelectorAll('.gallery-item');
     items.forEach(item => {
       if (category === 'all') {
-        item.classList.remove('hidden');
+        item.style.display = '';
       } else {
-        item.classList.toggle('hidden', !item.classList.contains(category));
+        item.style.display = item.classList.contains(category) ? '' : 'none';
       }
     });
 
+    // Mise à jour des styles des boutons
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.classList.remove('bg-black');
       btn.classList.add('bg-gray-700');
     });
-    event.target.classList.add('bg-black');
-    event.target.classList.remove('bg-gray-700');
+    if (event) {
+      event.target.classList.add('bg-black');
+      event.target.classList.remove('bg-gray-700');
+    }
   }
+
+  // Au chargement, filtre selon la query string "filter"
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('filter') || 'all';
+    filterGallery(category);
+    // Active le bouton correspondant visuellement
+    const activeBtn = document.querySelector(`[onclick*="${category}"]`);
+    if (activeBtn) {
+      activeBtn.classList.add('bg-black');
+      activeBtn.classList.remove('bg-gray-700');
+    }
+  });
 </script>
