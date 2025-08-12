@@ -40,4 +40,39 @@ permalink: /contact
       </div>
 
       <div>
-        <label for="message" class="block text-sm font-semibold mb-1">Mes
+        <label for="message" class="block text-sm font-semibold mb-1">Message</label>
+        <textarea id="message" name="message" rows="6" required
+                  class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"></textarea>
+      </div>
+
+      <div class="text-center">
+        <button type="submit"
+                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
+          Envoyer
+        </button>
+      </div>
+    </form>
+
+    <p class="text-sm text-center text-yellow-300 mt-8">
+      Vous pouvez aussi nous écrire directement à : <br />
+      <a href="mailto:livablom59@gmail.com" class="underline hover:text-yellow-200">livablom59@gmail.com</a>
+    </p>
+
+  </div>
+</section>
+
+<!-- Flatpickr (CSS + JS) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+  // Init calendrier Flatpickr
+  flatpickr("#dates", {
+    mode: "range",
+    dateFormat: "d/m/Y",
+    minDate: "today",
+    locale: {
+      firstDayOfWeek: 1
+    }
+  });
+</script>
