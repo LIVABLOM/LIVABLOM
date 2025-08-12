@@ -46,7 +46,7 @@ permalink: /contact
       </div>
 
       <!-- reCAPTCHA visible -->
-      <div class="g-recaptcha" data-sitekey="6LcYg6ErAAAAAHIx6LR87PDojgv4mnzUBU3FjWjt" data-callback="enableSubmit"></div>
+      <div class="g-recaptcha" data-sitekey="6LcYg6ErAAAAALJjzA7BQOPxvqtdbnebR_d9Lepu" data-callback="enableSubmit"></div>
 
       <div class="text-center">
         <button type="submit" id="submitBtn" disabled
