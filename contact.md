@@ -45,9 +45,12 @@ permalink: /contact
                   class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300"></textarea>
       </div>
 
+      <!-- reCAPTCHA visible -->
+      <div class="g-recaptcha" data-sitekey="TA_CLE_SITE" data-callback="enableSubmit"></div>
+
       <div class="text-center">
-        <button type="submit"
-                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
+        <button type="submit" id="submitBtn" disabled
+                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition cursor-not-allowed">
           Envoyer
         </button>
       </div>
@@ -65,6 +68,9 @@ permalink: /contact
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+<!-- Google reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <script>
   // Init calendrier Flatpickr
   flatpickr("#dates", {
@@ -75,4 +81,11 @@ permalink: /contact
       firstDayOfWeek: 1
     }
   });
+
+  // Active le bouton Envoyer quand captcha validé
+  function enableSubmit() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = false;
+    btn.classList.remove('cursor-not-allowed');
+  }
 </script>
