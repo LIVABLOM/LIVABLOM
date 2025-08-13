@@ -121,6 +121,10 @@
   .delay-400 { animation-delay: 0.4s; }
   .delay-500 { animation-delay: 0.5s; }
   </style>
+   
+{% if page.url %}
+  <link rel="canonical" href="https://www.livablom.fr{{ page.url | replace:'index.html','' }}">
+{% endif %}
 
 </head>
   <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden ...">
