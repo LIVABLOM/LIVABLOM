@@ -1,4 +1,4 @@
-[
+const avisBlom = [
   {
     "auteur": "P.M",
     "texte": "Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable on avait envie d’y rester.. rien à dire à part merci ☺️",
@@ -37,4 +37,22 @@
   },
   {
     "auteur": "Anissa",
-    "texte": "Par où commencer... Abdel un hôte au top respectueux disponible réactif attentionné. Le logement dans un endroit très très calme sécurisé. D'une propreté nickel. Nous avons passer un week-end mémorable et nous reviendrons sans hésitez et nous partagerons l'annonce. Nous avons fais d'autre logement du même type auparavant c'est de loin le meilleur. Allez-y vraiment les yeux fermé. Au delà de nos attentes. Une bonne cont
+    "texte": "Par où commencer... Abdel un hôte au top respectueux disponible réactif attentionné. Le logement dans un endroit très très calme sécurisé. D'une propreté nickel. Nous avons passer un week-end mémorable et nous reviendrons sans hésitez et nous partagerons l'annonce. Nous avons fais d'autre logement du même type auparavant c'est de loin le meilleur. Allez-y vraiment les yeux fermé. Au delà de nos attentes. Une bonne continuation à Abdel et merci encore pour tout.",
+    "note": 5,
+    "etoiles": "★★★★★"
+  },
+  {
+    "auteur": "Pauline",
+    "texte": "Nous avons passé un merveilleux week-end . Tout était tout simplement parfait : propre, soigné, avec plein de petites attentions qui font vraiment la différence. L’appartement est conforme à l’annonce, très bien équipé, cosy, et décoré avec goût. Mention spéciale à l’hôte, très réactif et attentionné, qui a su répondre rapidement à nos questions et s’assurer que tout se passait bien. Nous reviendrons sans hésiter et recommandons ce logement les yeux fermés !",
+    "note": 5,
+    "etoiles": "★★★★★"
+  },
+  {
+    "auteur": "Emilie",
+    "texte": "Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !",
+    "note": 5,
+    "etoiles": "★★★★★"
+  },
+  {
+    "auteur": "Anais",
+    "texte": "
