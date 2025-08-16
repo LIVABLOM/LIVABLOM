@@ -81,32 +81,95 @@ permalink: /blom/
       </div>
     </div>
 
-    <!-- Bloc témoignages -->
-    <div class="mt-20">
-      <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
-      <div class="relative max-w-3xl mx-auto overflow-hidden">
-        <div id="carousel" class="flex transition-transform duration-700">
-          {% for temoignage in site.data.temoignages %}
-          <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
-            <p class="italic text-lg truncate">“{{ temoignage.texte | truncate: 100 }}”</p>
-            <span class="block mt-2 text-sm text-gray-400">– {{ temoignage.auteur }}</span>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+<!-- Bloc témoignages -->
+<div class="mt-20">
+  <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
 
-    <!-- Modal témoignage -->
-    <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-      <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
-        <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-        <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
-        <div class="flex justify-between mt-4">
-          <button onclick="prevTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">&larr; Précédent</button>
-          <button onclick="nextTestimonial()" class="text-sm font-semibold text-blue-600 hover:underline">Suivant &rarr;</button>
+  <!-- Carrousel -->
+  <div class="swiper-container max-w-4xl mx-auto">
+    <div class="swiper-wrapper">
+      {% for avis in site.data.avis %}
+      <div class="swiper-slide">
+        <div class="avis-card cursor-pointer" onclick="openModal({{ forloop.index0 }})">
+          <p class="italic truncate">“{{ avis.texte | truncate: 80 }}”</p>
+          <span class="block mt-2 text-sm text-gray-400">– {{ avis.nom }}</span>
         </div>
       </div>
+      {% endfor %}
     </div>
+  </div>
+</div>
+
+<!-- Modal témoignages -->
+<div id="avisModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
+  <div class="bg-white text-black max-w-xl p-6 rounded-xl relative">
+    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
+    <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
+  </div>
+</div>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+
+<style>
+  .swiper-container {
+    overflow: visible;
+    padding: 20px 0;
+  }
+  .swiper-slide {
+    width: 250px; /* largeur d’un avis */
+    margin-right: 20px;
+  }
+  .avis-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+</style>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<script>
+  // Charger les avis depuis _data/avis.yml
+  var avis = {{ site.data.avis | jsonify }};
+
+  // Initialisation du carrousel
+  var swiper = new Swiper(".swiper-container", {
+    slidesPerView: 2.5, // affichage partiel
+    spaceBetween: 20,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+    },
+    breakpoints: {
+      768: { slidesPerView: 2 },
+      480: { slidesPerView: 1.2 },
+    },
+  });
+
+  // Modal
+  function openModal(index) {
+    document.getElementById('modalText').innerText = avis[index].texte;
+    document.getElementById('avisModal').classList.remove('hidden');
+    document.getElementById('avisModal').classList.add('flex');
+  }
+
+  function closeModal() {
+    document.getElementById('avisModal').classList.add('hidden');
+    document.getElementById('avisModal').classList.remove('flex');
+  }
+
+  // Fermer en cliquant à l’extérieur
+  window.onclick = function(event) {
+    let modal = document.getElementById('avisModal');
+    if (event.target == modal) {
+      closeModal();
+    }
+  }
+</script>
+
 
   <!-- Appel à l'action -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
@@ -124,53 +187,3 @@ permalink: /blom/
   </div>
 </div>
 
-<!-- Scripts -->
-<script>
-let currentIndex = 0;
-const fullTestimonials = [
-  {% for temoignage in site.data.temoignages %}
-    `{{ temoignage.texte | strip_newlines | escape }}`,
-  {% endfor %}
-];
-
-function openModal(i) {
-  currentIndex = i;
-  updateModalText();
-  document.getElementById("testimonialModal").classList.remove("hidden");
-  document.getElementById("testimonialModal").classList.add("flex");
-}
-
-function closeModal() {
-  document.getElementById("testimonialModal").classList.add("hidden");
-  document.getElementById("testimonialModal").classList.remove("flex");
-}
-
-function updateModalText() {
-  document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-}
-
-function prevTestimonial() {
-  currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-  updateModalText();
-}
-
-function nextTestimonial() {
-  currentIndex = (currentIndex + 1) % fullTestimonials.length;
-  updateModalText();
-}
-
-// Carrousel automatique
-const carousel = document.getElementById("carousel");
-const totalItems = {{ site.data.temoignages | size }};
-let carouselIndex = 0;
-
-function showCarouselSlide(index) {
-  const offset = -index * 100;
-  carousel.style.transform = `translateX(${offset}%)`;
-}
-
-setInterval(() => {
-  carouselIndex = (carouselIndex + 1) % totalItems;
-  showCarouselSlide(carouselIndex);
-}, 4000);
-</script>
