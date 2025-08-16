@@ -97,79 +97,77 @@ permalink: /blom/
 </div>
 
 
-<!-- Modal témoignage -->
-<div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4">
-  <div class="bg-black text-white max-w-xl p-6 rounded-xl relative border border-gray-600">
-    <button onclick="closeModal()" class="absolute top-2 right-4 text-2xl font-bold text-gray-400 hover:text-white">&times;</button>
-    <p id="modalText" class="text-lg leading-relaxed mb-4"></p>
+<!-- Modal témoignages -->
+<div id="testimonialModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+  <div class="bg-black text-white max-w-2xl p-6 rounded-xl relative">
+    <button id="closeBtn" class="absolute top-2 right-2 text-white text-xl">✖</button>
+    <div id="modalText" class="whitespace-pre-line"></div>
     <div class="flex justify-between mt-4">
-      <button onclick="prevTestimonial()" class="text-sm font-semibold text-gray-300 hover:text-white">&larr; Précédent</button>
-      <button onclick="nextTestimonial()" class="text-sm font-semibold text-gray-300 hover:text-white">Suivant &rarr;</button>
+      <button id="prevBtn" class="px-4 py-2 bg-gray-700 rounded">◀</button>
+      <button id="nextBtn" class="px-4 py-2 bg-gray-700 rounded">▶</button>
     </div>
   </div>
-</div>
+</div
 
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-
-<style>
-  .swiper-container {
-    overflow: visible;
-    padding: 20px 0;
-  }
-  .swiper-slide {
-    width: 250px; /* largeur d’un avis */
-    margin-right: 20px;
-  }
-  .avis-card {
-    background: #fff;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-</style>
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
+<!-- Scripts pour le carrousel + modal -->
 <script>
-  // Charger les avis depuis _data/avis.yml
-  var avis = {{ site.data.avis_blom | jsonify }};
+document.addEventListener("DOMContentLoaded", () => {
+  let currentIndex = 0;
+  const carousel = document.getElementById("carousel");
+  const items = carousel.children;
+  const totalItems = items.length;
 
-  // Initialisation du carrousel
-  var swiper = new Swiper(".swiper-container", {
-    slidesPerView: 2.5, // affichage partiel
-    spaceBetween: 20,
-    loop: true,
-    autoplay: {
-      delay: 4000,
-    },
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      480: { slidesPerView: 1.2 },
-    },
+  // Liste complète des témoignages depuis data
+  const fullTestimonials = [
+    {% for temoignage in site.data.avis_blom %}
+      `{{ temoignage.texte | strip_newlines | escape }}`,
+    {% endfor %}
+  ];
+
+  // Fonction d'affichage du slide
+  function showCarouselSlide(index) {
+    const offset = -index * 100;
+    carousel.style.transform = `translateX(${offset}%)`;
+  }
+
+  // Défilement automatique toutes les 5s
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % totalItems;
+    showCarouselSlide(currentIndex);
+  }, 5000);
+
+  // Ouverture du modal au clic sur un avis
+  Array.from(items).forEach((item, i) => {
+    item.addEventListener("click", () => {
+      currentIndex = i;
+      updateModalText();
+      document.getElementById("testimonialModal").classList.remove("hidden");
+      document.getElementById("testimonialModal").classList.add("flex");
+    });
   });
 
-  // Modal
-  function openModal(index) {
-    document.getElementById('modalText').innerText = avis[index].texte;
-    document.getElementById('avisModal').classList.remove('hidden');
-    document.getElementById('avisModal').classList.add('flex');
+  function updateModalText() {
+    document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
   }
 
-  function closeModal() {
-    document.getElementById('avisModal').classList.add('hidden');
-    document.getElementById('avisModal').classList.remove('flex');
-  }
+  // Navigation dans le modal
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+    updateModalText();
+  });
 
-  // Fermer en cliquant à l’extérieur
-  window.onclick = function(event) {
-    let modal = document.getElementById('avisModal');
-    if (event.target == modal) {
-      closeModal();
-    }
-  }
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % fullTestimonials.length;
+    updateModalText();
+  });
+
+  document.getElementById("closeBtn").addEventListener("click", () => {
+    document.getElementById("testimonialModal").classList.add("hidden");
+    document.getElementById("testimonialModal").classList.remove("flex");
+  });
+});
 </script>
+
 
 
   <!-- Appel à l'action -->
