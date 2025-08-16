@@ -1,8 +1,63 @@
-- nom: "Sophie L."
-  texte: "Super séjour, le spa est magnifique et très relaxant. Nous avons adoré !"
-- nom: "Marc D."
-  texte: "Logement très agréable, accueil chaleureux. À refaire."
-- nom: "Laura P."
-  texte: "Tout était parfait, petit déjeuner délicieux, cadre zen."
-- nom: "Alexandre T."
-  texte: "Excellent moment en couple, le spa est top et le confort impeccable."
+- auteur: "Sylvie"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    Nous y avons passé une nuit, notre arrivée a été très chaleureuse avec une petite musique
+    d’ambiance et plusieurs petites attentions qui font plaisir.
+    Tout était impeccable, la déco très jolie et romantique. Le Jacuzzi était impeccable également,
+    vidé et nettoyé au préalable.
+    Nous recommanderons ce logement autour de nous et reviendrons sans hésiter.
+
+- auteur: "Anaïs"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    Nous avons passé une nuit incroyable, tout était parfait. 
+    La maison est incroyable surtout la salle de massage en plus du jacuzzi 😍👌🏼.
+
+- auteur: "Alexandra"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    C’était notre deuxième séjour dans ce logement, toujours aussi impeccable !
+    Les petites attentions sont vraiment appréciables. Une excellente parenthèse sans enfant,
+    qui nous a fait beaucoup de bien. Nous reviendrons avec grand plaisir. 
+    Je recommande à 100 % ! 😀
+
+- auteur: "Fanny"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    Tout était parfait, hôte aux petits soins.
+
+- auteur: "Anissa"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    Par où commencer... Abdel est un hôte au top : respectueux, disponible, réactif, attentionné.
+    Le logement est situé dans un endroit très calme et sécurisé, d'une propreté nickel.
+    Nous avons passé un week-end mémorable et nous reviendrons sans hésiter.
+    Nous partagerons l'annonce car c'est de loin le meilleur logement de ce type que nous avons testé.
+    Allez-y vraiment les yeux fermés. Au-delà de nos attentes.
+    Une bonne continuation à Abdel et merci encore pour tout.
+
+- auteur: "Pauline"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    Nous avons passé un merveilleux week-end. Tout était tout simplement parfait : propre, soigné,
+    avec plein de petites attentions qui font vraiment la différence.
+    L’appartement est conforme à l’annonce, très bien équipé, cosy, et décoré avec goût.
+    Mention spéciale à l’hôte, très réactif et attentionné, qui a su répondre rapidement
+    à nos questions et s’assurer que tout se passait bien. 
+    Nous reviendrons sans hésiter et recommandons ce logement les yeux fermés !
+
+- auteur: "Emilie"
+  note: 5
+  etoiles: "★★★★★"
+  texte: >
+    Une pépite ! Un Abdel très sympathique, des instructions claires,
+    une petite maison sur 2 étages, un salon cosy, une table joliment dressée,
+    une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques,
+    un lit king size super confortable (dommage qu'on ne pouvait pas le ramener dans la voiture !),
+    un petit déj bien consistant en tête à tête. Rien à redire !
