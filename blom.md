@@ -82,23 +82,20 @@ permalink: /blom/
     </div>
 
 <!-- Bloc témoignages -->
-<div class="mt-20">
+<div class="mt-20 bg-black text-white">
   <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
-
-  <!-- Carrousel -->
-  <div class="swiper-container max-w-4xl mx-auto">
-    <div class="swiper-wrapper">
+  <div class="relative max-w-3xl mx-auto overflow-hidden">
+    <div id="carousel" class="flex transition-transform duration-700">
       {% for avis in site.data.avis_blom %}
-      <div class="swiper-slide">
-        <div class="avis-card cursor-pointer" onclick="openModal({{ forloop.index0 }})">
-          <p class="italic truncate">“{{ avis.texte | truncate: 80 }}”</p>
-          <span class="block mt-2 text-sm text-gray-400">– {{ avis.nom }}</span>
-        </div>
+      <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
+        <p class="italic text-lg truncate">“{{ avis.texte | truncate: 100 }}”</p>
+        <span class="block mt-2 text-sm text-gray-400">– {{ avis.auteur }}</span>
       </div>
       {% endfor %}
     </div>
   </div>
 </div>
+
 
 <!-- Modal témoignages -->
 <div id="avisModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
