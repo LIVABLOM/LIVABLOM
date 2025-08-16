@@ -88,7 +88,7 @@ permalink: /blom/
   <!-- Carrousel -->
   <div class="swiper-container max-w-4xl mx-auto">
     <div class="swiper-wrapper">
-      {% for avis in site.data.avis %}
+      {% for avis in site.data.avis_blom %}
       <div class="swiper-slide">
         <div class="avis-card cursor-pointer" onclick="openModal({{ forloop.index0 }})">
           <p class="italic truncate">“{{ avis.texte | truncate: 80 }}”</p>
