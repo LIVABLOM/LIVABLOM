@@ -107,7 +107,7 @@ permalink: /blom/
       <button id="nextBtn" class="px-4 py-2 bg-gray-700 rounded">▶</button>
     </div>
   </div>
-</div
+</div>
 
 <!-- Scripts pour le carrousel + modal -->
 <script>
