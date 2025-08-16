@@ -133,7 +133,7 @@ permalink: /blom/
 
 <script>
   // Charger les avis depuis _data/avis.yml
-  var avis = {{ site.data.avis | jsonify }};
+  var avis = {{ site.data.avis_blom | jsonify }};
 
   // Initialisation du carrousel
   var swiper = new Swiper(".swiper-container", {
