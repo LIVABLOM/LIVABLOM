@@ -31,7 +31,8 @@ permalink: /blom/
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
         <h2 class="text-2xl font-semibold">Jacuzzi privatif</h2>
-        <p>Chez BLŌM, l’eau de votre spa est totalement vidée et renouvelée pour chaque nouveau client. Vous êtes assurés d’une hygiène parfaite et d’une expérience 100 % privative.Jacuzzi intérieur à température idéale pour un moment de détente à deux. Ambiance tamisée et intimité garantie.</p>
+        <p>Chez BLŌM, l’eau de votre spa est totalement vidée et renouvelée pour chaque nouveau client. Vous êtes assurés d’une hygiène parfaite et d’une expérience 100 % privative.
+        Jacuzzi intérieur à température idéale pour un moment de détente à deux. Ambiance tamisée et intimité garantie.</p>
       </div>
     </div>
 
