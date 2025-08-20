@@ -9,8 +9,6 @@
 
 # Packages #
 ############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
 *.7z
 *.dmg
 *.gz
@@ -35,3 +33,11 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Node.js #
+######################
+node_modules/
+
+# Secrets #
+######################
+.env
