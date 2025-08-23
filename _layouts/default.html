@@ -16,9 +16,7 @@
 <!-- Dans <head> du layout -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
 
-<!-- A la fin du <body> -->
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
-<script type="module" src="/assets/js/calendar.js"></script>
+
 
    
   <meta name="description" content="{{ page.description | default: site.description | escape }}">
@@ -263,5 +261,8 @@ function loadGoogleAnalytics() {
   });
 </script>
 </body>
+   <!-- A la fin du <body> -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+<script type="module" src="/assets/js/calendar.js"></script>
 </html>
 
