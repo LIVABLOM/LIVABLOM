@@ -109,11 +109,12 @@ permalink: /liva/
   <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
 
   <!-- Bloc boutons responsive -->
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <a href="{{ site.baseurl }}/contact"
-       class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
-    </a>
+  <div class="text-center my-8">
+  <!-- Bouton réservation qui ouvrira le calendrier -->
+  <button id="btn-reserver-liva"
+          class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+    Réserver maintenant
+  </button>
 
     {% include share.html %}
   </div>
