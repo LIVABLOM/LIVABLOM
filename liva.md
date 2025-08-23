@@ -115,6 +115,8 @@ permalink: /liva/
           class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
     Réserver maintenant
   </button>
+  <div id="calendar-liva" style="display:none; max-width:900px; margin:2rem auto;"></div>
+
 <!-- Calendrier masqué qui s’affiche au clic -->
   <div id="calendar-liva" style="display:none; max-width:900px; margin:2rem auto;"></div>
 </div>
