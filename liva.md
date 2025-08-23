@@ -125,6 +125,31 @@ permalink: /liva/
 </div>
 
 <script>
+import { Calendar } from 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.esm.js';
+
+document.getElementById('btn-reserver-liva').addEventListener('click', async () => {
+  const container = document.getElementById('calendar-liva');
+  container.style.display = 'block';
+
+  // Vérifie si le calendrier existe déjà
+  if (container.innerHTML.trim() !== '') return;
+
+  const calendar = new Calendar(container, {
+    initialView: 'dayGridMonth',
+    height: 600,
+    events: [
+      {
+        url: 'https://calendar-proxy-production-08de.up.railway.app/calendar/liva'
+      }
+    ]
+  });
+
+  calendar.render();
+  // Scroll pour voir le calendrier
+  container.scrollIntoView({ behavior: 'smooth' });
+});
+
+  
 let currentIndex = 0;
 const fullTestimonials = [
   {% for temoignage in site.data.temoignages-liva %}
