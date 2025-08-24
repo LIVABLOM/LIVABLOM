@@ -89,12 +89,10 @@ permalink: /liva/
 
   <!-- Bloc boutons responsive -->
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    
     <!-- Bouton ouvrir modal calendrier -->
     <button onclick="openCalendar()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
       Réserver maintenant
     </button>
-
     {% include share.html %}
   </div>
 </div>
@@ -110,25 +108,45 @@ permalink: /liva/
   </div>
 </div>
 
-<!-- Conteneur FullCalendar -->
-    <div id="calendar-liva" class="w-full h-[500px] md:h-[600px]"></div>
-  </div>
-</div>
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
 <script>
+  let calendarInitialized = false;
+
   function openCalendar() {
-    document.getElementById("calendarModal").classList.remove("hidden");
-    document.getElementById("calendarModal").classList.add("flex");
+    const modal = document.getElementById("calendarModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+    if (!calendarInitialized) {
+      const calendarEl = document.getElementById("calendar-liva");
+
+      // Initialisation FullCalendar
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        height: 600,
+        events: 'https://ton-projet.up.railway.app/calendar/liva', // 👉 ton endpoint Railway
+        eventDisplay: 'background', 
+        eventColor: '#ff4d4d'
+      });
+
+      calendar.render();
+      calendarInitialized = true;
+    }
   }
 
   function closeCalendar(event) {
-    // Si on clique sur le fond noir OU sur le bouton, on ferme
     if (!event || event.target.id === "calendarModal") {
-      document.getElementById("calendarModal").classList.add("hidden");
-      document.getElementById("calendarModal").classList.remove("flex");
+      const modal = document.getElementById("calendarModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
     }
   }
 </script>
+
 
 <script>
   let currentIndex = 0;
