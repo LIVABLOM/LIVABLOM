@@ -89,6 +89,7 @@ permalink: /liva/
 
   <!-- Bloc boutons responsive -->
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    
     <!-- Bouton ouvrir modal calendrier -->
     <button onclick="openCalendar()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
       Réserver maintenant
@@ -100,50 +101,19 @@ permalink: /liva/
 
 <!-- Modal calendrier LIVA -->
 <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto" onclick="event.stopPropagation()">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-xl font-bold text-center mt-4 mb-2">Choisissez vos dates</h3>
+    <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
 
     <!-- Conteneur FullCalendar -->
     <div id="calendar-liva" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-
-<script>
-  let calendarInitialized = false;
-
-  function openCalendar() {
-    const modal = document.getElementById("calendarModal");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-
-    if (!calendarInitialized) {
-      var calendarEl = document.getElementById('calendar-liva');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        height: 'auto',
-        events: 'https://ton-projet.up.railway.app/calendar/liva',
-        eventDisplay: 'background',
-        eventColor: '#ff4d4d',
-        selectable: false
-      });
-      calendar.render();
-      calendarInitialized = true;
-    }
-  }
-
-  function closeCalendar(event) {
-    if (!event || event.target.id === "calendarModal") {
-      document.getElementById("calendarModal").classList.add("hidden");
-      document.getElementById("calendarModal").classList.remove("flex");
-    }
-  }
-</script>
+<!-- Conteneur FullCalendar -->
+    <div id="calendar-liva" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
 
 <script>
   function openCalendar() {
