@@ -104,7 +104,8 @@ permalink: /liva/
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
 
     <!-- Conteneur FullCalendar -->
-    <div id="calendar-liva" class="w-full h-[500px] md:h-[600px]"></div>
+<div id="calendar-liva" class="w-full h-[400px] md:h-[500px]"></div>
+
   </div>
 </div>
 
@@ -125,12 +126,15 @@ permalink: /liva/
 
       // Initialisation FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        height: 600,
-        events: 'https://ton-projet.up.railway.app/calendar/liva', // 👉 ton endpoint Railway
-        eventDisplay: 'background', 
-        eventColor: '#ff4d4d'
+  initialView: 'dayGridMonth',
+  locale: 'fr',
+  height: "auto",   // <-- laisse FullCalendar s’adapter
+  contentHeight: 450, // <-- hauteur max conseillée
+  events: '[https://calendar-proxy-production-08de.up.railway.app/calendar/liva)',
+  eventDisplay: 'background',
+  eventColor: '#ff4d4d'
+});
+
       });
 
       calendar.render();
