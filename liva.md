@@ -108,24 +108,19 @@ permalink: /liva/
   <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
   <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
 
-  <!-- Bloc boutons responsive -->
-  <div class="text-center my-8">
-  <!-- Bouton réservation qui ouvrira le calendrier -->
-  <button id="btn-reserver-liva"
-          class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-    Réserver maintenant
-  </button>
-  <div id="calendar-liva" style="display:none; max-width:900px; margin:2rem auto;"></div>
+  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    <button id="btn-reserver-liva"
+      class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+      Réserver maintenant
+    </button>
 
-<!-- Calendrier masqué qui s’affiche au clic -->
-  <div id="calendar-liva" style="display:none; max-width:900px; margin:2rem auto;"></div>
-</div>
     {% include share.html %}
   </div>
+
+  <!-- Un seul conteneur calendrier -->
+  <div id="calendar-liva" style="display:none; max-width:900px; margin:2rem auto;"></div>
 </div>
 
-<script>
-import { Calendar } from 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.esm.js';
 
 document.getElementById('btn-reserver-liva').addEventListener('click', async () => {
   const container = document.getElementById('calendar-liva');
