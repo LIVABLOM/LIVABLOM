@@ -96,18 +96,41 @@ permalink: /liva/
     </div>
   </div>
 
-  <!-- Modal calendrier -->
-  <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4">
-    <div class="bg-white text-black max-w-4xl w-full p-6 rounded-xl relative">
-      <button onclick="document.getElementById('calendarModal').classList.add('hidden'); document.getElementById('calendarModal').classList.remove('flex');"
-              class="absolute top-2 right-4 text-2xl font-bold text-gray-600">&times;</button>
-      <h3 class="text-xl font-bold mb-4">Disponibilités – LIVA</h3>
-      <iframe src="https://calendar.google.com/calendar/embed?src=25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com&ctz=Europe/Paris"
-              style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+ <!-- Modal Calendrier -->
+<div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto" onclick="event.stopPropagation()">
+    <!-- Bouton fermeture -->
+    <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
+
+    <h3 class="text-xl font-bold text-center mt-4 mb-2">Choisissez vos dates</h3>
+
+    <!-- Iframe calendrier -->
+    <div class="overflow-hidden rounded-b-xl">
+      <iframe 
+        src="https://calendar.google.com/calendar/embed?src=25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com&ctz=Europe/Paris" 
+        style="border:0;" 
+        class="w-full h-[500px] md:h-[600px]"
+        frameborder="0" 
+        scrolling="no">
+      </iframe>
     </div>
   </div>
-
 </div>
+
+<script>
+  function openCalendar() {
+    document.getElementById("calendarModal").classList.remove("hidden");
+    document.getElementById("calendarModal").classList.add("flex");
+  }
+
+  function closeCalendar(event) {
+    // Si on clique sur le fond noir OU sur le bouton, on ferme
+    if (!event || event.target.id === "calendarModal") {
+      document.getElementById("calendarModal").classList.add("hidden");
+      document.getElementById("calendarModal").classList.remove("flex");
+    }
+  }
+</script>
 
 <script>
   let currentIndex = 0;
