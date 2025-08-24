@@ -82,66 +82,68 @@ permalink: /liva/
     </div>
   </div>
 
-  <!-- Appel à l'action -->
-  <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-    <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-    <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
-    <!-- Bloc boutons responsive -->
-    <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-      <button onclick="document.getElementById('calendarModal').classList.remove('hidden'); document.getElementById('calendarModal').classList.add('flex');"
-              class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-        Réserver maintenant
-      </button>
-      {% include share.html %}
-    </div>
-  </div>
+<!-- Appel à l'action : Réserver LIVA -->
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+  <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
+  <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
 
-<!-- Zone du calendrier LIVA -->
-<div id="calendar-liva" class="w-full max-w-4xl mx-auto mb-8"></div>
+  <!-- Bloc boutons responsive -->
+  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    <!-- Bouton ouvrir modal calendrier -->
+    <button onclick="openCalendar()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+      Réserver maintenant
+    </button>
+
+    {% include share.html %}
+  </div>
+</div>
+
+<!-- Modal calendrier LIVA -->
+<div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-xl font-bold text-center mt-4 mb-2">Choisissez vos dates</h3>
+
+    <!-- Conteneur FullCalendar -->
+    <div id="calendar-liva" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
 
 <!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar-liva');
+  let calendarInitialized = false;
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      locale: 'fr',
-      height: 'auto',
-      events: 'https://ton-projet.up.railway.app/calendar/liva', // endpoint Railway
-      eventDisplay: 'background', // réserve les jours
-      eventColor: '#ff4d4d', // jours réservés en rouge
-      selectable: false // pour l'instant, juste affichage
-    });
+  function openCalendar() {
+    const modal = document.getElementById("calendarModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
 
-    calendar.render();
-  });
+    if (!calendarInitialized) {
+      var calendarEl = document.getElementById('calendar-liva');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        height: 'auto',
+        events: 'https://ton-projet.up.railway.app/calendar/liva',
+        eventDisplay: 'background',
+        eventColor: '#ff4d4d',
+        selectable: false
+      });
+      calendar.render();
+      calendarInitialized = true;
+    }
+  }
+
+  function closeCalendar(event) {
+    if (!event || event.target.id === "calendarModal") {
+      document.getElementById("calendarModal").classList.add("hidden");
+      document.getElementById("calendarModal").classList.remove("flex");
+    }
+  }
 </script>
-
-
- <!-- Modal Calendrier -->
-<div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto" onclick="event.stopPropagation()">
-    <!-- Bouton fermeture -->
-    <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-
-    <h3 class="text-xl font-bold text-center mt-4 mb-2">Choisissez vos dates</h3>
-
-    <!-- Iframe calendrier -->
-    <div class="overflow-hidden rounded-b-xl">
-      <iframe 
-        src="https://calendar.google.com/calendar/embed?src=25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com&ctz=Europe/Paris" 
-        style="border:0;" 
-        class="w-full h-[500px] md:h-[600px]"
-        frameborder="0" 
-        scrolling="no">
-      </iframe>
-    </div>
-  </div>
-</div>
 
 <script>
   function openCalendar() {
