@@ -73,6 +73,34 @@ permalink: /liva/
       Tarifs dégressifs possibles pour les séjours longs. Contactez-nous pour plus d'informations.
     </p>
   </section>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const btn = document.getElementById('btn-reserver-liva');
+  const container = document.getElementById('calendar-liva');
+  let calendar; // instance unique
+
+  if (!btn || !container) return;
+
+  btn.addEventListener('click', function () {
+    const isHidden = container.style.display === 'none' || container.style.display === '';
+    container.style.display = isHidden ? 'block' : 'none';
+
+    if (isHidden && !calendar) {
+      calendar = new FullCalendar.Calendar(container, {
+        plugins: [ FullCalendar.icalendarPlugin ],
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        height: 'auto',
+        eventSources: [
+          { url: 'https://calendar-proxy-production-08de.up.railway.app/calendar/liva', format: 'ics' }
+        ]
+      });
+      calendar.render();
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
 
 
   <!-- Bloc témoignages -->
