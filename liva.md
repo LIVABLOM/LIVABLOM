@@ -125,14 +125,16 @@ permalink: /liva/
 
       // Initialisation FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        height: "auto",   // <-- laisse FullCalendar s’adapter
-        contentHeight: 450, // <-- hauteur max conseillée
-        events: "https://calendar-proxy-production-08de.up.railway.app/calendar/liva",
-        eventDisplay: 'background',
-        eventColor: '#ff4d4d'
-      });
+  initialView: 'dayGridMonth',
+  locale: 'fr',
+  height: "auto",
+  contentHeight: 500,
+  aspectRatio: 1.35,
+  events: "https://calendar-proxy-production-08de.up.railway.app/calendar-json/liva", // <-- nouvelle route JSON
+  eventDisplay: 'background',
+  eventColor: '#ff4d4d'
+});
+
 
       calendar.render();
       calendarInitialized = true;
