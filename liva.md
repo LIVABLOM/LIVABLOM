@@ -3,23 +3,52 @@ layout: default
 title: LIVA
 ---
 
-<!-- Contenu de la page LIVA ici -->
+# LIVA – Logement Tout Confort
 
-<button id="btn-reserver-liva">Réserver</button>
-<div id="calendar-liva" style="display:none;"></div>
+Bienvenue dans notre appartement LIVA, idéal pour familles, couples ou séjours professionnels.  
+Vous y trouverez tout le nécessaire pour un séjour confortable et agréable.
 
-<!-- Galerie ou carrousel -->
-<div id="carousel">
-  <!-- Slides ici -->
+## Galerie
+
+<div id="carousel" class="overflow-hidden relative w-full">
+  <div class="flex transition-transform duration-500">
+    <img src="/assets/galerie/liva/photo1.jpg" alt="Photo 1" class="w-full">
+    <img src="/assets/galerie/liva/photo2.jpg" alt="Photo 2" class="w-full">
+    <img src="/assets/galerie/liva/photo3.jpg" alt="Photo 3" class="w-full">
+  </div>
+</div>
+
+## Réserver
+
+<button id="btn-reserver-liva" class="bg-blue-600 text-white px-4 py-2 rounded mt-4">
+  Réserver
+</button>
+
+<div id="calendar-liva" style="display:none; margin-top:20px;"></div>
+
+## Témoignages
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+  <div onclick="openModal(0)" class="p-4 bg-gray-100 rounded cursor-pointer">
+    Très bien situé, calme et parfaitement équipé...
+  </div>
+  <div onclick="openModal(1)" class="p-4 bg-gray-100 rounded cursor-pointer">
+    Propre, moderne, idéal pour notre séjour professionnel...
+  </div>
+  <div onclick="openModal(2)" class="p-4 bg-gray-100 rounded cursor-pointer">
+    L’appartement est spacieux, tout était conforme à l’annonce...
+  </div>
 </div>
 
 <!-- Modal témoignages -->
 <div id="testimonialModal" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center">
-  <div class="bg-white p-4 rounded">
-    <p id="modalText"></p>
-    <button onclick="prevTestimonial()">Précédent</button>
-    <button onclick="nextTestimonial()">Suivant</button>
-    <button onclick="closeModal()">Fermer</button>
+  <div class="bg-white p-6 rounded max-w-lg mx-auto">
+    <p id="modalText" class="mb-4"></p>
+    <div class="flex justify-between">
+      <button onclick="prevTestimonial()" class="bg-gray-300 px-3 py-1 rounded">Précédent</button>
+      <button onclick="nextTestimonial()" class="bg-gray-300 px-3 py-1 rounded">Suivant</button>
+      <button onclick="closeModal()" class="bg-red-500 text-white px-3 py-1 rounded">Fermer</button>
+    </div>
   </div>
 </div>
 
@@ -74,7 +103,7 @@ function nextTestimonial() {
 }
 
 // Carrousel automatique
-const carousel = document.getElementById("carousel");
+const carousel = document.getElementById("carousel").querySelector("div");
 const totalItems = 3;
 let carouselIndex = 0;
 
