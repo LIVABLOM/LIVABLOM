@@ -110,14 +110,20 @@ permalink: /liva/
 
   <!-- Bloc boutons responsive -->
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <a href="{{ site.baseurl }}/contact"
-       class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+    <button id="btn-reserver-liva" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
-    </a>
-
+    </button>
     {% include share.html %}
   </div>
+
+  <!-- Calendrier caché au départ -->
+  <div id="calendar-liva" class="mt-6 hidden">
+    <iframe src="https://calendar.google.com/calendar/embed?src=25b3ab9fef930d1760a10e762624b8f604389bdbf69d0ad23c98759fee1b1c89%40group.calendar.google.com&src=hmtqpabhudvckhdt21tct8qi1qdmofg5%40import.calendar.google.com&src=b8uo9em2kb7mdeg5s6ca8926vfiucrka%40import.calendar.google.com&ctz=Europe/Paris"
+      style="border: 0" width="100%" height="600" frameborder="0" scrolling="no">
+    </iframe>
+  </div>
 </div>
+
 
 <script>
 let currentIndex = 0;
@@ -167,4 +173,12 @@ setInterval(() => {
   carouselIndex = (carouselIndex + 1) % totalItems;
   showCarouselSlide(carouselIndex);
 }, 4000);
+
+  // Bouton Réserver -> affiche le calendrier
+document.getElementById("btn-reserver-liva").addEventListener("click", () => {
+  const cal = document.getElementById("calendar-liva");
+  cal.classList.remove("hidden");
+  cal.scrollIntoView({ behavior: "smooth" });
+});
+
 </script>
