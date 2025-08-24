@@ -96,6 +96,32 @@ permalink: /liva/
     </div>
   </div>
 
+<!-- Zone du calendrier LIVA -->
+<div id="calendar-liva" class="w-full max-w-4xl mx-auto mb-8"></div>
+
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar-liva');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'fr',
+      height: 'auto',
+      events: 'https://ton-projet.up.railway.app/calendar/liva', // endpoint Railway
+      eventDisplay: 'background', // réserve les jours
+      eventColor: '#ff4d4d', // jours réservés en rouge
+      selectable: false // pour l'instant, juste affichage
+    });
+
+    calendar.render();
+  });
+</script>
+
+
  <!-- Modal Calendrier -->
 <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto" onclick="event.stopPropagation()">
