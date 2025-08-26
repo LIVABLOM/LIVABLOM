@@ -21,24 +21,19 @@ permalink: /liva/
     <h2 class="text-3xl font-semibold mb-8 text-gray-900">Galerie</h2>
     <div class="flex flex-wrap justify-center gap-6">
       <!-- Images -->
-      <a href="{{ site.baseurl }}/assets/images/salon1.jpg" data-lightbox="liva" data-title="Salon LIVA"
-         class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
+      <a href="{{ site.baseurl }}/assets/images/salon1.jpg" data-lightbox="liva" data-title="Salon LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
         <img src="{{ site.baseurl }}/assets/images/salon1.jpg" alt="Salon LIVA" class="w-full h-40 object-cover" />
       </a>
-      <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA"
-         class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
+      <a href="{{ site.baseurl }}/assets/images/Liva.jpg" data-lightbox="liva" data-title="Salon LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
         <img src="{{ site.baseurl }}/assets/images/Liva.jpg" alt="Salon LIVA" class="w-full h-40 object-cover" />
       </a>
-      <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Chaise design LIVA"
-         class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
+      <a href="{{ site.baseurl }}/assets/images/chaise.jpg" data-lightbox="liva" data-title="Chaise design LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
         <img src="{{ site.baseurl }}/assets/images/chaise.jpg" alt="Chaise design LIVA" class="w-full h-40 object-cover" />
       </a>
-      <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Coin repas LIVA"
-         class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
+      <a href="{{ site.baseurl }}/assets/images/espacerepas.jpg" data-lightbox="liva" data-title="Coin repas LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
         <img src="{{ site.baseurl }}/assets/images/espacerepas.jpg" alt="Coin repas LIVA" class="w-full h-40 object-cover" />
       </a>
-      <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="Table LIVA"
-         class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
+      <a href="{{ site.baseurl }}/assets/images/the.jpg" data-lightbox="liva" data-title="Table LIVA" class="block rounded-lg shadow-lg overflow-hidden w-64 hover:scale-105 transition-transform">
         <img src="{{ site.baseurl }}/assets/images/the.jpg" alt="Table LIVA" class="w-full h-40 object-cover" />
       </a>
     </div>
@@ -82,116 +77,102 @@ permalink: /liva/
     </div>
   </div>
 
-<!-- Appel à l'action : Réserver LIVA -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-  <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
+  <!-- Appel à l'action : Réserver LIVA -->
+  <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl animate-fadeIn delay-600 max-w-4xl mx-auto">
+    <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
+    <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
 
-  <!-- Bloc boutons responsive -->
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <!-- Bouton ouvrir modal calendrier -->
-    <button onclick="openCalendar()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-      Réserver maintenant
-    </button>
-    {% include share.html %}
+    <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+      <button onclick="openCalendar()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+        Réserver maintenant
+      </button>
+      {% include share.html %}
+    </div>
   </div>
-</div>
 
-<!-- Modal calendrier LIVA -->
-<div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
-    <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
+  <!-- Modal calendrier LIVA -->
+  <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
+    <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
+      <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
+      <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
 
-    <!-- Conteneur FullCalendar -->
-    <div id="calendar-liva" class="w-full h-[400px] md:h-[500px]"></div>
+      <!-- Conteneur FullCalendar -->
+      <div id="calendar-liva" class="w-full h-[400px] md:h-[500px]"></div>
+    </div>
   </div>
-</div>
 
-<!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <!-- FullCalendar CSS & JS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-<script>
-  let calendarInitialized = false;
+  <!-- Script calendrier -->
+  <script>
+    let calendarInitialized = false;
 
-  function openCalendar() {
-    const modal = document.getElementById("calendarModal");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-
-    if (!calendarInitialized) {
-      const calendarEl = document.getElementById("calendar-liva");
-
-      // Initialisation FullCalendar
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: 'dayGridMonth',
-  locale: 'fr',
-  height: "auto",
-  contentHeight: 500,
-  aspectRatio: 1.35,
-  events: "https://calendar-proxy-production-08de.up.railway.app/calendar-json/liva", // <-- nouvelle route JSON
-  eventDisplay: 'background',
-  eventColor: '#ff4d4d'
-});
-
-
-      calendar.render();
-      calendarInitialized = true;
-    }
-  }
-
-  function closeCalendar(event) {
-    if (!event || event.target.id === "calendarModal") {
+    async function openCalendar() {
       const modal = document.getElementById("calendarModal");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      if (!calendarInitialized) {
+        const calendarEl = document.getElementById("calendar-liva");
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          locale: 'fr',
+          height: "auto",
+          contentHeight: 500,
+          aspectRatio: 1.35,
+          events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=LIVA",
+          eventDisplay: 'background',
+          eventColor: '#ff4d4d'
+        });
+
+        calendar.render();
+        calendarInitialized = true;
+      }
     }
-  }
-</script>
 
+    function closeCalendar(event) {
+      if (!event || event.target.id === "calendarModal") {
+        const modal = document.getElementById("calendarModal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+  </script>
 
+  <!-- Script témoignages -->
+  <script>
+    let currentIndex = 0;
+    const fullTestimonials = [
+      {% for temoignage in site.data.temoignages-liva %}
+        "{{ temoignage.texte | strip_newlines | escape }}",
+      {% endfor %}
+    ];
 
-<script>
-  let currentIndex = 0;
-  const fullTestimonials = [
-    {% for temoignage in site.data.temoignages-liva %}
-      "{{ temoignage.texte | strip_newlines | escape }}",
-    {% endfor %}
-  ];
+    function openModal(i) {
+      currentIndex = i;
+      updateModalText();
+      document.getElementById("testimonialModal").classList.remove("hidden");
+      document.getElementById("testimonialModal").classList.add("flex");
+    }
+    function closeModal() {
+      document.getElementById("testimonialModal").classList.add("hidden");
+      document.getElementById("testimonialModal").classList.remove("flex");
+    }
+    function updateModalText() {
+      document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+    }
+    function prevTestimonial() {
+      currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+      updateModalText();
+    }
+    function nextTestimonial() {
+      currentIndex = (currentIndex + 1) % fullTestimonials.length;
+      updateModalText();
+    }
 
-  function openModal(i) {
-    currentIndex = i;
-    updateModalText();
-    document.getElementById("testimonialModal").classList.remove("hidden");
-    document.getElementById("testimonialModal").classList.add("flex");
-  }
-  function closeModal() {
-    document.getElementById("testimonialModal").classList.add("hidden");
-    document.getElementById("testimonialModal").classList.remove("flex");
-  }
-  function updateModalText() {
-    document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-  }
-  function prevTestimonial() {
-    currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-    updateModalText();
-  }
-  function nextTestimonial() {
-    currentIndex = (currentIndex + 1) % fullTestimonials.length;
-    updateModalText();
-  }
-
-  // Carrousel auto
-  const carousel = document.getElementById("carousel");
-  const totalItems = {{ site.data.temoignages-liva | size }};
-  let carouselIndex = 0;
-  function showCarouselSlide(index) {
-    const offset = -index * 100;
-    carousel.style.transform = `translateX(${offset}%)`;
-  }
-  setInterval(() => {
-    carouselIndex = (carouselIndex + 1) % totalItems;
-    showCarouselSlide(carouselIndex);
-  }, 4000);
-</script>
+    // Carrousel auto
+    const carousel = document.getElementById("carousel");
+    const totalItems = {{ site.data.temoignages-liva | size }};
