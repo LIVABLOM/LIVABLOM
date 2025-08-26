@@ -166,20 +166,23 @@ permalink: /blom/
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
     <!-- Bouton calendrier BLŌM -->
-    <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-      Réserver maintenant
-    </button>
+   button onclick="openCalendarBlom()" class="bg-black text-white px-6 py-3 rounded-full">
+  Réserver maintenant
+</button>
     {% include share.html %}
   </div>
 </div>
+
+<!-- Bouton Réserver BLŌM -->
+<button onclick="openCalendarBlom()" class="bg-black text-white px-6 py-3 rounded-full">
+  Réserver maintenant
+</button>
 
 <!-- Modal calendrier BLŌM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-
-    <!-- Conteneur FullCalendar -->
     <div id="calendar-blom" class="w-full h-[500px]"></div>
   </div>
 </div>
@@ -188,6 +191,7 @@ permalink: /blom/
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
 <script>
+let calendarBlom; // stocke l'instance pour pouvoir la réutiliser
 let calendarInitializedBlom = false;
 
 async function openCalendarBlom() {
@@ -202,7 +206,6 @@ async function openCalendarBlom() {
       const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/calendar');
       const allEvents = await res.json();
 
-      // Filtre uniquement les événements BLOM
       const blomEvents = allEvents
         .filter(e => e.source && e.source.toUpperCase().includes('BLOM'))
         .map(e => ({
@@ -212,7 +215,7 @@ async function openCalendarBlom() {
           allDay: e.allDay
         }));
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
+      calendarBlom = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'fr',
         headerToolbar: {
@@ -228,7 +231,7 @@ async function openCalendarBlom() {
         height: 500
       });
 
-      calendar.render();
+      calendarBlom.render();
       calendarInitializedBlom = true;
     } catch (err) {
       console.error('Erreur récupération événements BLŌM :', err);
