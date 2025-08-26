@@ -166,7 +166,7 @@ permalink: /blom/
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
     <!-- Bouton calendrier BLŌM -->
-   button onclick="openCalendarBlom()" class="bg-black text-white px-6 py-3 rounded-full">
+   <button onclick="openCalendarBlom()" class="bg-black text-white px-6 py-3 rounded-full">
   Réserver maintenant
 </button>
     {% include share.html %}
