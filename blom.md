@@ -199,57 +199,46 @@ document.addEventListener("DOMContentLoaded", () => {
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
   <!-- Script calendrier BLŌM (récupère puis filtre côté client les événements BLOM) -->
-  <script>
-    let calendarInitializedBlom = false;
+<script>
+  let calendarInitializedBlom = false;
 
-    async function openCalendarBlom() {
+  async function openCalendarBlom() {
+    const modal = document.getElementById("calendarModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+    if (!calendarInitializedBlom) {
+      const calendarEl = document.getElementById("calendar-blom");
+
+      try {
+        // Récupère uniquement les événements BLOM depuis le proxy
+        const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM');
+        const blomEvents = await res.json();
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          locale: 'fr',
+          height: "auto",
+          contentHeight: 500,
+          aspectRatio: 1.35,
+          events: blomEvents,
+          eventDisplay: 'background',
+          eventColor: '#ff4d4d'
+        });
+
+        calendar.render();
+        calendarInitializedBlom = true;
+      } catch (err) {
+        console.error('Erreur récupération événements BLŌM :', err);
+      }
+    }
+  }
+
+  function closeCalendar(event) {
+    if (!event || event.target.id === "calendarModal") {
       const modal = document.getElementById("calendarModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-
-      if (!calendarInitializedBlom) {
-        const calendarEl = document.getElementById("calendar-blom");
-
-        try {
-          // Récupère tous les événements depuis le proxy
-          const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/calendar');
-          const allEvents = await res.json();
-
-          // Filtre uniquement les événements BLOM (source contenant "BLOM")
-          const blomEvents = allEvents
-            .filter(e => e.source && e.source.toUpperCase().includes('BLOM'))
-            .map(e => ({
-              title: e.title || 'Bloqué',
-              start: e.start,
-              end: e.end,
-              allDay: e.allDay
-            }));
-
-          // Initialiser FullCalendar avec les événements BLOM
-          const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'fr',
-            height: "auto",
-            contentHeight: 500,
-            aspectRatio: 1.35,
-            events: blomEvents,
-            eventDisplay: 'background',
-            eventColor: '#ff4d4d'
-          });
-
-          calendar.render();
-          calendarInitializedBlom = true;
-        } catch (err) {
-          console.error('Erreur récupération événements BLŌM :', err);
-        }
-      }
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
     }
-
-    function closeCalendar(event) {
-      if (!event || event.target.id === "calendarModal") {
-        const modal = document.getElementById("calendarModal");
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
-      }
-    }
-  </script>
+  }
+</script>
