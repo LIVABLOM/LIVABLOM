@@ -180,15 +180,13 @@ permalink: /blom/
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
 
     <!-- Conteneur FullCalendar -->
-    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
+    <div id="calendar-blom" class="w-full h-[500px]"></div>
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-<!-- Script calendrier BLŌM -->
 <script>
 let calendarInitializedBlom = false;
 
@@ -214,22 +212,20 @@ async function openCalendarBlom() {
           allDay: e.allDay
         }));
 
-      // Initialiser FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'fr',
-        height: "auto",
-        contentHeight: 500,
-        aspectRatio: 1.35,
-        events: blomEvents,
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
+        navLinks: true,
         dayMaxEvents: true,
+        events: blomEvents,
         eventDisplay: 'background',
-        eventColor: '#ff4d4d'
+        eventColor: '#ff4d4d',
+        height: 500
       });
 
       calendar.render();
