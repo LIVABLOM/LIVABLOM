@@ -176,3 +176,14 @@ permalink: /liva/
     // Carrousel auto
     const carousel = document.getElementById("carousel");
     const totalItems = {{ site.data.temoignages-liva | size }};
+    let carouselIndex = 0;
+    function showCarouselSlide(index) {
+      const offset = -index * 100;
+      carousel.style.transform = `translateX(${offset}%)`;
+    }
+    setInterval(() => {
+      carouselIndex = (carouselIndex + 1) % totalItems;
+      showCarouselSlide(carouselIndex);
+    }, 4000);
+  </script>
+</div>
