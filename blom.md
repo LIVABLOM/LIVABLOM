@@ -180,7 +180,7 @@ permalink: /blom/
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
 
     <!-- Conteneur FullCalendar -->
-    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
+    <div id="calendarBlom" class="w-full h-[400px] md:h-[500px]"></div>
   </div>
 </div>
 
@@ -193,34 +193,38 @@ permalink: /blom/
 <script>
   let calendarInitializedBlom = false;
 
-  function openCalendarBlom() {
-    const modal = document.getElementById("calendarModalBlom");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
+function openCalendarBlom() {
+  const modal = document.getElementById("calendarModalBlom");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 
-    if (!calendarInitializedBlom) {
-      const calendarEl = document.getElementById("calendar-blom");
+  if (!calendarInitializedBlom) {
+    const calendarEl = document.getElementById("calendarBlom");
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        height: "auto",
-        contentHeight: 500,
-        aspectRatio: 1.35,
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: ''
-        },
-        events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM",
-        eventDisplay: 'background',
-        eventColor: '#ff4d4d'
-      });
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'fr',
+      height: "auto",
+      contentHeight: 500,
+      aspectRatio: 1.35,
+      headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
+      events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM",
+      eventDisplay: 'background',
+      eventColor: '#ff4d4d'
+    });
 
-      calendar.render();
-      calendarInitializedBlom = true;
-    }
+    calendar.render();
+    calendarInitializedBlom = true;
   }
+}
+
+function closeCalendarBlom(event) {
+  if (!event || event.target.id === "calendarModalBlom") {
+    const modal = document.getElementById("calendarModalBlom");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
 
   function closeCalendarBlom(event) {
     if (!event || event.target.id === "calendarModalBlom") {
