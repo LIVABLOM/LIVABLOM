@@ -203,7 +203,8 @@ async function openCalendarBlom() {
     const calendarEl = document.getElementById("calendar-blom");
 
     try {
-      const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/calendar');
+      const res = await fetch('fetch("https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM")
+');
       const allEvents = await res.json();
 
       const blomEvents = allEvents
