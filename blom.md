@@ -184,11 +184,11 @@ permalink: /blom/
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS (même version que LIVA) -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.js"></script>
 
-<!-- Script calendrier BLŌM -->
+<!-- Script calendrier BLOM -->
 <script>
   let calendarInitializedBlom = false;
 
@@ -209,9 +209,8 @@ permalink: /blom/
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: '' // on peut ajouter d'autres vues si tu veux
+          right: ''
         },
-        // ⚠️ BLOM uniquement
         events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM",
         eventDisplay: 'background',
         eventColor: '#ff4d4d'
@@ -230,3 +229,16 @@ permalink: /blom/
     }
   }
 </script>
+
+<!-- Correction CSS pour forcer FullCalendar à s’afficher -->
+<style>
+  #calendar-blom {
+    max-width: 100%;
+    margin: 0 auto;
+    font-size: 14px;
+  }
+  .fc .fc-toolbar-title {
+    font-size: 1.2em;
+  }
+</style>
+
