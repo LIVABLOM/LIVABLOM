@@ -192,34 +192,37 @@ permalink: /blom/
 <!-- Script calendrier BLOM -->
 <script>
 let calendarInitializedBlom = false;
+let calendarBlom; // on garde la référence pour rafraîchir si besoin
 
 function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
   modal.classList.remove("hidden");
   modal.classList.add("flex");
 
+  // Initialisation uniquement si pas déjà fait
   if (!calendarInitializedBlom) {
     const calendarEl = document.getElementById("calendar-blom");
 
-    // Initialisation FullCalendar BLŌM
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      locale: 'fr',
-      height: "auto",
-      contentHeight: 500,
-      aspectRatio: 1.35,
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: ''
-      },
-      events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM",
-      eventDisplay: 'background',
-      eventColor: '#ff4d4d'
-    });
-
-    calendar.render();
-    calendarInitializedBlom = true;
+    // Création calendrier après que le modal soit visible
+    setTimeout(() => {
+      calendarBlom = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        height: "auto",
+        contentHeight: 500,
+        aspectRatio: 1.35,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: ''
+        },
+        events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM",
+        eventDisplay: 'background',
+        eventColor: '#ff4d4d'
+      });
+      calendarBlom.render();
+      calendarInitializedBlom = true;
+    }, 50); // délai court pour que le modal soit bien visible
   }
 }
 
@@ -230,6 +233,7 @@ function closeCalendarBlom(event) {
     modal.classList.remove("flex");
   }
 }
+
 </script>
 
 
