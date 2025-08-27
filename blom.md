@@ -165,7 +165,7 @@ permalink: /blom/
   <p class="mb-4">Logement avec spa pour couples</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <!-- Bouton qui ouvre le calendrier BLOM -->
+    <!-- Bouton ouvrant le modal BLŌM -->
     <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
       Réserver maintenant
     </button>
@@ -179,19 +179,19 @@ permalink: /blom/
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
 
-    <!-- Conteneur FullCalendar -->
-    <div id="calendarBlom" class="w-full h-[400px] md:h-[500px]"></div>
+    <!-- Conteneur FullCalendar BLŌM -->
+    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS -->
+
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
 
 <!-- Script calendrier BLOM -->
 <script>
-  let calendarInitializedBlom = false;
+let calendarInitializedBlom = false;
 
 function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
@@ -199,15 +199,20 @@ function openCalendarBlom() {
   modal.classList.add("flex");
 
   if (!calendarInitializedBlom) {
-    const calendarEl = document.getElementById("calendarBlom");
+    const calendarEl = document.getElementById("calendar-blom");
 
+    // Initialisation FullCalendar BLŌM
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       locale: 'fr',
       height: "auto",
       contentHeight: 500,
       aspectRatio: 1.35,
-      headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
       events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=BLOM",
       eventDisplay: 'background',
       eventColor: '#ff4d4d'
@@ -225,15 +230,8 @@ function closeCalendarBlom(event) {
     modal.classList.remove("flex");
   }
 }
-
-  function closeCalendarBlom(event) {
-    if (!event || event.target.id === "calendarModalBlom") {
-      const modal = document.getElementById("calendarModalBlom");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-  }
 </script>
+
 
 <!-- Correction CSS pour forcer FullCalendar à s’afficher -->
 <style>
