@@ -174,10 +174,10 @@ permalink: /blom/
 
 <!-- Modal calendrier BLŌM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
-    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[500px] md:h-[600px]"></div>
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendarBlom()" class="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-2xl font-bold text-center mb-6">Choisissez vos dates</h3>
+    <div id="calendar-blom" class="w-full h-[550px] md:h-[650px]"></div>
   </div>
 </div>
 
@@ -205,25 +205,34 @@ async function openCalendarBlom() {
         initialView: 'dayGridMonth',
         locale: 'fr',
         height: "auto",
-        contentHeight: 600,
+        contentHeight: 650,
         aspectRatio: 1.35,
-        headerToolbar: {               // Barre de navigation épurée
+        headerToolbar: {
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        dayHeaderFormat: { weekday: 'short' }, // Lun, Mar, Mer...
-        displayEventTime: false,                // pas d'heure, juste journée entière
+        dayHeaderFormat: { weekday: 'short' },
+        displayEventTime: false,
         events: events.map(e => ({
           title: e.summary,
           start: e.start,
           end: e.end,
           allDay: true
         })),
-        eventDisplay: 'background',
+        eventDisplay: 'block', // pour voir les réservations comme des blocs
         eventColor: '#ff4d4d',
-        navLinks: false,           // désactive liens sur dates
-        showNonCurrentDates: false // cache les jours hors mois courant
+        navLinks: false,
+        showNonCurrentDates: false,
+        dayCellClassNames: function(arg) {
+          return 'text-lg font-semibold'; // rend les jours plus grands
+        },
+        eventDidMount: function(info) {
+          info.el.style.borderRadius = '8px';
+          info.el.style.opacity = '0.9';
+          info.el.addEventListener('mouseenter', () => info.el.style.opacity = '1');
+          info.el.addEventListener('mouseleave', () => info.el.style.opacity = '0.9');
+        }
       });
 
       calendarBlom.render();
