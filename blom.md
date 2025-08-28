@@ -200,26 +200,28 @@ async function openCalendarBlom() {
       const res = await fetch('http://localhost:4000/api/reservations/BLOM');
       const events = await res.json();
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        height: "auto",
-        contentHeight: 500,
-        aspectRatio: 1.35,
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        events: events.map(e => ({
-          title: e.summary,
-          start: e.start,
-          end: e.end,
-          allDay: true
-        })),
-        eventDisplay: 'background',
-        eventColor: '#ff4d4d'
-      });
+const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'dayGridMonth', // vue mois classique
+  locale: 'fr', // jours et mois en français
+  height: "auto",
+  contentHeight: 500,
+  aspectRatio: 1.35,
+  headerToolbar: {
+    left: 'prev,next today', // flèches et bouton aujourd'hui
+    center: 'title',         // titre du mois
+    right: ''                // aucun bouton à droite
+  },
+  events: events.map(e => ({
+    title: e.summary,
+    start: e.start,
+    end: e.end,
+    allDay: true
+  })),
+  eventDisplay: 'background',
+  eventColor: '#ff4d4d',
+  dayHeaderFormat: { weekday: 'short' }, // pour afficher Lun, Mar, Mer...
+});
+
 
       calendar.render();
       calendarInitializedBlom = true;
