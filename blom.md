@@ -194,22 +194,14 @@ async function openCalendarBlom() {
   modal.classList.add("flex");
 
   if (!calendarInitializedBlom) {
-    const calendarEl = document.getElementById("calendar-blom");
-
-    try {
-      const res = await fetch('http://localhost:4000/api/reservations/BLOM');
-      const events = await res.json();
-
-const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: 'dayGridMonth', // vue mois classique
-  locale: 'fr', // jours et mois en français
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'dayGridMonth',
+  locale: 'fr',               // jours et mois en français
   height: "auto",
-  contentHeight: 500,
-  aspectRatio: 1.35,
-  headerToolbar: {
-    left: 'prev,next today', // flèches et bouton aujourd'hui
-    center: 'title',         // titre du mois
-    right: ''                // aucun bouton à droite
+  headerToolbar: {            // barre de navigation
+    left: 'prev,next today',
+    center: 'title',
+    right: '' 
   },
   events: events.map(e => ({
     title: e.summary,
@@ -219,7 +211,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
   })),
   eventDisplay: 'background',
   eventColor: '#ff4d4d',
-  dayHeaderFormat: { weekday: 'short' }, // pour afficher Lun, Mar, Mer...
+  dayHeaderFormat: { weekday: 'short' } // format des jours : Lun, Mar, Mer...
 });
 
 
