@@ -177,7 +177,7 @@ permalink: /blom/
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
+    <div id="calendar-blom" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
@@ -187,6 +187,7 @@ permalink: /blom/
 
 <script>
 let calendarInitializedBlom = false;
+let calendarBlom; // stocke l'instance du calendrier
 
 async function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
@@ -197,20 +198,21 @@ async function openCalendarBlom() {
     const calendarEl = document.getElementById("calendar-blom");
 
     try {
-      // Récupérer les réservations BLOM depuis ton server.js local
       const res = await fetch('http://localhost:4000/api/reservations/BLOM');
       const events = await res.json();
 
-      // Initialiser FullCalendar
-      const calendar = new FullCalendar.Calendar(calendarEl, {
+      calendarBlom = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',               // jours et mois en français
+        locale: 'fr',                  // jours et mois en français
         height: "auto",
-        headerToolbar: {            // barre de navigation
+        contentHeight: 600,
+        aspectRatio: 1.35,
+        headerToolbar: {               // barre de navigation
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
+        dayHeaderFormat: { weekday: 'short' }, // affiche Lun, Mar, Mer...
         events: events.map(e => ({
           title: e.summary,
           start: e.start,
@@ -218,11 +220,10 @@ async function openCalendarBlom() {
           allDay: true
         })),
         eventDisplay: 'background',
-        eventColor: '#ff4d4d',
-        dayHeaderFormat: { weekday: 'short' } // format des jours : Lun, Mar, Mer...
+        eventColor: '#ff4d4d'
       });
 
-      calendar.render();
+      calendarBlom.render();
       calendarInitializedBlom = true;
     } catch (err) {
       console.error('Erreur récupération événements BLŌM :', err);
