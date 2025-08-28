@@ -187,7 +187,7 @@ permalink: /blom/
 
 <script>
 let calendarInitializedBlom = false;
-let calendarBlom; // stocke l'instance du calendrier
+let calendarBlom;
 
 async function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
@@ -203,16 +203,17 @@ async function openCalendarBlom() {
 
       calendarBlom = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',                  // jours et mois en français
+        locale: 'fr',
         height: "auto",
         contentHeight: 600,
         aspectRatio: 1.35,
-        headerToolbar: {               // barre de navigation
+        headerToolbar: {               // Barre de navigation épurée
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        dayHeaderFormat: { weekday: 'short' }, // affiche Lun, Mar, Mer...
+        dayHeaderFormat: { weekday: 'short' }, // Lun, Mar, Mer...
+        displayEventTime: false,                // pas d'heure, juste journée entière
         events: events.map(e => ({
           title: e.summary,
           start: e.start,
@@ -220,7 +221,9 @@ async function openCalendarBlom() {
           allDay: true
         })),
         eventDisplay: 'background',
-        eventColor: '#ff4d4d'
+        eventColor: '#ff4d4d',
+        navLinks: false,           // désactive liens sur dates
+        showNonCurrentDates: false // cache les jours hors mois courant
       });
 
       calendarBlom.render();
