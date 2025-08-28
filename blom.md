@@ -177,7 +177,8 @@ permalink: /blom/
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <!-- Conteneur calendrier avec hauteur fixe -->
+
+    <!-- Conteneur FullCalendar -->
     <div id="calendar-blom" style="width:100%; height:600px;"></div>
   </div>
 </div>
@@ -198,9 +199,11 @@ async function openCalendarBlom() {
     const calendarEl = document.getElementById("calendar-blom");
 
     try {
+      // Récupère les réservations BLOM depuis ton serveur local
       const res = await fetch('http://localhost:4000/api/reservations/BLOM');
       const events = await res.json();
 
+      // Initialise FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'fr',
@@ -215,7 +218,7 @@ async function openCalendarBlom() {
           end: e.end,
           allDay: true
         })),
-        eventDisplay: 'background',
+        eventDisplay: 'block', // Important pour voir les jours et les événements
         eventColor: '#ff4d4d'
       });
 
