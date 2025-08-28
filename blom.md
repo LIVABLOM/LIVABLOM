@@ -177,7 +177,8 @@ permalink: /blom/
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
+    <!-- Conteneur calendrier avec hauteur fixe -->
+    <div id="calendar-blom" style="width:100%; height:600px;"></div>
   </div>
 </div>
 
@@ -203,9 +204,6 @@ async function openCalendarBlom() {
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'fr',
-        height: "auto",
-        contentHeight: 500,
-        aspectRatio: 1.35,
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
