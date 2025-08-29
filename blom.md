@@ -177,7 +177,7 @@ permalink: /blom/
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[500px] md:h-[600px]"></div>
+    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
   </div>
 </div>
 
@@ -185,7 +185,6 @@ permalink: /blom/
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-<script>
 <script>
 let calendarInitializedBlom = false;
 
@@ -205,6 +204,7 @@ async function openCalendarBlom() {
         initialView: 'dayGridMonth',
         locale: 'fr',
         height: "auto",
+        contentHeight: 500,
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
@@ -225,6 +225,7 @@ async function openCalendarBlom() {
       calendarInitializedBlom = true;
     } catch (err) {
       console.error('Impossible de charger le calendrier. Vérifiez la connexion au serveur.', err);
+      alert('Impossible de charger le calendrier. Vérifiez la connexion au serveur.');
     }
   }
 }
@@ -236,9 +237,4 @@ function closeCalendarBlom(event) {
     modal.classList.remove("flex");
   }
 }
-
-// Ajustement responsive si nécessaire
-window.addEventListener('resize', () => {
-  if(calendarBlom) calendarBlom.updateSize();
-});
 </script>
