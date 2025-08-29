@@ -174,10 +174,10 @@ permalink: /blom/
 
 <!-- Modal calendrier BLŌM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
-    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
+    <div id="calendar-blom" class="w-full h-[450px] md:h-[600px]"></div>
   </div>
 </div>
 
@@ -197,29 +197,41 @@ async function openCalendarBlom() {
     const calendarEl = document.getElementById("calendar-blom");
 
     try {
-      const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM');
+      const res = await fetch('https://calendrier-proxy-production-231c.up.railway.app/api/reservations/BLOM');
       const events = await res.json();
 
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',               // jours et mois en français
+        locale: 'fr',
         height: "auto",
-        contentHeight: 500,
-        aspectRatio: 1.35,
+        contentHeight: 600,
+        aspectRatio: 1.5,
+        themeSystem: 'standard',
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: '' 
+          right: ''
         },
-        dayHeaderFormat: { weekday: 'short' }, // Lun, Mar, Mer...
+        dayHeaderFormat: { weekday: 'short' },  // Affiche Lun, Mar, Mer...
+        dayCellContent: function(arg) {
+          return { html: `<div class="text-sm font-semibold">${arg.dayNumberText}</div>` };
+        },
         events: events.map(e => ({
           title: e.title || e.summary,
           start: e.start,
           end: e.end,
           allDay: true
         })),
-        eventDisplay: 'block', // les événements seront visibles
-        eventColor: '#ff4d4d'
+        eventDisplay: 'block',
+        eventColor: '#ff4d4d',
+        firstDay: 1,  // Commence la semaine le lundi
+        selectable: true,
+        selectMirror: true,
+        select: function(info) {
+          alert(`Vous avez sélectionné du ${info.startStr} au ${info.endStr}`);
+        },
+        dayMaxEventRows: true, // Affiche plusieurs événements par jour
+        showNonCurrentDates: false // Masque les jours hors mois
       });
 
       calendar.render();
@@ -240,3 +252,26 @@ function closeCalendarBlom(event) {
 }
 </script>
 
+<style>
+/* Style personnalisé du calendrier */
+#calendar-blom {
+  font-family: 'Inter', sans-serif;
+}
+.fc-toolbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.fc-daygrid-day-number {
+  font-weight: 600;
+}
+.fc-daygrid-event {
+  border-radius: 0.5rem;
+  opacity: 0.9;
+  padding: 2px 4px;
+  font-size: 0.85rem;
+}
+.fc .fc-col-header-cell-cushion {
+  color: #333;
+  font-weight: 600;
+}
+</style>
