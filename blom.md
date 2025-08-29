@@ -202,23 +202,24 @@ async function openCalendarBlom() {
 
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',
+        locale: 'fr',               // jours et mois en français
         height: "auto",
         contentHeight: 500,
+        aspectRatio: 1.35,
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: ''
+          right: '' 
         },
+        dayHeaderFormat: { weekday: 'short' }, // Lun, Mar, Mer...
         events: events.map(e => ({
-          title: e.summary,
+          title: e.title || e.summary,
           start: e.start,
           end: e.end,
           allDay: true
         })),
-        eventDisplay: 'background',
-        eventColor: '#ff4d4d',
-        dayHeaderFormat: { weekday: 'short' } // Lun, Mar, Mer...
+        eventDisplay: 'block', // les événements seront visibles
+        eventColor: '#ff4d4d'
       });
 
       calendar.render();
@@ -238,3 +239,4 @@ function closeCalendarBlom(event) {
   }
 }
 </script>
+
