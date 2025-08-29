@@ -187,7 +187,6 @@ permalink: /blom/
 
 <script>
 let calendarInitializedBlom = false;
-let calendarBlom;
 
 async function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
@@ -198,22 +197,24 @@ async function openCalendarBlom() {
     const calendarEl = document.getElementById("calendar-blom");
 
     try {
-      const res = await fetch('http://localhost:4000/api/reservations/BLOM');
+      // Récupération des événements depuis le serveur
+      const res = await fetch('https://livablom.fr/api/reservations/BLOM');
+      if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
       const events = await res.json();
 
-      calendarBlom = new FullCalendar.Calendar(calendarEl, {
+      // Initialisation du calendrier FullCalendar
+      const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',               // jours et mois en français
-        firstDay: 1,                // lundi comme premier jour
-        height: "auto",
-        contentHeight: 550,
-        aspectRatio: 1.3,
-        headerToolbar: {            // barre de navigation
+        locale: 'fr',                   // Jours et mois en français
+        height: 'auto',
+        contentHeight: 500,
+        aspectRatio: 1.35,
+        headerToolbar: {                // Barre de navigation
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        dayHeaderFormat: { weekday: 'short' }, // affiche Lun, Mar, Mer...
+        dayHeaderFormat: { weekday: 'short' }, // Affiche Lun, Mar, Mer...
         events: events.map(e => ({
           title: e.summary,
           start: e.start,
@@ -224,14 +225,17 @@ async function openCalendarBlom() {
         eventColor: '#ff4d4d'
       });
 
-      calendarBlom.render();
+      calendar.render();
       calendarInitializedBlom = true;
+
     } catch (err) {
       console.error('Erreur récupération événements BLŌM :', err);
+      calendarEl.innerHTML = "<p class='text-red-600 text-center mt-4'>Impossible de charger le calendrier. Vérifiez la connexion au serveur.</p>";
     }
   }
 }
 
+// Fermeture de la modal
 function closeCalendarBlom(event) {
   if (!event || event.target.id === "calendarModalBlom") {
     const modal = document.getElementById("calendarModalBlom");
