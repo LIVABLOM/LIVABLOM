@@ -186,6 +186,7 @@ permalink: /blom/
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
 <script>
+<script>
 let calendarInitializedBlom = false;
 
 async function openCalendarBlom() {
@@ -197,24 +198,18 @@ async function openCalendarBlom() {
     const calendarEl = document.getElementById("calendar-blom");
 
     try {
-      // Récupération des événements depuis le serveur
       const res = await fetch('https://calendrier-proxy-production-231c.up.railway.app/api/reservations/BLOM');
-      if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
       const events = await res.json();
 
-      // Initialisation du calendrier FullCalendar
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',                   // Jours et mois en français
-        height: 'auto',
-        contentHeight: 500,
-        aspectRatio: 1.35,
-        headerToolbar: {                // Barre de navigation
+        locale: 'fr',
+        height: "auto",
+        headerToolbar: {
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        dayHeaderFormat: { weekday: 'short' }, // Affiche Lun, Mar, Mer...
         events: events.map(e => ({
           title: e.summary,
           start: e.start,
@@ -222,20 +217,18 @@ async function openCalendarBlom() {
           allDay: true
         })),
         eventDisplay: 'background',
-        eventColor: '#ff4d4d'
+        eventColor: '#ff4d4d',
+        dayHeaderFormat: { weekday: 'short' } // Lun, Mar, Mer...
       });
 
       calendar.render();
       calendarInitializedBlom = true;
-
     } catch (err) {
-      console.error('Erreur récupération événements BLŌM :', err);
-      calendarEl.innerHTML = "<p class='text-red-600 text-center mt-4'>Impossible de charger le calendrier. Vérifiez la connexion au serveur.</p>";
+      console.error('Impossible de charger le calendrier. Vérifiez la connexion au serveur.', err);
     }
   }
 }
 
-// Fermeture de la modal
 function closeCalendarBlom(event) {
   if (!event || event.target.id === "calendarModalBlom") {
     const modal = document.getElementById("calendarModalBlom");
