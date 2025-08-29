@@ -174,69 +174,73 @@ permalink: /blom/
 
 <!-- Modal calendrier BLŌM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
     <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS -->
+<!-- FullCalendar CSS & JS (charger ici, pas dans le layout) -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
+<!-- Petite sécurité d'affichage (couleurs) -->
+<style>
+  /* Force la couleur du texte dans le calendrier (au cas où le parent est en text-white) */
+  #calendarModalBlom .fc,
+  #calendarModalBlom .fc * {
+    color: #111 !important;
+  }
+</style>
+
 <script>
-let calendarInitializedBlom = false;
-let calendarBlom; // pour stocker l'instance
+  let calendarInitializedBlom = false;
 
-async function openCalendarBlom() {
-  const modal = document.getElementById("calendarModalBlom");
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
+  async function openCalendarBlom() {
+    const modal = document.getElementById("calendarModalBlom");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
 
-  // Première ouverture → on initialise
-  if (!calendarInitializedBlom) {
-    try {
-      const res = await fetch("/api/reservations/BLOM"); // ton endpoint
-      const events = await res.json();
-
+    if (!calendarInitializedBlom) {
       const calendarEl = document.getElementById("calendar-blom");
-      calendarBlom = new FullCalendar.Calendar(calendarEl, {
+
+      // Récupère les événements depuis le JSON local du site
+      let events = [];
+      try {
+        const res = await fetch("{{ site.baseurl }}/reservations-blom.json", { cache: "no-store" });
+        events = await res.json();
+      } catch (e) {
+        console.error("Erreur chargement reservations-blom.json :", e);
+      }
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'fr',
         height: "auto",
+        contentHeight: 500,
+        aspectRatio: 1.35,
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        events: events.map(e => ({
-          title: e.summary,
-          start: e.start,
-          end: e.end,
-          allDay: true
-        })),
+        dayHeaderFormat: { weekday: 'short' }, // Lun, Mar, Mer...
+        events,                                // on passe directement le tableau JSON
         eventDisplay: 'background',
-        eventColor: '#ff4d4d',
-        dayHeaderFormat: { weekday: 'short' }
+        eventColor: '#ff4d4d'
       });
 
-      calendarBlom.render();
+      calendar.render();
       calendarInitializedBlom = true;
-    } catch (err) {
-      console.error('Erreur récupération événements BLŌM :', err);
     }
-  } else {
-    // Si déjà initialisé → on redimensionne (fix mobile)
-    calendarBlom.updateSize();
   }
-}
 
-function closeCalendarBlom(event) {
-  if (!event || event.target.id === "calendarModalBlom") {
-    const modal = document.getElementById("calendarModalBlom");
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
+  function closeCalendarBlom(event) {
+    if (!event || event.target.id === "calendarModalBlom") {
+      const modal = document.getElementById("calendarModalBlom");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
   }
-}
 </script>
