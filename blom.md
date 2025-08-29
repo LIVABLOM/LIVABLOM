@@ -208,8 +208,8 @@ permalink: /blom/
       // Récupère les événements depuis le JSON local du site
       let events = [];
       try {
-        const res = await fetch("{{ site.baseurl }}/reservations-blom.json", { cache: "no-store" });
-        events = await res.json();
+        const res = await fetch("https://calendrier-proxy-production-231c.up.railway.app", { cache: "no-store" });
+events = await res.json();
       } catch (e) {
         console.error("Erreur chargement reservations-blom.json :", e);
       }
