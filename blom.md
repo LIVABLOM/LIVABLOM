@@ -198,7 +198,7 @@ async function openCalendarBlom() {
 
     try {
       // Récupération des événements depuis le serveur
-      const res = await fetch('(https://calendrier-proxy-production-231c.up.railway.app/api/reservations/BLOM)');
+      const res = await fetch('https://calendrier-proxy-production-231c.up.railway.app/api/reservations/BLOM');
       if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
       const events = await res.json();
 
