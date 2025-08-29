@@ -177,70 +177,71 @@ permalink: /blom/
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
     <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
+    <div id="calendar-blom" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS (charger ici, pas dans le layout) -->
+<!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-<!-- Petite sécurité d'affichage (couleurs) -->
-<style>
-  /* Force la couleur du texte dans le calendrier (au cas où le parent est en text-white) */
-  #calendarModalBlom .fc,
-  #calendarModalBlom .fc * {
-    color: #111 !important;
-  }
-</style>
-
 <script>
-  let calendarInitializedBlom = false;
+let calendarInitializedBlom = false;
+let calendarBlom;
 
-  async function openCalendarBlom() {
-    const modal = document.getElementById("calendarModalBlom");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
+async function openCalendarBlom() {
+  const modal = document.getElementById("calendarModalBlom");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 
-    if (!calendarInitializedBlom) {
-      const calendarEl = document.getElementById("calendar-blom");
+  if (!calendarInitializedBlom) {
+    const calendarEl = document.getElementById("calendar-blom");
 
-      // Récupère les événements depuis le JSON local du site
-      let events = [];
-      try {
-        const res = await fetch("https://calendrier-proxy-production-231c.up.railway.app", { cache: "no-store" });
-events = await res.json();
-      } catch (e) {
-        console.error("Erreur chargement reservations-blom.json :", e);
-      }
+    try {
+      const res = await fetch('http://localhost:4000/api/reservations/BLOM');
+      const events = await res.json();
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
+      calendarBlom = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'fr',
+        locale: 'fr',               // jours et mois en français
+        firstDay: 1,                // lundi comme premier jour
         height: "auto",
-        contentHeight: 500,
-        aspectRatio: 1.35,
-        headerToolbar: {
+        contentHeight: 550,
+        aspectRatio: 1.3,
+        headerToolbar: {            // barre de navigation
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        dayHeaderFormat: { weekday: 'short' }, // Lun, Mar, Mer...
-        events,                                // on passe directement le tableau JSON
+        dayHeaderFormat: { weekday: 'short' }, // affiche Lun, Mar, Mer...
+        events: events.map(e => ({
+          title: e.summary,
+          start: e.start,
+          end: e.end,
+          allDay: true
+        })),
         eventDisplay: 'background',
         eventColor: '#ff4d4d'
       });
 
-      calendar.render();
+      calendarBlom.render();
       calendarInitializedBlom = true;
+    } catch (err) {
+      console.error('Erreur récupération événements BLŌM :', err);
     }
   }
+}
 
-  function closeCalendarBlom(event) {
-    if (!event || event.target.id === "calendarModalBlom") {
-      const modal = document.getElementById("calendarModalBlom");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
+function closeCalendarBlom(event) {
+  if (!event || event.target.id === "calendarModalBlom") {
+    const modal = document.getElementById("calendarModalBlom");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
   }
+}
+
+// Ajustement responsive si nécessaire
+window.addEventListener('resize', () => {
+  if(calendarBlom) calendarBlom.updateSize();
+});
 </script>
