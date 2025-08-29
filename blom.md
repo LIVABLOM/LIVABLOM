@@ -174,10 +174,10 @@ permalink: /blom/
 
 <!-- Modal calendrier BLŌM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-6" onclick="event.stopPropagation()">
-    <button onclick="closeCalendarBlom()" class="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-2xl font-bold text-center mb-6">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[550px] md:h-[650px]"></div>
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
+    <div id="calendar-blom" class="w-full h-[400px] md:h-[500px]"></div>
   </div>
 </div>
 
@@ -187,52 +187,38 @@ permalink: /blom/
 
 <script>
 let calendarInitializedBlom = false;
-let calendarBlom;
+let calendarBlom; // pour stocker l'instance
 
 async function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
   modal.classList.remove("hidden");
   modal.classList.add("flex");
 
+  // Première ouverture → on initialise
   if (!calendarInitializedBlom) {
-    const calendarEl = document.getElementById("calendar-blom");
-
     try {
-      const res = await fetch('http://localhost:4000/api/reservations/BLOM');
+      const res = await fetch("/api/reservations/BLOM"); // ton endpoint
       const events = await res.json();
 
+      const calendarEl = document.getElementById("calendar-blom");
       calendarBlom = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'fr',
         height: "auto",
-        contentHeight: 650,
-        aspectRatio: 1.35,
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
           right: ''
         },
-        dayHeaderFormat: { weekday: 'short' },
-        displayEventTime: false,
         events: events.map(e => ({
           title: e.summary,
           start: e.start,
           end: e.end,
           allDay: true
         })),
-        eventDisplay: 'block', // pour voir les réservations comme des blocs
+        eventDisplay: 'background',
         eventColor: '#ff4d4d',
-        navLinks: false,
-        showNonCurrentDates: false,
-        dayCellClassNames: function(arg) {
-          return 'text-lg font-semibold'; // rend les jours plus grands
-        },
-        eventDidMount: function(info) {
-          info.el.style.borderRadius = '8px';
-          info.el.style.opacity = '0.9';
-          info.el.addEventListener('mouseenter', () => info.el.style.opacity = '1');
-          info.el.addEventListener('mouseleave', () => info.el.style.opacity = '0.9');
-        }
+        dayHeaderFormat: { weekday: 'short' }
       });
 
       calendarBlom.render();
@@ -240,6 +226,9 @@ async function openCalendarBlom() {
     } catch (err) {
       console.error('Erreur récupération événements BLŌM :', err);
     }
+  } else {
+    // Si déjà initialisé → on redimensionne (fix mobile)
+    calendarBlom.updateSize();
   }
 }
 
