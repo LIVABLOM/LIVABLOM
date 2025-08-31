@@ -160,6 +160,7 @@ permalink: /blom/
     });
     </script>
 <!-- Section Réserver avec bouton + partage -->
+<!-- Section Réserver avec bouton + partage -->
 <div class="mt-12 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
   <p class="mb-4">Logement avec spa pour couples</p>
@@ -231,7 +232,7 @@ function closeCalendarBlom(event) {
 // Initialisation FullCalendar
 async function initCalendarBlom() {
   try {
-    const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
+    const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM", { cache: "no-store" });
     const events = await res.json();
 
     const calendarEl = document.getElementById("calendar-blom");
