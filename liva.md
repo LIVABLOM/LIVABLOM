@@ -147,23 +147,33 @@ async function initCalendar(logement) {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
-      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
-      events: events.map(ev => ({
-        title: ev.summary,
-        start: ev.start,
-        end: ev.end,
-        display: "block"
-      })),
+      firstDay: 1,
+      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+      events: events.map(ev => {
+        // Corrige la date de fin : on enlève 1 jour pour libérer le jour de départ
+        let endDate = new Date(ev.end);
+        endDate.setDate(endDate.getDate() - 1);
+
+        return {
+          title: "Réservé",
+          start: ev.start,
+          end: endDate.toISOString().split("T")[0], // format YYYY-MM-DD
+          display: "block",
+          allDay: true // évite d'afficher les heures comme "2h"
+        };
+      }),
       eventColor: "#e63946",
+      displayEventTime: false, // désactive totalement l'affichage des heures
       selectable: false,
       navLinks: true
     });
 
     calendar.render();
-    calendars[logement] = calendar; // stocke pour éviter reinit
+    calendars[logement] = calendar;
   } catch (err) {
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
     console.error(err);
   }
 }
+
 </script>
