@@ -160,24 +160,21 @@ permalink: /blom/
     });
     </script>
 <!-- Appel à l'action : Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
+<div class="mt-12 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-3xl mx-auto">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
   <p class="mb-4">Logement avec spa pour couples</p>
 
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-      Réserver maintenant
-    </button>
-    {% include share.html %}
-  </div>
+  <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+    Réserver maintenant
+  </button>
 </div>
 
-<!-- Modal calendrier BLŌM -->
-<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
-  <div class="bg-black rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-3xl font-bold text-gray-200 hover:text-white">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6 text-white">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[450px] md:h-[600px]"></div>
+<!-- Modal / Widget calendrier BLŌM -->
+<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
+  <div class="bg-black rounded-xl shadow-xl relative w-full max-w-3xl mx-auto p-4 md:p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-2xl font-bold text-gray-200 hover:text-white">&times;</button>
+    <h3 class="text-xl md:text-2xl font-bold text-center mt-2 mb-4 text-white">Choisissez vos dates</h3>
+    <div id="calendar-blom" class="w-full h-[350px] md:h-[450px]"></div>
   </div>
 </div>
 
@@ -186,73 +183,23 @@ permalink: /blom/
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-/* ----------- THEME SOMBRE ----------- */
 #calendar-blom {
-  max-width: 900px;
-  margin: 0 auto;
   background: #111;
   color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.5);
   font-family: "Arial", sans-serif;
+  padding: 10px;
 }
 
-.fc .fc-toolbar-title { font-size: 1.5rem; font-weight: bold; color: #fff; }
-.fc .fc-button { background: #222; border: none; color: #fff; border-radius: 8px; padding: 5px 12px; transition: 0.3s; }
+.fc .fc-toolbar-title { font-size: 1.25rem; font-weight: bold; color: #fff; }
+.fc .fc-button { background: #222; border: none; color: #fff; border-radius: 6px; padding: 4px 10px; transition: 0.3s; }
 .fc .fc-button:hover { background: #444; }
 .fc .fc-daygrid-day-number { color: #fff; font-weight: bold; }
-.fc .fc-day-today { background: rgba(255,255,255,0.1) !important; }
-.fc .fc-day-sat, .fc .fc-day-sun { background: rgba(255,255,255,0.05); }
-.fc-event { background: #e63946 !important; border: none !important; border-radius: 5px !important; font-size: 0.85rem !important; padding: 2px 4px; text-align: center; }
+.fc .fc-day-today { background: rgba(255,255,255,0.08) !important; }
+.fc .fc-day-sat, .fc .fc-day-sun { background: rgba(255,255,255,0.03); }
+.fc-event { background: #e63946 !important; border: none !important; border-radius: 4px !important; font-size: 0.8rem !important; padding: 1px 3px; text-align: center; }
 .fc-event:hover { background: #ff4c5b !important; }
 </style>
 
-<script>
-let calendarInitialized = false;
-
-function openCalendarBlom() {
-  const modal = document.getElementById("calendarModalBlom");
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  if (!calendarInitialized) {
-    initCalendarBlom();
-    calendarInitialized = true;
-  }
-}
-
-function closeCalendarBlom(event) {
-  const modal = document.getElementById("calendarModalBlom");
-  if (!event || event.target === modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
-}
-
-async function initCalendarBlom() {
-  try {
-    const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
-    const events = await res.json();
-
-    const calendarEl = document.getElementById("calendar-blom");
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      height: "auto",
-      locale: "fr",
-      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
-      events: events,
-      eventColor: "#e63946",
-      eventDisplay: "block",
-      navLinks: true,
-      selectable: true,
-      selectMirror: true
-    });
-
-    calendar.render();
-  } catch (err) {
-    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
-    console.error(err);
-  }
-}
-</script>
+<script
