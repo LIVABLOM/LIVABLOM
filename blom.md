@@ -181,6 +181,28 @@ permalink: /blom/
   </div>
 </div>
 
+<!-- Appel à l'action : Réserver BLŌM -->
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
+  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+  <p class="mb-4">Logement avec spa pour couples</p>
+
+  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+      Réserver maintenant
+    </button>
+    {% include share.html %}
+  </div>
+</div>
+
+<!-- Modal calendrier BLŌM -->
+<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
+  <div class="bg-black rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-3xl font-bold text-gray-200 hover:text-white">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6 text-white">Choisissez vos dates</h3>
+    <div id="calendar-blom" class="w-full h-[450px] md:h-[600px]"></div>
+  </div>
+</div>
+
 <!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
@@ -189,7 +211,7 @@ permalink: /blom/
 /* ----------- THEME SOMBRE ----------- */
 #calendar-blom {
   max-width: 900px;
-  margin: 20px auto;
+  margin: 0 auto;
   background: #111;
   color: #fff;
   padding: 20px;
@@ -244,9 +266,28 @@ permalink: /blom/
 }
 </style>
 
-<div id="calendar-blom"></div>
-
 <script>
+let calendarInitialized = false;
+
+function openCalendarBlom() {
+  const modal = document.getElementById("calendarModalBlom");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  if (!calendarInitialized) {
+    initCalendarBlom();
+    calendarInitialized = true;
+  }
+}
+
+function closeCalendarBlom(event) {
+  const modal = document.getElementById("calendarModalBlom");
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
 async function initCalendarBlom() {
   try {
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
@@ -256,15 +297,18 @@ async function initCalendarBlom() {
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
-      locale: "fr", // français (jours + mois)
+      locale: "fr",
       headerToolbar: {
         left: "prev,next today",
         center: "title",
-        right: ""
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
       },
       events: events,
-      eventColor: "#e63946",  // couleur des réservations
-      eventDisplay: "block"
+      eventColor: "#e63946",
+      eventDisplay: "block",
+      navLinks: true,
+      selectable: true,
+      selectMirror: true
     });
 
     calendar.render();
@@ -273,6 +317,6 @@ async function initCalendarBlom() {
     console.error(err);
   }
 }
-
-document.addEventListener("DOMContentLoaded", initCalendarBlom);
+</script>
+.addEventListener("DOMContentLoaded", initCalendarBlom);
 </script>
