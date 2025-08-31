@@ -189,7 +189,7 @@ permalink: /blom/
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-#calendar-container {
+#calendar-container-blom {
   max-width: 900px;
   margin: 0 auto;
   background: #111;
@@ -210,34 +210,35 @@ permalink: /blom/
 </style>
 
 <script>
-let calendar;
-let calendarInitialized = false;
+let calendarBlom;
+let calendarBlomInitialized = false;
 
 function openCalendar(logement) {
-  document.getElementById("calendarModal").classList.remove("hidden");
-  document.getElementById("calendarModal").classList.add("flex");
+  const modal = document.getElementById("calendarModalBlom");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 
-  if (!calendarInitialized) {
-    initCalendar(logement);
-    calendarInitialized = true;
+  if (!calendarBlomInitialized) {
+    initCalendarBlom(logement);
+    calendarBlomInitialized = true;
   }
 }
 
-function closeCalendar(event) {
-  const modal = document.getElementById("calendarModal");
+function closeCalendar(logement, event) {
+  const modal = document.getElementById("calendarModalBlom");
   if (!event || event.target === modal) {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
   }
 }
 
-async function initCalendar(logement) {
+async function initCalendarBlom(logement) {
   try {
     const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
     const events = await res.json();
 
-    const calendarEl = document.getElementById("calendar-container");
-    calendar = new FullCalendar.Calendar(calendarEl, {
+    const calendarEl = document.getElementById("calendar-container-blom");
+    calendarBlom = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
@@ -252,7 +253,7 @@ async function initCalendar(logement) {
       navLinks: true
     });
 
-    calendar.render();
+    calendarBlom.render();
   } catch (err) {
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
     console.error(err);
