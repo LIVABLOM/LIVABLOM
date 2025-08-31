@@ -77,14 +77,13 @@ permalink: /liva/
     </div>
   </div>
 
-<!-- Appel à l'action : Réserver LIVA -->
+<!-- Appel à l'action : Réserver BLŌM -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-  <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
+  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
-  <!-- Bloc boutons -->
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendar('LIVA')" 
+    <button onclick="openCalendar('BLOM')" 
             class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
     </button>
@@ -92,46 +91,47 @@ permalink: /liva/
   </div>
 </div>
 
+<!-- Modal calendrier BLOM -->
+<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour BLŌM</h3>
+    <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
+
 <!-- Modal calendrier LIVA -->
 <div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour LIVA</h3>
     <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
+<!-- FullCalendar -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <script>
-let calendarLiva, calendarBlom;
-let calendarInitializedLiva = false;
-let calendarInitializedBlom = false;
+let calendars = {}; // stocke les instances pour BLOM et LIVA
 
 function openCalendar(logement) {
-  if (logement === 'LIVA') {
-    const modal = document.getElementById("calendarModalLiva");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    if (!calendarInitializedLiva) { initCalendar('LIVA'); calendarInitializedLiva = true; }
-  }
-  if (logement === 'BLOM') {
-    const modal = document.getElementById("calendarModalBlom");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    if (!calendarInitializedBlom) { initCalendar('BLOM'); calendarInitializedBlom = true; }
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  document.getElementById(modalId).classList.remove("hidden");
+  document.getElementById(modalId).classList.add("flex");
+
+  if (!calendars[logement]) {
+    initCalendar(logement);
   }
 }
 
 function closeCalendar(logement, event) {
-  if (logement === 'LIVA') {
-    const modal = document.getElementById("calendarModalLiva");
-    if (!event || event.target === modal) { modal.classList.add("hidden"); modal.classList.remove("flex"); }
-  }
-  if (logement === 'BLOM') {
-    const modal = document.getElementById("calendarModalBlom");
-    if (!event || event.target === modal) { modal.classList.add("hidden"); modal.classList.remove("flex"); }
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  const modal = document.getElementById(modalId);
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
   }
 }
 
@@ -140,28 +140,30 @@ async function initCalendar(logement) {
     const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
     const events = await res.json();
 
-    let calendarEl, calendarVar;
-    if (logement === 'LIVA') { calendarEl = document.getElementById("calendar-container-liva"); calendarVar = calendarLiva; }
-    if (logement === 'BLOM') { calendarEl = document.getElementById("calendar-container-blom"); calendarVar = calendarBlom; }
+    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
+    const calendarEl = document.getElementById(containerId);
 
-    calendarVar = new FullCalendar.Calendar(calendarEl, {
+    const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
-      events: events.map(ev => ({ title: ev.summary, start: ev.start, end: ev.end })),
+      events: events.map(ev => ({
+        title: ev.summary,
+        start: ev.start,
+        end: ev.end,
+        display: "block"
+      })),
       eventColor: "#e63946",
-      selectable: true,
+      selectable: false,
       navLinks: true
     });
 
-    calendarVar.render();
-    if (logement === 'LIVA') calendarLiva = calendarVar;
-    if (logement === 'BLOM') calendarBlom = calendarVar;
-
+    calendar.render();
+    calendars[logement] = calendar; // stocke pour éviter reinit
   } catch (err) {
-    console.error(err);
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+    console.error(err);
   }
 }
 </script>
