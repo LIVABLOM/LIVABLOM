@@ -77,6 +77,7 @@ permalink: /liva/
     </div>
   </div>
 
+<!-- Appel à l'action :
  <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
     <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
     <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
