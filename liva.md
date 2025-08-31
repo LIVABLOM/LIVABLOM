@@ -81,7 +81,7 @@ permalink: /liva/
   <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
   <div class="max-w-6xl mx-auto space-y-16">
 
-    <h1 class="text-3xl md:text-4xl font-bold text-center mb-10">BLŌM – Détente & Évasion</h1>
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-10">LIVA tout confort</h1>
 
     <!-- Appel à l'action : Réserver LIVA -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
