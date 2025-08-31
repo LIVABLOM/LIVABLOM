@@ -159,7 +159,6 @@ permalink: /blom/
       });
     });
     </script>
-<!-- Appel à l'action : Réserver BLŌM -->
 <!-- Section Réserver avec bouton + partage -->
 <div class="mt-12 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
