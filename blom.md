@@ -274,13 +274,21 @@ async function initCalendar(logement) {
       locale: "fr",
       firstDay: 1,
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
-      events: events.map(ev => ({
-        title: "Réservé",
-        start: ev.start,
-        end: ev.end,
-        display: "block"
-      })),
+      events: events.map(ev => {
+        // Corrige la date de fin : on enlève 1 jour pour libérer le jour de départ
+        let endDate = new Date(ev.end);
+        endDate.setDate(endDate.getDate() - 1);
+
+        return {
+          title: "Réservé",
+          start: ev.start,
+          end: endDate.toISOString().split("T")[0], // format YYYY-MM-DD
+          display: "block",
+          allDay: true // évite d'afficher les heures comme "2h"
+        };
+      }),
       eventColor: "#e63946",
+      displayEventTime: false, // désactive totalement l'affichage des heures
       selectable: false,
       navLinks: true
     });
@@ -292,4 +300,5 @@ async function initCalendar(logement) {
     console.error(err);
   }
 }
+
 </script>
