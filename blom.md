@@ -183,9 +183,7 @@ permalink: /blom/
     <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
-
-
-  </div>
+ </div>
 </section>
 
 <!-- FullCalendar CSS & JS -->
