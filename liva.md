@@ -77,76 +77,66 @@ permalink: /liva/
     </div>
   </div>
 
-<!-- Appel à l'action :
- <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-    <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-    <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
-    <!-- Bloc boutons responsive -->
-    <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-      <button onclick="document.getElementById('calendarModal').classList.remove('hidden'); document.getElementById('calendarModal').classList.add('flex');"
-              class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-        Réserver maintenant
-      </button>
-      {% include share.html %}
-    </div>
+<!-- Appel à l'action : Réserver LIVA -->
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+  <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
+  <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
+
+  <!-- Bloc boutons responsive -->
+  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    <button onclick="openCalendar('LIVA')" 
+            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+      Réserver maintenant
+    </button>
+    {% include share.html %}
   </div>
-  
-    <!-- Modal calendrier LIVA -->
-    <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
-      <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-        <button onclick="closeCalendar()" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-        <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
-        <div id="calendar-container" class="w-full h-[500px] md:h-[600px]"></div>
-      </div>
-    </div>
+</div>
 
+<!-- Modal calendrier LIVA -->
+<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
+    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
-</section>
-
-<!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-<style>
-#calendar-container {
-  max-width: 900px;
-  margin: 0 auto;
-  background: #111;
-  color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
-}
-
-.fc .fc-toolbar-title { font-size: 1.5rem; font-weight: bold; color: #fff; }
-.fc .fc-button { background: #222; border: none; color: #fff; border-radius: 8px; padding: 5px 12px; transition: 0.3s; }
-.fc .fc-button:hover { background: #444; }
-.fc .fc-daygrid-day-number { color: #fff; font-weight: bold; }
-.fc .fc-day-today { background: rgba(255,255,255,0.1) !important; }
-.fc .fc-day-sat, .fc .fc-day-sun { background: rgba(255,255,255,0.05); }
-.fc-event { background: #e63946 !important; border: none !important; border-radius: 5px !important; font-size: 0.85rem !important; padding: 2px 4px; text-align: center; }
-.fc-event:hover { background: #ff4c5b !important; }
-</style>
+</div>
 
 <script>
-let calendar;
-let calendarInitialized = false;
+let calendarLiva;
+let calendarInitializedLiva = false;
 
 function openCalendar(logement) {
-  document.getElementById("calendarModal").classList.remove("hidden");
-  document.getElementById("calendarModal").classList.add("flex");
-
-  if (!calendarInitialized) {
-    initCalendar(logement);
-    calendarInitialized = true;
+  if (logement === 'LIVA') {
+    document.getElementById("calendarModalLiva").classList.remove("hidden");
+    document.getElementById("calendarModalLiva").classList.add("flex");
+    if (!calendarInitializedLiva) {
+      initCalendar('LIVA');
+      calendarInitializedLiva = true;
+    }
+  } else if (logement === 'BLOM') {
+    document.getElementById("calendarModalBlom").classList.remove("hidden");
+    document.getElementById("calendarModalBlom").classList.add("flex");
+    if (!calendarInitializedBlom) {
+      initCalendar('BLOM');
+      calendarInitializedBlom = true;
+    }
   }
 }
 
-function closeCalendar(event) {
-  const modal = document.getElementById("calendarModal");
-  if (!event || event.target === modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
+function closeCalendar(logement, event) {
+  if (logement === 'LIVA') {
+    const modal = document.getElementById("calendarModalLiva");
+    if (!event || event.target === modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+  }
+  if (logement === 'BLOM') {
+    const modal = document.getElementById("calendarModalBlom");
+    if (!event || event.target === modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
   }
 }
 
@@ -155,26 +145,6 @@ async function initCalendar(logement) {
     const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
     const events = await res.json();
 
-    const calendarEl = document.getElementById("calendar-container");
-    calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      height: "auto",
-      locale: "fr",
-      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
-      events: events.map(ev => ({
-        title: ev.summary,
-        start: ev.start,
-        end: ev.end
-      })),
-      eventColor: "#e63946",
-      selectable: true,
-      navLinks: true
-    });
-
-    calendar.render();
-  } catch (err) {
-    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
-    console.error(err);
-  }
-}
-</script>
+    let calendarEl, calendarVar;
+    if (logement === 'LIVA') {
+      calendarEl = document.getElementBy
