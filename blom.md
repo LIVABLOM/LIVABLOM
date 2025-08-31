@@ -165,7 +165,6 @@ permalink: /blom/
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
-  <!-- Bloc boutons -->
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
     <button onclick="openCalendar('BLOM')" 
             class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
@@ -179,66 +178,55 @@ permalink: /blom/
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
   <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour BLŌM</h3>
     <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
-<!-- FullCalendar CSS & JS -->
+<!-- Modal calendrier LIVA -->
+<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour LIVA</h3>
+    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
+
+<!-- FullCalendar -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
-<style>
-#calendar-container-blom {
-  max-width: 900px;
-  margin: 0 auto;
-  background: #111;
-  color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
-}
-
-.fc .fc-toolbar-title { font-size: 1.5rem; font-weight: bold; color: #fff; }
-.fc .fc-button { background: #222; border: none; color: #fff; border-radius: 8px; padding: 5px 12px; transition: 0.3s; }
-.fc .fc-button:hover { background: #444; }
-.fc .fc-daygrid-day-number { color: #fff; font-weight: bold; }
-.fc .fc-day-today { background: rgba(255,255,255,0.1) !important; }
-.fc .fc-day-sat, .fc .fc-day-sun { background: rgba(255,255,255,0.05); }
-.fc-event { background: #e63946 !important; border: none !important; border-radius: 5px !important; font-size: 0.85rem !important; padding: 2px 4px; text-align: center; }
-.fc-event:hover { background: #ff4c5b !important; }
-</style>
-
 <script>
-let calendarBlom;
-let calendarBlomInitialized = false;
+let calendars = {}; // stocke les instances pour BLOM et LIVA
 
 function openCalendar(logement) {
-  const modal = document.getElementById("calendarModalBlom");
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  document.getElementById(modalId).classList.remove("hidden");
+  document.getElementById(modalId).classList.add("flex");
 
-  if (!calendarBlomInitialized) {
-    initCalendarBlom(logement);
-    calendarBlomInitialized = true;
+  if (!calendars[logement]) {
+    initCalendar(logement);
   }
 }
 
 function closeCalendar(logement, event) {
-  const modal = document.getElementById("calendarModalBlom");
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  const modal = document.getElementById(modalId);
   if (!event || event.target === modal) {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
   }
 }
 
-async function initCalendarBlom(logement) {
+async function initCalendar(logement) {
   try {
     const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
     const events = await res.json();
 
-    const calendarEl = document.getElementById("calendar-container-blom");
-    calendarBlom = new FullCalendar.Calendar(calendarEl, {
+    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
+    const calendarEl = document.getElementById(containerId);
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
@@ -246,14 +234,16 @@ async function initCalendarBlom(logement) {
       events: events.map(ev => ({
         title: ev.summary,
         start: ev.start,
-        end: ev.end
+        end: ev.end,
+        display: "block"
       })),
       eventColor: "#e63946",
-      selectable: true,
+      selectable: false,
       navLinks: true
     });
 
-    calendarBlom.render();
+    calendar.render();
+    calendars[logement] = calendar; // stocke pour éviter reinit
   } catch (err) {
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
     console.error(err);
