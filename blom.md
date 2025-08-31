@@ -161,26 +161,29 @@ permalink: /blom/
     </script>
 
 <!-- Appel à l'action : Réserver BLŌM -->
-    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
-      <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
-      <p class="mb-4">Logement avec spa pour couples</p>
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
-      <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-        <button onclick="openCalendar('BLOM')" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-          Réserver maintenant
-        </button>
-        {% include share.html %}
-      </div>
-    </div>
+  <!-- Bloc boutons -->
+  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    <button onclick="openCalendar('BLOM')" 
+            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+      Réserver maintenant
+    </button>
+    {% include share.html %}
+  </div>
+</div>
 
-    <!-- Modal calendrier BLŌM -->
-    <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
-      <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-        <button onclick="closeCalendar()" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-        <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
-        <div id="calendar-container" class="w-full h-[500px] md:h-[600px]"></div>
-      </div>
-    </div>
+<!-- Modal calendrier BLOM -->
+<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
+  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
+    <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
+
 
   </div>
 </section>
