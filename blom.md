@@ -182,96 +182,97 @@ permalink: /blom/
 </div>
 
 <!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-
-<script>
-let calendarInitializedBlom = false;
-
-async function openCalendarBlom() {
-  const modal = document.getElementById("calendarModalBlom");
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  if (!calendarInitializedBlom) {
-    const calendarEl = document.getElementById("calendar-blom");
-
-    try {
-      const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM');
-      const events = await res.json();
-
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        height: "auto",
-        contentHeight: 600,
-        aspectRatio: 1.5,
-        themeSystem: 'standard',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: ''
-        },
-        dayHeaderFormat: { weekday: 'short' },  // Affiche Lun, Mar, Mer...
-        dayCellContent: function(arg) {
-          return { html: `<div class="text-sm font-semibold">${arg.dayNumberText}</div>` };
-        },
-        events: events.map(e => ({
-          title: e.title || e.summary,
-          start: e.start,
-          end: e.end,
-          allDay: true
-        })),
-        eventDisplay: 'block',
-        eventColor: '#ff4d4d',
-        firstDay: 1,  // Commence la semaine le lundi
-        selectable: true,
-        selectMirror: true,
-        select: function(info) {
-          alert(`Vous avez sélectionné du ${info.startStr} au ${info.endStr}`);
-        },
-        dayMaxEventRows: true, // Affiche plusieurs événements par jour
-        showNonCurrentDates: false // Masque les jours hors mois
-      });
-
-      calendar.render();
-      calendarInitializedBlom = true;
-    } catch (err) {
-      console.error('Impossible de charger le calendrier. Vérifiez la connexion au serveur.', err);
-      alert('Impossible de charger le calendrier. Vérifiez la connexion au serveur.');
-    }
-  }
-}
-
-function closeCalendarBlom(event) {
-  if (!event || event.target.id === "calendarModalBlom") {
-    const modal = document.getElementById("calendarModalBlom");
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
-}
-</script>
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-/* Style personnalisé du calendrier */
+/* ----------- THEME SOMBRE ----------- */
 #calendar-blom {
-  font-family: 'Inter', sans-serif;
+  max-width: 900px;
+  margin: 20px auto;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  font-family: "Arial", sans-serif;
 }
-.fc-toolbar-title {
+
+.fc .fc-toolbar-title {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #fff;
 }
-.fc-daygrid-day-number {
-  font-weight: 600;
+
+.fc .fc-button {
+  background: #222;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 12px;
+  transition: 0.3s;
 }
-.fc-daygrid-event {
-  border-radius: 0.5rem;
-  opacity: 0.9;
+.fc .fc-button:hover {
+  background: #444;
+}
+
+.fc .fc-daygrid-day-number {
+  color: #fff;
+  font-weight: bold;
+}
+
+.fc .fc-day-today {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+.fc .fc-day-sat,
+.fc .fc-day-sun {
+  background: rgba(255,255,255,0.05);
+}
+
+.fc-event {
+  background: #e63946 !important;
+  border: none !important;
+  border-radius: 5px !important;
+  font-size: 0.85rem !important;
   padding: 2px 4px;
-  font-size: 0.85rem;
+  text-align: center;
 }
-.fc .fc-col-header-cell-cushion {
-  color: #333;
-  font-weight: 600;
+
+.fc-event:hover {
+  background: #ff4c5b !important;
 }
 </style>
+
+<div id="calendar-blom"></div>
+
+<script>
+async function initCalendarBlom() {
+  try {
+    const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
+    const events = await res.json();
+
+    const calendarEl = document.getElementById("calendar-blom");
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      locale: "fr", // français (jours + mois)
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: ""
+      },
+      events: events,
+      eventColor: "#e63946",  // couleur des réservations
+      eventDisplay: "block"
+    });
+
+    calendar.render();
+  } catch (err) {
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+    console.error(err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initCalendarBlom);
+</script>
