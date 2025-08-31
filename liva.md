@@ -78,112 +78,108 @@ permalink: /liva/
   </div>
 
   <!-- Appel à l'action : Réserver LIVA -->
-  <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl animate-fadeIn delay-600 max-w-4xl mx-auto">
-    <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-    <p class="mb-4">Logement tout équipé avec parking privé et sécurisé</p>
+  <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
+  <div class="max-w-6xl mx-auto space-y-16">
 
-    <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-      <button onclick="openCalendar()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-        Réserver maintenant
-      </button>
-      {% include share.html %}
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-10">BLŌM – Détente & Évasion</h1>
+
+    <!-- Appel à l'action : Réserver BLŌM -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
+      <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+      <p class="mb-4">Logement avec spa pour couples</p>
+
+      <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+        <button onclick="openCalendar('LIVA')" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+          Réserver maintenant
+        </button>
+        {% include share.html %}
+      </div>
     </div>
-  </div>
 
-  <!-- Modal calendrier LIVA -->
-  <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
-    <div class="bg-white rounded-xl shadow-xl relative w-full max-w-4xl mx-auto p-4" onclick="event.stopPropagation()">
-      <button onclick="closeCalendar()" class="absolute top-2 right-4 text-2xl font-bold text-gray-600 hover:text-black">&times;</button>
-      <h3 class="text-xl font-bold text-center mt-2 mb-4">Choisissez vos dates</h3>
-
-      <!-- Conteneur FullCalendar -->
-      <div id="calendar-liva" class="w-full h-[400px] md:h-[500px]"></div>
+    <!-- Modal calendrier LIVA -->
+    <div id="calendarModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar(event)">
+      <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+        <button onclick="closeCalendar()" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+        <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
+        <div id="calendar-container" class="w-full h-[500px] md:h-[600px]"></div>
+      </div>
     </div>
+
   </div>
+</section>
 
-  <!-- FullCalendar CSS & JS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
-  <!-- Script calendrier -->
-  <script>
-    let calendarInitialized = false;
+<style>
+#calendar-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
 
-    async function openCalendar() {
-      const modal = document.getElementById("calendarModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
+.fc .fc-toolbar-title { font-size: 1.5rem; font-weight: bold; color: #fff; }
+.fc .fc-button { background: #222; border: none; color: #fff; border-radius: 8px; padding: 5px 12px; transition: 0.3s; }
+.fc .fc-button:hover { background: #444; }
+.fc .fc-daygrid-day-number { color: #fff; font-weight: bold; }
+.fc .fc-day-today { background: rgba(255,255,255,0.1) !important; }
+.fc .fc-day-sat, .fc .fc-day-sun { background: rgba(255,255,255,0.05); }
+.fc-event { background: #e63946 !important; border: none !important; border-radius: 5px !important; font-size: 0.85rem !important; padding: 2px 4px; text-align: center; }
+.fc-event:hover { background: #ff4c5b !important; }
+</style>
 
-      if (!calendarInitialized) {
-        const calendarEl = document.getElementById("calendar-liva");
+<script>
+let calendar;
+let calendarInitialized = false;
 
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          locale: 'fr',
-          height: "auto",
-          contentHeight: 500,
-          aspectRatio: 1.35,
-          events: "https://calendar-proxy-production-231c.up.railway.app/api/calendar?source=LIVA",
-          eventDisplay: 'background',
-          eventColor: '#ff4d4d'
-        });
+function openCalendar(logement) {
+  document.getElementById("calendarModal").classList.remove("hidden");
+  document.getElementById("calendarModal").classList.add("flex");
 
-        calendar.render();
-        calendarInitialized = true;
-      }
-    }
+  if (!calendarInitialized) {
+    initCalendar(logement);
+    calendarInitialized = true;
+  }
+}
 
-    function closeCalendar(event) {
-      if (!event || event.target.id === "calendarModal") {
-        const modal = document.getElementById("calendarModal");
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
-      }
-    }
-  </script>
+function closeCalendar(event) {
+  const modal = document.getElementById("calendarModal");
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
 
-  <!-- Script témoignages -->
-  <script>
-    let currentIndex = 0;
-    const fullTestimonials = [
-      {% for temoignage in site.data.temoignages-liva %}
-        "{{ temoignage.texte | strip_newlines | escape }}",
-      {% endfor %}
-    ];
+async function initCalendar(logement) {
+  try {
+    const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
+    const events = await res.json();
 
-    function openModal(i) {
-      currentIndex = i;
-      updateModalText();
-      document.getElementById("testimonialModal").classList.remove("hidden");
-      document.getElementById("testimonialModal").classList.add("flex");
-    }
-    function closeModal() {
-      document.getElementById("testimonialModal").classList.add("hidden");
-      document.getElementById("testimonialModal").classList.remove("flex");
-    }
-    function updateModalText() {
-      document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-    }
-    function prevTestimonial() {
-      currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-      updateModalText();
-    }
-    function nextTestimonial() {
-      currentIndex = (currentIndex + 1) % fullTestimonials.length;
-      updateModalText();
-    }
+    const calendarEl = document.getElementById("calendar-container");
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      locale: "fr",
+      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
+      events: events.map(ev => ({
+        title: ev.summary,
+        start: ev.start,
+        end: ev.end
+      })),
+      eventColor: "#e63946",
+      selectable: true,
+      navLinks: true
+    });
 
-    // Carrousel auto
-    const carousel = document.getElementById("carousel");
-    const totalItems = {{ site.data.temoignages-liva | size }};
-    let carouselIndex = 0;
-    function showCarouselSlide(index) {
-      const offset = -index * 100;
-      carousel.style.transform = `translateX(${offset}%)`;
-    }
-    setInterval(() => {
-      carouselIndex = (carouselIndex + 1) % totalItems;
-      showCarouselSlide(carouselIndex);
-    }, 4000);
-  </script>
-</div>
+    calendar.render();
+  } catch (err) {
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+    console.error(err);
+  }
+}
+</script>
