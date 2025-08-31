@@ -174,20 +174,6 @@ permalink: /blom/
   </div>
 </div>
 
-<!-- Appel à l'action : Réserver LIVA -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-  <p class="mb-4">Logement tout équipé pour familles, couples ou entreprises</p>
-
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendar('LIVA')" 
-            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
-    </button>
-    {% include share.html %}
-  </div>
-</div>
-
 <!-- Modal calendrier BLOM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
   <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
