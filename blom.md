@@ -268,27 +268,30 @@ async function initCalendar(logement) {
     const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
     const calendarEl = document.getElementById(containerId);
 
+    // utilitaire: force le format YYYY-MM-DD (jour local), sans heures
+    const toISODate = (d) => {
+      const x = new Date(d);
+      const y = x.getFullYear();
+      const m = String(x.getMonth() + 1).padStart(2, "0");
+      const day = String(x.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    };
+
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
       firstDay: 1,
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
-      events: events.map(ev => {
-        // Corrige la date de fin : on enlève 1 jour pour libérer le jour de départ
-        let endDate = new Date(ev.end);
-        endDate.setDate(endDate.getDate() - 1);
-
-        return {
-          title: "Réservé",
-          start: ev.start,
-          end: endDate.toISOString().split("T")[0], // format YYYY-MM-DD
-          display: "block",
-          allDay: true // évite d'afficher les heures comme "2h"
-        };
-      }),
+      events: events.map(ev => ({
+        title: "Réservé",
+        start: toISODate(ev.start), // inclus
+        end: toISODate(ev.end),     // EXCLUS (ne pas -1 jour)
+        allDay: true,
+        display: "block"
+      })),
+      displayEventTime: false,  // plus de "2h"
       eventColor: "#e63946",
-      displayEventTime: false, // désactive totalement l'affichage des heures
       selectable: false,
       navLinks: true
     });
@@ -296,9 +299,8 @@ async function initCalendar(logement) {
     calendar.render();
     calendars[logement] = calendar;
   } catch (err) {
-    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
     console.error(err);
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
   }
 }
-
 </script>
