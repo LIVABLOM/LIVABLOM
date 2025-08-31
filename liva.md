@@ -83,10 +83,10 @@ permalink: /liva/
 
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10">BLŌM – Détente & Évasion</h1>
 
-    <!-- Appel à l'action : Réserver BLŌM -->
+    <!-- Appel à l'action : Réserver LIVA -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
       <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
-      <p class="mb-4">Logement avec spa pour couples</p>
+      <p class="mb-4">Logement tout confort</p>
 
       <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
         <button onclick="openCalendar('LIVA')" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
