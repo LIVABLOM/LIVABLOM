@@ -15,4 +15,97 @@
       <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
     </nav>
   </div>
+
+  <script>
+let calendarLiva, calendarBlom;
+let calendarInitializedLiva = false;
+let calendarInitializedBlom = false;
+
+function openCalendar(logement) {
+  if (logement === 'LIVA') {
+    document.getElementById("calendarModalLiva").classList.remove("hidden");
+    document.getElementById("calendarModalLiva").classList.add("flex");
+    if (!calendarInitializedLiva) {
+      initCalendar('LIVA');
+      calendarInitializedLiva = true;
+    }
+  } else if (logement === 'BLOM') {
+    document.getElementById("calendarModalBlom").classList.remove("hidden");
+    document.getElementById("calendarModalBlom").classList.add("flex");
+    if (!calendarInitializedBlom) {
+      initCalendar('BLOM');
+      calendarInitializedBlom = true;
+    }
+  }
+}
+
+function closeCalendar(logement, event) {
+  if (logement === 'LIVA') {
+    const modal = document.getElementById("calendarModalLiva");
+    if (!event || event.target === modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+  }
+  if (logement === 'BLOM') {
+    const modal = document.getElementById("calendarModalBlom");
+    if (!event || event.target === modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+  }
+}
+
+async function initCalendar(logement) {
+  try {
+    const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
+    const events = await res.json();
+
+    let calendarEl, calendarVar;
+    if (logement === 'LIVA') calendarEl = document.getElementById("calendar-container-liva");
+    if (logement === 'BLOM') calendarEl = document.getElementById("calendar-container-blom");
+
+    const processedEvents = events.map(ev => {
+      const start = new Date(ev.start);
+      const end = new Date(ev.end);
+
+      // corrige : départ = libre
+      end.setDate(end.getDate() - 1);
+
+      return {
+        title: "Réservé",
+        start: start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+        allDay: true
+      };
+    });
+
+    calendarVar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      locale: "fr",
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
+      },
+      events: processedEvents,
+      eventColor: "#e63946",
+      selectable: true,
+      navLinks: true
+    });
+
+    calendarVar.render();
+
+    if (logement === 'LIVA') calendarLiva = calendarVar;
+    if (logement === 'BLOM') calendarBlom = calendarVar;
+
+  } catch (err) {
+    console.error(err);
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+  }
+}
+</script>
+
+  
 </header>
