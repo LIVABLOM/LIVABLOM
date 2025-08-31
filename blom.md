@@ -174,28 +174,6 @@ permalink: /blom/
 
 <!-- Modal calendrier BLŌM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-    <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates</h3>
-    <div id="calendar-blom" class="w-full h-[450px] md:h-[600px]"></div>
-  </div>
-</div>
-
-<!-- Appel à l'action : Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
-  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
-  <p class="mb-4">Logement avec spa pour couples</p>
-
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
-      Réserver maintenant
-    </button>
-    {% include share.html %}
-  </div>
-</div>
-
-<!-- Modal calendrier BLŌM -->
-<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendarBlom(event)">
   <div class="bg-black rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendarBlom()" class="absolute top-2 right-4 text-3xl font-bold text-gray-200 hover:text-white">&times;</button>
     <h3 class="text-2xl font-bold text-center mt-2 mb-6 text-white">Choisissez vos dates</h3>
@@ -220,50 +198,14 @@ permalink: /blom/
   font-family: "Arial", sans-serif;
 }
 
-.fc .fc-toolbar-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-.fc .fc-button {
-  background: #222;
-  border: none;
-  color: #fff;
-  border-radius: 8px;
-  padding: 5px 12px;
-  transition: 0.3s;
-}
-.fc .fc-button:hover {
-  background: #444;
-}
-
-.fc .fc-daygrid-day-number {
-  color: #fff;
-  font-weight: bold;
-}
-
-.fc .fc-day-today {
-  background: rgba(255,255,255,0.1) !important;
-}
-
-.fc .fc-day-sat,
-.fc .fc-day-sun {
-  background: rgba(255,255,255,0.05);
-}
-
-.fc-event {
-  background: #e63946 !important;
-  border: none !important;
-  border-radius: 5px !important;
-  font-size: 0.85rem !important;
-  padding: 2px 4px;
-  text-align: center;
-}
-
-.fc-event:hover {
-  background: #ff4c5b !important;
-}
+.fc .fc-toolbar-title { font-size: 1.5rem; font-weight: bold; color: #fff; }
+.fc .fc-button { background: #222; border: none; color: #fff; border-radius: 8px; padding: 5px 12px; transition: 0.3s; }
+.fc .fc-button:hover { background: #444; }
+.fc .fc-daygrid-day-number { color: #fff; font-weight: bold; }
+.fc .fc-day-today { background: rgba(255,255,255,0.1) !important; }
+.fc .fc-day-sat, .fc .fc-day-sun { background: rgba(255,255,255,0.05); }
+.fc-event { background: #e63946 !important; border: none !important; border-radius: 5px !important; font-size: 0.85rem !important; padding: 2px 4px; text-align: center; }
+.fc-event:hover { background: #ff4c5b !important; }
 </style>
 
 <script>
@@ -298,11 +240,7 @@ async function initCalendarBlom() {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay"
-      },
+      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
       events: events,
       eventColor: "#e63946",
       eventDisplay: "block",
@@ -317,6 +255,4 @@ async function initCalendarBlom() {
     console.error(err);
   }
 }
-</script>
-.addEventListener("DOMContentLoaded", initCalendarBlom);
 </script>
