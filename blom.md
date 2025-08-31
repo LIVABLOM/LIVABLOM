@@ -202,4 +202,55 @@ permalink: /blom/
 .fc-event:hover { background: #ff4c5b !important; }
 </style>
 
-<script
+<script>
+let calendarInitialized = false;
+
+function openCalendarBlom() {
+  const modal = document.getElementById("calendarModalBlom");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  if (!calendarInitialized) {
+    initCalendarBlom();
+    calendarInitialized = true;
+  }
+}
+
+function closeCalendarBlom(event) {
+  const modal = document.getElementById("calendarModalBlom");
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+async function initCalendarBlom() {
+  try {
+    const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
+    const events = await res.json();
+
+    const calendarEl = document.getElementById("calendar-blom");
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      locale: "fr",
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
+      },
+      events: events,
+      eventColor: "#e63946",
+      eventDisplay: "block",
+      navLinks: true,
+      selectable: true,
+      selectMirror: true
+    });
+
+    calendar.render();
+  } catch (err) {
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+    console.error(err);
+  }
+}
+</script>
