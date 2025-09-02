@@ -160,8 +160,6 @@ permalink: /blom/
     });
     </script>
 
-
-
 <!-- Appel à l'action : Réserver BLŌM -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
@@ -181,57 +179,18 @@ permalink: /blom/
   <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
     <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier BLŌM</h3>
-
-    <!-- Sélection de dates + prix -->
-    <div id="reservationFormBlom" class="hidden mb-6 bg-gray-800 p-4 rounded-lg shadow">
-      <label class="block mb-2">Date d’arrivée</label>
-      <input type="date" id="startDateBlom" class="text-black px-2 py-1 rounded w-full mb-4" />
-
-      <label class="block mb-2">Date de départ</label>
-      <input type="date" id="endDateBlom" class="text-black px-2 py-1 rounded w-full mb-4" />
-
-      <p id="priceBlom" class="mt-4 font-bold text-lg text-green-400"></p>
-      <button id="payBlom" class="mt-4 bg-green-600 hover:bg-green-700 px-6 py-2 rounded text-white font-semibold">
-        Payer avec Stripe
-      </button>
-    </div>
-
     <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
-<!-- Script d’ouverture/fermeture modal -->
-<script>
-function openCalendar(logement) {
-  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-  const modal = document.getElementById(modalId);
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  if (!calendars[logement]) {
-    initCalendar(logement);
-  }
-
-  if (logement === "BLOM") {
-    document.getElementById("reservationFormBlom").classList.remove("hidden");
-  }
-}
-
-function closeCalendar(logement, event) {
-  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-  const modal = document.getElementById(modalId);
-  if (!event || event.target === modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-
-    if (logement === "BLOM") {
-      document.getElementById("reservationFormBlom").classList.add("hidden");
-    }
-  }
-}
-</script>
-
-
+<!-- Modal calendrier LIVA -->
+<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
+  <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier LIVA</h3>
+    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
 
 <!-- FullCalendar -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
@@ -327,7 +286,7 @@ async function initCalendar(logement) {
       events: events.map(ev => ({
         title: "Réservé",
         start: toISODate(ev.start), // inclus
-        end: toISODate(ev.end),     // exclus
+        end: toISODate(ev.end),     // EXCLUS (ne pas -1 jour)
         allDay: true,
         display: "block"
       })),
@@ -344,37 +303,4 @@ async function initCalendar(logement) {
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
   }
 }
-
-/* -------------------- AJOUT : calcul du prix + bouton Stripe -------------------- */
-const checkinInput = document.getElementById("checkin");
-const checkoutInput = document.getElementById("checkout");
-const priceDisplay = document.getElementById("priceDisplay");
-const payButton = document.getElementById("payButton");
-
-// Exemple de prix par nuit
-const prixParNuit = 150;
-
-function calculerPrix() {
-  const checkin = new Date(checkinInput.value);
-  const checkout = new Date(checkoutInput.value);
-
-  if (checkin && checkout && checkout > checkin) {
-    const diffTime = checkout - checkin;
-    const nuits = diffTime / (1000 * 60 * 60 * 24);
-    const total = nuits * prixParNuit;
-    priceDisplay.textContent = `Total : ${total} €`;
-    payButton.disabled = false;
-  } else {
-    priceDisplay.textContent = "Total : 0 €";
-    payButton.disabled = true;
-  }
-}
-
-checkinInput.addEventListener("change", calculerPrix);
-checkoutInput.addEventListener("change", calculerPrix);
-
-payButton.addEventListener("click", () => {
-  alert("Ici on lancera le paiement Stripe 🚀");
-});
 </script>
-
