@@ -180,10 +180,36 @@ permalink: /blom/
     <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
     <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier BLŌM</h3>
     <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
+
+    <!-- AJOUT : Sélection des dates + prix -->
+    <div class="mt-8 bg-gray-800 p-6 rounded-xl shadow-md">
+      <h4 class="text-xl font-semibold mb-4">Sélectionnez vos dates</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="checkin" class="block text-sm mb-2">Arrivée</label>
+          <input type="date" id="checkin" class="w-full p-2 rounded text-black" />
+        </div>
+        <div>
+          <label for="checkout" class="block text-sm mb-2">Départ</label>
+          <input type="date" id="checkout" class="w-full p-2 rounded text-black" />
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <p id="priceDisplay" class="text-lg font-bold">Total : 0 €</p>
+      </div>
+
+      <button id="payButton" 
+              class="mt-6 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold shadow transition disabled:opacity-50 disabled:cursor-not-allowed" 
+              disabled>
+        Payer avec Stripe
+      </button>
+    </div>
+    <!-- FIN AJOUT -->
   </div>
 </div>
 
-<!-- Modal calendrier LIVA -->
+<!-- Modal calendrier LIVA (inchangé pour l’instant) -->
 <div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
   <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
@@ -286,7 +312,7 @@ async function initCalendar(logement) {
       events: events.map(ev => ({
         title: "Réservé",
         start: toISODate(ev.start), // inclus
-        end: toISODate(ev.end),     // EXCLUS (ne pas -1 jour)
+        end: toISODate(ev.end),     // exclus
         allDay: true,
         display: "block"
       })),
@@ -302,5 +328,40 @@ async function initCalendar(logement) {
     console.error(err);
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
   }
+}
+
+/* -------------------- AJOUT : calcul du prix + bouton Stripe -------------------- */
+const checkinInput = document.getElementById("checkin");
+const checkoutInput = document.getElementById("checkout");
+const priceDisplay = document.getElementById("priceDisplay");
+const payButton = document.getElementById("payButton");
+
+// Exemple de prix par nuit
+const prixParNuit = 150;
+
+function calculerPrix() {
+  const checkin = new Date(checkinInput.value);
+  const checkout = new Date(checkoutInput.value);
+
+  if (checkin && checkout && checkout > checkin) {
+    const diffTime = checkout - checkin;
+    const nuits = diffTime / (1000 * 60 * 60 * 24);
+    const total = nuits * prixParNuit;
+    priceDisplay.textContent = `Total : ${total} €`;
+    payButton.disabled = false;
+  } else {
+    priceDisplay.textContent = "Total : 0 €";
+    payButton.disabled = true;
+  }
+}
+
+checkinInput.addEventListener("change", calculerPrix);
+checkoutInput.addEventListener("change", calculerPrix);
+
+payButton.addEventListener("click", () => {
+  alert("Ici on lancera le paiement Stripe 🚀");
+});
+</script>
+
 }
 </script>
