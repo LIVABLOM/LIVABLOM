@@ -179,44 +179,56 @@ permalink: /blom/
   <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
     <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier BLŌM</h3>
-    <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
 
-    <!-- AJOUT : Sélection des dates + prix -->
-    <div class="mt-8 bg-gray-800 p-6 rounded-xl shadow-md">
-      <h4 class="text-xl font-semibold mb-4">Sélectionnez vos dates</h4>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="checkin" class="block text-sm mb-2">Arrivée</label>
-          <input type="date" id="checkin" class="w-full p-2 rounded text-black" />
-        </div>
-        <div>
-          <label for="checkout" class="block text-sm mb-2">Départ</label>
-          <input type="date" id="checkout" class="w-full p-2 rounded text-black" />
-        </div>
-      </div>
+    <!-- Sélection de dates + prix -->
+    <div id="reservationFormBlom" class="hidden mb-6 bg-gray-800 p-4 rounded-lg shadow">
+      <label class="block mb-2">Date d’arrivée</label>
+      <input type="date" id="startDateBlom" class="text-black px-2 py-1 rounded w-full mb-4" />
 
-      <div class="mt-4">
-        <p id="priceDisplay" class="text-lg font-bold">Total : 0 €</p>
-      </div>
+      <label class="block mb-2">Date de départ</label>
+      <input type="date" id="endDateBlom" class="text-black px-2 py-1 rounded w-full mb-4" />
 
-      <button id="payButton" 
-              class="mt-6 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold shadow transition disabled:opacity-50 disabled:cursor-not-allowed" 
-              disabled>
+      <p id="priceBlom" class="mt-4 font-bold text-lg text-green-400"></p>
+      <button id="payBlom" class="mt-4 bg-green-600 hover:bg-green-700 px-6 py-2 rounded text-white font-semibold">
         Payer avec Stripe
       </button>
     </div>
-    <!-- FIN AJOUT -->
+
+    <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
   </div>
 </div>
 
-<!-- Modal calendrier LIVA (inchangé pour l’instant) -->
-<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
-  <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier LIVA</h3>
-    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
-  </div>
-</div>
+<script>
+function openCalendar(logement) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  document.getElementById(modalId).classList.remove("hidden");
+  document.getElementById(modalId).classList.add("flex");
+
+  if (!calendars[logement]) {
+    initCalendar(logement);
+  }
+
+  // 👉 Forcer l’affichage du formulaire réservation uniquement pour BLOM
+  if (logement === "BLOM") {
+    document.getElementById("reservationFormBlom").classList.remove("hidden");
+  }
+}
+
+function closeCalendar(logement, event) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  const modal = document.getElementById(modalId);
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
+    // 👉 Cacher à nouveau le formulaire quand on ferme
+    if (logement === "BLOM") {
+      document.getElementById("reservationFormBlom").classList.add("hidden");
+    }
+  }
+}
+</script>
+
 
 <!-- FullCalendar -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
