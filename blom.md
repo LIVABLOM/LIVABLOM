@@ -183,15 +183,6 @@ permalink: /blom/
   </div>
 </div>
 
-<!-- Modal calendrier LIVA -->
-<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
-  <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier LIVA</h3>
-    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
-  </div>
-</div>
-
 <!-- FullCalendar -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
