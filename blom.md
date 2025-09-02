@@ -220,6 +220,42 @@ permalink: /blom/
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const calendarEl = document.getElementById('calendar-container-blom');
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    selectable: true,   // permet de cliquer sur les jours
+    locale: 'fr',       // calendrier en français
+    firstDay: 1,        // semaine qui commence le lundi
+    height: '100%',
+
+    // Quand on clique sur un jour
+    dateClick: function(info) {
+      const clickedDate = info.dateStr;
+
+      // Met la date d’arrivée
+      document.getElementById('arrivalBlom').value = clickedDate;
+
+      // Calcule la date de départ avec 1 nuit par défaut
+      const startDate = new Date(clickedDate);
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 1);
+
+      document.getElementById('departureBlom').value = endDate.toISOString().split('T')[0];
+      document.getElementById('nightsBlom').value = 1;
+
+      // Affiche le panneau de réservation
+      document.getElementById('bookingPanelBlom').classList.remove('hidden');
+    }
+  });
+
+  calendar.render();
+});
+</script>
+
+
 <style>
 /* Style sombre du calendrier */
 .fc { background-color: #1a1a1a; color: white; border-radius: 12px; padding: 10px; }
