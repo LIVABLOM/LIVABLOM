@@ -161,12 +161,12 @@ permalink: /blom/
     </script>
 
 <!-- Appel à l'action : Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendar('BLOM')"
+    <button onclick="openCalendar('BLOM')" 
             class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
     </button>
@@ -174,237 +174,133 @@ permalink: /blom/
   </div>
 </div>
 
-<!-- Modal calendrier BLŌM -->
+<!-- Modal calendrier BLOM -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
   <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
     <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-4">Calendrier BLŌM</h3>
-
-    <!-- Calendrier -->
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier BLŌM</h3>
     <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
-
-    <!-- Panneau de sélection après clic sur une date -->
-    <div id="bookingPanelBlom" class="hidden mt-5 bg-gray-800 p-4 rounded-lg">
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
-        <div>
-          <label class="block text-sm mb-1 opacity-80">Arrivée</label>
-          <input id="arrivalBlom" type="text" readonly class="w-full px-3 py-2 rounded text-black" />
-        </div>
-        <div>
-          <label class="block text-sm mb-1 opacity-80">Nuits</label>
-          <div class="flex items-center gap-2">
-            <button type="button" onclick="adjustNightsBlom(-1)" class="px-3 py-2 rounded bg-gray-700 hover:bg-gray-600">−</button>
-            <input id="nightsBlom" type="number" min="1" value="1" class="w-20 px-3 py-2 rounded text-black" />
-            <button type="button" onclick="adjustNightsBlom(1)" class="px-3 py-2 rounded bg-gray-700 hover:bg-gray-600">+</button>
-          </div>
-          <p id="maxInfoBlom" class="text-xs opacity-70 mt-1"></p>
-        </div>
-        <div>
-          <label class="block text-sm mb-1 opacity-80">Départ</label>
-          <input id="departureBlom" type="text" readonly class="w-full px-3 py-2 rounded text-black" />
-        </div>
-        <div class="sm:text-right">
-          <button id="confirmBlom" class="w-full sm:w-auto px-5 py-3 rounded-full bg-red-600 hover:bg-red-700 font-semibold">
-            Continuer
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
-<!-- FullCalendar (si pas déjà inclus plus haut sur la page) -->
+<!-- Modal calendrier LIVA -->
+<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
+  <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier LIVA</h3>
+    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
+
+<!-- FullCalendar -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-/* Style sombre du calendrier */
-.fc { background-color: #1a1a1a; color: white; border-radius: 12px; padding: 10px; }
-.fc-toolbar-title { font-size: 1.2rem; font-weight: 700; color: white; }
-.fc-button { background:#333 !important; color:white !important; border:none !important; border-radius:6px !important; }
-.fc-button:hover { background:#555 !important; }
-.fc-day-today { background: rgba(59,130,246,.3) !important; border: 2px solid #3b82f6 !important; }
-.fc-event { background-color:#e63946 !important; color:white !important; border:none !important; border-radius:6px !important; }
+/* Style sombre cohérent avec ton site */
+.fc {
+  background-color: #1a1a1a;
+  color: white;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* Titres et toolbar */
+.fc-toolbar-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+}
+.fc-button {
+  background: #333 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px !important;
+}
+.fc-button:hover {
+  background: #555 !important;
+}
+
+/* Aujourd’hui en bleu */
+.fc-day-today {
+  background: rgba(59, 130, 246, 0.3) !important;
+  border: 2px solid #3b82f6 !important;
+}
+
+/* Jours réservés */
+.fc-event {
+  background-color: #e63946 !important;
+  color: white !important;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 6px !important;
+  border: none !important;
+}
 </style>
 
 <script>
-/* ====== Variables globales (BLOM) ====== */
-let calendars = window.calendars || {};     // instances FullCalendar
-let blockedDatesBlom = new Set();           // jours occupés (format YYYY-MM-DD)
-let selectionEventBlom = null;              // événement de surlignage de la plage choisie
-let startBlom = null;                       // date d'arrivée sélectionnée (Date)
-let maxNightsBlom = 1;                      // nb max de nuits depuis startBlom (selon dispos)
+let calendars = {}; // stocke les instances
 
-/* ====== Utils dates ====== */
-const addDays = (date, n) => { const d = new Date(date); d.setDate(d.getDate()+n); return d; };
-const ymd = (date) => {
-  const y = date.getFullYear(), m = String(date.getMonth()+1).padStart(2,'0'), d = String(date.getDate()).padStart(2,'0');
-  return `${y}-${m}-${d}`;
-};
-const formatFR = (date) => date.toLocaleDateString('fr-FR', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
-
-/* ====== Ouvrir / fermer le modal ====== */
 function openCalendar(logement) {
-  if (logement !== "BLOM") return; // (on ne gère que BLŌM ici)
-  const modal = document.getElementById("calendarModalBlom");
-  modal.classList.remove("hidden"); modal.classList.add("flex");
-  if (!calendars["BLOM"]) initCalendar("BLOM");
-}
-function closeCalendar(logement, event) {
-  if (logement !== "BLOM") return;
-  const modal = document.getElementById("calendarModalBlom");
-  if (!event || event.target === modal) {
-    modal.classList.add("hidden"); modal.classList.remove("flex");
-    // reset panneau et sélection
-    document.getElementById("bookingPanelBlom").classList.add("hidden");
-    if (selectionEventBlom) { selectionEventBlom.remove(); selectionEventBlom = null; }
-    startBlom = null;
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  document.getElementById(modalId).classList.remove("hidden");
+  document.getElementById(modalId).classList.add("flex");
+
+  if (!calendars[logement]) {
+    initCalendar(logement);
   }
 }
 
-/* ====== Init du calendrier BLŌM avec clic sur date d'arrivée ====== */
+function closeCalendar(logement, event) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  const modal = document.getElementById(modalId);
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
 async function initCalendar(logement) {
   try {
     const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
-    const eventsRaw = await res.json();
+    const events = await res.json();
 
+    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
+    const calendarEl = document.getElementById(containerId);
+
+    // utilitaire: force le format YYYY-MM-DD (jour local), sans heures
     const toISODate = (d) => {
       const x = new Date(d);
-      return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`;
+      const y = x.getFullYear();
+      const m = String(x.getMonth() + 1).padStart(2, "0");
+      const day = String(x.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
     };
 
-    // Événements affichés dans FullCalendar (end EXCLUSIF)
-    const events = eventsRaw.map(ev => ({
-      title: "Réservé",
-      start: toISODate(ev.start),
-      end: toISODate(ev.end),
-      allDay: true,
-      display: "block"
-    }));
-
-    // Construit l'ensemble des jours bloqués (start inclus -> end exclus)
-    blockedDatesBlom = new Set();
-    for (const ev of events) {
-      let d = new Date(ev.start + "T00:00:00");
-      const end = new Date(ev.end + "T00:00:00"); // exclus
-      while (d < end) {
-        blockedDatesBlom.add(ymd(d));
-        d = addDays(d, 1);
-      }
-    }
-
-    const calendarEl = document.getElementById("calendar-container-blom");
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
       firstDay: 1,
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
-      events,
-      displayEventTime: false,
-      selectable: false, // on gère la sélection nous-mêmes
-      navLinks: true,
-      dateClick: (info) => onDateClickBlom(info)
+      events: events.map(ev => ({
+        title: "Réservé",
+        start: toISODate(ev.start), // inclus
+        end: toISODate(ev.end),     // EXCLUS (ne pas -1 jour)
+        allDay: true,
+        display: "block"
+      })),
+      displayEventTime: false,  // plus de "2h"
+      eventColor: "#e63946",
+      selectable: false,
+      navLinks: true
     });
 
     calendar.render();
-    calendars["BLOM"] = calendar;
-
+    calendars[logement] = calendar;
   } catch (err) {
     console.error(err);
-    alert("Impossible de charger le calendrier BLŌM.");
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
   }
-}
-
-/* ====== Clic sur une date d’arrivée ====== */
-function onDateClickBlom(info) {
-  const clicked = new Date(info.dateStr + "T00:00:00");
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  // 1) empêche les dates passées et les jours déjà réservés
-  if (clicked < today) return;
-  if (blockedDatesBlom.has(info.dateStr)) return;
-
-  startBlom = clicked;
-
-  // 2) calcule le nombre max de nuits jusqu'au prochain jour bloqué
-  maxNightsBlom = computeMaxNightsFrom(startBlom, blockedDatesBlom, 30); // limite 30 nuits
-  if (maxNightsBlom < 1) {
-    // rien de possible depuis ce jour (par ex. arrivée la veille d'une date bloquée)
-    return;
-  }
-
-  // 3) affiche panneau et met à jour champs
-  document.getElementById("bookingPanelBlom").classList.remove("hidden");
-  document.getElementById("arrivalBlom").value = formatFR(startBlom);
-
-  const nightsInput = document.getElementById("nightsBlom");
-  nightsInput.value = 1;
-  nightsInput.min = 1;
-  nightsInput.max = maxNightsBlom;
-  document.getElementById("maxInfoBlom").textContent = `Max : ${maxNightsBlom} nuit(s) possible(s) à partir de cette date`;
-
-  // 4) calcule départ + surligne la plage
-  updateDepartureAndHighlight();
-
-  // 5) branche événements sur le champ nuits
-  nightsInput.oninput = () => {
-    // borne dans [1, max]
-    let v = parseInt(nightsInput.value || "1", 10);
-    if (v < 1) v = 1;
-    if (v > maxNightsBlom) v = maxNightsBlom;
-    nightsInput.value = v;
-    updateDepartureAndHighlight();
-  };
-
-  // 6) bouton "Continuer" (à brancher plus tard vers Stripe/checkout)
-  document.getElementById("confirmBlom").onclick = () => {
-    const nights = parseInt(document.getElementById("nightsBlom").value, 10);
-    const departure = addDays(startBlom, nights);
-    alert(`Vous avez choisi BLŌM :\nArrivée : ${formatFR(startBlom)}\nNuits : ${nights}\nDépart : ${formatFR(departure)}\n(Étape paiement à venir)`);
-  };
-}
-
-/* ====== Calcule le max de nuits dispo depuis une date donnée ====== */
-function computeMaxNightsFrom(startDate, blockedSet, hardLimit = 30) {
-  // on peut rester tant que chaque nuit (jour de départ exclus) n’est pas bloquée
-  let nights = 0;
-  for (let i = 0; i < hardLimit; i++) {
-    const nightDay = addDays(startDate, i); // la nuit "i" occupe le jour 'start + i'
-    const key = ymd(nightDay);
-    if (blockedSet.has(key)) break;
-    nights++;
-  }
-  return nights; // nb de nuits possible avant de toucher un jour bloqué
-}
-
-/* ====== Met à jour la date de départ et le surlignage ====== */
-function updateDepartureAndHighlight() {
-  const nights = parseInt(document.getElementById("nightsBlom").value, 10) || 1;
-  const departure = addDays(startBlom, nights);
-  document.getElementById("departureBlom").value = formatFR(departure);
-
-  // supprime surlignage précédent
-  if (selectionEventBlom) { selectionEventBlom.remove(); selectionEventBlom = null; }
-
-  // ajoute un évènement "background" pour surligner la plage [arrivée ; départ)
-  selectionEventBlom = calendars["BLOM"].addEvent({
-    start: ymd(startBlom),
-    end: ymd(departure),           // exclusif (jour de départ non coloré)
-    display: "background",
-    color: "#16a34a",              // fallback
-    backgroundColor: "rgba(22,163,74,0.35)" // joli vert translucide
-  });
-}
-
-/* ====== Boutons + / − pour les nuits ====== */
-function adjustNightsBlom(delta) {
-  if (!startBlom) return;
-  const input = document.getElementById("nightsBlom");
-  let v = parseInt(input.value || "1", 10) + delta;
-  if (v < 1) v = 1;
-  if (v > maxNightsBlom) v = maxNightsBlom;
-  input.value = v;
-  updateDepartureAndHighlight();
 }
 </script>
