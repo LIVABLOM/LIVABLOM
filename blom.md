@@ -363,5 +363,3 @@ payButton.addEventListener("click", () => {
 });
 </script>
 
-}
-</script>
