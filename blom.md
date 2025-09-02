@@ -432,5 +432,3 @@ function adjustNightsBlom(delta) {
   updateDepartureAndHighlightBlom();
 }
 </script>
-
-</script>
