@@ -5,7 +5,10 @@ function addDays(date, days) {
 }
 
 function ymd(date) {
-  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,'0');
+  const d = String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
 }
 
 function formatFR(date) {
@@ -14,73 +17,84 @@ function formatFR(date) {
 
 window.blockedDatesBlom = new Set();
 window.calendars = {};
-window.selectionEventBlom = null;
-window.startBlom = null;
-window.maxNightsBlom = 1;
 
 async function initCalendarBlom() {
   const calendarEl = document.getElementById("calendar-container-blom");
   if (!calendarEl) return;
 
-  // Fetch reservations
-  const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
-  const eventsRaw = await res.json();
-  
-  const toISO = d => {
-    const x = new Date(d);
-    return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`;
-  };
+  // fetch reservations
+  let events = [];
+  try {
+    const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
+    const data = await res.json();
+    events = data.map(ev => {
+      const s = new Date(ev.start);
+      const e = new Date(ev.end);
+      return { title:"Réservé", start: ymd(s), end: ymd(e), allDay:true, display:"block" };
+    });
 
-  const events = (eventsRaw || []).map(ev => ({
-    title: "Réservé",
-    start: toISO(ev.start),
-    end: toISO(ev.end),
-    allDay: true,
-    display: "block"
-  }));
-
-  // build blocked dates set
-  window.blockedDatesBlom.clear();
-  events.forEach(ev => {
-    let d = new Date(ev.start + "T00:00:00");
-    const end = new Date(ev.end + "T00:00:00");
-    while (d < end) {
-      window.blockedDatesBlom.add(ymd(d));
-      d = addDays(d, 1);
+    // bloquer dates
+    window.blockedDatesBlom = new Set();
+    for (const ev of events) {
+      let d = new Date(ev.start + "T00:00:00");
+      const end = new Date(ev.end + "T00:00:00");
+      while(d < end) {
+        window.blockedDatesBlom.add(ymd(d));
+        d = addDays(d, 1);
+      }
     }
-  });
+  } catch(e){ console.error("Erreur fetch events:", e); }
 
-  // destroy previous
+  // destroy previous calendar
   if (window.calendars["BLOM"]) window.calendars["BLOM"].destroy();
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
-    locale: "fr",
     height: "auto",
+    locale: "fr",
     firstDay: 1,
+    headerToolbar: { left:"prev,next today", center:"title", right:"" },
     events,
-    displayEventTime: false,
-    navLinks: true,
-    dateClick: info => onDateClickBlom(info)
+    displayEventTime:false,
+    selectable:true,
+    dateClick: onDateClickBlom
   });
 
- calendar.render();
-window.calendars["BLOM"] = calendar;
+  calendar.render();
+  window.calendars["BLOM"] = calendar;
+}
 
-// --- rendre toute la cellule cliquable ---
-const calendarEl = document.getElementById("calendar-container-blom");
+// clic sur date
+function onDateClickBlom(info) {
+  const dateStr = info.dateStr || info.date;
+  if (window.blockedDatesBlom.has(dateStr)) { alert("Cette date est déjà réservée."); return; }
 
-calendarEl.addEventListener("click", (e) => {
-  // Ignore si on clique sur un événement existant (réservé)
-  if (e.target.closest(".fc-event")) return;
+  document.getElementById("arrivalBlom").value = dateStr;
+  document.getElementById("nightsBlom").value = 1;
 
-  // Cherche la cellule de jour la plus proche
-  const dayCell = e.target.closest("[data-date]");
-  if (!dayCell) return;
+  const d = new Date(dateStr);
+  d.setDate(d.getDate() + 1);
+  document.getElementById("departureBlom").value = ymd(d);
 
-  const dateStr = dayCell.getAttribute("data-date");
-  if (!dateStr) return;
+  document.getElementById("bookingPanelBlom").classList.remove("hidden");
 
-  // Déclenche le même handler que dateClick
-  onDateClickBlom({ dateStr });
-});
+  // bouton confirmer
+  document.getElementById("confirmBlom").onclick = () => {
+    const nights = parseInt(document.getElementById("nightsBlom").value,10);
+    const dep = addDays(new Date(dateStr), nights);
+    alert(`Simulation réservation\nArrivée: ${dateStr}\nNuits: ${nights}\nDépart: ${ymd(dep)}`);
+  };
+}
+
+function adjustNightsBlom(delta) {
+  const nightsInput = document.getElementById("nightsBlom");
+  let nights = parseInt(nightsInput.value) + delta;
+  if (nights < 1) nights = 1;
+  nightsInput.value = nights;
+
+  const arrival = document.getElementById("arrivalBlom").value;
+  if(arrival){
+    const dep = addDays(new Date(arrival), nights);
+    document.getElementById("departureBlom").value = ymd(dep);
+  }
+}
