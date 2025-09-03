@@ -242,11 +242,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // clic sur la cellule entière
   dayCellDidMount: (arg) => {
-    arg.el.style.cursor = "pointer";
-    arg.el.addEventListener("click", () => {
-      onDateClickBlom({ dateStr: arg.date.toISOString().split("T")[0] });
-    });
-  }
+  arg.el.style.cursor = "pointer";
+  arg.el.addEventListener("click", () => {
+    const clickedDate = arg.date.toISOString().split("T")[0];
+    console.log("Clique sur :", clickedDate); // debug
+    onDateClickBlom({ dateStr: clickedDate });
+  });
+}
 });
 
 
