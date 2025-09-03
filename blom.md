@@ -256,7 +256,7 @@ function closeCalendarBlom(event) {
 }
 
 /* --------- Init calendar BLŌM --------- */
-<script>
+
 async function initCalendarBlom() {
   try {
     console.log("[BLŌM] initCalendarBlom: fetching events...");
