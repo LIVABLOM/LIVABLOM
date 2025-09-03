@@ -186,6 +186,30 @@ permalink: /blom/
     <!-- Calendrier BLŌM -->
 <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
 
+<script>
+// Ouvre le modal calendrier
+function openCalendar(logement) {
+  if (logement === "BLOM") {
+    document.getElementById("calendarModalBlom").classList.remove("hidden");
+  }
+  if (logement === "LIVA") {
+    document.getElementById("calendarModalLiva").classList.remove("hidden");
+  }
+}
+
+// Ferme le modal calendrier
+function closeCalendar(logement, event) {
+  if (event && event.target !== event.currentTarget) return; // éviter la fermeture si on clique à l'intérieur
+  if (logement === "BLOM") {
+    document.getElementById("calendarModalBlom").classList.add("hidden");
+  }
+  if (logement === "LIVA") {
+    document.getElementById("calendarModalLiva").classList.add("hidden");
+  }
+}
+</script>
+
+
 <!-- Panneau de réservation -->
 <div id="bookingPanelBlom" class="hidden mt-5 bg-gray-800 p-4 rounded-lg">
   <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
