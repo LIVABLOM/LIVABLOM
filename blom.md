@@ -169,15 +169,11 @@ permalink: /blom/
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button id="reserveBlom" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+    <button onclick="openCalendarBlom()" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
     </button>
     {% include share.html %}
   </div>
 </div>
 
-<!-- Modal vide, le HTML du calendrier sera injecté -->
-<div id="calendarModalBlom" class="modal hidden fixed inset-0 bg-black bg-opacity-90 items-center justify-center z-50 px-4"></div>
-
-<!-- JS pour charger le calendrier -->
-<script src="/assets/js/load-blom-calendar.js"></script>
+<script src="/assets/js/blom-calendar.js"></script>
