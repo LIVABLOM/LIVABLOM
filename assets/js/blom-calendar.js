@@ -11,10 +11,6 @@ function ymd(date) {
   return `${y}-${m}-${d}`;
 }
 
-function formatFR(date) {
-  return date.toLocaleDateString('fr-FR', { weekday:'short', day:'2-digit', month:'short', year:'numeric' });
-}
-
 window.blockedDatesBlom = new Set();
 window.calendars = {};
 
@@ -30,7 +26,7 @@ async function initCalendarBlom() {
     events = data.map(ev => {
       const s = new Date(ev.start);
       const e = new Date(ev.end);
-      return { title:"Réservé", start: ymd(s), end: ymd(e), allDay:true, display:"block" };
+      return { title:"Réservé", start: ymd(s), end: ymd(e), allDay:true, display:"block", color:"#e63946" };
     });
 
     // bloquer dates
@@ -57,14 +53,28 @@ async function initCalendarBlom() {
     events,
     displayEventTime:false,
     selectable:true,
+    dayCellClassNames: function(arg) {
+      if(window.blockedDatesBlom.has(arg.dateStr)) return ["blocked-date"];
+      return [];
+    },
     dateClick: onDateClickBlom
   });
 
   calendar.render();
   window.calendars["BLOM"] = calendar;
+
+  // rendre toute la cellule cliquable
+  calendarEl.addEventListener("click", e => {
+    if (e.target.closest(".fc-event")) return; // ignore événements
+    const dayCell = e.target.closest("[data-date]");
+    if (!dayCell) return;
+    const dateStr = dayCell.getAttribute("data-date");
+    if (!dateStr) return;
+    if(window.blockedDatesBlom.has(dateStr)) return; // ignore jours bloqués
+    onDateClickBlom({ dateStr });
+  });
 }
 
-// clic sur date
 function onDateClickBlom(info) {
   const dateStr = info.dateStr || info.date;
   if (window.blockedDatesBlom.has(dateStr)) { alert("Cette date est déjà réservée."); return; }
@@ -78,7 +88,6 @@ function onDateClickBlom(info) {
 
   document.getElementById("bookingPanelBlom").classList.remove("hidden");
 
-  // bouton confirmer
   document.getElementById("confirmBlom").onclick = () => {
     const nights = parseInt(document.getElementById("nightsBlom").value,10);
     const dep = addDays(new Date(dateStr), nights);
