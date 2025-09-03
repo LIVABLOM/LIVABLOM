@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!modal) return;
 
     // Charger le contenu HTML
-    const html = await fetch("/assets/html/blom-calendar.html").then(r => r.text());
+    const html = await fetch("livablom/assets/html/blom-calendar.html").then(r => r.text());
     modal.innerHTML = html;
     modal.classList.remove("hidden");
     modal.classList.add("flex");
