@@ -1,3 +1,36 @@
+// Ouvre le modal et charge le HTML depuis _includes
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("reserveBlom");
+  if (!btn) return;
+
+  btn.addEventListener("click", async () => {
+    const modal = document.getElementById("calendarModalBlom");
+    if (!modal) return;
+
+    // Charger le contenu HTML
+    const html = await fetch("/_includes/blom-calendar.html").then(r => r.text());
+    modal.innerHTML = html;
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+    // Initialiser le calendrier après l’injection
+    if (typeof initCalendarBlom === "function") {
+      initCalendarBlom();
+    }
+  });
+});
+
+// Ferme le modal
+function closeCalendarBlom() {
+  const modal = document.getElementById("calendarModalBlom");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.innerHTML = ""; // vider pour éviter les doublons
+  }
+}
+
+// === FONCTIONS DU CALENDRIER ===
+
 function addDays(date, days) {
   const d = new Date(date);
   d.setDate(d.getDate() + days);
@@ -6,105 +39,71 @@ function addDays(date, days) {
 
 async function initCalendarBlom() {
   try {
-    console.log("[BLŌM] Chargement des réservations...");
-
+    console.log("[BLŌM] initCalendarBlom: fetching events...");
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
     if (!res.ok) throw new Error("Erreur HTTP " + res.status);
     const eventsRaw = await res.json();
 
-    // Transformer en format ISO (aaaa-mm-jj)
     const toISODate = d => {
       const x = new Date(d);
-      return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
+      return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`;
     };
 
-    // Convertir en événements FullCalendar
     const events = (eventsRaw || []).map(ev => {
+      const s = new Date(ev.start);
+      const e = new Date(ev.end);
       return {
         title: "Réservé",
-        start: toISODate(new Date(ev.start)),
-        end: toISODate(new Date(ev.end)),
+        start: toISODate(s),
+        end: toISODate(e),
         allDay: true,
-        display: "background", // fond coloré
-        color: "red"           // en rouge
+        display: "background" // affiche en fond plutôt qu’en bloc
       };
     });
 
-    // Construire la liste des jours bloqués
+    // Bloquer les jours réservés
     window.blockedDatesBlom = new Set();
     for (const ev of events) {
       let d = new Date(ev.start + "T00:00:00");
       const end = new Date(ev.end + "T00:00:00");
       while (d < end) {
         window.blockedDatesBlom.add(
-          `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+          d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,'0') + "-" + String(d.getDate()).padStart(2,'0')
         );
         d = addDays(d, 1);
       }
     }
 
     const calendarEl = document.getElementById("calendar-container-blom");
-    if (!calendarEl) {
-      console.error("⚠️ Élément #calendar-container-blom introuvable");
-      return;
-    }
+    if (!calendarEl) return;
 
-    // Détruire l’ancien calendrier si présent
-    if (window.calendars && window.calendars["BLOM"]) {
-      try { window.calendars["BLOM"].destroy(); } catch (e) {}
-      window.calendars["BLOM"] = null;
-    }
-
-    // Créer le calendrier
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
       locale: "fr",
       firstDay: 1,
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: ""
-      },
+      headerToolbar: { left: "prev,next today", center: "title", right: "" },
       events,
       displayEventTime: false,
       selectable: false,
       navLinks: false,
-      dateClick: info => {
+      dateClick: (info) => {
         onDateClickBlom(info);
       }
     });
 
     calendar.render();
-    window.calendars = window.calendars || {};
-    window.calendars["BLOM"] = calendar;
-    console.log("[BLŌM] Calendrier affiché ✅");
-
-    // --- Rendre toute la cellule cliquable ---
-    calendarEl.addEventListener("click", e => {
-      if (e.target.closest(".fc-event")) return; // ignorer les clics sur un événement
-      const dayCell = e.target.closest("[data-date]");
-      if (!dayCell) return;
-      const dateStr = dayCell.getAttribute("data-date");
-      if (!dateStr) return;
-      onDateClickBlom({ dateStr });
-    });
-
   } catch (err) {
-    console.error("[BLŌM] Erreur initCalendar :", err);
-    alert("Impossible de charger le calendrier BLŌM. Vérifie la console.");
+    console.error("[BLŌM] initCalendar error:", err);
   }
 }
 
-// Quand on clique sur une date
 function onDateClickBlom(info) {
   const dateStr = info.dateStr;
   if (window.blockedDatesBlom && window.blockedDatesBlom.has(dateStr)) {
     alert("Cette date est déjà réservée.");
     return;
   }
-
-  console.log("[BLŌM] Date choisie :", dateStr);
 
   document.getElementById("arrivalBlom").value = dateStr;
   document.getElementById("nightsBlom").value = 1;
@@ -116,7 +115,6 @@ function onDateClickBlom(info) {
   document.getElementById("bookingPanelBlom").classList.remove("hidden");
 }
 
-// Ajuster le nombre de nuits
 function adjustNightsBlom(delta) {
   const nightsInput = document.getElementById("nightsBlom");
   let nights = parseInt(nightsInput.value) + delta;
