@@ -169,9 +169,27 @@ permalink: /blom/
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendarBlom()" 
-            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
+    # BLŌM
+
+...
+
+<button id="reserveBlom" class="btn">Réserver maintenant</button>
+
+<div id="calendarModalBlom" class="modal hidden"></div>
+
+<script>
+document.getElementById("reserveBlom").addEventListener("click", async () => {
+  const modal = document.getElementById("calendarModalBlom");
+  // charger le calendrier depuis un fichier séparé
+  const html = await fetch("/_includes/blom-calendar.html").then(r => r.text());
+  modal.innerHTML = html;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  // après insertion, init calendrier
+  if (typeof initCalendarBlom === "function") initCalendarBlom();
+});
+</script>
+
     </button>
     {% include share.html %}
   </div>
