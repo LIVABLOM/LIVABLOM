@@ -182,4 +182,4 @@ permalink: /blom/
 <!-- Script qui charge le HTML externe et le JS -->
 <script src="/assets/js/blom-calendar.js"></script>
 
-</script>
+
