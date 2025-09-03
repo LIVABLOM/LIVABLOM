@@ -169,10 +169,11 @@ permalink: /blom/
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendarBlom()" 
-            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
-    </button>
+    <button onclick="openCalendar('BLOM')" 
+        class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+  Réserver maintenant
+</button>
+
     {% include share.html %}
   </div>
 </div>
@@ -191,22 +192,21 @@ permalink: /blom/
 function openCalendar(logement) {
   if (logement === "BLOM") {
     document.getElementById("calendarModalBlom").classList.remove("hidden");
-  }
-  if (logement === "LIVA") {
-    document.getElementById("calendarModalLiva").classList.remove("hidden");
+    document.getElementById("calendarModalBlom").classList.add("flex");
   }
 }
 
-// Ferme le modal calendrier
-function closeCalendar(logement, event) {
-  if (event && event.target !== event.currentTarget) return; // éviter la fermeture si on clique à l'intérieur
-  if (logement === "BLOM") {
-    document.getElementById("calendarModalBlom").classList.add("hidden");
-  }
-  if (logement === "LIVA") {
-    document.getElementById("calendarModalLiva").classList.add("hidden");
-  }
+function closeCalendarBlom(event) {
+  if (event && event.target !== event.currentTarget) return; // éviter la fermeture si clic interne
+  const modal = document.getElementById("calendarModalBlom");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+
+  const panel = document.getElementById("bookingPanelBlom");
+  if (panel) panel.classList.add("hidden");
 }
+
 </script>
 
 
