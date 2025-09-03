@@ -111,6 +111,9 @@ permalink: /blom/
     <!-- Scripts carrousel + modal -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
+  initCalendarBlom();
+});
+
       let currentIndex = 0;
       const carousel = document.getElementById("carousel");
       const items = carousel.children;
@@ -233,6 +236,11 @@ function openCalendarBlom() {
   const modal = document.getElementById("calendarModalBlom");
   modal.classList.remove("hidden");
   modal.classList.add("flex");
+
+  // NE PAS relancer initCalendarBlom ici
+  // calendar déjà créé lors du DOMContentLoaded
+}
+
 
   if (!window.calendars || !window.calendars["BLOM"]) initCalendarBlom();
 }
