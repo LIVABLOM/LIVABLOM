@@ -64,37 +64,23 @@ async function initCalendarBlom() {
     dateClick: info => onDateClickBlom(info)
   });
 
-  calendar.render();
-  window.calendars["BLOM"] = calendar;
-}
+ calendar.render();
+window.calendars["BLOM"] = calendar;
 
-function onDateClickBlom(info) {
-  const dateStr = info.dateStr;
-  if (window.blockedDatesBlom.has(dateStr)) {
-    alert("Cette date est déjà réservée.");
-    return;
-  }
+// --- rendre toute la cellule cliquable ---
+const calendarEl = document.getElementById("calendar-container-blom");
 
-  document.getElementById("arrivalBlom").value = dateStr;
-  document.getElementById("nightsBlom").value = 1;
+calendarEl.addEventListener("click", (e) => {
+  // Ignore si on clique sur un événement existant (réservé)
+  if (e.target.closest(".fc-event")) return;
 
-  const d = new Date(dateStr);
-  d.setDate(d.getDate() + 1);
-  document.getElementById("departureBlom").value = d.toISOString().split("T")[0];
+  // Cherche la cellule de jour la plus proche
+  const dayCell = e.target.closest("[data-date]");
+  if (!dayCell) return;
 
-  document.getElementById("bookingPanelBlom").classList.remove("hidden");
-}
+  const dateStr = dayCell.getAttribute("data-date");
+  if (!dateStr) return;
 
-function adjustNightsBlom(delta) {
-  const nightsInput = document.getElementById("nightsBlom");
-  let nights = parseInt(nightsInput.value) + delta;
-  if (nights < 1) nights = 1;
-  nightsInput.value = nights;
-
-  const arrival = document.getElementById("arrivalBlom").value;
-  if (arrival) {
-    const d = new Date(arrival);
-    d.setDate(d.getDate() + nights);
-    document.getElementById("departureBlom").value = d.toISOString().split("T")[0];
-  }
-}
+  // Déclenche le même handler que dateClick
+  onDateClickBlom({ dateStr });
+});
