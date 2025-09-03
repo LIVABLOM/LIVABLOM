@@ -186,7 +186,7 @@ document.getElementById("reserveBlom").addEventListener("click", async () => {
   const modal = document.getElementById("calendarModalBlom");
 
   // Charger le HTML du calendrier depuis le dossier assets/html
-  const html = await fetch("LIVABLOM/assets/html/blom-calendar.html").then(r => r.text());
+  const html = await fetch("/assets/html/blom-calendar.html").then(r => r.text());
   modal.innerHTML = html;
 
   // Afficher le modal
