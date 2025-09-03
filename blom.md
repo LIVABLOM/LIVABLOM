@@ -225,15 +225,30 @@ document.addEventListener('DOMContentLoaded', function() {
   const calendarEl = document.getElementById('calendar-container-blom');
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    selectable: true,   // permet de cliquer sur les jours
-    locale: 'fr',       // calendrier en français
-    firstDay: 1,        // semaine qui commence le lundi
-    height: '100%',
+  initialView: "dayGridMonth",
+  height: "auto",
+  locale: "fr",
+  firstDay: 1,
+  headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+  events,
+  displayEventTime: false,
+  selectable: false,
+  navLinks: false, // ⚠️ désactivé pour éviter le lien sur le chiffre
 
-    // Quand on clique sur un jour
-    dateClick: function(info) {
-      const clickedDate = info.dateStr;
+  // empêche FullCalendar de créer un <a>, on affiche juste le numéro du jour
+  dayCellContent: (arg) => {
+    return { html: `<span>${arg.date.getDate()}</span>` };
+  },
+
+  // clic sur la cellule entière
+  dayCellDidMount: (arg) => {
+    arg.el.style.cursor = "pointer";
+    arg.el.addEventListener("click", () => {
+      onDateClickBlom({ dateStr: arg.date.toISOString().split("T")[0] });
+    });
+  }
+});
+
 
       // Met la date d’arrivée
       document.getElementById('arrivalBlom').value = clickedDate;
