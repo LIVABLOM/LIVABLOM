@@ -257,6 +257,7 @@ function closeCalendarBlom(event) {
 
 /* --------- Init calendar BLŌM --------- */
 
+<script>
 async function initCalendarBlom() {
   try {
     console.log("[BLŌM] initCalendarBlom: fetching events...");
@@ -361,6 +362,8 @@ async function initCalendarBlom() {
     alert("Impossible de charger le calendrier BLŌM. Voir la console pour les détails.");
   }
 }
+</script>
+
 
 /* --------- Click date arrival handler --------- */
 function onDateClickBlom(info) {
