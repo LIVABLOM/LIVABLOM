@@ -317,7 +317,6 @@ async function initCalendarBlom() {
     };
 
     const events = (eventsRaw || []).map(ev => {
-      // supporte strings ou objets Date
       const s = new Date(ev.start);
       const e = new Date(ev.end);
       return {
@@ -344,9 +343,9 @@ async function initCalendarBlom() {
     const calendarEl = document.getElementById("calendar-container-blom");
     if (!calendarEl) { console.error("calendar-container-blom introuvable"); return; }
 
-    // destroy previous if existed (safe re-init)
+    // destroy previous if existed
     if (window.calendars["BLOM"]) {
-      try { window.calendars["BLOM"].destroy(); } catch(e){/*ignore*/ }
+      try { window.calendars["BLOM"].destroy(); } catch(e){}
       window.calendars["BLOM"] = null;
     }
 
@@ -360,7 +359,17 @@ async function initCalendarBlom() {
       displayEventTime: false,
       selectable: false,
       navLinks: true,
-      dateClick: (info) => onDateClickBlom(info)
+
+      // clic sur le numéro du jour
+      dateClick: (info) => onDateClickBlom(info),
+
+      // 👇 ajout pour rendre toute la cellule cliquable
+      dayCellDidMount: (arg) => {
+        arg.el.style.cursor = "pointer";
+        arg.el.addEventListener("click", () => {
+          onDateClickBlom({ dateStr: arg.date.toISOString().split("T")[0] });
+        });
+      }
     });
 
     calendar.render();
@@ -371,6 +380,7 @@ async function initCalendarBlom() {
     alert("Impossible de charger le calendrier BLŌM. Voir console pour détails.");
   }
 }
+
 
 /* --------- Click date arrival handler --------- */
 function onDateClickBlom(info) {
