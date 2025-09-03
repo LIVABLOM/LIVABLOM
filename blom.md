@@ -169,17 +169,36 @@ permalink: /blom/
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button id="reserveBlom" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition">
+    <button id="reserveBlom" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
     </button>
     {% include share.html %}
   </div>
 </div>
 
-<!-- Modal vide qui sera rempli dynamiquement -->
+<!-- Modal calendrier BLŌM (sera rempli dynamiquement) -->
 <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4"></div>
 
-<!-- Script qui charge le HTML externe et le JS -->
-<script src="/assets/js/blom-calendar.js"></script>
+<script>
+document.getElementById("reserveBlom").addEventListener("click", async () => {
+  const modal = document.getElementById("calendarModalBlom");
+
+  // Charger le HTML du calendrier
+  const html = await fetch("/livablom/assets/html/blom-calendar.html").then(r => r.text());
+  modal.innerHTML = html;
+
+  // Afficher le modal
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  // Charger le JS du calendrier si pas encore chargé
+  if (typeof initCalendarBlom !== "function") {
+    await import("/livablom/assets/js/blom-calendar.js");
+  }
+
+  // Initialiser le calendrier
+  if (typeof initCalendarBlom === "function") initCalendarBlom();
+});
+</script>
 
 
