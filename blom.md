@@ -256,11 +256,14 @@ function closeCalendarBlom(event) {
 }
 
 /* --------- Init calendar BLŌM --------- */
+<script>
 async function initCalendarBlom() {
   try {
+    console.log("[BLŌM] initCalendarBlom: fetching events...");
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
     if (!res.ok) throw new Error("Erreur HTTP " + res.status);
     const eventsRaw = await res.json();
+    console.log("[BLŌM] eventsRaw:", eventsRaw.length);
 
     const toISODate = d => {
       const x = new Date(d);
@@ -279,21 +282,24 @@ async function initCalendarBlom() {
       };
     });
 
+    // build blocked set (start inclusive, end exclusive)
     window.blockedDatesBlom = new Set();
     for (const ev of events) {
       let d = new Date(ev.start + "T00:00:00");
       const end = new Date(ev.end + "T00:00:00");
       while (d < end) {
-        window.blockedDatesBlom.add(ymd(d));
+        window.blockedDatesBlom.add( (d.getFullYear()) + "-" + String(d.getMonth()+1).padStart(2,'0') + "-" + String(d.getDate()).padStart(2,'0') );
         d = addDays(d, 1);
       }
     }
+    console.log("[BLŌM] blocked days count:", window.blockedDatesBlom.size);
 
     const calendarEl = document.getElementById("calendar-container-blom");
-    if (!calendarEl) return;
+    if (!calendarEl) { console.error("calendar-container-blom introuvable"); return; }
 
-    if (window.calendars["BLOM"]) {
-      try { window.calendars["BLOM"].destroy(); } catch(e){}
+    // destroy previous if existed
+    if (window.calendars && window.calendars["BLOM"]) {
+      try { window.calendars["BLOM"].destroy(); } catch(e){/*ignore*/ }
       window.calendars["BLOM"] = null;
     }
 
@@ -307,26 +313,52 @@ async function initCalendarBlom() {
       displayEventTime: false,
       selectable: false,
       navLinks: true,
-
-      // Click sur un chiffre (comportement normal)
-      dateClick: (info) => onDateClickBlom(info),
-
-      // Click sur toute la cellule
-      dayCellDidMount: (arg) => {
-        arg.el.style.cursor = "pointer";
-        arg.el.addEventListener("click", () => {
-          const clickedDate = arg.date.toISOString().split("T")[0];
-          console.log("Clique cellule :", clickedDate);
-          onDateClickBlom({ dateStr: clickedDate });
-        });
+      // on garde dateClick au cas où, mais la vraie gestion est la délégation ci-dessous
+      dateClick: (info) => {
+        // appel direct si FullCalendar le détecte
+        onDateClickBlom(info);
       }
     });
 
     calendar.render();
+    window.calendars = window.calendars || {};
     window.calendars["BLOM"] = calendar;
+    console.log("[BLŌM] calendar rendered");
+
+    // --- DÉLÉGATION : rendre toute la cellule cliquable ---
+    // retire ancien handler si présent
+    if (window._blomCellClickHandler && calendarEl._blomCellClickHandlerAttached) {
+      try { calendarEl.removeEventListener('click', window._blomCellClickHandler); } catch(e){}
+      calendarEl._blomCellClickHandlerAttached = false;
+    }
+
+    const handler = (e) => {
+      // Ignore clicks qui visent un événement existant
+      if (e.target.closest('.fc-event')) return;
+
+      // Cherche l'ancêtre le plus proche qui a data-date (les cellules jour de FullCalendar)
+      const dayCell = e.target.closest('[data-date]');
+      if (!dayCell) return;
+
+      // Assure que la cellule est bien à l'intérieur du calendrier
+      if (!calendarEl.contains(dayCell)) return;
+
+      const dateStr = dayCell.getAttribute('data-date');
+      if (!dateStr) return;
+
+      console.log("[BLŌM] cellule cliquée :", dateStr);
+      // appelle le même handler que pour dateClick
+      onDateClickBlom({ dateStr });
+    };
+
+    // mémoriser et attacher
+    window._blomCellClickHandler = handler;
+    calendarEl.addEventListener('click', handler);
+    calendarEl._blomCellClickHandlerAttached = true;
+
   } catch (err) {
     console.error("[BLŌM] initCalendar error:", err);
-    alert("Impossible de charger le calendrier BLŌM.");
+    alert("Impossible de charger le calendrier BLŌM. Voir la console pour les détails.");
   }
 }
 
