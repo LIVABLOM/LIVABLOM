@@ -163,51 +163,21 @@ permalink: /blom/
     });
     </script>
 
+<!-- Appel à l'action : Réserver BLŌM -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button id="reserveBlom"
-            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+    <button id="reserveBlom" class="btn bg-black text-white px-4 py-2 rounded-lg shadow">
       Réserver maintenant
     </button>
     {% include share.html %}
   </div>
 </div>
 
-<!-- Conteneur pour injecter le calendrier -->
-<div id="calendarContainer"></div>
+<!-- Modal calendrier (contenu chargé dynamiquement) -->
+<div id="calendarModalBlom" class="hidden fixed inset-0 bg-black bg-opacity-70 items-center justify-center z-50"></div>
 
-<script>
-document.getElementById("reserveBlom").addEventListener("click", async () => {
-  const container = document.getElementById("calendarContainer");
-
-  // Charger le HTML du modal si pas déjà injecté
-  if (!container.innerHTML.trim()) {
-    try {
-      const html = await fetch("/assets/html/blom-calendar.html").then(r => r.text());
-      container.innerHTML = html;
-
-      // Charger le JS du calendrier
-      const script = document.createElement("script");
-      script.src = "/assets/js/blom-calendar.js";
-      script.onload = () => {
-        if (typeof openCalendarBlom === "function") {
-          openCalendarBlom();
-        } else {
-          console.error("⚠️ La fonction openCalendarBlom n'est pas définie.");
-        }
-      };
-      document.body.appendChild(script);
-    } catch (e) {
-      console.error("Erreur lors du chargement du calendrier :", e);
-    }
-  } else {
-    // Si déjà chargé → simplement l’ouvrir
-    if (typeof openCalendarBlom === "function") {
-      openCalendarBlom();
-    }
-  }
-});
-</script>
+<!-- JS pour charger le calendrier -->
+<script src="/assets/js/blom-loader.js"></script>
