@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       })),
       displayEventTime: false,
       eventColor: "#e63946",
-      selectable: true,       // rend toute la cellule cliquable
+      selectable: true,       
       selectMirror: true,
-      dayMaxEvents: true,     // permet aux cellules avec événements d’être cliquables
+      dayMaxEvents: true,     
       navLinks: true,
       dateClick: function(info) {
         const clickedDate = info.dateStr;
@@ -45,9 +45,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          // Ici tu peux rediriger vers un formulaire de réservation avec la date sélectionnée
-          // Exemple : window.location.href = `/reservation-form.html?date=${clickedDate}&logement=BLOM`;
-          alert("Date sélectionnée : " + clickedDate);
+          // ✅ Redirection vers le formulaire avec la date choisie
+          window.location.href = `/reservation-form.html?date=${clickedDate}&logement=BLOM`;
         }
       }
     });
