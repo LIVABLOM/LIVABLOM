@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           alert("Cette date est déjà réservée !");
         } else {
           // ✅ Redirection vers le formulaire avec la date choisie
-          window.location.href = `/reservation-form.html?date=${clickedDate}&logement=BLOM`;
+          window.location.href = `reservation-form.html?date=${clickedDate}&logement=BLOM`;
         }
       }
     });
