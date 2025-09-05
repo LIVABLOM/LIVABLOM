@@ -111,9 +111,6 @@ permalink: /blom/
     <!-- Scripts carrousel + modal -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-  initCalendarBlom();
-});
-
       let currentIndex = 0;
       const carousel = document.getElementById("carousel");
       const items = carousel.children;
@@ -164,17 +161,146 @@ permalink: /blom/
     </script>
 
 <!-- Appel à l'action : Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto">
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button id="reserveBlom" class="btn">Réserver maintenant</button>
+    <button onclick="openCalendar('BLOM')" 
+            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+      Réserver maintenant
+    </button>
     {% include share.html %}
   </div>
 </div>
 
-<!-- Modal vide qui sera rempli -->
-<div id="calendarModalBlom" class="modal hidden"></div>
+<!-- Modal calendrier BLOM -->
+<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
+  <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier BLŌM</h3>
+    <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
 
-<script src="/assets/js/blom-calendar.js"></script>
+<!-- Modal calendrier LIVA -->
+<div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
+  <div class="bg-gray-900 text-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+    <button onclick="closeCalendar('LIVA')" class="absolute top-2 right-4 text-3xl font-bold text-gray-400 hover:text-white">&times;</button>
+    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Calendrier LIVA</h3>
+    <div id="calendar-container-liva" class="w-full h-[500px] md:h-[600px]"></div>
+  </div>
+</div>
+
+<!-- FullCalendar -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<style>
+/* Style sombre cohérent avec ton site */
+.fc {
+  background-color: #1a1a1a;
+  color: white;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* Titres et toolbar */
+.fc-toolbar-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+}
+.fc-button {
+  background: #333 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px !important;
+}
+.fc-button:hover {
+  background: #555 !important;
+}
+
+/* Aujourd’hui en bleu */
+.fc-day-today {
+  background: rgba(59, 130, 246, 0.3) !important;
+  border: 2px solid #3b82f6 !important;
+}
+
+/* Jours réservés */
+.fc-event {
+  background-color: #e63946 !important;
+  color: white !important;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 6px !important;
+  border: none !important;
+}
+</style>
+
+<script>
+let calendars = {}; // stocke les instances
+
+function openCalendar(logement) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  document.getElementById(modalId).classList.remove("hidden");
+  document.getElementById(modalId).classList.add("flex");
+
+  if (!calendars[logement]) {
+    initCalendar(logement);
+  }
+}
+
+function closeCalendar(logement, event) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  const modal = document.getElementById(modalId);
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+async function initCalendar(logement) {
+  try {
+    const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
+    const events = await res.json();
+
+    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
+    const calendarEl = document.getElementById(containerId);
+
+    // utilitaire: force le format YYYY-MM-DD (jour local), sans heures
+    const toISODate = (d) => {
+      const x = new Date(d);
+      const y = x.getFullYear();
+      const m = String(x.getMonth() + 1).padStart(2, "0");
+      const day = String(x.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    };
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      locale: "fr",
+      firstDay: 1,
+      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+      events: events.map(ev => ({
+        title: "Réservé",
+        start: toISODate(ev.start), // inclus
+        end: toISODate(ev.end),     // EXCLUS (ne pas -1 jour)
+        allDay: true,
+        display: "block"
+      })),
+      displayEventTime: false,  // plus de "2h"
+      eventColor: "#e63946",
+      selectable: false,
+      navLinks: true
+    });
+
+    calendar.render();
+    calendars[logement] = calendar;
+  } catch (err) {
+    console.error(err);
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+  }
+}
+</script>
