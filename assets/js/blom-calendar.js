@@ -28,14 +28,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       })),
       displayEventTime: false,
       eventColor: "#e63946",
-      selectable: true,       
+      selectable: true,
       selectMirror: true,
-      dayMaxEvents: true,     
+      dayMaxEvents: true,
       navLinks: true,
       dateClick: function(info) {
+        info.jsEvent.preventDefault(); // bloque popup par défaut
         const clickedDate = info.dateStr;
 
-        // Vérifie si la date est déjà réservée
         const isBlocked = events.some(ev => {
           const evStart = toISODate(ev.start);
           const evEnd = toISODate(ev.end);
@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          // ✅ Redirection vers le formulaire avec la date choisie
-          window.location.href = `reservation-form.html?date=${clickedDate}&logement=BLOM`;
+          // Redirection vers le formulaire avec date et logement
+          window.location.href = "reservation-form.html?date=" + clickedDate + "&logement=BLOM";
         }
       }
     });
