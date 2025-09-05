@@ -12,6 +12,13 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Finaliser votre réservation</h2>
     
     <form id="reservationForm" class="space-y-4">
+      <!-- Logement -->
+      <div>
+        <label class="block mb-1 font-semibold">Logement</label>
+        <input type="text" id="logement" name="logement" readonly
+               class="w-full border rounded px-3 py-2 bg-gray-100">
+      </div>
+
       <!-- Date choisie -->
       <div>
         <label class="block mb-1 font-semibold">Date d’arrivée</label>
@@ -40,12 +47,13 @@
   </div>
 
   <script>
-    // ✅ Récupère la date depuis l’URL
+    // ✅ Récupère la date et le logement depuis l’URL
     const params = new URLSearchParams(window.location.search);
     const date = params.get("date");
-    if (date) {
-      document.getElementById("selectedDate").value = date;
-    }
+    const logement = params.get("logement");
+
+    if (date) document.getElementById("selectedDate").value = date;
+    if (logement) document.getElementById("logement").value = logement;
 
     // ✅ Gestion du formulaire
     document.getElementById("reservationForm").addEventListener("submit", function(e) {
@@ -53,11 +61,12 @@
       
       const date = document.getElementById("selectedDate").value;
       const nights = document.getElementById("nights").value;
+      const logement = document.getElementById("logement").value;
       
       // Pour l’instant simple test
-      alert(`✅ Réservation validée : ${date} pour ${nights} nuit(s).\n\nProchaine étape : redirection vers Stripe...`);
+      alert(`✅ Réservation pour ${logement} : ${date} pour ${nights} nuit(s).\n\nProchaine étape : redirection vers Stripe...`);
       
-      // 🚀 Ensuite ici on ajoutera Stripe Checkout
+      // 🚀 Ici on ajoutera Stripe Checkout
     });
   </script>
 </body>
