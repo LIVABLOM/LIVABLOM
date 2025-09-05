@@ -1,29 +1,45 @@
-<div class="bg-white p-6 rounded-xl shadow-lg max-w-3xl w-full">
-  <h3 class="text-2xl font-bold mb-4 text-center">Calendrier BLŌM</h3>
-  <div id="calendar-container-blom"></div>
+<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6 relative">
+    
+    <!-- Bouton fermer -->
+    <button id="closeBlom" class="absolute top-3 right-3 text-gray-600 hover:text-black text-xl font-bold">
+      ✕
+    </button>
 
-  <!-- Panneau réservation -->
-  <div id="bookingPanelBlom" class="hidden mt-6 text-left">
-    <label class="block mb-2">Arrivée :
-      <input id="arrivalBlom" readonly class="border p-2 rounded w-full">
-    </label>
-    <label class="block mb-2">Nuits :
-      <input id="nightsBlom" type="number" value="1" min="1" class="border p-2 rounded w-full">
-    </label>
-    <label class="block mb-2">Départ :
-      <input id="departureBlom" readonly class="border p-2 rounded w-full">
-    </label>
-    <button id="confirmBlom" class="bg-black text-white px-4 py-2 rounded">Confirmer</button>
-  </div>
+    <!-- Titre -->
+    <h2 class="text-2xl font-semibold text-center mb-4">Calendrier des disponibilités</h2>
 
-  <div class="mt-4 text-right">
-    <button id="closeBlom" class="text-red-600">Fermer</button>
+    <!-- Conteneur du calendrier -->
+    <div id="calendar-container-blom" class="mb-6"></div>
+
+    <!-- Panneau de réservation -->
+    <div id="bookingPanelBlom" class="hidden border-t pt-4">
+      <h3 class="text-xl font-semibold mb-3">Votre réservation</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Arrivée</label>
+          <input type="text" id="arrivalBlom" class="w-full border rounded px-2 py-1" readonly>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Nuits</label>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="adjustNightsBlom(-1)" class="px-2 py-1 bg-gray-200 rounded">-</button>
+            <input type="text" id="nightsBlom" class="w-12 text-center border rounded" value="1" readonly>
+            <button type="button" onclick="adjustNightsBlom(1)" class="px-2 py-1 bg-gray-200 rounded">+</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Départ</label>
+          <input type="text" id="departureBlom" class="w-full border rounded px-2 py-1" readonly>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button id="confirmBlom" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+          Confirmer la réservation
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
-<!-- FullCalendar -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-<!-- JS spécifique calendrier -->
-<script src="/assets/js/blom-calendar.js"></script>
