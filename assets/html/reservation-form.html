@@ -12,27 +12,35 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Finaliser votre réservation</h2>
     
     <form id="reservationForm" class="space-y-4">
+      <!-- Date choisie -->
       <div>
         <label class="block mb-1 font-semibold">Date d’arrivée</label>
         <input type="text" id="selectedDate" name="date" readonly 
                class="w-full border rounded px-3 py-2 bg-gray-100">
       </div>
       
+      <!-- Nombre de nuits -->
       <div>
         <label class="block mb-1 font-semibold">Nombre de nuits</label>
         <input type="number" id="nights" name="nights" min="1" value="1" 
                class="w-full border rounded px-3 py-2">
       </div>
       
+      <!-- Bouton paiement -->
       <button type="submit" 
-              class="w-full bg-black text-white py-2 rounded-lg font-semibold hover:bg-gray-800">
+              class="w-full bg-black text-white py-2 rounded-lg font-semibold hover:bg-gray-800 transition">
         Valider & Payer
       </button>
     </form>
+
+    <!-- Bouton retour -->
+    <div class="mt-4 text-center">
+      <a href="blom-calendar.html" class="text-blue-600 hover:underline">← Retour au calendrier</a>
+    </div>
   </div>
 
   <script>
-    // ✅ Récupère la date depuis l'URL
+    // ✅ Récupère la date depuis l’URL
     const params = new URLSearchParams(window.location.search);
     const date = params.get("date");
     if (date) {
@@ -46,10 +54,10 @@
       const date = document.getElementById("selectedDate").value;
       const nights = document.getElementById("nights").value;
       
-      // Pour l’instant : simple test
-      alert(`✅ Réservation validée : ${date} pour ${nights} nuit(s).\nOn redirige vers Stripe...`);
+      // Pour l’instant simple test
+      alert(`✅ Réservation validée : ${date} pour ${nights} nuit(s).\n\nProchaine étape : redirection vers Stripe...`);
       
-      // 🚀 Ensuite on branchera Stripe Checkout
+      // 🚀 Ensuite ici on ajoutera Stripe Checkout
     });
   </script>
 </body>
