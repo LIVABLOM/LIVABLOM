@@ -1,16 +1,15 @@
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
   const calendarEl = document.getElementById("calendar-container");
 
   try {
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
     const events = await res.json();
 
-    // utilitaire: formater YYYY-MM-DD
     const toISODate = (d) => {
       const x = new Date(d);
       const y = x.getFullYear();
-      const m = String(x.getMonth() + 1).padStart(2, "0");
-      const day = String(x.getDate()).padStart(2, "0");
+      const m = String(x.getMonth()+1).padStart(2,"0");
+      const day = String(x.getDate()).padStart(2,"0");
       return `${y}-${m}-${day}`;
     };
 
@@ -29,12 +28,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       })),
       displayEventTime: false,
       eventColor: "#e63946",
-      selectable: true,   // ✅ cellules cliquables
-      navLinks: false,
+      selectable: true,       // rend toute la cellule cliquable
+      selectMirror: true,
+      dayMaxEvents: true,     // permet aux cellules avec événements d’être cliquables
+      navLinks: true,
       dateClick: function(info) {
         const clickedDate = info.dateStr;
 
-        // Vérifie si déjà réservé
+        // Vérifie si la date est déjà réservée
         const isBlocked = events.some(ev => {
           const evStart = toISODate(ev.start);
           const evEnd = toISODate(ev.end);
@@ -42,17 +43,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         if (isBlocked) {
-          alert("⚠️ Cette date est déjà réservée !");
+          alert("Cette date est déjà réservée !");
         } else {
-          // Redirige vers le formulaire avec la date choisie
-          window.location.href = `reservation-form.html?date=${clickedDate}`;
+          // Ici tu peux rediriger vers un formulaire de réservation avec la date sélectionnée
+          // Exemple : window.location.href = `/reservation-form.html?date=${clickedDate}&logement=BLOM`;
+          alert("Date sélectionnée : " + clickedDate);
         }
       }
     });
 
     calendar.render();
   } catch (err) {
-    console.error("Erreur de chargement du calendrier :", err);
+    console.error(err);
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
   }
 });
