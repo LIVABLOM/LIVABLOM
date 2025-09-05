@@ -6,8 +6,17 @@
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <style>
-    body { background: #1a1a1a; color: white; font-family: sans-serif; margin:0; padding:20px; }
-    #calendar-container { max-width: 900px; margin: 0 auto; }
+    body { 
+      background: #1a1a1a; 
+      color: white; 
+      font-family: sans-serif; 
+      margin:0; 
+      padding:20px; 
+    }
+    #calendar-container { 
+      max-width: 900px; 
+      margin: 0 auto; 
+    }
 
     /* Toolbar */
     .fc-toolbar-title { font-size:1.3rem; font-weight:bold; color:white; }
@@ -18,21 +27,41 @@
     .fc-day-today { background: rgba(59,130,246,0.3) !important; border: 2px solid #3b82f6 !important; }
 
     /* Jours réservés */
-    .fc-event { background-color:#e63946 !important; color:white !important; font-weight:bold; text-align:center; border-radius:6px !important; border:none !important; }
+    .fc-event { 
+      background-color:#e63946 !important; 
+      color:white !important; 
+      font-weight:bold; 
+      text-align:center; 
+      border-radius:6px !important; 
+      border:none !important; 
+    }
+
+    /* Bouton fermer */
+    .close-btn {
+      background:#333; 
+      color:white; 
+      border:none; 
+      border-radius:6px; 
+      padding:8px 12px; 
+      cursor:pointer; 
+      font-size:16px;
+      margin-bottom:10px;
+      float:right;
+    }
+    .close-btn:hover { background:#555; }
   </style>
 </head>
 <body>
-  <div style="text-align: right; margin-bottom: 10px;">
-    <button onclick="window.history.back()" 
-            style="background:#333; color:white; border:none; border-radius:6px; padding:8px 12px; cursor:pointer; font-size:16px;">
-      ❌ Fermer
-    </button>
-  </div>
+  <!-- Bouton Fermer -->
+  <button class="close-btn" onclick="window.history.back()">❌ Fermer</button>
 
+  <!-- Titre -->
   <h1 class="text-center text-2xl font-bold mb-6">Calendrier BLŌM</h1>
+
+  <!-- Calendrier -->
   <div id="calendar-container"></div>
 
+  <!-- Script FullCalendar -->
   <script src="/assets/js/blom-calendar.js"></script>
 </body>
-
 </html>
