@@ -169,9 +169,11 @@ permalink: /blom/
   <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button id="reserveBlom" class="btn bg-black text-white px-4 py-2 rounded-lg shadow">
-      Réserver maintenant
-    </button>
+<button onclick="document.getElementById('calendarModalBlom').classList.remove('hidden'); document.getElementById('calendarModalBlom').classList.add('flex'); initCalendarBlom();" 
+class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+  Réserver maintenant
+</button>
+
     {% include share.html %}
   </div>
 </div>
