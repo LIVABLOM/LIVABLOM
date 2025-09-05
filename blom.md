@@ -167,7 +167,7 @@ permalink: /blom/
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
     <!-- Changement : ouverture page séparée -->
-    <a href="/blom-calendar.html" 
+    <a href="/assets/html/blom-calendar.html" 
        class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
     </a>
