@@ -55,22 +55,23 @@
   </style>
 </head>
 <body>
-  <h1 class="text-center text-2xl font-bold mb-6">Calendrier BLŌM</h1>
+  <div style="max-width:900px;margin:0 auto;">
+    <!-- Bouton retour -->
+    <a href="blom.md" 
+       style="display:inline-block;margin-bottom:20px;padding:10px 20px;
+              background:#333;color:white;text-decoration:none;border-radius:8px;">
+      ← Retour à BLŌM
+    </a>
 
-  <!-- Bloc tarifs -->
-  <div class="tarifs">
-    <h2>Tarifs hébergement :</h2>
-    <ul>
-      <li>Lundi – Jeudi : 150 €/nuit</li>
-      <li>Vendredi & Samedi : 169 €/nuit</li>
-      <li>Dimanche : 190 €/nuit</li>
-    </ul>
-    <p>⚠️ Formule journée 4h : 130 € (sur demande)<br>
-    ⚠️ Les formules journée et 4h nécessitent une validation préalable par message.</p>
+    <h1 class="text-center text-2xl font-bold mb-6">Calendrier BLŌM</h1>
+    <p style="text-align:center;margin-bottom:20px;color:#ccc;">
+      ⚠️ Formule journée 4h : 130 € (sur demande) <br>
+      Les formules journée et 4h nécessitent une validation préalable par message.
+    </p>
+    <div id="calendar-container"></div>
   </div>
-
-  <div id="calendar-container"></div>
 
   <script src="/assets/js/blom-calendar.js"></script>
 </body>
+
 </html>
