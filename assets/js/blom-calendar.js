@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         topEl.appendChild(priceEl);
       },
 
-      // ✅ Toute la cellule cliquable, sans popover
+      // ✅ Toute la cellule cliquable
       dateClick: function(info) {
         info.jsEvent.preventDefault();
         const clickedDate = info.dateStr;
@@ -80,21 +80,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     calendar.render();
-  } catch (err) {
-    // Forcer le clic sur le numéro du jour à agir comme un dateClick normal
-document.addEventListener('click', function (e) {
-  if (e.target.classList.contains('fc-daygrid-day-number')) {
-    // Récupérer la date depuis l'attribut parent
-    const cell = e.target.closest('.fc-daygrid-day');
-    if (cell) {
-      const dateStr = cell.getAttribute('data-date');
-      if (dateStr) {
-        calendar.trigger('dateClick', { date: new Date(dateStr), allDay: true, dayEl: cell });
-      }
-    }
-  }
-});
 
+    // ✅ Forcer aussi le clic sur le numéro du jour à agir comme un clic cellule
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('fc-daygrid-day-number')) {
+        const cell = e.target.closest('.fc-daygrid-day');
+        if (cell) {
+          const dateStr = cell.getAttribute('data-date');
+          if (dateStr) {
+            calendar.trigger('dateClick', {
+              date: new Date(dateStr),
+              allDay: true,
+              dayEl: cell,
+              jsEvent: e
+            });
+          }
+        }
+      }
+    });
+
+  } catch (err) {
     console.error(err);
     alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
   }
