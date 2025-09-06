@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const toISODate = (d) => {
       const x = new Date(d);
       const y = x.getFullYear();
-      const m = String(x.getMonth() + 1).padStart(2, "0");
-      const day = String(x.getDate()).padStart(2, "0");
+      const m = String(x.getMonth() + 1).padStart(2,"0");
+      const day = String(x.getDate()).padStart(2,"0");
       return `${y}-${m}-${day}`;
     };
 
@@ -42,23 +42,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       dayMaxEvents: true,
       navLinks: true,
 
-      // ✅ Injecte le prix sous le numéro du jour
+      // Affiche le prix sous le numéro du jour
       dayCellDidMount: function(info) {
         if (info.view.type !== "dayGridMonth") return;
-
         const topEl = info.el.querySelector(".fc-daygrid-day-top");
         if (!topEl) return;
+        if (topEl.querySelector(".price-tag")) return;
 
         const price = getPriceForDate(info.date);
-        if (topEl.querySelector(".price-tag")) return; // évite doublons
-
         const priceEl = document.createElement("span");
         priceEl.className = "price-tag";
         priceEl.textContent = price + " €";
         topEl.appendChild(priceEl);
       },
 
-      // ✅ Toute la cellule cliquable
+      // Gestion du clic sur la cellule complète
       dateClick: function(info) {
         info.jsEvent.preventDefault();
         const clickedDate = info.dateStr;
@@ -79,8 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     calendar.render();
 
-    
-    // ✅ Ajoute ce bloc ici (après render)
+    // ✅ Rendre le numéro du jour cliquable comme la cellule
     document.addEventListener('click', function (e) {
       if (e.target.classList.contains('fc-daygrid-day-number')) {
         const cell = e.target.closest('.fc-daygrid-day');
@@ -89,31 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (dateStr) {
             calendar.trigger('dateClick', {
               date: new Date(dateStr),
-              dateStr: dateStr,   // on transmet bien la date
-              allDay: true,
-              dayEl: cell,
-              jsEvent: e
-            });
-          }
-        }
-      }
-    });
-
-  } catch (err) {
-    console.error(err);
-    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
-  }
-});
-
-    // ✅ Forcer aussi le clic sur le numéro du jour à agir comme un clic cellule
-    document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('fc-daygrid-day-number')) {
-        const cell = e.target.closest('.fc-daygrid-day');
-        if (cell) {
-          const dateStr = cell.getAttribute('data-date');
-          if (dateStr) {
-            calendar.trigger('dateClick', {
-              date: new Date(dateStr),
+              dateStr: dateStr,
               allDay: true,
               dayEl: cell,
               jsEvent: e
