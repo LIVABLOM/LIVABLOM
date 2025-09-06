@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       events: events.map(ev => ({
         title: "Réservé",
         start: toISODate(ev.start),
-        end: toISODate(ev.end), // end exclus
+        end: toISODate(ev.end),
         allDay: true,
         display: "block"
       })),
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       dayMaxEvents: true,
       navLinks: true,
 
-      // ✅ Injecte le prix sous le numéro du jour (mois uniquement)
+      // ✅ Injecte le prix sous le numéro du jour
       dayCellDidMount: function(info) {
         if (info.view.type !== "dayGridMonth") return;
 
@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!topEl) return;
 
         const price = getPriceForDate(info.date);
-        // évite doublon si rerender
-        if (topEl.querySelector(".price-tag")) return;
+        if (topEl.querySelector(".price-tag")) return; // évite doublons
 
         const priceEl = document.createElement("span");
         priceEl.className = "price-tag";
@@ -73,7 +72,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          // Chemin relatif vers le formulaire
           window.location.href = "reservation-form.html?date=" + clickedDate + "&logement=BLOM";
         }
       }
