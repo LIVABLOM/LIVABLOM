@@ -79,6 +79,32 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     calendar.render();
 
+    
+    // ✅ Ajoute ce bloc ici (après render)
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('fc-daygrid-day-number')) {
+        const cell = e.target.closest('.fc-daygrid-day');
+        if (cell) {
+          const dateStr = cell.getAttribute('data-date');
+          if (dateStr) {
+            calendar.trigger('dateClick', {
+              date: new Date(dateStr),
+              dateStr: dateStr,   // on transmet bien la date
+              allDay: true,
+              dayEl: cell,
+              jsEvent: e
+            });
+          }
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error(err);
+    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
+  }
+});
+
     // ✅ Forcer aussi le clic sur le numéro du jour à agir comme un clic cellule
     document.addEventListener('click', function (e) {
       if (e.target.classList.contains('fc-daygrid-day-number')) {
