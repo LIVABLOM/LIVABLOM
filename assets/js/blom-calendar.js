@@ -8,17 +8,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const toISODate = (d) => {
       const x = new Date(d);
       const y = x.getFullYear();
-      const m = String(x.getMonth()+1).padStart(2,"0");
-      const day = String(x.getDate()).padStart(2,"0");
+      const m = String(x.getMonth() + 1).padStart(2, "0");
+      const day = String(x.getDate()).padStart(2, "0");
       return `${y}-${m}-${day}`;
     };
 
-    // Fonction qui retourne le prix selon le jour de la semaine
+    // Prix par jour
     function getPriceForDate(date) {
-      const day = date.getDay(); // 0=Dim, 1=Lun...
-      if (day === 0) return 190; // Dimanche
-      if (day === 5 || day === 6) return 169; // Ven-Sam
-      return 150; // Lun-Jeu
+      const day = date.getDay(); // 0=Dim, 1=Lun ... 6=Sam
+      if (day === 0) return 190;            // Dimanche
+      if (day === 5 || day === 6) return 169; // Vendredi & Samedi
+      return 150;                           // Lundi à Jeudi
     }
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -27,30 +27,43 @@ document.addEventListener("DOMContentLoaded", async () => {
       locale: "fr",
       firstDay: 1,
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+
       events: events.map(ev => ({
         title: "Réservé",
         start: toISODate(ev.start),
-        end: toISODate(ev.end),
+        end: toISODate(ev.end), // end exclus
         allDay: true,
         display: "block"
       })),
+
       displayEventTime: false,
       eventColor: "#e63946",
       selectable: true,
       dayMaxEvents: true,
       navLinks: true,
+
+      // ✅ Injecte le prix sous le numéro du jour (mois uniquement)
       dayCellDidMount: function(info) {
-        const dateObj = new Date(info.date);
-        const price = getPriceForDate(dateObj);
+        if (info.view.type !== "dayGridMonth") return;
+
+        const topEl = info.el.querySelector(".fc-daygrid-day-top");
+        if (!topEl) return;
+
+        const price = getPriceForDate(info.date);
+        // évite doublon si rerender
+        if (topEl.querySelector(".price-tag")) return;
+
         const priceEl = document.createElement("span");
-        priceEl.classList.add("price-tag");
-        priceEl.innerText = price + " €";
-        info.el.querySelector(".fc-daygrid-day-number").after(priceEl);
+        priceEl.className = "price-tag";
+        priceEl.textContent = price + " €";
+        topEl.appendChild(priceEl);
       },
+
+      // ✅ Toute la cellule cliquable, sans popover
       dateClick: function(info) {
+        info.jsEvent.preventDefault();
         const clickedDate = info.dateStr;
 
-        // Vérifie si la date est déjà réservée
         const isBlocked = events.some(ev => {
           const evStart = toISODate(ev.start);
           const evEnd = toISODate(ev.end);
@@ -60,8 +73,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          // Redirection vers formulaire avec prix inclus
-          window.location.href = `/reservation-form.html?date=${clickedDate}&logement=BLOM`;
+          // Chemin relatif vers le formulaire
+          window.location.href = "reservation-form.html?date=" + clickedDate + "&logement=BLOM";
         }
       }
     });
