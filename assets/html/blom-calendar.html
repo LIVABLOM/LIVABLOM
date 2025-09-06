@@ -3,44 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <title>Calendrier BLŌM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ indispensable mobile -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <style>
-    body { 
-      background: #1a1a1a; 
-      color: white; 
-      font-family: sans-serif; 
-      margin:0; 
-      padding:20px; 
+    body {
+      background: #1a1a1a;
+      color: white;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-    #calendar-container { max-width: 900px; margin: 0 auto; }
+
+    #calendar-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ✅ Ajustement sur mobile */
+    @media (max-width: 768px) {
+      #calendar-container {
+        max-width: 100% !important;
+        padding: 0 5px;
+      }
+      .fc {
+        font-size: 0.8rem; /* réduit un peu la taille du texte */
+      }
+      .fc-toolbar-title {
+        font-size: 1rem !important;
+      }
+      .fc-button {
+        padding: 4px 6px !important;
+        font-size: 0.75rem !important;
+      }
+    }
 
     /* Toolbar */
-    .fc-toolbar-title { font-size:1.3rem; font-weight:bold; color:white; }
-    .fc-button { background:#333 !important; color:white !important; border:none !important; border-radius:6px !important; }
-    .fc-button:hover { background:#555 !important; }
+    .fc-toolbar-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: white;
+    }
+    .fc-button {
+      background: #333 !important;
+      color: white !important;
+      border: none !important;
+      border-radius: 6px !important;
+    }
+    .fc-button:hover {
+      background: #555 !important;
+    }
 
-    /* Aujourd'hui */
-    .fc-day-today { background: rgba(59,130,246,0.3) !important; border: 2px solid #3b82f6 !important; }
+    /* Aujourd’hui */
+    .fc-day-today {
+      background: rgba(59,130,246,0.3) !important;
+      border: 2px solid #3b82f6 !important;
+    }
 
     /* Jours réservés */
-    .fc-event { background-color:#e63946 !important; color:white !important; font-weight:bold; text-align:center; border-radius:6px !important; border:none !important; }
-
-    /* Bouton fermer */
-    .close-btn {
-      background:#333; 
-      color:white; 
-      border:none; 
-      border-radius:6px; 
-      padding:8px 12px; 
-      cursor:pointer; 
-      font-size:16px;
-      margin-bottom:10px;
-      float:right;
+    .fc-event {
+      background-color: #e63946 !important;
+      color: white !important;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 6px !important;
+      border: none !important;
     }
-    .close-btn:hover { background:#555; }
   </style>
 </head>
+
 <body>
   <!-- Bouton Fermer -->
   <button class="close-btn" onclick="window.history.back()">❌ Fermer</button>
