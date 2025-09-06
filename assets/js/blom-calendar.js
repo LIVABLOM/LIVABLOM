@@ -13,6 +13,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       return `${y}-${m}-${day}`;
     };
 
+    // Fonction qui retourne le prix selon le jour de la semaine
+    function getPriceForDate(date) {
+      const day = date.getDay(); // 0=Dim, 1=Lun...
+      if (day === 0) return 190; // Dimanche
+      if (day === 5 || day === 6) return 169; // Ven-Sam
+      return 150; // Lun-Jeu
+    }
+
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
@@ -29,13 +37,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       displayEventTime: false,
       eventColor: "#e63946",
       selectable: true,
-      selectMirror: true,
       dayMaxEvents: true,
       navLinks: true,
+      dayCellDidMount: function(info) {
+        const dateObj = new Date(info.date);
+        const price = getPriceForDate(dateObj);
+        const priceEl = document.createElement("span");
+        priceEl.classList.add("price-tag");
+        priceEl.innerText = price + " €";
+        info.el.querySelector(".fc-daygrid-day-number").after(priceEl);
+      },
       dateClick: function(info) {
-        info.jsEvent.preventDefault(); // bloque popup par défaut
         const clickedDate = info.dateStr;
 
+        // Vérifie si la date est déjà réservée
         const isBlocked = events.some(ev => {
           const evStart = toISODate(ev.start);
           const evEnd = toISODate(ev.end);
@@ -45,8 +60,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          // Redirection vers le formulaire avec date et logement
-          window.location.href = "reservation-form.html?date=" + clickedDate + "&logement=BLOM";
+          // Redirection vers formulaire avec prix inclus
+          window.location.href = `/reservation-form.html?date=${clickedDate}&logement=BLOM`;
         }
       }
     });
