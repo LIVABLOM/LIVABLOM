@@ -2,137 +2,114 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Réservation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réservation BLOM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background: #1a1a1a;
-      color: white;
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-    .container {
-      max-width: 500px;
-      margin: 40px auto;
+    form {
+      background: #222;
       padding: 20px;
-      background: #2a2a2a;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    }
-    h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
     }
     label {
       display: block;
-      margin: 12px 0 6px;
-      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 5px;
     }
-    input, select {
+    input, select, textarea, button {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       border-radius: 8px;
       border: none;
-      margin-bottom: 16px;
-      font-size: 1rem;
-    }
-    input[readonly] {
-      background: #444;
-      color: #ccc;
-    }
-    .error {
-      color: #ff6666;
-      font-size: 0.9rem;
-      margin-top: -10px;
       margin-bottom: 10px;
-      display: none;
+    }
+    input, select, textarea {
+      background: #333;
+      color: #fff;
     }
     button {
-      width: 100%;
-      padding: 14px;
       background: #e63946;
       color: white;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      font-size: 16px;
+      font-weight: bold;
     }
     button:hover {
       background: #c72e3a;
     }
-    @media (max-width: 600px) {
-      .container {
-        margin: 20px;
-        padding: 16px;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
+    .note {
+      font-size: 14px;
+      margin-top: 10px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Finaliser ma réservation</h1>
 
-    <form id="reservation-form">
-      <label>Date choisie</label>
-      <input type="text" id="date" name="date" readonly>
+  <form id="reservationForm" action="https://formspree.io/f/mvgopbll" method="POST">
+    <h2>Réserver BLOM</h2>
 
-      <label>Logement</label>
-      <input type="text" id="logement" name="logement" readonly>
+    <label for="dateArrivee">Date d’arrivée</label>
+    <input type="date" id="dateArrivee" name="dateArrivee" required>
 
-      <label>Nombre de nuits</label>
-      <select id="nuits" name="nuits" required>
-        <option value="">-- Sélectionnez --</option>
-        <option value="1">1 nuit</option>
-        <option value="2">2 nuits</option>
-        <option value="3">3 nuits</option>
-        <option value="4">4 nuits</option>
-      </select>
-      <div id="error-nuits" class="error">⚠️ Merci de sélectionner le nombre de nuits.</div>
+    <label for="nuits">Nombre de nuits</label>
+    <input type="number" id="nuits" name="nuits" min="1" required>
 
-      <label>Votre nom</label>
-      <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+    <label for="nom">Nom</label>
+    <input type="text" id="nom" name="nom" required>
 
-      <label>Email</label>
-      <input type="email" id="email" name="email" placeholder="Votre email" required>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
 
-      <button type="submit">Valider et payer</button>
-    </form>
-  </div>
+    <label for="message">Message (optionnel)</label>
+    <textarea id="message" name="message" rows="3"></textarea>
+
+    <!-- Logement prérempli -->
+    <input type="hidden" id="logement" name="logement" value="BLOM">
+
+    <button type="submit">Envoyer la demande</button>
+
+    <p class="note">
+      ⚠️ Les formules journée (11h–16h, 130 €) et 4h nécessitent une validation préalable par message.
+    </p>
+  </form>
 
   <script>
-    // Récupère les paramètres d'URL
+    // Récupère les paramètres de l’URL
     const urlParams = new URLSearchParams(window.location.search);
-    const date = urlParams.get("date");
-    const logement = urlParams.get("logement");
+    const dateParam = urlParams.get("date");
+    const logementParam = urlParams.get("logement");
 
-    // Préremplit les champs
-    document.getElementById("date").value = date || "Non défini";
-    document.getElementById("logement").value = logement || "Non défini";
+    // Préremplir la date si dispo
+    if (dateParam) {
+      document.getElementById("dateArrivee").value = dateParam;
+    }
 
-    // Gestion du formulaire
-    document.getElementById("reservation-form").addEventListener("submit", (e) => {
-      e.preventDefault();
+    // Préremplir logement si dispo
+    if (logementParam) {
+      document.getElementById("logement").value = logementParam;
+    }
 
+    // Bloquer l’envoi si nombre de nuits vide
+    document.getElementById("reservationForm").addEventListener("submit", function(e) {
       const nuits = document.getElementById("nuits").value;
-      const errorNuits = document.getElementById("error-nuits");
-
-      if (!nuits) {
-        errorNuits.style.display = "block";
-        return;
-      } else {
-        errorNuits.style.display = "none";
+      if (!nuits || nuits <= 0) {
+        e.preventDefault();
+        alert("Veuillez indiquer le nombre de nuits.");
       }
-
-      // Ici, on pourra brancher Stripe Checkout ensuite
-      alert("Réservation validée ✅\n(Date: " + date + ", Logement: " + logement + ", Nuits: " + nuits + ")");
     });
   </script>
+
 </body>
 </html>
