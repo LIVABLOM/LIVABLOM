@@ -13,6 +13,7 @@ button { margin-top:20px; padding:12px; background:#333; color:white; border:non
 button:hover { background:#555; }
 .total { margin-top:15px; font-size:1.2rem; font-weight:bold; }
 </style>
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 <div class="container">
@@ -29,7 +30,7 @@ button:hover { background:#555; }
 
   <div class="total">Total : <span id="total">0</span> €</div>
 
-  <button type="submit">Valider la réservation</button>
+  <button type="button" id="payBtn">Payer avec Stripe</button>
 </form>
 </div>
 
@@ -69,16 +70,27 @@ updateTotal();
 // Mettre à jour le total au changement du nombre de nuits
 nightsInput.addEventListener('input', updateTotal);
 
-// Gestion formulaire
-document.getElementById('reservationForm').addEventListener('submit', function(e){
-  e.preventDefault();
+// Stripe
+const stripe = Stripe('TA_PUBLISHABLE_KEY'); // Remplace par ta clé publique
+
+document.getElementById('payBtn').addEventListener('click', async () => {
+  const price = getPrice(selectedDate);
   const nights = parseInt(nightsInput.value);
-  if(!nights || nights < 1){
+
+  if(!nights || nights < 1) {
     alert("Veuillez indiquer le nombre de nuits.");
     return;
   }
-  alert(`Réservation prête pour Stripe :\nDate : ${selectedDate}\nLogement : ${logement}\nNuits : ${nights}\nTotal : ${priceInput.value * nights} €`);
-  // Ici tu peux déclencher Stripe Checkout ou Formspree etc.
+
+  // Crée la session côté serveur
+  const res = await fetch('/create-checkout-session', {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json' },
+    body: JSON.stringify({ price, nights, date: selectedDate, logement })
+  });
+
+  const data = await res.json();
+  await stripe.redirectToCheckout({ sessionId: data.id });
 });
 </script>
 </body>
