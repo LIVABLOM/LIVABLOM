@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Fonction pour appeler Stripe
     async function reserver(date, logement, nuits, prix) {
       try {
-        const res = await fetch('https://TON-SERVER-STRIPE-URL/create-checkout-session', {
+        const res = await fetch('https://github.com/LIVABLOM/livablom-stripe/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ date, logement, nuits, prix })
