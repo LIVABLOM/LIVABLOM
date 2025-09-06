@@ -42,6 +42,13 @@
       background: #444;
       color: #ccc;
     }
+    .error {
+      color: #ff6666;
+      font-size: 0.9rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
     button {
       width: 100%;
       padding: 14px;
@@ -87,6 +94,7 @@
         <option value="3">3 nuits</option>
         <option value="4">4 nuits</option>
       </select>
+      <div id="error-nuits" class="error">⚠️ Merci de sélectionner le nombre de nuits.</div>
 
       <label>Votre nom</label>
       <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
@@ -108,10 +116,22 @@
     document.getElementById("date").value = date || "Non défini";
     document.getElementById("logement").value = logement || "Non défini";
 
-    // Soumission factice (avant Stripe)
+    // Gestion du formulaire
     document.getElementById("reservation-form").addEventListener("submit", (e) => {
       e.preventDefault();
-      alert("Réservation enregistrée ! (Stripe sera branché ensuite)");
+
+      const nuits = document.getElementById("nuits").value;
+      const errorNuits = document.getElementById("error-nuits");
+
+      if (!nuits) {
+        errorNuits.style.display = "block";
+        return;
+      } else {
+        errorNuits.style.display = "none";
+      }
+
+      // Ici, on pourra brancher Stripe Checkout ensuite
+      alert("Réservation validée ✅\n(Date: " + date + ", Logement: " + logement + ", Nuits: " + nuits + ")");
     });
   </script>
 </body>
