@@ -1,115 +1,85 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Réservation BLOM</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    form {
-      background: #222;
-      padding: 20px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
-    }
-    input, select, textarea, button {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 10px;
-    }
-    input, select, textarea {
-      background: #333;
-      color: #fff;
-    }
-    button {
-      background: #e63946;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    button:hover {
-      background: #c72e3a;
-    }
-    .note {
-      font-size: 14px;
-      margin-top: 10px;
-      color: #ccc;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Réservation BLŌM</title>
+<style>
+body { background:#1a1a1a; color:white; font-family:sans-serif; padding:20px; }
+.container { max-width:600px; margin:0 auto; background:#2a2a2a; padding:20px; border-radius:12px; }
+label { display:block; margin-top:15px; font-weight:bold; }
+input, select { width:100%; padding:8px; margin-top:5px; border-radius:6px; border:none; }
+button { margin-top:20px; padding:12px; background:#333; color:white; border:none; border-radius:6px; cursor:pointer; }
+button:hover { background:#555; }
+.total { margin-top:15px; font-size:1.2rem; font-weight:bold; }
+</style>
 </head>
 <body>
+<div class="container">
+<h2>Réservation BLŌM</h2>
+<form id="reservationForm">
+  <label>Date d'arrivée</label>
+  <input type="text" id="date" readonly>
 
-  <form id="reservationForm" action="https://formspree.io/f/mvgopbll" method="POST">
-    <h2>Réserver BLOM</h2>
+  <label>Nombre de nuits</label>
+  <input type="number" id="nights" min="1" value="1" required>
 
-    <label for="dateArrivee">Date d’arrivée</label>
-    <input type="date" id="dateArrivee" name="dateArrivee" required>
+  <label>Prix par nuit</label>
+  <input type="text" id="pricePerNight" readonly>
 
-    <label for="nuits">Nombre de nuits</label>
-    <input type="number" id="nuits" name="nuits" min="1" required>
+  <div class="total">Total : <span id="total">0</span> €</div>
 
-    <label for="nom">Nom</label>
-    <input type="text" id="nom" name="nom" required>
+  <button type="submit">Valider la réservation</button>
+</form>
+</div>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+<script>
+// Récupérer les paramètres URL
+const params = new URLSearchParams(window.location.search);
+const selectedDate = params.get('date');
+const logement = params.get('logement');
 
-    <label for="message">Message (optionnel)</label>
-    <textarea id="message" name="message" rows="3"></textarea>
+const dateInput = document.getElementById('date');
+const nightsInput = document.getElementById('nights');
+const priceInput = document.getElementById('pricePerNight');
+const totalSpan = document.getElementById('total');
 
-    <!-- Logement prérempli -->
-    <input type="hidden" id="logement" name="logement" value="BLOM">
+dateInput.value = selectedDate;
 
-    <button type="submit">Envoyer la demande</button>
+// Fonction pour calculer le prix par nuit selon le jour
+function getPrice(dateStr) {
+  const d = new Date(dateStr);
+  const day = d.getDay(); // 0=dim, 6=sam
+  if(day === 0) return 190;       // Dimanche
+  if(day === 5 || day === 6) return 169; // Ven/Sam
+  return 150;                     // Lun → Jeu
+}
 
-    <p class="note">
-      ⚠️ Les formules journée (11h–16h, 130 €) et 4h nécessitent une validation préalable par message.
-    </p>
-  </form>
+// Calcul total
+function updateTotal() {
+  const price = getPrice(selectedDate);
+  const nights = parseInt(nightsInput.value) || 1;
+  priceInput.value = price + " €";
+  totalSpan.textContent = price * nights;
+}
 
-  <script>
-    // Récupère les paramètres de l’URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const dateParam = urlParams.get("date");
-    const logementParam = urlParams.get("logement");
+// Initialisation
+updateTotal();
 
-    // Préremplir la date si dispo
-    if (dateParam) {
-      document.getElementById("dateArrivee").value = dateParam;
-    }
+// Mettre à jour le total au changement du nombre de nuits
+nightsInput.addEventListener('input', updateTotal);
 
-    // Préremplir logement si dispo
-    if (logementParam) {
-      document.getElementById("logement").value = logementParam;
-    }
-
-    // Bloquer l’envoi si nombre de nuits vide
-    document.getElementById("reservationForm").addEventListener("submit", function(e) {
-      const nuits = document.getElementById("nuits").value;
-      if (!nuits || nuits <= 0) {
-        e.preventDefault();
-        alert("Veuillez indiquer le nombre de nuits.");
-      }
-    });
-  </script>
-
+// Gestion formulaire
+document.getElementById('reservationForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nights = parseInt(nightsInput.value);
+  if(!nights || nights < 1){
+    alert("Veuillez indiquer le nombre de nuits.");
+    return;
+  }
+  alert(`Réservation prête pour Stripe :\nDate : ${selectedDate}\nLogement : ${logement}\nNuits : ${nights}\nTotal : ${priceInput.value * nights} €`);
+  // Ici tu peux déclencher Stripe Checkout ou Formspree etc.
+});
+</script>
 </body>
 </html>
