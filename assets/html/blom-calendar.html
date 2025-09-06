@@ -54,26 +54,41 @@
     }
   </style>
 </head>
-<div style="max-width:900px;margin:0 auto;">
-  <button id="backBtn" 
-    style="display:inline-block;margin-bottom:20px;padding:10px 20px;
-           background:#333;color:white;text-decoration:none;border-radius:8px;border:none;cursor:pointer;">
-    ← Retour à BLŌM
-  </button>
-</div>
+<body>
 
-<script>
-  document.getElementById('backBtn').addEventListener('click', function () {
-    // si l'utilisateur a une page précédente dans l'historique, retourne en arrière
-    if (history.length > 1 && document.referrer && document.referrer.includes(location.origin)) {
-      history.back();
-      return;
-    }
-    // fallback : remplacer par la vraie URL de ta page BLŌM si nécessaire
-    // Exemples possibles : '/blom/', '/blom.html', '/'
-    window.location.href = '/blom/'; 
-  });
-</script>
+  <div style="max-width:900px;margin:0 auto;">
+    <!-- Bouton retour -->
+    <button id="backBtn" 
+      style="display:inline-block;margin-bottom:20px;padding:10px 20px;
+             background:#333;color:white;text-decoration:none;border-radius:8px;border:none;cursor:pointer;">
+      ← Retour à BLŌM
+    </button>
+  </div>
 
+  <!-- Bloc tarifs -->
+  <div class="tarifs">
+    <h2>Tarifs BLŌM</h2>
+    <ul>
+      <li>Vendredi & samedi : 169 €/nuit</li>
+      <li>Dimanche : 190 €/nuit</li>
+      <li>Lundi au jeudi : 150 €/nuit</li>
+    </ul>
+    ⚠️ Formule journée 4h : 130 € (sur demande)<br>
+    ⚠️ Les formules journée et 4h nécessitent une validation préalable par message.
+  </div>
 
+  <!-- Calendrier -->
+  <div id="calendar-container"></div>
+
+  <script src="/assets/js/blom-calendar.js"></script>
+  <script>
+    document.getElementById('backBtn').addEventListener('click', function () {
+      if (history.length > 1 && document.referrer && document.referrer.includes(location.origin)) {
+        history.back();
+        return;
+      }
+      window.location.href = '/blom/'; 
+    });
+  </script>
+</body>
 </html>
