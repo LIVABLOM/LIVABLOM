@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const calendarEl = document.getElementById("calendar-container");
 
   try {
-    // Récupération des réservations depuis le serveur iCal
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
     const events = await res.json();
 
@@ -14,15 +13,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       return `${y}-${m}-${day}`;
     };
 
-    // Prix par jour
     function getPriceForDate(date) {
       const day = date.getDay(); // 0=Dim, 1=Lun ... 6=Sam
       if (day === 0) return 190;            // Dimanche
       if (day === 5 || day === 6) return 169; // Vendredi & Samedi
-      return 150;                           // Lundi à Jeudi
+      return 150;                           // Lun → Jeu
     }
 
-    // Fonction pour appeler Stripe via le serveur Railway
     async function reserver(date, logement, nuits, prix) {
       try {
         const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
@@ -45,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       locale: "fr",
       firstDay: 1,
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
-
       events: events.map(ev => ({
         title: "Réservé",
         start: toISODate(ev.start),
@@ -53,14 +49,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         allDay: true,
         display: "block"
       })),
-
       displayEventTime: false,
       eventColor: "#e63946",
       selectable: true,
       dayMaxEvents: true,
       navLinks: true,
-
-      // Prix affichés sous le numéro de jour
       dayCellDidMount: function(info) {
         if (info.view.type !== "dayGridMonth") return;
         const topEl = info.el.querySelector(".fc-daygrid-day-top");
@@ -71,34 +64,59 @@ document.addEventListener("DOMContentLoaded", async () => {
         priceEl.className = "price-tag";
         priceEl.textContent = price + " €";
         topEl.appendChild(priceEl);
-      },
-
-      // Toute la cellule cliquable
-      dateClick: function(info) {
-        info.jsEvent.preventDefault();
-        const clickedDate = info.dateStr;
-
-        const isBlocked = events.some(ev => {
-          const evStart = toISODate(ev.start);
-          const evEnd = toISODate(ev.end);
-          return clickedDate >= evStart && clickedDate < evEnd;
-        });
-
-        if (isBlocked) {
-          alert("Cette date est déjà réservée !");
-        } else {
-          const nuits = parseInt(prompt("Combien de nuits ?", "1"));
-          if (!nuits || nuits <= 0) {
-            alert("Veuillez saisir un nombre de nuits valide !");
-            return;
-          }
-          const prix = getPriceForDate(new Date(clickedDate)) * nuits;
-          reserver(clickedDate, 'BLŌM', nuits, prix);
-        }
       }
     });
 
     calendar.render();
+
+    // --- Modal de réservation ---
+    const modal = document.getElementById('reservationModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalDateEl = document.getElementById('modalDate');
+    const modalNightsInput = document.getElementById('modalNights');
+    const modalPricePerNightEl = document.getElementById('modalPricePerNight');
+    const modalTotalEl = document.getElementById('modalTotal');
+    const modalPayBtn = document.getElementById('modalPayBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+
+    function openModal(dateStr) {
+      const pricePerNight = getPriceForDate(new Date(dateStr));
+      modalDateEl.textContent = dateStr;
+      modalNightsInput.value = 1;
+      modalPricePerNightEl.textContent = pricePerNight;
+      modalTotalEl.textContent = pricePerNight;
+      modal.style.display = 'block';
+
+      modalNightsInput.oninput = () => {
+        const nights = parseInt(modalNightsInput.value) || 1;
+        modalTotalEl.textContent = pricePerNight * nights;
+      }
+
+      modalCancelBtn.onclick = () => modal.style.display = 'none';
+
+      modalPayBtn.onclick = async () => {
+        const nuits = parseInt(modalNightsInput.value);
+        const prix = pricePerNight * nuits;
+        await reserver(dateStr, 'BLŌM', nuits, prix);
+        modal.style.display = 'none';
+      }
+    }
+
+    // Remplacer le clic sur la date
+    calendar.setOption('dateClick', function(info) {
+      const clickedDate = info.dateStr;
+      const isBlocked = events.some(ev => {
+        const evStart = toISODate(ev.start);
+        const evEnd = toISODate(ev.end);
+        return clickedDate >= evStart && clickedDate < evEnd;
+      });
+
+      if (isBlocked) {
+        alert("Cette date est déjà réservée !");
+      } else {
+        openModal(clickedDate);
+      }
+    });
 
     // Forcer le clic sur le numéro du jour à agir comme une cellule complète
     document.addEventListener('click', function (e) {
