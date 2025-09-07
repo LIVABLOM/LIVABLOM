@@ -71,7 +71,7 @@ updateTotal();
 nightsInput.addEventListener('input', updateTotal);
 
 // Stripe
-const stripe = Stripe('TA_PUBLISHABLE_KEY'); // Remplace par ta clé publique
+const stripe = Stripe('pk_live_51RgYd9IWRH02GJbeI26kTmFzkNFPUc9asYk3qTVT2NrOqCUB3Y9DkhSOV6GP50tWbBcJscjYDSRiIT3DDC3MRtkC00gtwbJ9U4'); // Remplace par ta clé publique
 
 document.getElementById('payBtn').addEventListener('click', async () => {
   const price = getPrice(selectedDate);
