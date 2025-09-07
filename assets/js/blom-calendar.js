@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const calendarEl = document.getElementById("calendar-container");
 
+  // Modal elements
+  const modal = document.getElementById("reservationModal");
+  const modalDateEl = document.getElementById("modalDate");
+  const modalNightsInput = document.getElementById("modalNights");
+  const modalPricePerNightEl = document.getElementById("modalPricePerNight");
+  const modalTotalEl = document.getElementById("modalTotal");
+  const modalPayBtn = document.getElementById("modalPayBtn");
+  const modalCancelBtn = document.getElementById("modalCancelBtn");
+
   try {
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
     const events = await res.json();
@@ -13,28 +22,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       return `${y}-${m}-${day}`;
     };
 
+    // Prix par jour
     function getPriceForDate(date) {
       const day = date.getDay(); // 0=Dim, 1=Lun ... 6=Sam
-      if (day === 0) return 190;            // Dimanche
+      if (day === 0) return 190; // Dimanche
       if (day === 5 || day === 6) return 169; // Vendredi & Samedi
-      return 150;                           // Lun → Jeu
+      return 150; // Lun → Jeu
     }
 
-    async function reserver(date, logement, nuits, prix) {
-      try {
-        const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ date, logement, nuits, prix })
-        });
-
-        const data = await res.json();
-        window.location.href = data.url; // redirige vers Stripe Checkout
-      } catch (err) {
-        console.error(err);
-        alert('Erreur lors de la réservation.');
-      }
-    }
+    let selectedDate = null;
+    let selectedNights = 1;
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
@@ -54,6 +51,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       selectable: true,
       dayMaxEvents: true,
       navLinks: true,
+
+      // Prix affichés sous le numéro de jour
       dayCellDidMount: function(info) {
         if (info.view.type !== "dayGridMonth") return;
         const topEl = info.el.querySelector(".fc-daygrid-day-top");
@@ -64,70 +63,63 @@ document.addEventListener("DOMContentLoaded", async () => {
         priceEl.className = "price-tag";
         priceEl.textContent = price + " €";
         topEl.appendChild(priceEl);
+      },
+
+      // Clic sur une date
+      dateClick: function(info) {
+        const clickedDate = info.dateStr;
+        const isBlocked = events.some(ev => {
+          const evStart = toISODate(ev.start);
+          const evEnd = toISODate(ev.end);
+          return clickedDate >= evStart && clickedDate < evEnd;
+        });
+
+        if (isBlocked) {
+          alert("Cette date est déjà réservée !");
+        } else {
+          // Affiche le modal
+          selectedDate = clickedDate;
+          selectedNights = 1;
+          const pricePerNight = getPriceForDate(new Date(selectedDate));
+
+          modalDateEl.textContent = selectedDate;
+          modalNightsInput.value = selectedNights;
+          modalPricePerNightEl.textContent = pricePerNight;
+          modalTotalEl.textContent = pricePerNight * selectedNights;
+
+          modal.style.display = "flex";
+        }
       }
     });
 
     calendar.render();
 
-    // --- Modal de réservation ---
-    const modal = document.getElementById('reservationModal');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalDateEl = document.getElementById('modalDate');
-    const modalNightsInput = document.getElementById('modalNights');
-    const modalPricePerNightEl = document.getElementById('modalPricePerNight');
-    const modalTotalEl = document.getElementById('modalTotal');
-    const modalPayBtn = document.getElementById('modalPayBtn');
-    const modalCancelBtn = document.getElementById('modalCancelBtn');
-
-    function openModal(dateStr) {
-      const pricePerNight = getPriceForDate(new Date(dateStr));
-      modalDateEl.textContent = dateStr;
-      modalNightsInput.value = 1;
-      modalPricePerNightEl.textContent = pricePerNight;
-      modalTotalEl.textContent = pricePerNight;
-      modal.style.display = 'block';
-
-      modalNightsInput.oninput = () => {
-        const nights = parseInt(modalNightsInput.value) || 1;
-        modalTotalEl.textContent = pricePerNight * nights;
-      }
-
-      modalCancelBtn.onclick = () => modal.style.display = 'none';
-
-      modalPayBtn.onclick = async () => {
-        const nuits = parseInt(modalNightsInput.value);
-        const prix = pricePerNight * nuits;
-        await reserver(dateStr, 'BLŌM', nuits, prix);
-        modal.style.display = 'none';
-      }
-    }
-
-    // Remplacer le clic sur la date
-    calendar.setOption('dateClick', function(info) {
-      const clickedDate = info.dateStr;
-      const isBlocked = events.some(ev => {
-        const evStart = toISODate(ev.start);
-        const evEnd = toISODate(ev.end);
-        return clickedDate >= evStart && clickedDate < evEnd;
-      });
-
-      if (isBlocked) {
-        alert("Cette date est déjà réservée !");
-      } else {
-        openModal(clickedDate);
-      }
+    // Met à jour le total quand on change le nombre de nuits
+    modalNightsInput.addEventListener("input", () => {
+      selectedNights = parseInt(modalNightsInput.value) || 1;
+      const pricePerNight = getPriceForDate(new Date(selectedDate));
+      modalTotalEl.textContent = pricePerNight * selectedNights;
     });
 
-    // Forcer le clic sur le numéro du jour à agir comme une cellule complète
-    document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('fc-daygrid-day-number')) {
-        const cell = e.target.closest('.fc-daygrid-day');
-        if (cell) {
-          const dateStr = cell.getAttribute('data-date');
-          if (dateStr) {
-            calendar.trigger('dateClick', { date: new Date(dateStr), allDay: true, dayEl: cell, jsEvent: e });
-          }
-        }
+    // Bouton annuler
+    modalCancelBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Bouton payer
+    modalPayBtn.addEventListener("click", async () => {
+      const prix = getPriceForDate(new Date(selectedDate)) * selectedNights;
+      try {
+        const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ date: selectedDate, logement: 'BLŌM', nuits: selectedNights, prix })
+        });
+        const data = await res.json();
+        window.location.href = data.url;
+      } catch (err) {
+        console.error(err);
+        alert("Erreur lors de la réservation.");
       }
     });
 
