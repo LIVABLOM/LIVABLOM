@@ -21,23 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return 150;                           // Lundi à Jeudi
     }
 
-    // Fonction pour appeler Stripe
-    async function reserver(date, logement, nuits, prix) {
-      try {
-        const res = await fetch('https://github.com/LIVABLOM/livablom-stripe/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ date, logement, nuits, prix })
-        });
-
-        const data = await res.json();
-        window.location.href = data.url; // redirige vers Stripe Checkout
-      } catch (err) {
-        console.error(err);
-        alert('Erreur lors de la réservation.');
-      }
-    }
-
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       height: "auto",
@@ -72,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         topEl.appendChild(priceEl);
       },
 
-      // Toute la cellule cliquable
+      // Click sur une date
       dateClick: function(info) {
         info.jsEvent.preventDefault();
         const clickedDate = info.dateStr;
@@ -86,20 +69,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          const nuits = parseInt(prompt("Combien de nuits ?", "1"));
-          if (!nuits || nuits <= 0) {
-            alert("Veuillez saisir un nombre de nuits valide !");
-            return;
-          }
-          const prix = getPriceForDate(new Date(clickedDate)) * nuits;
-          reserver(clickedDate, 'BLŌM', nuits, prix);
+          // Redirection vers le formulaire avec date et logement
+          const url = `/assets/HTML/formulaire-de-reservation.html?date=${clickedDate}&logement=BLŌM`;
+          window.location.href = url;
         }
       }
     });
 
     calendar.render();
 
-    // Forcer le clic sur le numéro du jour à agir comme une cellule complète
+    // Forcer le clic sur le numéro du jour
     document.addEventListener('click', function (e) {
       if (e.target.classList.contains('fc-daygrid-day-number')) {
         const cell = e.target.closest('.fc-daygrid-day');
