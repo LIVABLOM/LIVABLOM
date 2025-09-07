@@ -35,7 +35,7 @@ button:hover { background:#555; }
 </div>
 
 <script>
-// Récupérer les paramètres URL
+// Récupération des paramètres URL
 const params = new URLSearchParams(window.location.search);
 const selectedDate = params.get('date');
 const logement = params.get('logement');
@@ -56,7 +56,7 @@ function getPrice(dateStr) {
   return 150;                     // Lun → Jeu
 }
 
-// Calcul total
+// Calcul du total
 function updateTotal() {
   const price = getPrice(selectedDate);
   const nights = parseInt(nightsInput.value) || 1;
@@ -67,7 +67,7 @@ function updateTotal() {
 // Initialisation
 updateTotal();
 
-// Mettre à jour le total au changement du nombre de nuits
+// Mettre à jour le total si l'utilisateur change le nombre de nuits
 nightsInput.addEventListener('input', updateTotal);
 
 // Stripe
@@ -82,15 +82,23 @@ document.getElementById('payBtn').addEventListener('click', async () => {
     return;
   }
 
-  // Crée la session côté serveur
-  const res = await fetch('/create-checkout-session', {
-    method: 'POST',
-    headers: { 'Content-Type':'application/json' },
-    body: JSON.stringify({ price, nights, date: selectedDate, logement })
-  });
+  try {
+    // Crée la session côté serveur
+    const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ prix: price * nights, nuits, date: selectedDate, logement })
+    });
 
-  const data = await res.json();
-  await stripe.redirectToCheckout({ sessionId: data.id });
+    const data = await res.json();
+
+    // Redirection vers Stripe Checkout
+    window.location.href = data.url;
+
+  } catch(err) {
+    console.error(err);
+    alert('Erreur lors de la création de la session Stripe.');
+  }
 });
 </script>
 </body>
