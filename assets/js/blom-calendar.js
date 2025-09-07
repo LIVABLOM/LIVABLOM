@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const calendarEl = document.getElementById("calendar-container");
 
   try {
+    // Récupération des réservations depuis ton serveur
     const res = await fetch("https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM");
     const events = await res.json();
 
@@ -16,9 +17,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Prix par jour
     function getPriceForDate(date) {
       const day = date.getDay(); // 0=Dim, 1=Lun ... 6=Sam
-      if (day === 0) return 190;            // Dimanche
-      if (day === 5 || day === 6) return 169; // Vendredi & Samedi
-      return 150;                           // Lundi à Jeudi
+      if (day === 0) return 190;
+      if (day === 5 || day === 6) return 169;
+      return 150;
     }
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -42,7 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       dayMaxEvents: true,
       navLinks: true,
 
-      // Prix affichés sous le numéro de jour
       dayCellDidMount: function(info) {
         if (info.view.type !== "dayGridMonth") return;
         const topEl = info.el.querySelector(".fc-daygrid-day-top");
@@ -55,9 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         topEl.appendChild(priceEl);
       },
 
-      // Click sur une date
       dateClick: function(info) {
-        info.jsEvent.preventDefault();
         const clickedDate = info.dateStr;
 
         const isBlocked = events.some(ev => {
@@ -69,16 +67,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
-          // Redirection vers le formulaire avec date et logement
-          const url = `/assets/HTML/formulaire-de-reservation.html?date=${clickedDate}&logement=BLŌM`;
-          window.location.href = url;
+          // Redirection vers le formulaire avec date + logement
+          window.location.href = `/assets/html/formulaire-de-reservation.html?date=${clickedDate}&logement=BLŌM`;
         }
       }
     });
 
     calendar.render();
 
-    // Forcer le clic sur le numéro du jour
+    // Forcer le clic sur le numéro du jour à agir comme toute la cellule
     document.addEventListener('click', function (e) {
       if (e.target.classList.contains('fc-daygrid-day-number')) {
         const cell = e.target.closest('.fc-daygrid-day');
