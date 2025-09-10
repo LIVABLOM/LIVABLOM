@@ -6,78 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
 
   <!-- FullCalendar JS -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
   <style>
     body { background: #1a1a1a; color: white; font-family: sans-serif; margin:0; padding:20px; }
     #calendar-container { max-width: 900px; margin: 0 auto; }
 
-    /* Bloc tarifs */
-    .tarifs {
-      max-width: 900px;
-      margin: 0 auto 20px;
-      background: #2a2a2a;
-      padding: 16px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
+    .tarifs { max-width: 900px; margin: 0 auto 20px; background: #2a2a2a; padding: 16px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); font-size: 0.95rem; line-height: 1.4; }
     .tarifs h2 { margin-top: 0; font-size: 1.3rem; color: #f1f1f1; }
     .tarifs ul { padding-left: 18px; }
 
-    /* Toolbar FullCalendar */
     .fc-toolbar-title { font-size:1.3rem; font-weight:bold; color:white; }
     .fc-button { background:#333 !important; color:white !important; border:none !important; border-radius:6px !important; }
     .fc-button:hover { background:#555 !important; }
-
-    /* Aujourd'hui */
     .fc-day-today { background: rgba(59,130,246,0.3) !important; border: 2px solid #3b82f6 !important; }
-
-    /* Jours réservés */
     .fc-event { background-color:#e63946 !important; color:white !important; font-weight:bold; text-align:center; border-radius:6px !important; border:none !important; }
-
-    /* Prix dans les cellules */
     .fc-daygrid-day-number { font-weight: bold; display: block; }
     .price-tag { display: block; font-size: 0.8rem; color: #aaa; margin-top: 2px; }
 
-    /* Bouton retour */
-    #backBtn {
-      display:inline-block;
-      margin: 0 auto 20px;
-      padding:10px 20px;
-      background:#333;
-      color:white;
-      text-decoration:none;
-      border-radius:8px;
-      border:none;
-      cursor:pointer;
-    }
+    #backBtn { display:inline-block; margin: 0 auto 20px; padding:10px 20px; background:#333; color:white; text-decoration:none; border-radius:8px; border:none; cursor:pointer; }
     #backBtn:hover { background:#555; }
     .btn-container { max-width:900px; margin:0 auto; text-align:left; }
 
-    /* Modal réservation */
-    #reservationModal {
-      display:none;
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.6);
-      z-index:1000;
-      justify-content:center;
-      align-items:center;
-    }
-    #reservationModalContent {
-      background:#2a2a2a;
-      padding:20px;
-      border-radius:12px;
-      max-width:400px;
-      margin:auto;
-      color:white;
-    }
+    #reservationModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center; }
+    #reservationModalContent { background:#2a2a2a; padding:20px; border-radius:12px; max-width:400px; margin:auto; color:white; }
     #reservationModalContent input { width:100%; padding:6px; margin:6px 0 12px; border-radius:6px; border:none; }
     #reservationModalContent button { padding:10px 20px; border:none; border-radius:6px; cursor:pointer; margin-right:10px; }
     #modalPayBtn { background:#3b82f6; color:white; }
@@ -116,11 +71,8 @@
     </div>
   </div>
 
-  <!-- Script spécifique BLOM -->
   <script src="/assets/js/blom-calendar.js"></script>
-
   <script>
-    // Bouton retour
     document.getElementById('backBtn').addEventListener('click', function () {
       if (history.length > 1 && document.referrer && document.referrer.includes(location.origin)) {
         history.back();
