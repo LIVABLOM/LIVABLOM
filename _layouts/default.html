@@ -52,36 +52,30 @@
 </head>
 <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden">
 {% if site.maintenance %}
-  {% assign admin = false %}
-  {% if page.url contains "admin=true" %}
-    {% assign admin = true %}
-  {% endif %}
+  <div id="maintenance-page" class="flex flex-col items-center justify-center h-screen text-center px-4 bg-white">
+    <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="w-32 h-auto mb-6">
+    <h1 class="text-4xl font-extrabold mb-4 text-gray-900">Site en maintenance</h1>
+    <p class="text-lg text-gray-700 mb-6 max-w-xl">
+      Nous travaillons actuellement sur le site pour vous offrir une meilleure expérience.
+      Vous pouvez toujours nous contacter via le bouton ci-dessous.
+    </p>
+    <a href="/contact" class="px-8 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition">
+      Contactez-nous
+    </a>
+  </div>
 
-  {% if admin == false %}
-    <div class="flex flex-col items-center justify-center h-screen text-center px-4 bg-white">
-      <!-- Logo -->
-      <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="w-32 h-auto mb-6">
-
-      <!-- Titre -->
-      <h1 class="text-4xl font-extrabold mb-4 text-gray-900">Site en maintenance</h1>
-
-      <!-- Texte -->
-      <p class="text-lg text-gray-700 mb-6 max-w-xl">
-        Nous travaillons actuellement sur le site pour vous offrir une meilleure expérience.
-        Vous pouvez toujours nous contacter via le bouton ci-dessous.
-      </p>
-
-      <!-- Bouton Contact -->
-      <a href="/contact" class="px-8 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition">
-        Contactez-nous
-      </a>
-    </div>
-
-    {% comment %}On empêche l’affichage du reste du site{% endcomment %}
-    {% exit %}
-  {% endif %}
+  <script>
+    // Si l'URL contient ?admin=true, on cache la maintenance et on montre le site
+    if (window.location.search.includes("admin=true")) {
+      document.getElementById('maintenance-page').style.display = 'none';
+    } else {
+      // on cache le reste du site pour les visiteurs
+      document.querySelector('header').style.display = 'none';
+      document.querySelector('main').style.display = 'none';
+      document.querySelector('footer').style.display = 'none';
+    }
+  </script>
 {% endif %}
-
 
 <header class="bg-black text-white w-full px-6 py-4 relative z-50 flex justify-between items-center">
   <div class="flex items-center space-x-4">
