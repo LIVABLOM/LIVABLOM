@@ -33,10 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const modalNights = document.getElementById('modalNights');
       const modalTotal = document.getElementById('modalTotal');
 
-      // 👉 Tarifs LIVA (adapte selon tes règles)
-      let price = 120; // exemple prix standard
+      // 💰 Tarifs LIVA (exemple, adapte selon tes vrais prix)
+      let price = 120; // par défaut
       const day = new Date(info.dateStr).getDay();
-      if (day === 5 || day === 6) price = 140; // vendredi/samedi plus cher
+
+      if (day === 5 || day === 6) price = 150; // vendredi/samedi
+      else if (day === 0) price = 130; // dimanche
 
       modalDate.textContent = info.dateStr;
       modalPricePerNight.textContent = price;
@@ -55,24 +57,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
       document.getElementById('modalPayBtn').onclick = async () => {
         try {
-          const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              date: info.dateStr,
-              logement: 'LIVA',
-              nuits: parseInt(modalNights.value, 10),
-              prix: price,
-              email: 'client@example.com'
-            })
-          });
+          const res = await fetch(
+            'https://livablom-stripe-production.up.railway.app/create-checkout-session',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                date: info.dateStr,
+                logement: 'LIVA',
+                nuits: parseInt(modalNights.value, 10),
+                prix: price,
+                email: 'client@example.com'
+              })
+            }
+          );
+
           const data = await res.json();
+
           if (data.url) {
             window.location.href = data.url;
           }
         } catch (err) {
           console.error('Erreur Stripe LIVA :', err);
-          alert("Impossible de créer la réservation.");
+          alert('Impossible de créer la réservation.');
         }
       };
     }
