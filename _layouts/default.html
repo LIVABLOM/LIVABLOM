@@ -66,6 +66,24 @@
   </div>
 
   <script>
+  // Vérifie si on est en mode admin
+  const isAdmin = window.location.search.includes("admin=true");
+
+  if (isAdmin) {
+    // Récupère tous les liens internes
+    document.querySelectorAll('a[href^="/"]').forEach(link => {
+      const url = new URL(link.href, window.location.origin);
+      // Ajoute ?admin=true si ce n'est pas déjà présent
+      if (!url.searchParams.has("admin")) {
+        url.searchParams.set("admin", "true");
+        link.href = url.toString();
+      }
+    });
+  }
+</script>
+
+
+  <script>
     // Si l'URL contient ?admin=true, on cache la maintenance et on montre le site
     if (window.location.search.includes("admin=true")) {
       document.getElementById('maintenance-page').style.display = 'none';
