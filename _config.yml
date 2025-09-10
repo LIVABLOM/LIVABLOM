@@ -9,6 +9,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 permalink: pretty
+maintenance: true
 include:
   - index.md
   - liva.md
@@ -17,3 +18,4 @@ exclude:
   - README.md
   - .gitignore
 google_analytics: "G-34YPEPJ0WQ"
+
