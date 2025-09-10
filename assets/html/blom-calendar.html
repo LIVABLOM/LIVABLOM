@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Tarifs BLOM
       const day = new Date(info.dateStr).getDay();
-      let price = 150; // par défaut lundi-jeudi
+      let price = 150; // lundi-jeudi par défaut
       if (day === 0) price = 190; // dimanche
       else if (day === 5 || day === 6) price = 169; // vendredi/samedi
 
@@ -56,24 +56,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
       document.getElementById('modalPayBtn').onclick = async () => {
         try {
-          const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              date: info.dateStr,
-              logement: 'BLOM',
-              nuits: parseInt(modalNights.value, 10),
-              prix: price,
-              email: 'client@example.com'
-            })
-          });
+          const res = await fetch(
+            'https://livablom-stripe-production.up.railway.app/create-checkout-session',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                date: info.dateStr,
+                logement: 'BLOM',
+                nuits: parseInt(modalNights.value, 10),
+                prix: price,
+                email: 'client@example.com'
+              })
+            }
+          );
+
           const data = await res.json();
+
           if (data.url) {
             window.location.href = data.url;
           }
         } catch (err) {
           console.error('Erreur Stripe BLOM :', err);
-          alert("Impossible de créer la réservation.");
+          alert('Impossible de créer la réservation.');
         }
       };
     }
