@@ -10,35 +10,17 @@ title: Confirmation de réservation
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f0f4f8;
+    background: #000; /* fond noir */
     overflow-x: hidden;
-  }
-
-  /* Fond animé */
-  .background-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, #d9f0f7, #f0f4f8, #d9f0f7, #f0f4f8);
-    background-size: 400% 400%;
-    animation: gradientMove 15s ease infinite;
-    z-index: -1;
-  }
-
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    color: #fff; /* texte général blanc pour contraste */
   }
 
   .confirmation-container {
     max-width: 550px;
     margin: 80px auto;
-    background: rgba(255, 255, 255, 0.95);
+    background: #ffffff; /* cadre blanc */
     border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     padding: 50px 35px;
     text-align: center;
     position: relative;
@@ -55,26 +37,12 @@ title: Confirmation de réservation
   .logo {
     max-width: 120px;
     margin-bottom: 25px;
-    animation: logoBounce 0.8s;
-  }
-
-  @keyframes logoBounce {
-    0% { transform: scale(0.5); opacity: 0; }
-    60% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(1); }
   }
 
   .checkmark {
     font-size: 4rem;
     color: #2b7a78;
     margin-bottom: 20px;
-    animation: bounce 0.8s ease;
-  }
-
-  @keyframes bounce {
-    0% { transform: scale(0.5); opacity: 0; }
-    60% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(1); }
   }
 
   h1 {
@@ -97,12 +65,12 @@ title: Confirmation de réservation
     padding: 20px;
     margin-bottom: 30px;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    color: #17252a;
   }
 
   .recap h2 {
     font-size: 1.4rem;
     margin-bottom: 15px;
-    color: #17252a;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -133,17 +101,6 @@ title: Confirmation de réservation
     background: #1f5f5a;
   }
 
-  /* Confetti canvas */
-  #confetti-canvas {
-    position: fixed;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-  }
-
   @media (max-width: 600px) {
     .confirmation-container {
       margin: 40px 20px;
@@ -151,10 +108,6 @@ title: Confirmation de réservation
     }
   }
 </style>
-
-<canvas id="confetti-canvas"></canvas>
-
-<div class="background-animation"></div>
 
 <div class="confirmation-container">
   <img src="/assets/logo/livablom-logo.png" alt="LIVABLŌM" class="logo">
@@ -173,7 +126,6 @@ title: Confirmation de réservation
   <a href="/blom/" class="btn-home">Retour à BLŌM</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
 const params = new URLSearchParams(window.location.search);
 const status = document.getElementById('status');
@@ -190,17 +142,4 @@ document.getElementById('recapLogement').textContent = logement;
 document.getElementById('recapDate').textContent = date !== 'Non renseignée' ? new Date(date).toLocaleDateString('fr-FR') : date;
 document.getElementById('recapNuits').textContent = nuits;
 document.getElementById('recapMontant').textContent = montant;
-
-// --- Confetti effect ---
-if (params.get('success') === 'true') {
-  const confettiSettings = {
-    particleCount: 150,
-    spread: 70,
-    origin: { y: 0.6 }
-  };
-  confetti(confettiSettings);
-  // Animate continuously for 3 seconds
-  const interval = setInterval(() => confetti(confettiSettings), 250);
-  setTimeout(() => clearInterval(interval), 3000);
-}
 </script>
