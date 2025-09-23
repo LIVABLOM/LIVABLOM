@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Confirmation Paiement
+title: Confirmation de réservation
 ---
 
 <!DOCTYPE html>
@@ -11,96 +11,74 @@ title: Confirmation Paiement
   <style>
     body {
       font-family: 'Helvetica Neue', sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      color: #17252a;
-    }
-    .container {
-      background: #ffffff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 500px;
-      width: 100%;
       text-align: center;
+      padding: 50px;
+      background: #f5f5f5;
+      color: #17252a;
     }
     h1 {
       color: #2b7a78;
-      font-size: 1.8rem;
-      margin-bottom: 10px;
+      font-size: 2rem;
     }
-    .success-icon {
-      font-size: 3rem;
-      color: #3b82f6;
-      margin-bottom: 20px;
-    }
-    p {
-      margin: 8px 0;
+    .success { color: #2b7a78; font-weight: bold; }
+    .error { color: red; font-weight: bold; }
+    .recap {
+      background: #ffffff;
+      display: inline-block;
+      text-align: left;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin-top: 20px;
+      line-height: 1.6;
       font-size: 1rem;
     }
-    .summary {
-      background: #e0f2f1;
-      padding: 20px;
-      border-radius: 12px;
-      margin: 20px 0;
-      text-align: left;
-      font-size: 0.95rem;
-    }
-    .summary p { margin: 6px 0; }
-    .btn {
-      display: inline-block;
-      padding: 12px 24px;
-      margin: 8px;
-      background: #3b82f6;
-      color: white;
+    a {
       text-decoration: none;
-      border-radius: 8px;
+      color: #17252a;
       font-weight: bold;
-      transition: background 0.3s;
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #2b7a78;
+      border-radius: 8px;
+      color: white;
     }
-    .btn:hover { background: #2563eb; }
+    a:hover { background: #3a9e8d; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="success-icon">✅</div>
-    <h1>Merci pour votre réservation !</h1>
-    <p id="statusMessage"></p>
+  <h1>Merci pour votre réservation !</h1>
+  <p id="message"></p>
 
-    <div class="summary">
-      <h3>Récapitulatif du séjour</h3>
-      <p><strong>Logement :</strong> <span id="logement"></span></p>
-      <p><strong>Date d’arrivée :</strong> <span id="dateArrivee"></span></p>
-      <p><strong>Nombre de nuits :</strong> <span id="nuits"></span></p>
-      <p><strong>Montant payé :</strong> <span id="montant"></span> €</p>
-    </div>
-
-    <a href="/blom/" class="btn">Retour à BLŌM</a>
-    <a href="/blom-calendrier/" class="btn">Voir le calendrier</a>
+  <div class="recap">
+    <h2>Récapitulatif du séjour</h2>
+    <p><strong>Logement :</strong> <span id="recapLogement">Non renseigné</span></p>
+    <p><strong>Date d’arrivée :</strong> <span id="recapDate">Non renseignée</span></p>
+    <p><strong>Nombre de nuits :</strong> <span id="recapNuits">Non renseigné</span></p>
+    <p><strong>Montant payé :</strong> <span id="recapMontant">Non renseigné</span> €</p>
   </div>
+
+  <a href="/blom/">Retour à BLŌM</a>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const success = params.get('success') === 'true';
-    const logement = params.get('logement') || 'Non renseigné';
-    const date = params.get('date') || 'Non renseignée';
-    const nuits = params.get('nuits') || 'Non renseigné';
-    const montant = params.get('montant') || 'Non renseigné';
+    const msg = document.getElementById('message');
 
-    document.getElementById('statusMessage').textContent = success 
-      ? "Votre paiement a été effectué avec succès !" 
-      : "Le paiement a été annulé ou a échoué ❌";
+    if (params.get('success') === 'true') {
+      msg.textContent = "Votre paiement a été effectué avec succès ✅";
+      msg.className = "success";
+    } else {
+      msg.textContent = "Le paiement a été annulé ou a échoué ❌";
+      msg.className = "error";
+    }
 
-    document.getElementById('logement').textContent = logement;
-    document.getElementById('dateArrivee').textContent = date;
-    document.getElementById('nuits').textContent = nuits;
-    document.getElementById('montant').textContent = montant;
+    // Récupérer les informations du séjour depuis l'URL
+    document.getElementById('recapLogement').textContent = params.get('logement') || 'Non renseigné';
+    const dateStr = params.get('date') ? new Date(params.get('date')).toLocaleDateString('fr-FR') : 'Non renseignée';
+    document.getElementById('recapDate').textContent = dateStr;
+    document.getElementById('recapNuits').textContent = params.get('nuits') || 'Non renseigné';
+    document.getElementById('recapMontant').textContent = params.get('montant') || 'Non renseigné';
   </script>
 </body>
 </html>
