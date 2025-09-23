@@ -133,6 +133,17 @@ title: Confirmation de réservation
     background: #1f5f5a;
   }
 
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
   @media (max-width: 600px) {
     .confirmation-container {
       margin: 40px 20px;
@@ -140,6 +151,8 @@ title: Confirmation de réservation
     }
   }
 </style>
+
+<canvas id="confetti-canvas"></canvas>
 
 <div class="background-animation"></div>
 
@@ -160,6 +173,7 @@ title: Confirmation de réservation
   <a href="/blom/" class="btn-home">Retour à BLŌM</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
 const params = new URLSearchParams(window.location.search);
 const status = document.getElementById('status');
@@ -176,4 +190,17 @@ document.getElementById('recapLogement').textContent = logement;
 document.getElementById('recapDate').textContent = date !== 'Non renseignée' ? new Date(date).toLocaleDateString('fr-FR') : date;
 document.getElementById('recapNuits').textContent = nuits;
 document.getElementById('recapMontant').textContent = montant;
+
+// --- Confetti effect ---
+if (params.get('success') === 'true') {
+  const confettiSettings = {
+    particleCount: 150,
+    spread: 70,
+    origin: { y: 0.6 }
+  };
+  confetti(confettiSettings);
+  // Animate continuously for 3 seconds
+  const interval = setInterval(() => confetti(confettiSettings), 250);
+  setTimeout(() => clearInterval(interval), 3000);
+}
 </script>
