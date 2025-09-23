@@ -3,64 +3,154 @@ layout: default
 title: Confirmation de réservation
 ---
 
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f4f8;
-    color: #333;
     margin: 0;
     padding: 0;
+    background: #f0f4f8;
+    overflow-x: hidden;
   }
+
+  /* Fond animé */
+  .background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, #d9f0f7, #f0f4f8, #d9f0f7, #f0f4f8);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    z-index: -1;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
   .confirmation-container {
-    max-width: 500px;
+    max-width: 550px;
     margin: 80px auto;
-    background: white;
-    padding: 40px 30px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    padding: 50px 35px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s forwards;
   }
-  .confirmation-container h1 {
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo {
+    max-width: 120px;
+    margin-bottom: 25px;
+    animation: logoBounce 0.8s;
+  }
+
+  @keyframes logoBounce {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  .checkmark {
+    font-size: 4rem;
     color: #2b7a78;
-    font-size: 1.8rem;
+    margin-bottom: 20px;
+    animation: bounce 0.8s ease;
+  }
+
+  @keyframes bounce {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  h1 {
+    color: #2b7a78;
+    font-size: 2rem;
     margin-bottom: 10px;
   }
-  .confirmation-container p.status {
+
+  .status {
     font-size: 1.1rem;
     margin-bottom: 30px;
     font-weight: bold;
+    color: #333;
   }
-  .confirmation-container .recap h2 {
-    font-size: 1.3rem;
+
+  .recap {
+    text-align: left;
+    background: #f7f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  }
+
+  .recap h2 {
+    font-size: 1.4rem;
     margin-bottom: 15px;
     color: #17252a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  .confirmation-container .recap p {
+
+  .recap h2 i {
+    color: #2b7a78;
+  }
+
+  .recap p {
     font-size: 1rem;
-    margin: 6px 0;
+    margin: 8px 0;
   }
+
   .btn-home {
     display: inline-block;
-    margin-top: 25px;
-    padding: 12px 25px;
+    padding: 14px 28px;
     background: #2b7a78;
     color: white;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: bold;
+    font-size: 1rem;
     transition: 0.3s;
   }
+
   .btn-home:hover {
     background: #1f5f5a;
   }
+
+  @media (max-width: 600px) {
+    .confirmation-container {
+      margin: 40px 20px;
+      padding: 35px 20px;
+    }
+  }
 </style>
 
+<div class="background-animation"></div>
+
 <div class="confirmation-container">
+  <img src="/assets/logo/livablom-logo.png" alt="LIVABLŌM" class="logo">
+  <i class='bx bxs-check-circle checkmark'></i>
   <h1>Merci pour votre réservation !</h1>
   <p class="status" id="status"></p>
 
   <div class="recap">
-    <h2>Récapitulatif du séjour</h2>
+    <h2><i class='bx bx-calendar-event'></i> Récapitulatif du séjour</h2>
     <p>Logement : <span id="recapLogement"></span></p>
     <p>Date d’arrivée : <span id="recapDate"></span></p>
     <p>Nombre de nuits : <span id="recapNuits"></span></p>
