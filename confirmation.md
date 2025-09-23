@@ -3,44 +3,37 @@ layout: default
 title: Confirmation de réservation
 ---
 
-<div style="text-align:center; padding:50px; font-family:sans-serif; background:#f5f5f5; min-height:70vh; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-  <img src="/assets/images/logo.png" alt="LIVABLŌM" style="width:120px; margin-bottom:30px;">
-  <h1 style="color:#2b7a78; margin-bottom:20px;">Merci pour votre réservation !</h1>
+<div style="text-align:center; font-family:sans-serif; padding:50px; background:#f5f5f5;">
+  <h1 style="color:#2b7a78;">Merci pour votre réservation !</h1>
+  <div id="message" style="margin:20px 0; font-size:1.1rem;"></div>
 
-  <p id="message" style="font-size:1.1rem; margin-bottom:20px;"></p>
-
-  <div style="background:#fff; padding:20px 30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.2); margin-bottom:20px; max-width:400px;">
-    <h2 style="margin-top:0; color:#17252a;">Détails de votre réservation</h2>
-    <ul style="list-style:none; padding-left:0; text-align:left; font-size:0.95rem;">
-      <li><strong>Logement :</strong> <span id="logement"></span></li>
-      <li><strong>Date d'arrivée :</strong> <span id="date"></span></li>
-      <li><strong>Nombre de nuits :</strong> <span id="nuits"></span></li>
-    </ul>
+  <div id="details" style="background:#fff; padding:20px; border-radius:12px; display:inline-block; text-align:left; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+    <p><strong>Logement :</strong> <span id="logement"></span></p>
+    <p><strong>Date d’arrivée :</strong> <span id="date"></span></p>
+    <p><strong>Nombre de nuits :</strong> <span id="nuits"></span></p>
   </div>
 
-  <a href="/blom/" style="display:inline-block; padding:12px 25px; background:#2b7a78; color:white; text-decoration:none; border-radius:8px; font-weight:bold; transition:0.3s;">Retour à BLŌM</a>
+  <div style="margin-top:30px;">
+    <a href="/blom/" style="display:inline-block; padding:12px 25px; background:#2b7a78; color:white; border-radius:8px; text-decoration:none;">Retour à BLŌM</a>
+  </div>
 </div>
 
 <script>
   const params = new URLSearchParams(window.location.search);
   const msg = document.getElementById('message');
-  const logement = document.getElementById('logement');
-  const date = document.getElementById('date');
-  const nuits = document.getElementById('nuits');
-
-  const log = params.get('logement') || '—';
-  const dat = params.get('date') || '—';
-  const n = params.get('nuits') || '—';
-
-  logement.textContent = log;
-  date.textContent = dat;
-  nuits.textContent = n;
+  const logementEl = document.getElementById('logement');
+  const dateEl = document.getElementById('date');
+  const nuitsEl = document.getElementById('nuits');
 
   if (params.get('success') === 'true') {
     msg.textContent = "Votre paiement a été effectué avec succès ✅";
-    msg.style.color = "#2b7a78";
+    msg.style.color = "green";
   } else {
     msg.textContent = "Le paiement a été annulé ou a échoué ❌";
     msg.style.color = "red";
   }
+
+  logementEl.textContent = params.get('logement') || "Non renseigné";
+  dateEl.textContent = params.get('date') ? new Date(params.get('date')).toLocaleDateString('fr-FR') : "Non renseignée";
+  nuitsEl.textContent = params.get('nuits') || "Non renseigné";
 </script>
