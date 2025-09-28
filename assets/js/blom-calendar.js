@@ -1,3 +1,4 @@
+// assets/js/blom-calendar.js
 document.addEventListener("DOMContentLoaded", async () => {
   const calendarEl = document.getElementById("calendar-container");
 
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const modalPayBtn = document.getElementById("modalPayBtn");
   const modalCancelBtn = document.getElementById("modalCancelBtn");
 
-  // Convertit date PostgreSQL en ISO yyyy-mm-dd
+  // Helper pour formater en YYYY-MM-DD
   const toISODate = (d) => {
     const x = new Date(d);
     const y = x.getFullYear();
@@ -19,22 +20,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     return `${y}-${m}-${day}`;
   };
 
-  // Prix par jour
+  // Fonction tarif
   function getPriceForDate(date) {
     const day = date.getDay(); // 0=Dim, 1=Lun ... 6=Sam
-    if (day === 0) return 190;
-    if (day === 5 || day === 6) return 169;
-    return 150;
+    if (day === 0) return 190; // Dimanche
+    if (day === 5 || day === 6) return 169; // Vendredi & Samedi
+    return 150; // Lun → Jeu
   }
 
-  let selectedDate = null;
-  let selectedNights = 1;
-
   try {
-    // Récupère les réservations depuis ton serveur Node
-    const res = await fetch("https://livablom-stripe-production.up.railway.app/api/reservations/BLŌM");
+    // 👉 On appelle ton backend Stripe/Postgres
+    const res = await fetch("https://livablom-stripe-production.up.railway.app/api/reservations/BLOM");
     const reservations = await res.json();
 
+    // Transforme les réservations BDD en events FullCalendar
     const events = reservations.map(r => ({
       title: "Réservé",
       start: toISODate(r.date_debut),
@@ -42,6 +41,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       allDay: true,
       display: "block"
     }));
+
+    let selectedDate = null;
+    let selectedNights = 1;
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
@@ -56,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       dayMaxEvents: true,
       navLinks: true,
 
+      // Prix affichés sous le numéro de jour
       dayCellDidMount: function(info) {
         if (info.view.type !== "dayGridMonth") return;
         const topEl = info.el.querySelector(".fc-daygrid-day-top");
@@ -68,13 +71,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         topEl.appendChild(priceEl);
       },
 
+      // Clic sur une date
       dateClick: function(info) {
         const clickedDate = info.dateStr;
-        const isBlocked = events.some(ev => clickedDate >= ev.start && clickedDate < ev.end);
+
+        const isBlocked = events.some(ev => {
+          const evStart = toISODate(ev.start);
+          const evEnd = toISODate(ev.end);
+          return clickedDate >= evStart && clickedDate < evEnd;
+        });
 
         if (isBlocked) {
           alert("Cette date est déjà réservée !");
         } else {
+          // Affiche le modal
           selectedDate = clickedDate;
           selectedNights = 1;
           const pricePerNight = getPriceForDate(new Date(selectedDate));
@@ -98,18 +108,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       modalTotalEl.textContent = pricePerNight * selectedNights;
     });
 
-    modalCancelBtn.addEventListener("click", () => { modal.style.display = "none"; });
+    // Bouton annuler
+    modalCancelBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
 
+    // Bouton payer
     modalPayBtn.addEventListener("click", async () => {
       const prix = getPriceForDate(new Date(selectedDate)) * selectedNights;
       try {
         const res = await fetch('https://livablom-stripe-production.up.railway.app/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ date: selectedDate, logement: 'BLŌM', nuits: selectedNights, prix })
+          body: JSON.stringify({
+            date: selectedDate,
+            logement: 'BLOM',
+            nuits: selectedNights,
+            prix
+          })
         });
         const data = await res.json();
-        window.location.href = data.url;
+        if (data.url) {
+          window.location.href = data.url; // Redirection Stripe Checkout
+        } else {
+          alert("Erreur lors de la création de la session.");
+          console.error(data);
+        }
       } catch (err) {
         console.error(err);
         alert("Erreur lors de la réservation.");
