@@ -1,80 +1,49 @@
-// /assets/js/blom-calendar.js
-
-// Fonction pour calculer le tarif par nuit selon le jour
-function getTarif(date) {
-  const d = new Date(date);
-  const day = d.getUTCDay(); // 0=dim, 1=lun, ..., 6=sam
-  if (day === 0) return 190; // Dimanche
-  if (day === 5 || day === 6) return 169; // Vendredi / Samedi
-  return 150; // Lundi à jeudi
+function getTarif(date){
+  const d=new Date(date);
+  const day=d.getUTCDay();
+  if(day===0) return 190;
+  if(day===5||day===6) return 169;
+  return 150;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const calendarEl = document.getElementById("calendar");
-  if (!calendarEl) return; // Sécurité si le conteneur n'existe pas
+document.addEventListener("DOMContentLoaded",function(){
+  const el=document.getElementById("calendar");
+  if(!el) return;
 
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "dayGridMonth",
-    locale: "fr",
-    selectable: true,
-    unselectAuto: true,
+  const cal=new FullCalendar.Calendar(el,{
+    initialView:"dayGridMonth",
+    locale:"fr",
+    selectable:true,
 
-    select: async (info) => {
-      const startDate = info.startStr;
-      const endDate = info.endStr;
+    select: async info => {
+      const start=info.startStr,end=info.endStr;
+      let total=0,cur=new Date(start),fin=new Date(end);
+      while(cur<fin){ total+=getTarif(cur.toISOString().split("T")[0]); cur.setDate(cur.getDate()+1); }
 
-      // Calcul du tarif total pour plusieurs jours
-      let total = 0;
-      let current = new Date(startDate);
-      let end = new Date(endDate);
+      let montant=window.TEST_PAYMENT?1:total;
+      if(!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
 
-      while (current < end) {
-        total += getTarif(current.toISOString().split("T")[0]);
-        current.setDate(current.getDate() + 1);
-      }
-
-      // Si TEST_PAYMENT=true sur le backend, le montant sera remplacé par 1 €
-      let displayAmount = total;
-      if (window.TEST_PAYMENT === true) displayAmount = 1;
-
-      if (!confirm(`Réserver BLŌM du ${startDate} au ${endDate} pour ${displayAmount} € ?`)) return;
-
-      try {
-        const res = await fetch("https://livablom-stripe-production.up.railway.app/api/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            logement: "BLOM",
-            startDate,
-            endDate,
-            amount: total,
-          }),
+      try{
+        const res=await fetch("https://livablom-stripe-production.up.railway.app/api/checkout",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({logement:"BLOM",startDate:start,endDate:end,amount:montant})
         });
-
-        const data = await res.json();
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          alert("Impossible de créer la réservation.");
-        }
-      } catch (err) {
-        console.error("Erreur checkout:", err);
-        alert("Erreur lors de la création de la réservation.");
-      }
+        const data=await res.json();
+        if(data.url) window.location.href=data.url;
+        else alert("Impossible de créer la réservation.");
+      }catch(err){ console.error(err); alert("Erreur lors de la création de la réservation."); }
     },
 
-    events: async (fetchInfo, successCallback, failureCallback) => {
-      try {
-        const res = await fetch("https://livablom-stripe-production.up.railway.app/api/reservations/BLOM");
-        if (!res.ok) throw new Error("Erreur serveur");
-        const events = await res.json();
-        successCallback(events);
-      } catch (err) {
-        console.error("Impossible de charger le calendrier:", err);
-        failureCallback(err);
-      }
-    },
+    events: async (fetchInfo,success,failure)=>{
+      try{
+        const res=await fetch("https://livablom-stripe-production.up.railway.app/api/reservations/BLOM");
+        if(!res.ok) throw new Error("Erreur serveur");
+        const evts=await res.json();
+        success(evts);
+      }catch(err){ console.error(err); failure(err); }
+    }
   });
 
-  calendar.render();
+  cal.render();
 });
