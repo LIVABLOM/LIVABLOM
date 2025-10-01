@@ -1,100 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calendrier BLŌM</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-  <script src="https://js.stripe.com/v3/"></script>
-  <style>
-    body { background: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; }
-    #calendar { max-width: 900px; margin: 40px auto; background: #111; padding: 20px; border-radius: 12px; }
-    .fc-daygrid-day.fc-day-disabled { background: #333 !important; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendrier BLŌM</title>
+
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<style>
+  html, body { height: 100%; margin: 0; padding: 0; background: #000; color: #fff; font-family: Arial, sans-serif; }
+  #calendar { width: 100%; max-width: 1000px; margin: 0 auto; padding: 10px; background: #111; border-radius: 12px; height: calc(100vh - 40px); }
+  h1 { text-align: center; margin: 10px 0; font-size: 1.8rem; }
+  @media (max-width: 768px) {
+    h1 { font-size: 1.4rem; }
+    #calendar { padding: 5px; }
+  }
+</style>
 </head>
 <body>
-  <h1>Calendrier des disponibilités - BLŌM</h1>
-  <div id="calendar"></div>
 
-  <script>
-    // Fonction qui calcule le tarif par nuit
-    function getTarif(date) {
-      const d = new Date(date);
-      const day = d.getUTCDay(); // 0=dim, 1=lun, ..., 6=sam
-      if (day === 0) return 190; // Dimanche
-      if (day === 5 || day === 6) return 169; // Vendredi / Samedi
-      return 150; // Lundi à jeudi
-    }
+<h1>Calendrier des disponibilités - BLŌM</h1>
+<div id="calendar"></div>
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const calendarEl = document.getElementById("calendar");
+<script>
+  // Mode test ou prod côté front
+  window.TEST_PAYMENT = true; // true = 1€ pour test, false = montant réel
+</script>
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        locale: "fr",
-        selectable: true,
-        unselectAuto: true,
-        
-        // Sélection d'une ou plusieurs dates
-        select: async (info) => {
-          const startDate = info.startStr;
-          const endDate = info.endStr;
+<script src="/assets/js/blom-calendar.js"></script>
 
-          // Calcul du tarif total pour plusieurs jours
-          let total = 0;
-          let current = new Date(startDate);
-          let end = new Date(endDate);
-
-          while (current < end) {
-            total += getTarif(current.toISOString().split("T")[0]);
-            current.setDate(current.getDate() + 1);
-          }
-
-          if (!confirm(`Réserver BLŌM du ${startDate} au ${endDate} pour ${total} € ?`)) {
-            return;
-          }
-
-          try {
-            const res = await fetch("https://livablom-stripe-production.up.railway.app/api/checkout", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                logement: "BLOM",
-                startDate,
-                endDate,
-                amount: total,
-              }),
-            });
-
-            const data = await res.json();
-            if (data.url) {
-              window.location.href = data.url;
-            } else {
-              alert("Impossible de créer la réservation.");
-            }
-          } catch (err) {
-            console.error("Erreur checkout:", err);
-            alert("Erreur lors de la création de la réservation.");
-          }
-        },
-
-        // Charger les réservations déjà prises
-        events: async (fetchInfo, successCallback, failureCallback) => {
-          try {
-            const res = await fetch("https://livablom-stripe-production.up.railway.app/api/reservations/BLOM");
-            if (!res.ok) throw new Error("Erreur serveur");
-            const events = await res.json();
-            successCallback(events);
-          } catch (err) {
-            console.error("Impossible de charger le calendrier:", err);
-            failureCallback(err);
-          }
-        },
-      });
-
-      calendar.render();
-    });
-  </script>
 </body>
 </html>
