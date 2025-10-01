@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     selectable: true,
     unselectAuto: true,
 
-    // Sélection d'une ou plusieurs dates
     select: async (info) => {
       const startDate = info.startStr;
       const endDate = info.endStr;
@@ -34,7 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
         current.setDate(current.getDate() + 1);
       }
 
-      if (!confirm(`Réserver BLŌM du ${startDate} au ${endDate} pour ${total} € ?`)) return;
+      // Si TEST_PAYMENT=true sur le backend, le montant sera remplacé par 1 €
+      let displayAmount = total;
+      if (window.TEST_PAYMENT === true) displayAmount = 1;
+
+      if (!confirm(`Réserver BLŌM du ${startDate} au ${endDate} pour ${displayAmount} € ?`)) return;
 
       try {
         const res = await fetch("https://livablom-stripe-production.up.railway.app/api/checkout", {
@@ -60,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    // Récupération des réservations déjà prises
     events: async (fetchInfo, successCallback, failureCallback) => {
       try {
         const res = await fetch("https://livablom-stripe-production.up.railway.app/api/reservations/BLOM");
