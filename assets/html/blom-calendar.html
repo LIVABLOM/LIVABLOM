@@ -113,46 +113,12 @@
 
   <script src="/assets/js/blom-calendar.js"></script>
   <script>
-    // Bouton retour
     document.getElementById('backBtn').addEventListener('click', function () {
       if (history.length > 1 && document.referrer && document.referrer.includes(location.origin)) {
         history.back();
         return;
       }
       window.location.href = '/blom/';
-    });
-
-    // Paiement Stripe
-    const payBtn = document.getElementById('modalPayBtn');
-
-    payBtn.addEventListener('click', async () => {
-      const nights = document.getElementById('modalNights').value;
-      const total = document.getElementById('modalTotal').innerText;
-      const date = document.getElementById('modalDate').innerText;
-
-      try {
-        const response = await fetch("https://livablom-stripe-production.up.railway.app/create-checkout-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nights,
-            total,
-            date
-          }),
-        });
-
-        const session = await response.json();
-
-        if (session.url) {
-          window.location.href = session.url; // redirection Stripe Checkout
-        } else {
-          alert("Erreur : impossible de créer la session de paiement.");
-          console.error(session);
-        }
-      } catch (err) {
-        console.error("Erreur réseau :", err);
-        alert("Problème de connexion avec le serveur de paiement.");
-      }
     });
   </script>
 </body>
