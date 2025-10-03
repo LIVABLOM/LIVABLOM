@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(){
       if(!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
 
       try{
-        const backendUrl = "{{ site.backend_url }}"; // depuis _config.yml
+       const backendUrl = "https://livablom-stripe-production.up.railway.app"; // depuis _config.yml
         const res = await fetch(`${backendUrl}/api/checkout`, {
           method: "POST",
           headers: {"Content-Type":"application/json"},
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     events: async (fetchInfo, success, failure) => {
       try{
-        const backendUrl = "{{ site.backend_url }}"; // depuis _config.yml
+        const backendUrl = "https://livablom-stripe-production.up.railway.app"; // depuis _config.yml
         const res = await fetch(`${backendUrl}/api/reservations/BLOM`);
         if(!res.ok) throw new Error("Erreur serveur");
         const evts = await res.json();
