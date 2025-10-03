@@ -73,7 +73,6 @@
 </script>
 
 <script>
-  // Propager ?admin=true sur tous les liens internes si on est en mode admin
   if (isAdmin) {
     document.querySelectorAll('a[href^="/"]').forEach(link => {
       const url = new URL(link.href, window.location.origin);
@@ -131,6 +130,12 @@
 </footer>
 
 <!-- Scripts JS -->
+
+<!-- Injecter backend URL pour calendriers -->
+<script>
+  window.BACKEND_URL = "{{ site.backend_url | default: 'http://localhost:3000' }}";
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
 
