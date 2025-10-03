@@ -1,9 +1,5 @@
 function getTarif(date){
-  const d = new Date(date);
-  const day = d.getUTCDay();
-  if(day === 0) return 190;          // Dimanche
-  if(day === 5 || day === 6) return 169; // Vendredi & Samedi
-  return 150;                         // Lundi à Jeudi
+  return 79; // Tarif fixe pour LIVA
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -27,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function(){
       if(!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € ?`)) return;
 
       try{
-        const backendUrl = "{{ site.backend_url }}"; // depuis _config.yml
+        const backendUrl = "https://livablom-stripe-production.up.railway.app"; // backend Railway
         const res = await fetch(`${backendUrl}/api/checkout`, {
           method: "POST",
           headers: {"Content-Type":"application/json"},
@@ -49,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     events: async (fetchInfo, success, failure) => {
       try{
-        const backendUrl = "{{ site.backend_url }}"; // depuis _config.yml
+        const backendUrl = "https://livablom-stripe-production.up.railway.app"; // backend Railway
         const res = await fetch(`${backendUrl}/api/reservations/LIVA`);
         if(!res.ok) throw new Error("Erreur serveur");
         const evts = await res.json();
