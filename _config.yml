@@ -4,7 +4,11 @@ url: "https://www.livablom.fr"
 baseurl: ""
 markdown: kramdown
 theme: minima
-backend_url: "https://livablom-stripe-production.up.railway.app"
+production:
+  backend_url: "https://livablom-stripe-production.up.railway.app"
+development:
+  backend_url: "http://localhost:3000"
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
