@@ -1,9 +1,9 @@
 function getTarif(date){
   const d = new Date(date);
   const day = d.getUTCDay();
-  if(day === 0) return 190; // Dimanche
-  if(day === 5 || day === 6) return 169; // Vendredi et samedi
-  return 150; // Lundi à jeudi
+  if(day === 0) return 190;          // Dimanche
+  if(day === 5 || day === 6) return 169; // Vendredi & Samedi
+  return 150;                         // Lundi à Jeudi
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -27,10 +27,16 @@ document.addEventListener("DOMContentLoaded", function(){
       if(!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € ?`)) return;
 
       try{
-        const res = await fetch("{{ site.backend_url }}/api/checkout", {
+        const backendUrl = "{{ site.backend_url }}"; // depuis _config.yml
+        const res = await fetch(`${backendUrl}/api/checkout`, {
           method: "POST",
           headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({logement:"LIVA", startDate:start, endDate:end, amount:montant})
+          body: JSON.stringify({
+            logement:"LIVA",
+            startDate:start,
+            endDate:end,
+            amount:montant
+          })
         });
         const data = await res.json();
         if(data.url) window.location.href = data.url;
@@ -43,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     events: async (fetchInfo, success, failure) => {
       try{
-        const res = await fetch("{{ site.backend_url }}/api/reservations/LIVA");
+        const backendUrl = "{{ site.backend_url }}"; // depuis _config.yml
+        const res = await fetch(`${backendUrl}/api/reservations/LIVA`);
         if(!res.ok) throw new Error("Erreur serveur");
         const evts = await res.json();
         success(evts);
