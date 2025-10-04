@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendrier BLŌM</title>
 
-<!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.global.min.js"></script>
-
+<!-- FullCalendar CSS & JS depuis jsDelivr -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
   html, body { 
@@ -19,6 +18,7 @@
     color: #fff; 
     font-family: Arial, sans-serif; 
   }
+
   #calendar { 
     width: 100%; 
     max-width: 1000px; 
@@ -28,11 +28,13 @@
     border-radius: 12px; 
     height: calc(100vh - 40px); 
   }
+
   h1 { 
     text-align: center; 
     margin: 10px 0; 
     font-size: 1.8rem; 
   }
+
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
     #calendar { padding: 5px; }
@@ -49,7 +51,7 @@
   window.TEST_PAYMENT = true; // true = 1€ pour test, false = montant réel
 </script>
 
-<!-- JS du calendrier avec Stripe et proxy -->
+<!-- Script du calendrier BLŌM -->
 <script src="/assets/js/blom-calendar.js"></script>
 
 </body>
