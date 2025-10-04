@@ -10,15 +10,17 @@ document.addEventListener("DOMContentLoaded", function(){
   const el = document.getElementById("calendar");
   if(!el) return;
 
+  // ⚡️ Détection automatique de l'environnement
   const backendUrl = window.location.hostname.includes("localhost")
-    ? "http://localhost:4000"
-    : "https://calendar-proxy-production-ed46.up.railway.app";
+    ? "http://localhost:4000" // proxy local
+    : "https://calendar-proxy-production-ed46.up.railway.app"; // proxy Railway
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
 
+    // Gestion de la sélection de dates pour réservation
     select: async info => {
       const start = info.startStr, end = info.endStr;
       let total = 0, cur = new Date(start), fin = new Date(end);
@@ -45,15 +47,15 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     },
 
+    // Récupération et affichage des événements
     events: async (fetchInfo, success, failure) => {
       try{
-        // Fetch avec timestamp anti-cache
         const res = await fetch(`${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
         if(!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
 
-        // ⚡️ FullCalendar : réservations rouges
+        // Transformer les événements en style "fond rouge"
         const fcEvents = evts.map(e => ({
           start: e.start,
           end: e.end,
