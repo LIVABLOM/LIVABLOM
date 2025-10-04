@@ -1,12 +1,14 @@
 function getTarif(date) {
   const d = new Date(date);
   const day = d.getUTCDay();
-  if (day === 0) return 190;
-  if (day === 5 || day === 6) return 169;
-  return 150;
+  if (day === 0) return 190; // dimanche
+  if (day === 5 || day === 6) return 169; // vendredi/samedi
+  return 150; // lundi-jeudi
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("✅ Initialisation du calendrier BLOM...");
+
   const el = document.getElementById("calendar");
   if (!el) return;
 
@@ -23,25 +25,34 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    height: "auto",
+    firstDay: 1, // Lundi
 
-    // ✅ Sélection d'une période pour réserver
-    select: async (info) => {
-      const start = info.startStr, end = info.endStr;
-      let total = 0, cur = new Date(start), fin = new Date(end);
+    select: async function (info) {
+      const start = info.startStr;
+      const end = info.endStr;
+      let total = 0,
+        cur = new Date(start),
+        fin = new Date(end);
+
       while (cur < fin) {
         total += getTarif(cur.toISOString().split("T")[0]);
         cur.setDate(cur.getDate() + 1);
       }
 
-      const montant = window.TEST_PAYMENT ? 1 : total;
-      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
+      let montant = window.TEST_PAYMENT ? 1 : total;
+      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`))
+        return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ logement: "BLOM", startDate: start, endDate: end, amount: montant }),
+          body: JSON.stringify({
+            logement: "BLOM",
+            startDate: start,
+            endDate: end,
+            amount: montant,
+          }),
         });
         const data = await res.json();
         if (data.url) window.location.href = data.url;
@@ -52,29 +63,32 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    // ✅ Chargement des réservations existantes
-    eventSources: [
-      {
-       events: async function (fetchInfo, successCallback, failureCallback) {
-  try {
-    const response = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-    if (!response.ok) throw new Error("Erreur serveur");
-    const events = await response.json();
-console.log("📦 Données reçues du backend :", events);
+    events: async function (fetchInfo, success, failure) {
+      console.log("📡 Début du chargement des événements depuis le backend...");
 
+      try {
+        const res = await fetch(
+          `${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`
+        );
+        if (!res.ok) throw new Error("Erreur serveur");
+        const evts = await res.json();
 
-    // 🔹 Les événements sont déjà prêts pour FullCalendar
-    successCallback(events);
-  } catch (error) {
-    console.error("❌ Erreur lors du chargement des événements :", error);
-    failureCallback(error);
-  }
-},
+        console.log("📅 Événements reçus :", evts);
 
-        display: "background",
-        color: "#ff0000"
+        const fcEvents = evts.map((e) => ({
+          title: e.title || "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          color: "#ff0000",
+        }));
+
+        success(fcEvents);
+      } catch (err) {
+        console.error("❌ Erreur lors du chargement des événements :", err);
+        failure(err);
       }
-    ],
+    },
   });
 
   cal.render();
