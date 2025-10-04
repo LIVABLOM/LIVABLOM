@@ -57,27 +57,33 @@ document.addEventListener("DOMContentLoaded", function(){
     },
 
     // 🔹 Affichage des réservations existantes
-    events: async (fetchInfo, success, failure) => {
-      try{
-        const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-        if(!res.ok) throw new Error("Erreur serveur");
+  events: async (fetchInfo, success, failure) => {
+  try {
+    console.log("Fetching events from:", `${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
 
-        const evts = await res.json();
+    const res = await fetch(`${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
+    if (!res.ok) throw new Error("Erreur serveur");
 
-        const fcEvents = evts.map(e => ({
-          start: e.start,
-          end: e.end,
-          display: "background",
-          color: "#ff0000",
-          title: e.summary || e.title || "Réservé"
-        }));
+    const evts = await res.json();
+    console.log("Événements reçus :", evts);
 
-        success(fcEvents);
-      } catch(err){
-        console.error(err);
-        failure(err);
-      }
-    }
+    // ✅ Correction : adapter pour affichage "background"
+    const fcEvents = evts.map(e => ({
+      title: e.title || "Réservé",
+      start: e.start,
+      end: e.end,
+      display: "background", // Important pour colorier les jours
+      backgroundColor: "#ff0000", // Utiliser backgroundColor plutôt que color
+      borderColor: "#ff0000"
+    }));
+
+    success(fcEvents);
+  } catch (err) {
+    console.error("Erreur de chargement des événements :", err);
+    failure(err);
+  }
+}
+
   });
 
   cal.render();
