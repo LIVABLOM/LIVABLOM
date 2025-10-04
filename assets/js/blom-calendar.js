@@ -60,8 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const response = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
     if (!response.ok) throw new Error("Erreur serveur");
     const events = await response.json();
+console.log("📦 Données reçues du backend :", events);
 
-    console.log("✅ Événements reçus :", events);
 
     // 🔹 Les événements sont déjà prêts pour FullCalendar
     successCallback(events);
