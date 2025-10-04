@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function(){
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    businessHours: true, // nécessaire pour background events
 
     select: async info => {
       const start = info.startStr, end = info.endStr;
@@ -48,14 +47,17 @@ document.addEventListener("DOMContentLoaded", function(){
 
     events: async (fetchInfo, success, failure) => {
       try{
+        // Fetch avec timestamp anti-cache
         const res = await fetch(`${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
         if(!res.ok) throw new Error("Erreur serveur");
+
         const evts = await res.json();
 
+        // ⚡️ FullCalendar : réservations rouges
         const fcEvents = evts.map(e => ({
           start: e.start,
           end: e.end,
-          display: "background", // fond rouge
+          display: "background",
           color: "#ff0000",
           title: e.summary || "Réservé"
         }));
