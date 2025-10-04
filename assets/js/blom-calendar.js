@@ -10,17 +10,17 @@ document.addEventListener("DOMContentLoaded", function(){
   const el = document.getElementById("calendar");
   if(!el) return;
 
-  // ⚡️ Détection automatique de l'environnement
   const backendUrl = window.location.hostname.includes("localhost")
-    ? "http://localhost:4000" // proxy local
-    : "https://calendar-proxy-production-ed46.up.railway.app"; // proxy Railway
+    ? "http://localhost:4000"
+    : "https://calendar-proxy-production-ed46.up.railway.app";
+
+  console.log("Backend URL:", backendUrl);
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
 
-    // Gestion de la sélection de dates pour réservation
     select: async info => {
       const start = info.startStr, end = info.endStr;
       let total = 0, cur = new Date(start), fin = new Date(end);
@@ -47,26 +47,37 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     },
 
-    // Récupération et affichage des événements
     events: async (fetchInfo, success, failure) => {
       try{
-        const res = await fetch(`${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
-        if(!res.ok) throw new Error("Erreur serveur");
+        // Ajout du timestamp pour éviter le cache
+        const url = `${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`;
+        console.log("Fetching events from:", url);
+
+        const res = await fetch(url);
+        if(!res.ok) throw new Error("Erreur serveur: " + res.status);
 
         const evts = await res.json();
+        console.log("Réservations reçues du proxy:", evts);
 
-        // Transformer les événements en style "fond rouge"
-        const fcEvents = evts.map(e => ({
-          start: e.start,
-          end: e.end,
-          display: "background",
-          color: "#ff0000",
-          title: e.summary || "Réservé"
-        }));
+        // Vérifie que toutes les dates sont bien des ISO strings
+        const fcEvents = evts.map((e, i) => {
+          const startISO = new Date(e.start).toISOString();
+          const endISO = new Date(e.end).toISOString();
+          console.log(`Event ${i}: start=${startISO}, end=${endISO}, summary=${e.summary}`);
 
+          return {
+            start: startISO,
+            end: endISO,
+            display: "background",
+            color: "#ff0000",
+            title: e.summary || "Réservé"
+          };
+        });
+
+        console.log("Événements envoyés à FullCalendar:", fcEvents);
         success(fcEvents);
       } catch(err){
-        console.error(err);
+        console.error("Erreur chargement events:", err);
         failure(err);
       }
     }
