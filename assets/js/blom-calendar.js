@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // ⚡️ Détection automatique de l'environnement
   const backendUrl = window.location.hostname.includes("localhost")
-    ? "http://localhost:3000"
-    : "https://livablom-stripe-production.up.railway.app";
+  ? "http://localhost:4000" // proxy local (server.js proxy utilise le port 4000)
+  : "https://calendrier-proxy-production-ed46.up.railway.app";
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
