@@ -3,90 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calendrier LIVA</title>
+  <title>Calendrier des réservations – LIVA</title>
 
-  <!-- FullCalendar CSS & JS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <!-- ✅ FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
 
   <style>
-    html, body {
-      height: 100%;
+    body {
+      background-color: white;
+      color: black;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
       margin: 0;
       padding: 0;
-      background: #fff;
-      color: #000;
-      font-family: "Arial", sans-serif;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f5f5f5;
-      padding: 10px 20px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.6rem;
-    }
-
-    .back-btn {
-      background: #000;
-      color: #fff;
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: background 0.3s;
-    }
-
-    .back-btn:hover {
-      background: #333;
+    h1 {
+      font-size: 2rem;
+      margin-top: 20px;
+      margin-bottom: 10px;
     }
 
     #calendar {
-      max-width: 1000px;
-      margin: 20px auto;
+      max-width: 900px;
+      margin: 40px auto;
       padding: 10px;
-      background: #fafafa;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      height: calc(100vh - 120px);
+    }
+
+    .nav-buttons {
+      margin-bottom: 20px;
+    }
+
+    .nav-buttons a {
+      display: inline-block;
+      background-color: black;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #444;
     }
 
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.2rem;
-      }
-      .back-btn {
-        padding: 6px 10px;
-        font-size: 0.8rem;
+      h1 {
+        font-size: 1.5rem;
       }
       #calendar {
-        padding: 5px;
+        width: 95%;
+        margin: 20px auto;
       }
     }
   </style>
 </head>
-<body>
 
-  <header>
-    <a href="/liva" class="back-btn">← Retour à LIVA</a>
-    <h1>Calendrier des disponibilités - LIVA</h1>
-    <a href="/blom" class="back-btn">Voir BLŌM →</a>
-  </header>
+<body>
+  <div class="nav-buttons">
+    <a href="/liva">Retour à LIVA</a>
+    <a href="/blom">Aller à BLŌM</a>
+  </div>
+
+  <h1>Calendrier des réservations – LIVA</h1>
 
   <div id="calendar"></div>
 
-  <script>
-    // Mode test (paiement à 1€)
-    window.TEST_PAYMENT = true;
-  </script>
+  <!-- ✅ FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
+  <!-- ✅ Ton script -->
   <script src="/assets/js/liva-calendar.js"></script>
-
 </body>
 </html>
