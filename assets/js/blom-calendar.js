@@ -1,19 +1,18 @@
 function getTarif(date){
   const d = new Date(date);
   const day = d.getUTCDay();
-  if(day === 0) return 190;       // Dimanche
-  if(day === 5 || day === 6) return 169; // Vendredi/Samedi
-  return 150;                      // Lundi à Jeudi
+  if(day === 0) return 190;
+  if(day === 5 || day === 6) return 169;
+  return 150;
 }
 
 document.addEventListener("DOMContentLoaded", function(){
   const el = document.getElementById("calendar");
   if(!el) return;
 
-  // ⚡️ Détection automatique de l'environnement
   const backendUrl = window.location.hostname.includes("localhost")
-    ? "http://localhost:8080" // ton proxy local
-    : "https://calendar-proxy-production-ed46.up.railway.app"; // proxy en prod
+    ? "http://localhost:4000"
+    : "https://calendar-proxy-production-ed46.up.railway.app";
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
@@ -48,11 +47,22 @@ document.addEventListener("DOMContentLoaded", function(){
 
     events: async (fetchInfo, success, failure) => {
       try{
-        // Pas de point après BLOM, anti-cache via ts
+        // Fetch avec timestamp pour éviter le cache
         const res = await fetch(`${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
         if(!res.ok) throw new Error("Erreur serveur");
+
         const evts = await res.json();
-        success(evts);
+
+        // FullCalendar : afficher les réservations en rouge (background)
+        const fcEvents = evts.map(e => ({
+          start: e.start,
+          end: e.end,
+          display: "background",
+          color: "#ff0000",
+          title: e.summary || "Réservé"
+        }));
+
+        success(fcEvents);
       } catch(err){
         console.error(err);
         failure(err);
