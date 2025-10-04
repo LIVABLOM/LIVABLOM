@@ -1,16 +1,15 @@
 function getTarif(date) {
   const d = new Date(date);
   const day = d.getUTCDay();
-  if(day === 0) return 190;      // Dimanche
-  if(day === 5 || day === 6) return 169; // Vendredi & Samedi
+  if (day === 0) return 190;      // Dimanche
+  if (day === 5 || day === 6) return 169; // Vendredi & Samedi
   return 150;                     // Lundi à Jeudi
 }
 
 document.addEventListener("DOMContentLoaded", function() {
   const el = document.getElementById("calendar");
-  if(!el) return;
+  if (!el) return;
 
-  // 🔹 Backends séparés
   const calendarBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:4000"
     : "https://calendar-proxy-production-ed46.up.railway.app";
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    firstDay: 1, // Lundi
+    firstDay: 1,
 
     select: async function(info) {
       const start = info.startStr;
@@ -35,19 +34,14 @@ document.addEventListener("DOMContentLoaded", function() {
         cur.setDate(cur.getDate() + 1);
       }
 
-      const montant = window.TEST_PAYMENT ? 1 : total;
-      if(!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
+      let montant = window.TEST_PAYMENT ? 1 : total;
+      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            logement: "BLOM",
-            startDate: start,
-            endDate: end,
-            amount: montant
-          })
+          body: JSON.stringify({ logement:"BLOM", startDate:start, endDate:end, amount:montant })
         });
         const data = await res.json();
         if(data.url) window.location.href = data.url;
@@ -59,14 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
     },
 
     events: async function(fetchInfo, success, failure) {
-      console.log("📡 Chargement des événements depuis le backend...");
-
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if(!res.ok) throw new Error("Erreur serveur");
-
         const evts = await res.json();
-        console.log("📅 Événements reçus :", evts);
 
         const fcEvents = evts.map(e => ({
           title: e.title || "Réservé",
@@ -80,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         success(fcEvents);
       } catch(err) {
-        console.error("❌ Erreur lors du chargement des événements :", err);
+        console.error(err);
         failure(err);
       }
     }
