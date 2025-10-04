@@ -1,9 +1,9 @@
 function getTarif(date){
   const d = new Date(date);
   const day = d.getUTCDay();
-  if(day === 0) return 190;
-  if(day === 5 || day === 6) return 169;
-  return 150;
+  if(day === 0) return 190;       // Dimanche
+  if(day === 5 || day === 6) return 169; // Vendredi/Samedi
+  return 150;                      // Lundi à Jeudi
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
   // ⚡️ Détection automatique de l'environnement
   const backendUrl = window.location.hostname.includes("localhost")
-  ? "http://localhost:4000" // proxy local (server.js proxy utilise le port 4000)
-  : "https://calendrier-proxy-production-ed46.up.railway.app";
+    ? "http://localhost:8080" // ton proxy local
+    : "https://calendrier-proxy-production-ed46.up.railway.app"; // proxy en prod
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     events: async (fetchInfo, success, failure) => {
       try{
-        // Ajout du timestamp anti-cache
+        // Pas de point après BLOM, anti-cache via ts
         const res = await fetch(`${backendUrl}/api/reservations/BLOM?ts=${Date.now()}`);
         if(!res.ok) throw new Error("Erreur serveur");
         const evts = await res.json();
