@@ -80,25 +80,18 @@ permalink: /liva/
 <!-- Appel à l'action : Réserver BLŌM -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
+  <p class="mb-4">Logement tout equipe tout confort</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <button onclick="openCalendar('LIVA')" 
-            class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+    <!-- Changement : ouverture page séparée -->
+    <a href="/assets/html/liva-calendar.html" 
+       class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
-    </button>
+    </a>
     {% include share.html %}
   </div>
 </div>
 
-<!-- Modal calendrier BLOM -->
-<div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
-  <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-    <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-    <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour BLŌM</h3>
-    <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
-  </div>
-</div>
 
 <!-- Modal calendrier LIVA -->
 <div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
