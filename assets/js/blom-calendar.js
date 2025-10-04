@@ -55,28 +55,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ Chargement des réservations existantes
     eventSources: [
       {
-        events: async (fetchInfo, success, failure) => {
-          try {
-            const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-            if (!res.ok) throw new Error("Erreur serveur");
-            const evts = await res.json();
-            console.log("Événements reçus :", evts);
+       events: async function (fetchInfo, successCallback, failureCallback) {
+  try {
+    const response = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
+    if (!response.ok) throw new Error("Erreur serveur");
+    const events = await response.json();
 
-            const fcEvents = evts.map(e => ({
-              title: e.title || "Réservé",
-              start: e.start,
-              end: e.end,
-              display: "background",
-              backgroundColor: "#ff0000",
-              borderColor: "#ff0000"
-            }));
+    console.log("✅ Événements reçus :", events);
 
-            success(fcEvents);
-          } catch (err) {
-            console.error("Erreur de chargement des événements :", err);
-            failure(err);
-          }
-        },
+    // 🔹 Les événements sont déjà prêts pour FullCalendar
+    successCallback(events);
+  } catch (error) {
+    console.error("❌ Erreur lors du chargement des événements :", error);
+    failureCallback(error);
+  }
+},
+
         display: "background",
         color: "#ff0000"
       }
