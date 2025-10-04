@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calendrier BLŌM</title>
+<title>Test Calendrier BLŌM</title>
 
-<!-- FullCalendar CSS & JS fonctionnel -->
+<!-- FullCalendar CSS & JS depuis jsDelivr -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.global.min.js"></script>
 
@@ -21,13 +21,31 @@
 </head>
 <body>
 
-<h1>Calendrier des disponibilités - BLŌM</h1>
+<h1>Test Calendrier BLŌM</h1>
 <div id="calendar"></div>
 
 <script>
-  window.TEST_PAYMENT = true; // true = 1€ test, false = réel
+document.addEventListener("DOMContentLoaded", function(){
+  const el = document.getElementById("calendar");
+  if(!el) return;
+
+  const backendUrl = window.location.hostname.includes("localhost")
+    ? "http://localhost:4000"
+    : "https://calendar-proxy-production-ed46.up.railway.app";
+
+  const cal = new FullCalendar.Calendar(el, {
+    initialView: "dayGridMonth",
+    locale: "fr",
+    selectable: true,
+    events: [
+      // événements test pour vérifier l'affichage
+      { title: "Test Réservation", start: new Date().toISOString().split("T")[0], color: "#ff0000" }
+    ]
+  });
+
+  cal.render();
+});
 </script>
-<script src="/assets/js/blom-calendar.js"></script>
 
 </body>
 </html>
