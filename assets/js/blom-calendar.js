@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(){
   // ⚡️ Détection automatique de l'environnement
   const backendUrl = window.location.hostname.includes("localhost")
     ? "http://localhost:8080" // ton proxy local
-    : "https://calendrier-proxy-production-ed46.up.railway.app"; // proxy en prod
+    : "https://calendar-proxy-production-ed46.up.railway.app"; // proxy en prod
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
