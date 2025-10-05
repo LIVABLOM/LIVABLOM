@@ -19,11 +19,29 @@ document.addEventListener("DOMContentLoaded", function () {
     ? "http://localhost:3000"
     : "https://livablom-stripe-production.up.railway.app";
 
+  // Liste des périodes réservées
+  let reservedRanges = [];
+
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
     firstDay: 1, // Lundi
+
+    // 🔹 Vérifie si la date sélectionnée chevauche une période réservée
+    selectAllow: function (selectInfo) {
+      const start = selectInfo.start;
+      const end = selectInfo.end;
+      for (let range of reservedRanges) {
+        const rangeStart = new Date(range.start);
+        const rangeEnd = new Date(range.end);
+        if (start < rangeEnd && end > rangeStart) {
+          // Chevauchement : réservation interdite
+          return false;
+        }
+      }
+      return true;
+    },
 
     select: async function (info) {
       const start = info.startStr;
@@ -79,6 +97,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const evts = await res.json();
         console.log("📅 Événements récupérés :", evts);
+
+        // Stocke les périodes réservées pour bloquer la sélection
+        reservedRanges = evts.map(e => ({
+          start: e.start,
+          end: e.end
+        }));
 
         const fcEvents = evts.map(e => ({
           title: e.title || "Réservé",
