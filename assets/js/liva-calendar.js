@@ -22,24 +22,24 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    firstDay: 1,
+    firstDay: 1, // lundi
 
-    // 🔒 Interdire les chevauchements sauf si on commence pile le jour du départ
+    // 🔒 Interdire sélection de dates passées et dates réservées
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
 
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // on ignore l'heure
+      if (start < today) return false; // interdit avant aujourd'hui
+
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
+        rangeEnd.setDate(rangeEnd.getDate() - 1); // fin exclusive
 
-        // On réduit la fin de la réservation d’un jour (car end est exclusif)
-        const rangeEndMinusOne = new Date(rangeEnd);
-        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
-
-        // Si la sélection chevauche une date réservée → interdit
-        if (start <= rangeEndMinusOne && end > rangeStart) {
-          // MAIS on autorise si la sélection commence pile le jour du départ
+        // Si chevauchement, interdit sauf si commence le jour du départ
+        if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
@@ -51,7 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const start = info.startStr;
       const end = info.endStr;
 
-      let nbPersonnes = prompt("Combien de personnes ?");
+      // Demander le nombre de personnes une seule fois pour tout le séjour
+      let nbPersonnes = prompt("Combien de personnes pour tout le séjour ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
       if (isNaN(nbPersonnes) || nbPersonnes < 1) {
@@ -59,9 +60,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, nbPersonnes);
+      // Calcul du prix total pour tout le séjour
+      let cur = new Date(start);
+      const fin = new Date(end);
+      let total = 0;
+      while (cur < fin) {
+        total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
+        cur.setDate(cur.getDate() + 1);
+      }
 
-      if (!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € ?`)) return;
+      let montant = window.TEST_PAYMENT ? 1 : total;
+
+      if (!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € pour ${nbPersonnes} personne(s) ?`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -91,17 +101,15 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-
-        // On corrige les plages pour que le end ne soit pas compté comme réservé
         reservedRanges = evts.map(e => ({
           start: e.start,
           end: e.end
         }));
 
         const fcEvents = evts.map(e => {
-          const end = new Date(e.end);
-          // On soustrait 1 jour pour colorer jusqu’à la veille du départ
-          end.setDate(end.getDate());
+          const endDate = new Date(e.end);
+          // On colorie jusqu'à la veille du départ
+          endDate.setDate(endDate.getDate() - 1);
           return {
             title: "Réservé",
             start: e.start,
