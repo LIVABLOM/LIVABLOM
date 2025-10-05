@@ -5,34 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendrier LIVA</title>
 
-<!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
+<!-- FullCalendar CSS & JS depuis jsDelivr -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #fff;
-    color: #000;
-    font-family: Arial, sans-serif;
+  html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+    background: #fff; 
+    color: #000; 
+    font-family: Arial, sans-serif; 
   }
 
-  #calendar {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 12px;
-    height: calc(100vh - 40px);
+  #calendar { 
+    width: 100%; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 10px; 
+    background: #f9f9f9; 
+    border-radius: 12px; 
+    height: calc(100vh - 40px); 
   }
 
-  h1 {
-    text-align: center;
-    margin: 10px 0;
-    font-size: 1.8rem;
+  h1 { 
+    text-align: center; 
+    margin: 10px 0; 
+    font-size: 1.8rem; 
   }
 
   @media (max-width: 768px) {
@@ -47,10 +47,11 @@
 <div id="calendar"></div>
 
 <script>
+  // Mode test ou prod côté front
   window.TEST_PAYMENT = true; // true = 1€ pour test, false = montant réel
 </script>
 
-<!-- JS du calendrier LIVA -->
+<!-- JS du calendrier avec Stripe et proxy pour LIVA -->
 <script src="/assets/js/liva-calendar.js"></script>
 
 </body>
