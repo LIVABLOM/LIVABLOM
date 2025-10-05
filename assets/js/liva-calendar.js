@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
     selectable: true,
     firstDay: 1,
 
-    // 🔒 Empêche de sélectionner des dates qui chevauchent une réservation
+    // 🔒 Empêche les sélections qui chevauchent une réservation,
+    // mais autorise à commencer le jour exact du départ (end)
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -33,9 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
 
-        // On autorise la sélection à partir du jour du départ (rangeEnd)
-        // mais pas avant
+        // ✅ Ajustement clé :
+        // On considère la réservation occupée jusqu'à la veille de rangeEnd
+        // donc on interdit les sélections qui commencent AVANT rangeEnd
+        // et se terminent APRÈS rangeStart
         if (start < rangeEnd && end > rangeStart) {
+          // mais on autorise si la sélection commence pile le jour du départ
+          if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
       }
@@ -80,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    // 📅 Chargement des réservations Airbnb/Booking
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
