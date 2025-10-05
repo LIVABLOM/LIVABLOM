@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
+        // on ajoute 1 jour à la fin du blocage pour permettre la réservation dès le lendemain
+        rangeEnd.setDate(rangeEnd.getDate());
         if (start < rangeEnd && end > rangeStart) {
           return false; // chevauchement → interdit
         }
@@ -82,11 +84,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const evts = await res.json();
 
-        // ✅ Corrige la date de fin pour rendre le lendemain cliquable
+        // Correction : on ajuste les dates pour bloquer jusqu’à la veille de la fin
         reservedRanges = evts.map(e => {
-          const correctedEnd = new Date(e.end);
-          correctedEnd.setDate(correctedEnd.getDate() - 1);
-          return { start: e.start, end: correctedEnd.toISOString().split("T")[0] };
+          const end = new Date(e.end);
+          end.setDate(end.getDate() - 1); // on soustrait 1 jour au moment du rendu
+          return {
+            start: e.start,
+            end: end.toISOString().split("T")[0]
+          };
         });
 
         const fcEvents = reservedRanges.map(e => ({
