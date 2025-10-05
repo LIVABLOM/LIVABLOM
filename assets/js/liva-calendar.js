@@ -24,16 +24,19 @@ document.addEventListener("DOMContentLoaded", function () {
     selectable: true,
     firstDay: 1,
 
+    // 🔒 Empêche de sélectionner des dates qui chevauchent une réservation
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
+
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        // on ajoute 1 jour à la fin du blocage pour permettre la réservation dès le lendemain
-        rangeEnd.setDate(rangeEnd.getDate());
+
+        // On autorise la sélection à partir du jour du départ (rangeEnd)
+        // mais pas avant
         if (start < rangeEnd && end > rangeStart) {
-          return false; // chevauchement → interdit
+          return false;
         }
       }
       return true;
@@ -77,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
+    // 📅 Chargement des réservations Airbnb/Booking
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
@@ -84,15 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const evts = await res.json();
 
-        // Correction : on ajuste les dates pour bloquer jusqu’à la veille de la fin
-        reservedRanges = evts.map(e => {
-          const end = new Date(e.end);
-          end.setDate(end.getDate() - 1); // on soustrait 1 jour au moment du rendu
-          return {
-            start: e.start,
-            end: end.toISOString().split("T")[0]
-          };
-        });
+        reservedRanges = evts.map(e => ({
+          start: e.start,
+          end: e.end
+        }));
 
         const fcEvents = reservedRanges.map(e => ({
           title: "Réservé",
