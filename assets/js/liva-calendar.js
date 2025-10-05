@@ -2,15 +2,15 @@ function getTarif(date, nbPersonnes = 2) {
   // Tarif de base : 79€ pour 2 personnes
   const base = 79;
   if (nbPersonnes <= 2) return base;
-  // 20€ par personne supplémentaire
+  // +20€ par personne supplémentaire
   return base + (nbPersonnes - 2) * 20;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const el = document.getElementById("calendar");
   if (!el) return;
 
-  // 🔹 Backends séparés
+  // 🔹 Backends séparés (proxy calendrier et backend Stripe)
   const calendarBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:4000"
     : "https://calendar-proxy-production-ed46.up.railway.app";
@@ -23,17 +23,28 @@ document.addEventListener("DOMContentLoaded", function() {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    firstDay: 1, // lundi
+    firstDay: 1, // Lundi
 
-    select: async function(info) {
+    select: async function (info) {
       const start = info.startStr;
       const end = info.endStr;
 
-      // Ici on prend 2 personnes par défaut, tu pourras ajouter un prompt si tu veux
-      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, 2);
+      // 🔸 Demande du nombre de personnes
+      let nbPersonnes = prompt("Combien de personnes ?");
+      if (!nbPersonnes) return;
+      nbPersonnes = parseInt(nbPersonnes);
+      if (isNaN(nbPersonnes) || nbPersonnes < 1) {
+        alert("Veuillez entrer un nombre valide de personnes.");
+        return;
+      }
 
+      // 🔸 Calcul du tarif total (79€ pour 2 personnes, +20€/personne supplémentaire)
+      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, nbPersonnes);
+
+      // 🔸 Confirmation utilisateur
       if (!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € ?`)) return;
 
+      // 🔸 Envoi vers le backend Stripe
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
           method: "POST",
@@ -42,19 +53,25 @@ document.addEventListener("DOMContentLoaded", function() {
             logement: "LIVA",
             startDate: start,
             endDate: end,
-            amount: montant
+            amount: montant,
+            personnes: nbPersonnes
           })
         });
+
         const data = await res.json();
-        if (data.url) window.location.href = data.url;
-        else alert("Impossible de créer la réservation.");
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert("Impossible de créer la réservation.");
+        }
       } catch (err) {
         console.error(err);
         alert("Erreur lors de la création de la réservation.");
       }
     },
 
-    events: async function(fetchInfo, success, failure) {
+    // 🔹 Récupération des réservations (Airbnb/Booking)
+    events: async function (fetchInfo, success, failure) {
       console.log("📡 Chargement des événements depuis le backend LIVA...");
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
