@@ -24,8 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     selectable: true,
     firstDay: 1,
 
-    // 🔒 Empêche les sélections qui chevauchent une réservation,
-    // mais autorise à commencer le jour exact du départ (end)
+    // 🔒 Interdire les chevauchements sauf si on commence pile le jour du départ
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -34,12 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
 
-        // ✅ Ajustement clé :
-        // On considère la réservation occupée jusqu'à la veille de rangeEnd
-        // donc on interdit les sélections qui commencent AVANT rangeEnd
-        // et se terminent APRÈS rangeStart
-        if (start < rangeEnd && end > rangeStart) {
-          // mais on autorise si la sélection commence pile le jour du départ
+        // On réduit la fin de la réservation d’un jour (car end est exclusif)
+        const rangeEndMinusOne = new Date(rangeEnd);
+        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
+
+        // Si la sélection chevauche une date réservée → interdit
+        if (start <= rangeEndMinusOne && end > rangeStart) {
+          // MAIS on autorise si la sélection commence pile le jour du départ
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
@@ -92,20 +92,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const evts = await res.json();
 
+        // On corrige les plages pour que le end ne soit pas compté comme réservé
         reservedRanges = evts.map(e => ({
           start: e.start,
           end: e.end
         }));
 
-        const fcEvents = reservedRanges.map(e => ({
-          title: "Réservé",
-          start: e.start,
-          end: e.end,
-          display: "background",
-          backgroundColor: "#ff0000",
-          borderColor: "#ff0000",
-          allDay: true
-        }));
+        const fcEvents = evts.map(e => {
+          const end = new Date(e.end);
+          // On soustrait 1 jour pour colorer jusqu’à la veille du départ
+          end.setDate(end.getDate());
+          return {
+            title: "Réservé",
+            start: e.start,
+            end: e.end,
+            display: "background",
+            backgroundColor: "#ff0000",
+            borderColor: "#ff0000",
+            allDay: true
+          };
+        });
 
         success(fcEvents);
       } catch (err) {
