@@ -1,112 +1,85 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const calendarEl = document.getElementById("calendar");
+function getTarif(date, nbPersonnes = 2) {
+  // Tarif de base : 79€ pour 2 personnes
+  const base = 79;
+  if (nbPersonnes <= 2) return base;
+  // 20€ par personne supplémentaire
+  return base + (nbPersonnes - 2) * 20;
+}
 
-  const calendar = new FullCalendar.Calendar(calendarEl, {
+document.addEventListener("DOMContentLoaded", function() {
+  const el = document.getElementById("calendar");
+  if (!el) return;
+
+  // 🔹 Backends séparés
+  const calendarBackend = window.location.hostname.includes("localhost")
+    ? "http://localhost:4000"
+    : "https://calendar-proxy-production-ed46.up.railway.app";
+
+  const stripeBackend = window.location.hostname.includes("localhost")
+    ? "http://localhost:3000"
+    : "https://livablom-stripe-production.up.railway.app";
+
+  const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    height: "100%",
-    displayEventTime: false,
+    firstDay: 1, // lundi
 
-    headerToolbar: {
-      left: "prev,next today",
-      center: "title",
-      right: "dayGridMonth,timeGridWeek",
+    select: async function(info) {
+      const start = info.startStr;
+      const end = info.endStr;
+
+      // Ici on prend 2 personnes par défaut, tu pourras ajouter un prompt si tu veux
+      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, 2);
+
+      if (!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € ?`)) return;
+
+      try {
+        const res = await fetch(`${stripeBackend}/api/checkout`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            logement: "LIVA",
+            startDate: start,
+            endDate: end,
+            amount: montant
+          })
+        });
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+        else alert("Impossible de créer la réservation.");
+      } catch (err) {
+        console.error(err);
+        alert("Erreur lors de la création de la réservation.");
+      }
     },
 
-    // ✅ Chargement des réservations iCal (LIVA)
-    events: async function (fetchInfo, successCallback, failureCallback) {
+    events: async function(fetchInfo, success, failure) {
+      console.log("📡 Chargement des événements depuis le backend LIVA...");
       try {
-        const response = await fetch(
-          "https://livablom-stripe-production.up.railway.app/api/calendar/liva"
-        );
-        if (!response.ok) throw new Error("Erreur réseau");
+        const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
+        if (!res.ok) throw new Error("Erreur serveur");
 
-        const reservations = await response.json();
+        const evts = await res.json();
+        console.log("📅 Événements récupérés :", evts);
 
-        const events = reservations.map((r) => ({
-          title: "Réservé",
-          start: r.start,
-          end: r.end,
-          color: "red",
-          allDay: true,
+        const fcEvents = evts.map(e => ({
+          title: e.title || "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true
         }));
 
-        successCallback(events);
-      } catch (error) {
-        console.error("Erreur de chargement du calendrier :", error);
-        failureCallback(error);
+        success(fcEvents);
+      } catch (err) {
+        console.error("❌ Erreur lors du chargement des événements :", err);
+        failure(err);
       }
-    },
-
-    // ✅ Lorsqu’on clique sur une date libre
-    dateClick: async function (info) {
-      const clickedDate = new Date(info.dateStr);
-      const now = new Date();
-
-      if (clickedDate < now) {
-        alert("Impossible de réserver une date passée.");
-        return;
-      }
-
-      // ✅ Vérifier si la date est déjà réservée
-      const events = calendar.getEvents();
-      const isBooked = events.some((event) => {
-        const start = new Date(event.start);
-        const end = new Date(event.end);
-        return clickedDate >= start && clickedDate < end;
-      });
-
-      if (isBooked) {
-        alert("Cette date est déjà réservée.");
-        return;
-      }
-
-      // ✅ Demande du nombre de personnes
-      const guests = prompt(
-        "Combien de personnes séjourneront ? (minimum 2 personnes)"
-      );
-      if (!guests || isNaN(guests) || guests < 2) {
-        alert("Veuillez entrer un nombre valide (minimum 2 personnes).");
-        return;
-      }
-
-      // ✅ Calcul du tarif
-      const basePrice = 79;
-      const extraPrice = Math.max(0, guests - 2) * 20; // +20€ par personne supplémentaire
-      const totalPrice = basePrice + extraPrice;
-
-      const confirmMsg = `Réservation pour le ${info.dateStr}\nNombre de personnes : ${guests}\nTarif total : ${totalPrice} €\n\nSouhaitez-vous procéder au paiement ?`;
-
-      if (confirm(confirmMsg)) {
-        try {
-          const checkoutResponse = await fetch(
-            "https://livablom-stripe-production.up.railway.app/api/checkout",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                lodging: "LIVA",
-                date: info.dateStr,
-                guests: parseInt(guests),
-                amount: totalPrice * 100, // Stripe en centimes
-              }),
-            }
-          );
-
-          const data = await checkoutResponse.json();
-          if (data.url) {
-            window.location.href = data.url; // Redirection vers Stripe Checkout
-          } else {
-            alert("Une erreur est survenue pendant la redirection Stripe.");
-          }
-        } catch (error) {
-          console.error("Erreur Stripe :", error);
-          alert("Impossible de démarrer le paiement. Vérifiez votre connexion.");
-        }
-      }
-    },
+    }
   });
 
-  calendar.render();
+  cal.render();
 });
