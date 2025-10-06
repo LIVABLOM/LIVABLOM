@@ -1,5 +1,6 @@
 function getTarif(date, nbPersonnes = 2) {
-  const base = 150; // Tarif de base BLŌM par nuitée
+  // 💆‍♀️ Tarifs BLŌM (base par nuitée)
+  const base = 150;
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
@@ -22,32 +23,32 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    firstDay: 1,
+    unselectAuto: false,
+    selectMirror: true,
+    selectLongPressDelay: 0, // 📱 clic rapide sur mobile
+    longPressDelay: 0,
+    firstDay: 1, // lundi
 
+    // 🔒 Interdire dates passées + chevauchement avec réservations
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
 
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (start < today) return false; // ⛔ pas avant aujourd’hui
+
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
+        rangeEnd.setDate(rangeEnd.getDate() - 1); // end exclusif
 
-        // On réduit la fin de la réservation d’un jour
-        const rangeEndMinusOne = new Date(rangeEnd);
-        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
-
-        // Si la sélection chevauche une date réservée → interdit
-        if (start <= rangeEndMinusOne && end > rangeStart) {
-          // MAIS on autorise si la sélection commence pile le jour du départ
+        // Si chevauchement, interdit sauf si on commence pile le jour du départ
+        if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
       }
-      // On interdit les dates passées
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      if (start < today) return false;
-
       return true;
     },
 
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const start = info.startStr;
       const end = info.endStr;
 
-      let nbPersonnes = prompt("Combien de personnes ?");
+      let nbPersonnes = prompt("Combien de personnes pour tout le séjour ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
       if (isNaN(nbPersonnes) || nbPersonnes < 1) {
@@ -63,9 +64,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, nbPersonnes);
+      // 🧮 Calcul du total du séjour
+      let cur = new Date(start);
+      const fin = new Date(end);
+      let total = 0;
+      while (cur < fin) {
+        total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
+        cur.setDate(cur.getDate() + 1);
+      }
 
-      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
+      let montant = window.TEST_PAYMENT ? 1 : total;
+
+      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € pour ${nbPersonnes} personne(s) ?`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -89,22 +99,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    events: async function(fetchInfo, success, failure) {
+    // 🔴 Charger et colorer les réservations existantes
+    events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-
-        // On stocke les plages réservées
         reservedRanges = evts.map(e => ({
           start: e.start,
           end: e.end
         }));
 
         const fcEvents = evts.map(e => {
-          const end = new Date(e.end);
-          end.setDate(end.getDate()); // fin exclusive
+          const endDate = new Date(e.end);
+          endDate.setDate(endDate.getDate() - 1); // colorer jusqu’à la veille du départ
           return {
             title: "Réservé",
             start: e.start,
