@@ -50,10 +50,20 @@ document.addEventListener("DOMContentLoaded", function () {
     dateClick: async function(info) {
       const start = info.dateStr;
 
+      // 🔒 Bloquer les dates passées
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const clickedDate = new Date(start);
+      if (clickedDate < today) return;
+
+      // 🔒 Bloquer les dates déjà réservées
       for (let range of reservedRanges) {
-        if (start >= range.start && start < range.end) return;
+        const rangeStart = new Date(range.start);
+        const rangeEnd = new Date(range.end);
+        if (clickedDate >= rangeStart && clickedDate < rangeEnd) return;
       }
 
+      // Demande le nombre de personnes
       let nbPersonnes = prompt("Combien de personnes ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
@@ -62,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // Demande la date de fin
       let end = prompt("Date de fin (YYYY-MM-DD) ?");
       if (!end) return;
 
@@ -72,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // Calcul du tarif total
       let total = 0;
       let cur = new Date(startDate);
       while (cur < endDate) {
