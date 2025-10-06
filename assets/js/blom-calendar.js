@@ -1,6 +1,5 @@
 function getTarif(date, nbPersonnes = 2) {
-  // 💆‍♀️ Tarifs BLŌM (base par nuitée)
-  const base = 150;
+  const base = 150; // Tarif de base BLŌM par nuitée
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
@@ -23,28 +22,24 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    unselectAuto: false,
+    firstDay: 1,
     selectMirror: true,
-    selectLongPressDelay: 0, // 📱 clic rapide sur mobile
-    longPressDelay: 0,
-    firstDay: 1, // lundi
 
-    // 🔒 Interdire dates passées + chevauchement avec réservations
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (start < today) return false; // ⛔ pas avant aujourd’hui
+      today.setHours(0,0,0,0);
+      if (start < today) return false;
 
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1); // end exclusif
+        const rangeEndMinusOne = new Date(rangeEnd);
+        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
 
-        // Si chevauchement, interdit sauf si on commence pile le jour du départ
-        if (start <= rangeEnd && end > rangeStart) {
+        if (start <= rangeEndMinusOne && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
@@ -52,11 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
       return true;
     },
 
-    select: async function (info) {
-      const start = info.startStr;
-      const end = info.endStr;
+    dateClick: async function(info) {
+      const start = info.dateStr;
 
-      let nbPersonnes = prompt("Combien de personnes pour tout le séjour ?");
+      for (let range of reservedRanges) {
+        if (start >= range.start && start < range.end) return;
+      }
+
+      let nbPersonnes = prompt("Combien de personnes ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
       if (isNaN(nbPersonnes) || nbPersonnes < 1) {
@@ -64,11 +62,19 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // 🧮 Calcul du total du séjour
-      let cur = new Date(start);
-      const fin = new Date(end);
+      let end = prompt("Date de fin (YYYY-MM-DD) ?");
+      if (!end) return;
+
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      if (endDate <= startDate) {
+        alert("La date de fin doit être après la date de début.");
+        return;
+      }
+
       let total = 0;
-      while (cur < fin) {
+      let cur = new Date(startDate);
+      while (cur < endDate) {
         total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
         cur.setDate(cur.getDate() + 1);
       }
@@ -89,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
             personnes: nbPersonnes
           })
         });
-
         const data = await res.json();
         if (data.url) window.location.href = data.url;
         else alert("Impossible de créer la réservation.");
@@ -99,31 +104,23 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    // 🔴 Charger et colorer les réservations existantes
-    events: async function (fetchInfo, success, failure) {
+    events: async function(fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({
-          start: e.start,
-          end: e.end
-        }));
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map(e => {
-          const endDate = new Date(e.end);
-          endDate.setDate(endDate.getDate() - 1); // colorer jusqu’à la veille du départ
-          return {
-            title: "Réservé",
-            start: e.start,
-            end: e.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true
-          };
-        });
+        const fcEvents = evts.map(e => ({
+          title: "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true
+        }));
 
         success(fcEvents);
       } catch (err) {
