@@ -1,7 +1,7 @@
 function getTarif(date, nbPersonnes = 2) {
   const base = 79; // Tarif de base LIVA pour 2 personnes
   if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20; // +20€ par personne supplémentaire
+  return base + (nbPersonnes - 2) * 20;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     firstDay: 1,
     selectMirror: true,
 
-    // Bloquer dates passées et réservées
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -37,9 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1); // fin exclusive
+        const rangeEndMinusOne = new Date(rangeEnd);
+        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
 
-        if (start <= rangeEnd && end > rangeStart) {
+        if (start <= rangeEndMinusOne && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
@@ -47,16 +47,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return true;
     },
 
-    // Ouverture immédiate du prompt au premier clic/touch
     dateClick: async function(info) {
       const start = info.dateStr;
 
-      // Vérifie que la date n'est pas réservée
+      // 🔒 Bloquer les dates passées
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const clickedDate = new Date(start);
+      if (clickedDate < today) return;
+
+      // 🔒 Bloquer les dates déjà réservées
       for (let range of reservedRanges) {
-        if (start >= range.start && start < range.end) return;
+        const rangeStart = new Date(range.start);
+        const rangeEnd = new Date(range.end);
+        if (clickedDate >= rangeStart && clickedDate < rangeEnd) return;
       }
 
-      let nbPersonnes = prompt("Combien de personnes pour tout le séjour ?");
+      // Nombre de personnes
+      let nbPersonnes = prompt("Combien de personnes ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
       if (isNaN(nbPersonnes) || nbPersonnes < 1) {
@@ -64,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // Date de fin
       let end = prompt("Date de fin (YYYY-MM-DD) ?");
       if (!end) return;
 
@@ -115,22 +124,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const evts = await res.json();
         reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map(e => {
-          const endDate = new Date(e.end);
-          endDate.setDate(endDate.getDate() - 1);
-          return {
-            title: "Réservé",
-            start: e.start,
-            end: e.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true
-          };
-        });
+        const fcEvents = evts.map(e => ({
+          title: "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true
+        }));
 
         success(fcEvents);
-      } catch(err) {
+      } catch (err) {
         console.error("❌ Erreur lors du chargement des événements :", err);
         failure(err);
       }
