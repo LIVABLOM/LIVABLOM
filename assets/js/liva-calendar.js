@@ -1,7 +1,7 @@
 function getTarif(date, nbPersonnes = 2) {
-  const base = 79;
+  const base = 79; // Tarif de base LIVA pour 2 personnes
   if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
+  return base + (nbPersonnes - 2) * 20; // +20€ par personne supplémentaire
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -22,27 +22,23 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    unselectAuto: false,
+    firstDay: 1,
     selectMirror: true,
-    selectLongPressDelay: 0, // 📱 active la sélection immédiate sur mobile
-    longPressDelay: 0,
-    firstDay: 1, // lundi
 
-    // 🔒 Interdire sélection de dates passées et dates réservées
+    // Bloquer dates passées et réservées
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (start < today) return false; // pas avant aujourd'hui
+      today.setHours(0,0,0,0);
+      if (start < today) return false;
 
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1); // fin exclusive
 
-        // Si chevauchement, interdit sauf si commence pile le jour du départ
         if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
@@ -51,9 +47,14 @@ document.addEventListener("DOMContentLoaded", function () {
       return true;
     },
 
-    select: async function (info) {
-      const start = info.startStr;
-      const end = info.endStr;
+    // Ouverture immédiate du prompt au premier clic/touch
+    dateClick: async function(info) {
+      const start = info.dateStr;
+
+      // Vérifie que la date n'est pas réservée
+      for (let range of reservedRanges) {
+        if (start >= range.start && start < range.end) return;
+      }
 
       let nbPersonnes = prompt("Combien de personnes pour tout le séjour ?");
       if (!nbPersonnes) return;
@@ -63,11 +64,20 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // Calcul du prix total pour tout le séjour
-      let cur = new Date(start);
-      const fin = new Date(end);
+      let end = prompt("Date de fin (YYYY-MM-DD) ?");
+      if (!end) return;
+
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      if (endDate <= startDate) {
+        alert("La date de fin doit être après la date de début.");
+        return;
+      }
+
+      // Calcul du tarif total
       let total = 0;
-      while (cur < fin) {
+      let cur = new Date(startDate);
+      while (cur < endDate) {
         total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
         cur.setDate(cur.getDate() + 1);
       }
@@ -88,7 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
             personnes: nbPersonnes
           })
         });
-
         const data = await res.json();
         if (data.url) window.location.href = data.url;
         else alert("Impossible de créer la réservation.");
@@ -98,16 +107,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    events: async function (fetchInfo, success, failure) {
+    events: async function(fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({
-          start: e.start,
-          end: e.end
-        }));
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
         const fcEvents = evts.map(e => {
           const endDate = new Date(e.end);
@@ -124,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         success(fcEvents);
-      } catch (err) {
+      } catch(err) {
         console.error("❌ Erreur lors du chargement des événements :", err);
         failure(err);
       }
