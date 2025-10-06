@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
+    unselectAuto: false,
+    selectMirror: true,
+    selectLongPressDelay: 0, // 📱 active la sélection immédiate sur mobile
+    longPressDelay: 0,
     firstDay: 1, // lundi
 
     // 🔒 Interdire sélection de dates passées et dates réservées
@@ -30,15 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const end = selectInfo.end;
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // on ignore l'heure
-      if (start < today) return false; // interdit avant aujourd'hui
+      today.setHours(0, 0, 0, 0);
+      if (start < today) return false; // pas avant aujourd'hui
 
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1); // fin exclusive
 
-        // Si chevauchement, interdit sauf si commence le jour du départ
+        // Si chevauchement, interdit sauf si commence pile le jour du départ
         if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
@@ -51,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const start = info.startStr;
       const end = info.endStr;
 
-      // Demander le nombre de personnes une seule fois pour tout le séjour
       let nbPersonnes = prompt("Combien de personnes pour tout le séjour ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
@@ -108,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const fcEvents = evts.map(e => {
           const endDate = new Date(e.end);
-          // On colorie jusqu'à la veille du départ
           endDate.setDate(endDate.getDate() - 1);
           return {
             title: "Réservé",
