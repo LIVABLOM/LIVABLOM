@@ -1,54 +1,100 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calendrier LIVA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendrier LIVA</title>
 
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    h1 { margin-top: 24px; font-size: 1.8rem; }
-    #calendar {
-      max-width: 900px;
-      margin: 28px auto;
-      background: #111;
-      border-radius: 12px;
-      padding: 12px;
-      box-sizing: border-box;
-      min-height: 60vh;
-    }
-    a.retour {
-      display: inline-block;
-      margin: 18px auto 40px;
-      color: #fff;
-      text-decoration: none;
-      background: #333;
-      padding: 8px 14px;
-      border-radius: 8px;
-    }
-    @media (max-width:600px) {
-      #calendar { width: 95%; padding: 8px; }
-    }
-  </style>
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<style>
+  html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+    background: #fff; 
+    color: #000; 
+    font-family: Arial, sans-serif; 
+  }
+
+  #calendar { 
+    width: 100%; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 10px; 
+    background: #f9f9f9; 
+    border-radius: 12px; 
+    height: calc(100vh - 40px); 
+  }
+
+  h1 { 
+    text-align: center; 
+    margin: 10px 0; 
+    font-size: 1.8rem; 
+  }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 1.4rem; }
+    #calendar { padding: 5px; }
+  }
+
+  /* Popup modal */
+  #reservationModal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center; align-items: center;
+  }
+  #reservationModal .modal-content {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+  }
+  #reservationModal label { display: block; margin: 10px 0 5px; }
+  #reservationModal input { width: 100%; padding: 8px; margin-bottom: 10px; }
+  #reservationModal button { padding: 10px 15px; margin-top: 10px; cursor: pointer; }
+</style>
 </head>
 <body>
 
-  <h1>Calendrier des disponibilités — LIVA</h1>
-  <div id="calendar"></div>
+<h1>Calendrier des disponibilités - LIVA</h1>
+<div id="calendar"></div>
 
-  <a class="retour" href="https://livablom.fr/liva/">← Retour vers LIVA</a>
+<!-- Popup réservation -->
+<div id="reservationModal">
+  <div class="modal-content">
+    <h2>Réserver LIVA</h2>
+    <p id="reservationDates"></p>
+    <form id="reservationForm">
+      <label>Nom complet</label>
+      <input type="text" name="name" required>
 
-  <!-- FullCalendar global bundle (JS injecte le CSS pour v6) -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+      <label>Email</label>
+      <input type="email" name="email" required>
 
-  <!-- Ton script (vérifie que le chemin correspond dans ton repo/site) -->
-  <script src="/assets/js/liva-calendar.js"></script>
+      <label>Téléphone</label>
+      <input type="tel" name="phone" required>
+
+      <label>Nombre de personnes (max 5)</label>
+      <input type="number" name="people" min="1" max="5" value="2" required>
+
+      <button type="submit">Confirmer la réservation</button>
+      <button type="button" id="cancelModal">Annuler</button>
+    </form>
+  </div>
+</div>
+
+<script>
+window.TEST_PAYMENT = true;
+</script>
+<script src="/assets/js/liva-calendar.js"></script>
+
 </body>
 </html>
