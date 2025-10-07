@@ -26,7 +26,7 @@
     padding: 10px; 
     background: #f9f9f9; 
     border-radius: 12px; 
-    height: calc(100vh - 40px); 
+    height: calc(100vh - 120px); /* Ajusté pour le bouton retour */
   }
 
   h1 { 
@@ -35,9 +35,24 @@
     font-size: 1.8rem; 
   }
 
+  .back-button {
+    text-align: center; 
+    margin-bottom: 10px;
+  }
+
+  .back-button a {
+    padding: 8px 15px; 
+    background: #000; 
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
     #calendar { padding: 5px; }
+    .back-button a { padding: 6px 12px; font-size: 0.9rem; }
   }
 
   /* Modal style */
@@ -67,6 +82,12 @@
 <body>
 
 <h1>Calendrier des disponibilités - LIVA</h1>
+
+<!-- Bouton Retour vers LIVA -->
+<div class="back-button">
+  <a href="/liva.html">← Retour vers LIVA</a>
+</div>
+
 <div id="calendar"></div>
 
 <!-- Modal réservation -->
