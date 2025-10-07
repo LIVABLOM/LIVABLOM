@@ -26,7 +26,7 @@
     padding: 10px; 
     background: #111; 
     border-radius: 12px; 
-    height: calc(100vh - 40px); 
+    height: calc(100vh - 120px); /* laisser de la place pour le bouton */
   }
 
   h1 { 
@@ -35,19 +35,82 @@
     font-size: 1.8rem; 
   }
 
+  #backBtn {
+    display: block;
+    width: max-content;
+    margin: 10px auto;
+    padding: 8px 16px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  /* Modal formulaire */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  .modal-content {
+    background-color: #111;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 12px;
+    color: #fff;
+  }
+
+  .modal-content label { display: block; margin-top: 10px; }
+  .modal-content input { width: 100%; padding: 6px; margin-top: 4px; border-radius: 6px; border: none; }
+  .modal-content button { margin-top: 15px; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; }
+
+  .modal-content .confirm { background-color: #28a745; color: #fff; margin-right: 10px; }
+  .modal-content .cancel { background-color: #dc3545; color: #fff; }
+
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
-    #calendar { padding: 5px; }
+    #calendar { padding: 5px; height: calc(100vh - 160px); }
   }
 </style>
 </head>
 <body>
 
 <h1>Calendrier des disponibilités - BLŌM</h1>
+
+<a id="backBtn" href="/blom/">← Retour à BLŌM</a>
+
 <div id="calendar"></div>
 
+<!-- Modal formulaire -->
+<div id="reservationModal" class="modal">
+  <div class="modal-content">
+    <h2>Réserver BLŌM</h2>
+    <p id="resDates"></p>
+    <label>Nom complet<input type="text" id="resNom" required></label>
+    <label>Email<input type="email" id="resEmail" required></label>
+    <label>Téléphone<input type="tel" id="resTel" required></label>
+    <label>Nombre de personnes (max 2)<input type="number" id="resNb" min="1" max="2" value="2"></label>
+    <div style="text-align: right;">
+      <button class="confirm" id="resConfirm">Confirmer la réservation</button>
+      <button class="cancel" id="resCancel">Annuler</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  window.TEST_PAYMENT = true; // true = 1€ pour test, false = montant réel
+  window.TEST_PAYMENT = true; // true = 1€ test, false = réel
 </script>
 
 <script src="/assets/js/blom-calendar.js"></script>
