@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendrier BLŌM</title>
 
-<!-- FullCalendar CSS & JS -->
+<!-- FullCalendar CSS & JS depuis jsDelivr -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
 
 <style>
   html, body { 
@@ -27,7 +26,7 @@
     padding: 10px; 
     background: #111; 
     border-radius: 12px; 
-    height: calc(100vh - 120px); /* laisser de la place pour le bouton */
+    height: calc(100vh - 40px); 
   }
 
   h1 { 
@@ -36,82 +35,58 @@
     font-size: 1.8rem; 
   }
 
-  #backBtn {
-    display: block;
-    width: max-content;
-    margin: 10px auto;
-    padding: 8px 16px;
-    background: #fff;
-    color: #000;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-  }
-
-  /* Modal formulaire */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.8);
-  }
-
-  .modal-content {
-    background-color: #111;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 12px;
-    color: #fff;
-  }
-
-  .modal-content label { display: block; margin-top: 10px; }
-  .modal-content input { width: 100%; padding: 6px; margin-top: 4px; border-radius: 6px; border: none; }
-  .modal-content button { margin-top: 15px; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; }
-
-  .modal-content .confirm { background-color: #28a745; color: #fff; margin-right: 10px; }
-  .modal-content .cancel { background-color: #dc3545; color: #fff; }
-
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
-    #calendar { padding: 5px; height: calc(100vh - 160px); }
+    #calendar { padding: 5px; }
   }
+
+  /* Modal style */
+  .modal-bg {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-content {
+    background: #222;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+  }
+  .modal-content label { display:block; margin-top:10px; }
+  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:none; }
+  .modal-buttons { text-align:right; margin-top:15px; }
+  .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
 </style>
 </head>
 <body>
 
 <h1>Calendrier des disponibilités - BLŌM</h1>
-
-<a id="backBtn" href="/blom/">← Retour à BLŌM</a>
-
 <div id="calendar"></div>
 
-<!-- Modal formulaire -->
-<div id="reservationModal" class="modal">
+<!-- Modal réservation -->
+<div class="modal-bg" id="reservationModal">
   <div class="modal-content">
-    <h2>Réserver BLŌM</h2>
-    <p id="resDates"></p>
-    <label>Nom complet<input type="text" id="resNom" required></label>
-    <label>Email<input type="email" id="resEmail" required></label>
-    <label>Téléphone<input type="tel" id="resTel" required></label>
-    <label>Nombre de personnes (max 2)<input type="number" id="resNb" min="1" max="2" value="2"></label>
-    <div style="text-align: right;">
-      <button class="confirm" id="resConfirm">Confirmer la réservation</button>
-      <button class="cancel" id="resCancel">Annuler</button>
+    <h3>Réserver BLŌM</h3>
+    <p id="modal-dates"></p>
+    <label>Nom complet<input type="text" id="res-name"></label>
+    <label>Email<input type="email" id="res-email"></label>
+    <label>Téléphone<input type="tel" id="res-phone"></label>
+    <label>Nombre de personnes (max 2)<input type="number" id="res-persons" min="1" max="2" value="2"></label>
+    <div class="modal-buttons">
+      <button id="res-cancel">Annuler</button>
+      <button id="res-confirm">Confirmer</button>
     </div>
   </div>
 </div>
 
 <script>
-  window.TEST_PAYMENT = true; // true = 1€ test, false = réel
+  window.TEST_PAYMENT = true;
 </script>
 
 <script src="/assets/js/blom-calendar.js"></script>
