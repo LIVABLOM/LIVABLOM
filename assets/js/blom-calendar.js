@@ -23,14 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
     locale: "fr",
     selectable: true,
     firstDay: 1,
-    selectMirror: true,
 
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
 
       const today = new Date();
-      today.setHours(0,0,0,0);
+      today.setHours(0, 0, 0, 0);
       if (start < today) return false;
 
       for (let range of reservedRanges) {
@@ -47,23 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
       return true;
     },
 
-    dateClick: async function(info) {
-      const start = info.dateStr;
+    select: async function (info) {
+      const start = info.startStr;
+      const end = info.endStr;
 
-      // 🔒 Bloquer les dates passées
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const clickedDate = new Date(start);
-      if (clickedDate < today) return;
-
-      // 🔒 Bloquer les dates déjà réservées
-      for (let range of reservedRanges) {
-        const rangeStart = new Date(range.start);
-        const rangeEnd = new Date(range.end);
-        if (clickedDate >= rangeStart && clickedDate < rangeEnd) return;
-      }
-
-      // Demande le nombre de personnes
       let nbPersonnes = prompt("Combien de personnes ?");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
@@ -72,28 +58,17 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // Demande la date de fin
-      let end = prompt("Date de fin (YYYY-MM-DD) ?");
-      if (!end) return;
-
-      const startDate = new Date(start);
-      const endDate = new Date(end);
-      if (endDate <= startDate) {
-        alert("La date de fin doit être après la date de début.");
-        return;
-      }
-
-      // Calcul du tarif total
+      let cur = new Date(start);
+      const fin = new Date(end);
       let total = 0;
-      let cur = new Date(startDate);
-      while (cur < endDate) {
+      while (cur < fin) {
         total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
         cur.setDate(cur.getDate() + 1);
       }
 
       let montant = window.TEST_PAYMENT ? 1 : total;
 
-      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € pour ${nbPersonnes} personne(s) ?`)) return;
+      if (!confirm(`Vous allez réserver BLŌM du ${start} au ${end} pour ${nbPersonnes} personne(s) — montant total : ${montant} €`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -107,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
             personnes: nbPersonnes
           })
         });
+
         const data = await res.json();
         if (data.url) window.location.href = data.url;
         else alert("Impossible de créer la réservation.");
@@ -116,23 +92,30 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    events: async function(fetchInfo, success, failure) {
+    events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
-
-        const fcEvents = evts.map(e => ({
-          title: "Réservé",
+        reservedRanges = evts.map(e => ({
           start: e.start,
-          end: e.end,
-          display: "background",
-          backgroundColor: "#ff0000",
-          borderColor: "#ff0000",
-          allDay: true
+          end: e.end
         }));
+
+        const fcEvents = evts.map(e => {
+          const end = new Date(e.end);
+          end.setDate(end.getDate() - 1);
+          return {
+            title: "Réservé",
+            start: e.start,
+            end: e.end,
+            display: "background",
+            backgroundColor: "#ff0000",
+            borderColor: "#ff0000",
+            allDay: true
+          };
+        });
 
         success(fcEvents);
       } catch (err) {
