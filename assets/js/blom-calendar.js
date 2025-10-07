@@ -1,5 +1,5 @@
 function getTarif(date, nbPersonnes = 2) {
-  const base = 150; // Tarif de base BLŌM par nuitée
+  const base = 150; // Tarif de base BLŌM
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
-
       const today = new Date();
       today.setHours(0, 0, 0, 0);
+
       if (start < today) return false;
 
       for (let range of reservedRanges) {
@@ -50,25 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const start = info.startStr;
       const end = info.endStr;
 
-      let nbPersonnes = prompt("Combien de personnes ?");
+      let nbPersonnes = prompt("Combien de personnes ? (max 2)");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
-      if (isNaN(nbPersonnes) || nbPersonnes < 1) {
-        alert("Veuillez entrer un nombre valide de personnes.");
+      if (isNaN(nbPersonnes) || nbPersonnes < 1 || nbPersonnes > 2) {
+        alert("BLŌM est limité à 2 personnes maximum.");
         return;
       }
 
-      let cur = new Date(start);
-      const fin = new Date(end);
-      let total = 0;
-      while (cur < fin) {
-        total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
-        cur.setDate(cur.getDate() + 1);
-      }
+      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, nbPersonnes);
 
-      let montant = window.TEST_PAYMENT ? 1 : total;
-
-      if (!confirm(`Vous allez réserver BLŌM du ${start} au ${end} pour ${nbPersonnes} personne(s) — montant total : ${montant} €`)) return;
+      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € ?`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -98,28 +90,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({
-          start: e.start,
-          end: e.end
-        }));
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map(e => {
-          const end = new Date(e.end);
-          end.setDate(end.getDate() - 1);
-          return {
-            title: "Réservé",
-            start: e.start,
-            end: e.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true
-          };
-        });
+        const fcEvents = evts.map(e => ({
+          title: "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true
+        }));
 
         success(fcEvents);
       } catch (err) {
-        console.error("❌ Erreur lors du chargement des événements :", err);
+        console.error("❌ Erreur chargement des événements :", err);
         failure(err);
       }
     }
