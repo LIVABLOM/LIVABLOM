@@ -28,8 +28,33 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
+  // Affichage tarif dynamique
+  let priceDisplay = document.createElement("p");
+  priceDisplay.id = "modal-price";
+  priceDisplay.style.fontWeight = "bold";
+  priceDisplay.style.marginTop = "10px";
+  modal.querySelector(".modal-content").appendChild(priceDisplay);
+
   let selectedStart = null;
   let selectedEnd = null;
+
+  function calculateTotal() {
+    if (!selectedStart || !selectedEnd) return 0;
+    let nbPersons = parseInt(inputPersons.value) || 2;
+    let cur = new Date(selectedStart);
+    const fin = new Date(selectedEnd);
+    let total = 0;
+    while(cur < fin){
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      cur.setDate(cur.getDate()+1);
+    }
+    return total;
+  }
+
+  function updatePriceDisplay() {
+    const total = calculateTotal();
+    priceDisplay.textContent = `Montant total : ${window.TEST_PAYMENT ? 1 : total} €`;
+  }
 
   // Fonction de validation du formulaire
   function validateForm() {
@@ -39,9 +64,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const nbPersons = parseInt(inputPersons.value);
     const valid = name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5;
     btnConfirm.disabled = !valid;
+    updatePriceDisplay();
   }
 
-  // Ecoute sur tous les champs pour activer/désactiver le bouton confirmer
+  // Écoute sur tous les champs pour activer/désactiver le bouton confirmer et mettre à jour le tarif
   [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
     input.addEventListener("input", validateForm);
   });
@@ -132,20 +158,11 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    let cur = new Date(selectedStart);
-    const fin = new Date(selectedEnd);
-    let total = 0;
-    while(cur < fin){
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
-      cur.setDate(cur.getDate()+1);
-    }
-
-    const montant = window.TEST_PAYMENT ? 1 : total;
+    const montant = window.TEST_PAYMENT ? 1 : calculateTotal();
 
     if(!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
 
     try{
-      // Préparation future pour validation côté serveur
       const payload = {
         logement:"LIVA",
         startDate:selectedStart,
