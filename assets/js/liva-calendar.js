@@ -31,6 +31,21 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedStart = null;
   let selectedEnd = null;
 
+  // Fonction de validation du formulaire
+  function validateForm() {
+    const name = inputName.value.trim();
+    const email = inputEmail.value.trim();
+    const phone = inputPhone.value.trim();
+    const nbPersons = parseInt(inputPersons.value);
+    const valid = name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5;
+    btnConfirm.disabled = !valid;
+  }
+
+  // Ecoute sur tous les champs pour activer/désactiver le bouton confirmer
+  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
+    input.addEventListener("input", validateForm);
+  });
+
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
@@ -62,10 +77,14 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
+
+      // Reset du formulaire
       inputName.value = "";
       inputEmail.value = "";
       inputPhone.value = "";
       inputPersons.value = 2;
+      validateForm();
+
       modal.style.display = "flex";
     },
 
@@ -79,7 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const fcEvents = evts.map(e=>{
           const end = new Date(e.end);
-          return {title:"Réservé", start:e.start, end:e.end, display:"background", backgroundColor:"#ff0000", borderColor:"#ff0000", allDay:true};
+          return {
+            title:"Réservé",
+            start:e.start,
+            end:e.end,
+            display:"background",
+            backgroundColor:"#ff0000",
+            borderColor:"#ff0000",
+            allDay:true
+          };
         });
 
         success(fcEvents);
@@ -94,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   btnCancel.addEventListener("click", ()=> modal.style.display="none");
 
-  btnConfirm.addEventListener("click", async ()=>{
+  btnConfirm.addEventListener("click", async ()=> {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
@@ -118,20 +145,24 @@ document.addEventListener("DOMContentLoaded", function () {
     if(!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
 
     try{
+      // Préparation future pour validation côté serveur
+      const payload = {
+        logement:"LIVA",
+        startDate:selectedStart,
+        endDate:selectedEnd,
+        amount:montant,
+        personnes:nbPersons,
+        name:name,
+        email:email,
+        phone:phone
+      };
+
       const res = await fetch(`${stripeBackend}/api/checkout`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({
-          logement:"LIVA",
-          startDate:selectedStart,
-          endDate:selectedEnd,
-          amount:montant,
-          personnes:nbPersons,
-          name:name,
-          email:email,
-          phone:phone
-        })
+        body: JSON.stringify(payload)
       });
+
       const data = await res.json();
       if(data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
