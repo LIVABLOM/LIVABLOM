@@ -1,7 +1,7 @@
 function getTarif(date, nbPersonnes = 2) {
-  const base = 79; // Tarif de base pour 2 personnes
+  const base = 120; // Exemple : tarif de base LIVA
   if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
+  return base + (nbPersonnes - 2) * 15;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -22,55 +22,47 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    firstDay: 1, // Lundi
+    firstDay: 1,
 
-    // Interdire les dates passées et réservées
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
-
       const today = new Date();
       today.setHours(0, 0, 0, 0);
+
+      // Interdit les dates passées
       if (start < today) return false;
 
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1); // fin exclusive
+        const rangeEndMinusOne = new Date(rangeEnd);
+        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
 
-        if (start <= rangeEnd && end > rangeStart) {
-          if (start.getTime() === rangeEnd.getTime()) continue; // autorisé si commence le jour du départ
+        // Empêche chevauchement
+        if (start <= rangeEndMinusOne && end > rangeStart) {
+          if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
       }
       return true;
     },
 
-    // Sélection du séjour
     select: async function (info) {
       const start = info.startStr;
       const end = info.endStr;
 
-      let nbPersonnes = prompt("Combien de personnes pour ce séjour ?");
+      let nbPersonnes = prompt("Combien de personnes ? (max 5)");
       if (!nbPersonnes) return;
       nbPersonnes = parseInt(nbPersonnes);
-      if (isNaN(nbPersonnes) || nbPersonnes < 1) {
-        alert("Veuillez entrer un nombre valide de personnes.");
+      if (isNaN(nbPersonnes) || nbPersonnes < 1 || nbPersonnes > 5) {
+        alert("Veuillez entrer un nombre de personnes entre 1 et 5.");
         return;
       }
 
-      // Calcul du montant total
-      let cur = new Date(start);
-      const fin = new Date(end);
-      let total = 0;
-      while (cur < fin) {
-        total += getTarif(cur.toISOString().split("T")[0], nbPersonnes);
-        cur.setDate(cur.getDate() + 1);
-      }
+      let montant = window.TEST_PAYMENT ? 1 : getTarif(start, nbPersonnes);
 
-      let montant = window.TEST_PAYMENT ? 1 : total;
-
-      if (!confirm(`Vous allez réserver LIVA du ${start} au ${end} pour ${nbPersonnes} personne(s) — montant total : ${montant} €`)) return;
+      if (!confirm(`Réserver LIVA du ${start} au ${end} pour ${montant} € ?`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -94,35 +86,27 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
 
-    // Chargement des réservations existantes
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({
-          start: e.start,
-          end: e.end
-        }));
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map(e => {
-          const endDate = new Date(e.end);
-          endDate.setDate(endDate.getDate() - 1); // colorier jusqu'à la veille du départ
-          return {
-            title: "Réservé",
-            start: e.start,
-            end: e.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true
-          };
-        });
+        const fcEvents = evts.map(e => ({
+          title: "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true
+        }));
 
         success(fcEvents);
       } catch (err) {
-        console.error("❌ Erreur lors du chargement des événements :", err);
+        console.error("❌ Erreur chargement des événements :", err);
         failure(err);
       }
     }
