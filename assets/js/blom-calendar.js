@@ -1,7 +1,7 @@
 function getTarif(date, nbPersonnes = 2) {
   const base = 150; // Tarif de base BLŌM
   if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
+  return base + (nbPersonnes - 2) * 20; // Mais max 2 pers, donc jamais utilisé
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -28,8 +28,52 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
+  // Affichage tarif dynamique
+  let priceDisplay = document.createElement("p");
+  priceDisplay.id = "modal-price";
+  priceDisplay.style.fontWeight = "bold";
+  priceDisplay.style.marginTop = "10px";
+  modal.querySelector(".modal-content").appendChild(priceDisplay);
+
   let selectedStart = null;
   let selectedEnd = null;
+
+  function calculateTotal() {
+    if (!selectedStart || !selectedEnd) return 0;
+    let nbPersons = parseInt(inputPersons.value) || 2;
+    if (nbPersons > 2) nbPersons = 2; // Max 2 personnes pour BLŌM
+    let cur = new Date(selectedStart);
+    const fin = new Date(selectedEnd);
+    let total = 0;
+    while(cur < fin){
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      cur.setDate(cur.getDate()+1);
+    }
+    return total;
+  }
+
+  function updatePriceDisplay() {
+    const total = calculateTotal();
+    priceDisplay.textContent = `Montant total : ${window.TEST_PAYMENT ? 1 : total} €`;
+  }
+
+  // Fonction de validation du formulaire
+  function validateForm() {
+    const name = inputName.value.trim();
+    const email = inputEmail.value.trim();
+    const phone = inputPhone.value.trim();
+    let nbPersons = parseInt(inputPersons.value);
+    if (isNaN(nbPersons) || nbPersons < 1) nbPersons = 1;
+    if (nbPersons > 2) inputPersons.value = 2;
+    const valid = name && email && phone && nbPersons >= 1 && nbPersons <= 2;
+    btnConfirm.disabled = !valid;
+    updatePriceDisplay();
+  }
+
+  // Écoute sur tous les champs pour activer/désactiver le bouton confirmer et mettre à jour le tarif
+  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
+    input.addEventListener("input", validateForm);
+  });
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
@@ -62,10 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
+
+      // Reset du formulaire
       inputName.value = "";
       inputEmail.value = "";
       inputPhone.value = "";
       inputPersons.value = 2;
+      validateForm();
+
       modal.style.display = "flex";
     },
 
@@ -79,7 +127,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const fcEvents = evts.map(e=>{
           const end = new Date(e.end);
-          return {title:"Réservé", start:e.start, end:e.end, display:"background", backgroundColor:"#ff0000", borderColor:"#ff0000", allDay:true};
+          return {
+            title:"Réservé",
+            start:e.start,
+            end:e.end,
+            display:"background",
+            backgroundColor:"#ff0000",
+            borderColor:"#ff0000",
+            allDay:true
+          };
         });
 
         success(fcEvents);
@@ -94,44 +150,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
   btnCancel.addEventListener("click", ()=> modal.style.display="none");
 
-  btnConfirm.addEventListener("click", async ()=>{
+  btnConfirm.addEventListener("click", async ()=> {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     let nbPersons = parseInt(inputPersons.value);
+    if (isNaN(nbPersons) || nbPersons < 1) nbPersons = 1;
+    if (nbPersons > 2) nbPersons = 2;
 
-    if(!name || !email || !phone || isNaN(nbPersons) || nbPersons<1 || nbPersons>2){
+    if(!name || !email || !phone || nbPersons < 1 || nbPersons > 2){
       alert("Veuillez remplir tous les champs correctement (max 2 personnes).");
       return;
     }
 
-    let cur = new Date(selectedStart);
-    const fin = new Date(selectedEnd);
-    let total = 0;
-    while(cur < fin){
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
-      cur.setDate(cur.getDate()+1);
-    }
-
-    const montant = window.TEST_PAYMENT ? 1 : total;
+    const montant = window.TEST_PAYMENT ? 1 : calculateTotal();
 
     if(!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
 
     try{
+      const payload = {
+        logement:"BLŌM",
+        startDate:selectedStart,
+        endDate:selectedEnd,
+        amount:montant,
+        personnes:nbPersons,
+        name:name,
+        email:email,
+        phone:phone
+      };
+
       const res = await fetch(`${stripeBackend}/api/checkout`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({
-          logement:"BLOM",
-          startDate:selectedStart,
-          endDate:selectedEnd,
-          amount:montant,
-          personnes:nbPersons,
-          name:name,
-          email:email,
-          phone:phone
-        })
+        body: JSON.stringify(payload)
       });
+
       const data = await res.json();
       if(data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
