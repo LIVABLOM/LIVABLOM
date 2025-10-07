@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendrier BLŌM</title>
 
-<!-- FullCalendar CSS & JS depuis jsDelivr -->
+<!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
@@ -26,7 +26,7 @@
     padding: 10px; 
     background: #111; 
     border-radius: 12px; 
-    height: calc(100vh - 40px); 
+    height: calc(100vh - 140px); 
   }
 
   h1 { 
@@ -35,16 +35,31 @@
     font-size: 1.8rem; 
   }
 
+  .back-button {
+    text-align: center; 
+    margin-bottom: 10px;
+  }
+
+  .back-button a {
+    padding: 8px 15px; 
+    background: #fff; 
+    color: #000; 
+    text-decoration: none; 
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
     #calendar { padding: 5px; }
+    .back-button a { padding: 6px 12px; font-size: 0.9rem; }
   }
 
   /* Modal style */
   .modal-bg {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.7);
     display: none;
     justify-content: center;
     align-items: center;
@@ -59,14 +74,23 @@
     max-width: 400px;
   }
   .modal-content label { display:block; margin-top:10px; }
-  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:none; }
+  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #555; background:#111; color:#fff; }
   .modal-buttons { text-align:right; margin-top:15px; }
   .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
+
+  /* Prix dynamique */
+  #modal-price { font-weight: bold; margin-top:10px; }
 </style>
 </head>
 <body>
 
 <h1>Calendrier des disponibilités - BLŌM</h1>
+
+<!-- Bouton Retour vers BLŌM -->
+<div class="back-button">
+  <a href="/blom.html">← Retour vers BLŌM</a>
+</div>
+
 <div id="calendar"></div>
 
 <!-- Modal réservation -->
@@ -78,9 +102,10 @@
     <label>Email<input type="email" id="res-email"></label>
     <label>Téléphone<input type="tel" id="res-phone"></label>
     <label>Nombre de personnes (max 2)<input type="number" id="res-persons" min="1" max="2" value="2"></label>
+    <p id="modal-price">Montant total : 0 €</p>
     <div class="modal-buttons">
       <button id="res-cancel">Annuler</button>
-      <button id="res-confirm">Confirmer</button>
+      <button id="res-confirm" disabled>Confirmer</button>
     </div>
   </div>
 </div>
