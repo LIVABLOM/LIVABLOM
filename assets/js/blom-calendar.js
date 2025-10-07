@@ -1,5 +1,6 @@
 function getTarif(date, nbPersonnes = 2) {
-  const base = 150; // Tarif de base BLŌM par nuitée
+  // Tarif de base BLŌM par nuitée
+  const base = 150;
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
@@ -22,13 +23,14 @@ document.addEventListener("DOMContentLoaded", function () {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    firstDay: 1,
+    firstDay: 1, // lundi
 
-    // Interdire sélection de dates passées et réservées
+    // 🔒 Bloquer dates passées et dates déjà réservées
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
 
+      // Interdire dates passées
       const today = new Date();
       today.setHours(0,0,0,0);
       if (start < today) return false;
@@ -36,9 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1); // fin exclusive
+        const rangeEndMinusOne = new Date(rangeEnd);
+        rangeEndMinusOne.setDate(rangeEndMinusOne.getDate() - 1);
 
-        if (start <= rangeEnd && end > rangeStart) {
+        // Interdire chevauchement, sauf si on commence pile le jour du départ
+        if (start <= rangeEndMinusOne && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
@@ -50,14 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const start = info.startStr;
       const end = info.endStr;
 
-      // Popup pour récupérer les infos client
-      let nom = prompt("Nom du client ?");
+      // 🔹 Popup formulaire
+      let nom = prompt("Votre nom ?");
       if (!nom) return;
 
-      let email = prompt("Email du client ?");
+      let email = prompt("Votre email ?");
       if (!email) return;
 
-      let tel = prompt("Numéro de téléphone ?");
+      let tel = prompt("Votre numéro de téléphone ?");
       if (!tel) return;
 
       let nbPersonnes = prompt("Nombre de personnes (max 2) ?");
@@ -68,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // Calcul du prix total
+      // Calcul du prix total pour le séjour
       let cur = new Date(start);
       const fin = new Date(end);
       let total = 0;
@@ -79,7 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let montant = window.TEST_PAYMENT ? 1 : total;
 
-      if (!confirm(`Réserver BLŌM du ${start} au ${end} pour ${montant} € (${nbPersonnes} personne(s)) ?`)) return;
+      if (!confirm(
+        `Réserver BLŌM du ${start} au ${end} pour ${montant} € pour ${nbPersonnes} personne(s) ?`
+      )) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -118,8 +124,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }));
 
         const fcEvents = evts.map(e => {
-          const end = new Date(e.end);
-          end.setDate(end.getDate()); // fin exclusive
+          const endDate = new Date(e.end);
+          // On colorie jusqu'à la veille du départ
+          endDate.setDate(endDate.getDate() - 1);
           return {
             title: "Réservé",
             start: e.start,
