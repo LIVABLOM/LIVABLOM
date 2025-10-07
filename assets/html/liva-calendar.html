@@ -1,65 +1,54 @@
----
-layout: default
-title: Calendrier LIVA
----
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendrier LIVA</title>
 
-<style>
-  body {
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-
-  h1 {
-    margin-top: 40px;
-    font-size: 2rem;
-    letter-spacing: 1px;
-  }
-
-  #calendar {
-    max-width: 900px;
-    margin: 40px auto;
-    background: #111;
-    border-radius: 12px;
-    padding: 20px;
-  }
-
-  a.retour {
-    display: inline-block;
-    margin-top: 30px;
-    color: #fff;
-    text-decoration: none;
-    background: #333;
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: background 0.3s;
-  }
-
-  a.retour:hover {
-    background: #555;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    #calendar {
-      width: 95%;
-      font-size: 0.9rem;
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-  }
-</style>
+    h1 { margin-top: 24px; font-size: 1.8rem; }
+    #calendar {
+      max-width: 900px;
+      margin: 28px auto;
+      background: #111;
+      border-radius: 12px;
+      padding: 12px;
+      box-sizing: border-box;
+      min-height: 60vh;
+    }
+    a.retour {
+      display: inline-block;
+      margin: 18px auto 40px;
+      color: #fff;
+      text-decoration: none;
+      background: #333;
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+    @media (max-width:600px) {
+      #calendar { width: 95%; padding: 8px; }
+    }
+  </style>
+</head>
+<body>
 
-<h1>Calendrier de réservation — LIVA</h1>
+  <h1>Calendrier des disponibilités — LIVA</h1>
+  <div id="calendar"></div>
 
-<div id="calendar"></div>
+  <a class="retour" href="https://livablom.fr/liva/">← Retour vers LIVA</a>
 
-<a href="https://livablom.fr/liva/" class="retour">← Retour vers LIVA</a>
+  <!-- FullCalendar global bundle (JS injecte le CSS pour v6) -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
 
-<!-- FullCalendar -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-
-<!-- Script LIVA -->
-<script src="/assets/js/liva-calendar.js"></script>
+  <!-- Ton script (vérifie que le chemin correspond dans ton repo/site) -->
+  <script src="/assets/js/liva-calendar.js"></script>
+</body>
+</html>
