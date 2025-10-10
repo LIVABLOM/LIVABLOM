@@ -90,10 +90,13 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-      inputName.value = "";
-      inputEmail.value = "";
-      inputPhone.value = "";
-      inputPersons.value = 2;
+      
+      // On ne réinitialise pas les valeurs pour garder pré-remplissage
+      inputName.value = inputName.value || "";
+      inputEmail.value = inputEmail.value || "";
+      inputPhone.value = inputPhone.value || "";
+      inputPersons.value = inputPersons.value || 2;
+
       validateForm();
       updatePrice();
       modal.style.display = "flex";
