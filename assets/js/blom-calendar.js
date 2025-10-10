@@ -1,5 +1,5 @@
 function getTarif(date, nbPersonnes = 2) {
-  const base = 150; // Tarif de base BLŌM
+  const base = 150; // Tarif de base BLOM
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
@@ -90,8 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-      
-      // On ne réinitialise pas les valeurs pour garder pré-remplissage
+
       inputName.value = inputName.value || "";
       inputEmail.value = inputEmail.value || "";
       inputPhone.value = inputPhone.value || "";
@@ -160,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          logement: "BLŌM",
+          logement: "BLOM", // <-- Sans accent pour Stripe
           startDate: selectedStart,
           endDate: selectedEnd,
           amount: montant,
