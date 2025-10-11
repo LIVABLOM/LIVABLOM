@@ -1,13 +1,22 @@
 ---
 layout: default
-title: Merci
-permalink: /merci
+title: Réservation réussie
+permalink: /merci/
 ---
 
-<div class="min-h-screen bg-white text-black px-4 py-12 text-center">
-  <h1 class="text-3xl font-bold mb-6">Merci pour votre message</h1>
-  <p class="text-lg max-w-xl mx-auto">
-    Nous vous répondrons rapidement.
+<section class="merci-page" style="text-align:center; padding:4rem 2rem; color:white; background-color:black; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+  <h1 style="font-size:2.5rem; margin-bottom:1rem;">🎉 Merci pour votre réservation !</h1>
+  <p style="font-size:1.3rem; max-width:600px; line-height:1.6;">
+    Votre paiement a bien été reçu et votre séjour est confirmé.<br>
+    Un email de confirmation vous a été envoyé avec tous les détails de votre réservation.
   </p>
-  <a href="{{ site.baseurl }}/" class="mt-6 inline-block text-blue-600 hover:underline">Retour à l’accueil</a>
-</div>
+  <p style="margin-top:2rem; font-size:1.1rem;">
+    Nous avons hâte de vous accueillir à <strong>LIVABLŌM</strong> !
+  </p>
+
+  <div style="margin-top:3rem;">
+    <a href="/" style="display:inline-block; padding:0.8rem 1.5rem; background:#fff; color:#000; border-radius:8px; text-decoration:none; font-weight:bold; transition:all 0.3s;">
+      ⬅️ Retour à l'accueil
+    </a>
+  </div>
+</section>
