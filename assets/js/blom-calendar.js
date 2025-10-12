@@ -1,3 +1,18 @@
+// ========================================================
+// 🌸 BLOM Calendar JS - version adaptative
+// ========================================================
+
+async function getConfig() {
+  try {
+    const res = await fetch("/api/config?ts=" + Date.now());
+    if (!res.ok) throw new Error("Impossible de récupérer la config");
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return { testPayment: true }; // fallback sécurisé en mode test
+  }
+}
+
 function getTarif(date, nbPersonnes = 2) {
   const base = 150; // Tarif de base BLŌM
   if (nbPersonnes <= 2) return base;
@@ -16,18 +31,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     ? "http://localhost:3000"
     : "https://livablom-stripe-production.up.railway.app";
 
-  // 👉 On va chercher la configuration serveur
-  let TEST_PAYMENT = false;
-  try {
-    const res = await fetch(`${stripeBackend}/api/config`);
-    if (res.ok) {
-      const cfg = await res.json();
-      TEST_PAYMENT = cfg.testPayment === true;
-      console.log("Mode paiement :", TEST_PAYMENT ? "TEST (1€)" : "RÉEL");
-    }
-  } catch (err) {
-    console.warn("Impossible de charger la config de paiement, mode réel par défaut.");
-  }
+  // Récupération config serveur
+  const config = await getConfig();
+  const testPayment = config.testPayment;
 
   let reservedRanges = [];
 
@@ -51,12 +57,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
     const valid =
-      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
+      name &&
+      email &&
+      phone &&
+      !isNaN(nbPersons) &&
+      nbPersons >= 1 &&
+      nbPersons <= 2;
     btnConfirm.disabled = !valid;
   }
 
-  [inputName, inputEmail, inputPhone, inputPersons].forEach((input) => {
-    input.addEventListener("input", validateForm);
+  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
+    input.addEventListener("input", () => {
+      validateForm();
+      updatePrice();
+    });
   });
 
   function updatePrice() {
@@ -69,17 +83,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-    priceDisplay.textContent = `Montant total : ${total} €`;
+    const displayAmount = testPayment ? 1 : total;
+    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
-
-  inputPersons.addEventListener("input", updatePrice);
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
     firstDay: 1,
-
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -99,7 +111,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
       return true;
     },
-
     select: function (info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
@@ -112,25 +123,22 @@ document.addEventListener("DOMContentLoaded", async function () {
       updatePrice();
       modal.style.display = "flex";
     },
-
     events: async function (fetchInfo, success, failure) {
       try {
-        const res = await fetch(
-          `${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`
-        );
+        const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map((e) => ({
+        const fcEvents = evts.map(e => ({
           title: "Réservé",
           start: e.start,
           end: e.end,
           display: "background",
           backgroundColor: "#ff0000",
           borderColor: "#ff0000",
-          allDay: true,
+          allDay: true
         }));
 
         success(fcEvents);
@@ -138,7 +146,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error(err);
         failure(err);
       }
-    },
+    }
   });
 
   cal.render();
@@ -151,14 +159,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const phone = inputPhone.value.trim();
     let nbPersons = parseInt(inputPersons.value);
 
-    if (
-      !name ||
-      !email ||
-      !phone ||
-      isNaN(nbPersons) ||
-      nbPersons < 1 ||
-      nbPersons > 2
-    ) {
+    if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 2) {
       alert("Veuillez remplir tous les champs correctement (max 2 personnes).");
       return;
     }
@@ -171,14 +172,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       cur.setDate(cur.getDate() + 1);
     }
 
-    const montant = TEST_PAYMENT ? 1 : total;
+    const montant = testPayment ? 1 : total;
 
-    if (
-      !confirm(
-        `Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`
-      )
-    )
-      return;
+    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -192,8 +188,8 @@ document.addEventListener("DOMContentLoaded", async function () {
           personnes: nbPersons,
           name,
           email,
-          phone,
-        }),
+          phone
+        })
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
