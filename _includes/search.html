@@ -1,8 +1,8 @@
-<div class="max-w-4xl mx-auto my-8 px-4">
-  <input type="text" id="searchInput" placeholder="Rechercher..." 
-         class="w-full border rounded px-4 py-2 mb-4 text-black" />
+<div class="max-w-6xl mx-auto my-8 px-4">
+  <input type="text" id="searchInput" placeholder="Rechercher un logement..." 
+         class="w-full border rounded px-4 py-2 mb-6 text-black text-lg" />
 
-  <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+  <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 </div>
 
 <script>
@@ -12,7 +12,8 @@
         title: "{{ page.title | escape }}",
         url: "{{ page.url }}",
         tags: {{ page.tags | jsonify }},
-        description: "{{ page.description | escape }}"
+        description: "{{ page.description | escape }}",
+        image: "{{ page.image | default: '/assets/galerie/blom22.jpg' }}"
       },
     {% endfor %}
   ];
@@ -27,20 +28,25 @@
       return;
     }
 
-    // Trier : BLŌM d'abord si mots clés spa/massage, puis les autres
     const matched = pages
       .filter(p => p.title.toLowerCase().includes(query) ||
                    p.description.toLowerCase().includes(query) ||
                    (p.tags && p.tags.some(t => t.toLowerCase().includes(query))))
       .sort(p => {
+        // spa/massage en priorité
         if ((query.includes("spa") || query.includes("massage")) && p.tags.includes("spa")) return -1;
         return 0;
       });
 
     resultsDiv.innerHTML = matched.map(p => `
-      <a href="${p.url}" class="block p-4 bg-gray-100 rounded shadow hover:bg-gray-200">
-        <h3 class="font-bold text-lg">${p.title}</h3>
-        <p class="text-sm mt-1">${p.description}</p>
+      <a href="${p.url}" class="block rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1">
+        <div class="relative w-full h-48">
+          <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover"/>
+        </div>
+        <div class="p-4 bg-white text-black">
+          <h3 class="font-bold text-xl mb-1">${p.title}</h3>
+          <p class="text-sm text-gray-700">${p.description}</p>
+        </div>
       </a>
     `).join("");
   });
