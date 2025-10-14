@@ -1,10 +1,54 @@
 ---
 layout: default
 title: LIVA – Maison tout équipée à Guesnain pour couples, familles, ou dans le cadre d'une activité pro
-description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, parking privé et securisée."
+description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, parking privé et sécurisé, idéal pour familles, couples et professionnels dans le Douaisis."
 image: "/assets/galerie/liva/salon1.jpg"
 permalink: /liva/
+keywords: "logement tout confort Douaisis, maison équipée Guesnain, séjour famille Douai, logement pro Douai, hébergement spacieux Nord, LIVA, LIVABLŌM"
 ---
+
+<!-- Balises Open Graph pour le partage -->
+<meta property="og:title" content="LIVA – Maison tout équipée à Guesnain pour couples, familles et pros">
+<meta property="og:description" content="Séjour premium à LIVA : logement spacieux, cuisine équipée, parking privé et sécurisé dans le Douaisis, idéal pour familles, couples et professionnels.">
+<meta property="og:image" content="{{ site.baseurl }}/assets/galerie/liva/salon1.jpg">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+
+<!-- Données structurées pour Google (schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "LIVA – Logement tout confort",
+  "image": "{{ site.url }}{{ site.baseurl }}/assets/galerie/liva/salon1.jpg",
+  "description": "Logement spacieux et tout équipé pour familles, couples et professionnels dans le Douaisis, avec cuisine, parking et espace confortable.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "338 boulevard Ambroise Croizat",
+    "addressLocality": "Guesnain",
+    "postalCode": "59287",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "50.3666",
+    "longitude": "3.0808"
+  },
+  "priceRange": "€€",
+  "telephone": "+33 6 00 00 00 00",
+  "url": "https://livablom.github.io/liva/",
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Cuisine équipée" },
+    { "@type": "LocationFeatureSpecification", "name": "Parking privé" },
+    { "@type": "LocationFeatureSpecification", "name": "Espace tout confort" }
+  ],
+  "containedInPlace": {
+    "@type": "Place",
+    "name": "Douaisis"
+  }
+}
+</script>
 
 <div class="bg-gray-100 min-h-screen px-6 py-8 text-center flex flex-col">
 
@@ -77,13 +121,12 @@ permalink: /liva/
     </div>
   </div>
 
-<!-- Appel à l'action : Réserver BLŌM -->
+<!-- Appel à l'action : Réserver LIVA -->
 <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
   <h3 class="text-2xl font-bold mb-2">Réservez LIVA</h3>
-  <p class="mb-4">Logement tout equipe tout confort</p>
+  <p class="mb-4">Logement tout équipé tout confort</p>
 
   <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <!-- Changement : ouverture page séparée -->
     <a href="/assets/html/liva-calendar.html" 
        class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
       Réserver maintenant
@@ -91,7 +134,6 @@ permalink: /liva/
     {% include share.html %}
   </div>
 </div>
-
 
 <!-- Modal calendrier LIVA -->
 <div id="calendarModalLiva" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('LIVA', event)">
@@ -136,7 +178,6 @@ async function initCalendar(logement) {
     const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
     const calendarEl = document.getElementById(containerId);
 
-    // utilitaire: force le format YYYY-MM-DD (jour local), sans heures
     const toISODate = (d) => {
       const x = new Date(d);
       const y = x.getFullYear();
@@ -153,12 +194,12 @@ async function initCalendar(logement) {
       headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
       events: events.map(ev => ({
         title: "Réservé",
-        start: toISODate(ev.start), // inclus
-        end: toISODate(ev.end),     // EXCLUS (ne pas -1 jour)
+        start: toISODate(ev.start),
+        end: toISODate(ev.end),
         allDay: true,
         display: "block"
       })),
-      displayEventTime: false,  // plus de "2h"
+      displayEventTime: false,
       eventColor: "#e63946",
       selectable: false,
       navLinks: true
