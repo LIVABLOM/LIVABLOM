@@ -1,0 +1,47 @@
+<div class="max-w-4xl mx-auto my-8 px-4">
+  <input type="text" id="searchInput" placeholder="Rechercher..." 
+         class="w-full border rounded px-4 py-2 mb-4 text-black" />
+
+  <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</div>
+
+<script>
+  const pages = [
+    {% for page in site.pages %}
+      {
+        title: "{{ page.title | escape }}",
+        url: "{{ page.url }}",
+        tags: {{ page.tags | jsonify }},
+        description: "{{ page.description | escape }}"
+      },
+    {% endfor %}
+  ];
+
+  const input = document.getElementById("searchInput");
+  const resultsDiv = document.getElementById("searchResults");
+
+  input.addEventListener("input", () => {
+    const query = input.value.toLowerCase().trim();
+    if (!query) {
+      resultsDiv.innerHTML = "";
+      return;
+    }
+
+    // Trier : BLŌM d'abord si mots clés spa/massage, puis les autres
+    const matched = pages
+      .filter(p => p.title.toLowerCase().includes(query) ||
+                   p.description.toLowerCase().includes(query) ||
+                   (p.tags && p.tags.some(t => t.toLowerCase().includes(query))))
+      .sort(p => {
+        if ((query.includes("spa") || query.includes("massage")) && p.tags.includes("spa")) return -1;
+        return 0;
+      });
+
+    resultsDiv.innerHTML = matched.map(p => `
+      <a href="${p.url}" class="block p-4 bg-gray-100 rounded shadow hover:bg-gray-200">
+        <h3 class="font-bold text-lg">${p.title}</h3>
+        <p class="text-sm mt-1">${p.description}</p>
+      </a>
+    `).join("");
+  });
+</script>
