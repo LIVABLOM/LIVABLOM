@@ -1,10 +1,55 @@
 ---
 layout: default
 title: BLŌM – Spa privatif et hébergement romantique à Guesnain
-description: "Offrez-vous une parenthèse romantique à BLŌM : logement de charme, spa privatif, détente et petit‑déjeuner inclus."
+description: "Offrez-vous une parenthèse romantique à BLŌM : logement de charme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit-déjeuner offert."
 image: "/assets/galerie/blom/blom22.jpg"
 permalink: /blom/
+keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain, massage couple Douai, hébergement bien-être Nord, jacuzzi privatif Douai, nuit détente romantique, LIVABLŌM, BLŌM"
 ---
+
+<!-- Balises Open Graph pour le partage -->
+<meta property="og:title" content="BLŌM – Spa privatif et hébergement romantique à Guesnain">
+<meta property="og:description" content="Offrez-vous une parenthèse romantique à BLŌM : spa privatif, salle de massage et petit déjeuner offert, à Guesnain près de Douai.">
+<meta property="og:image" content="{{ site.baseurl }}/assets/galerie/blom/blom22.jpg">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+
+<!-- Données structurées pour Google (schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "BLŌM – Suite romantique avec spa et massage",
+  "image": "{{ site.url }}{{ site.baseurl }}/assets/galerie/blom/blom22.jpg",
+  "description": "Logement haut de gamme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit déjeuner offert.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "338 boulevard Ambroise Croizat",
+    "addressLocality": "Guesnain",
+    "postalCode": "59287",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "50.3666",
+    "longitude": "3.0808"
+  },
+  "priceRange": "€€€",
+  "telephone": "+33 6 00 00 00 00",
+  "url": "https://livablom.github.io/blom/",
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Spa privatif" },
+    { "@type": "LocationFeatureSpecification", "name": "Salle de massage" },
+    { "@type": "LocationFeatureSpecification", "name": "Petit déjeuner offert" },
+    { "@type": "LocationFeatureSpecification", "name": "Arrivée autonome" }
+  ],
+  "containedInPlace": {
+    "@type": "Place",
+    "name": "Douaisis"
+  }
+}
+</script>
 
 <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
   <div class="max-w-6xl mx-auto space-y-16">
@@ -12,7 +57,7 @@ permalink: /blom/
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
 
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
-      Découvrez BLŌM, un refuge romantique où le bien‑être prend tout son sens
+      Découvrez BLŌM, un refuge romantique où le bien-être prend tout son sens
       · Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux.
       · À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
     </p>
