@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Récupération config serveur
   const config = await getConfig();
   const testPayment = config.testPayment;
+  console.log("💻 Front testPayment :", testPayment);
 
   let reservedRanges = [];
 
