@@ -22,7 +22,13 @@ async function getConfig() {
 
 
 function getTarif(date, nbPersonnes = 2) {
-  const base = 150; // Tarif de base BLŌM
+  const jour = new Date(date).getDay(); // 0 = dimanche, 1 = lundi ... 6 = samedi
+  let base;
+  
+  if (jour === 0) base = 190;        // Dimanche
+  else if (jour === 5 || jour === 6) base = 169; // Vendredi et samedi
+  else base = 150;                   // Lundi → Jeudi
+
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
