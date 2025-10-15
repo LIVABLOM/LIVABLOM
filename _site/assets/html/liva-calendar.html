@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendrier LIVA</title>
+
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<style>
+  html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+    background: #fff; 
+    color: #000; 
+    font-family: Arial, sans-serif; 
+  }
+
+  #calendar { 
+    width: 100%; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 10px; 
+    background: #f9f9f9; 
+    border-radius: 12px; 
+    height: calc(100vh - 140px); /* Ajusté pour le bouton retour et le prix */
+  }
+
+  h1 { 
+    text-align: center; 
+    margin: 10px 0; 
+    font-size: 1.8rem; 
+  }
+
+  .back-button {
+    text-align: center; 
+    margin-bottom: 10px;
+  }
+
+  .back-button a {
+    padding: 8px 15px; 
+    background: #000; 
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 1.4rem; }
+    #calendar { padding: 5px; }
+    .back-button a { padding: 6px 12px; font-size: 0.9rem; }
+  }
+
+  /* Modal style */
+  .modal-bg {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-content {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+  }
+  .modal-content label { display:block; margin-top:10px; }
+  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+  .modal-buttons { text-align:right; margin-top:15px; }
+  .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
+
+  /* Prix dynamique */
+  #modal-price { font-weight: bold; margin-top:10px; }
+</style>
+</head>
+<body>
+
+<h1>Calendrier des disponibilités - LIVA</h1>
+
+<!-- Bouton Retour vers LIVA -->
+<div class="back-button">
+  <a href="/liva/">← Retour vers LIVA</a>
+</div>
+
+<div id="calendar"></div>
+
+<!-- Modal réservation -->
+<div class="modal-bg" id="reservationModal">
+  <div class="modal-content">
+    <h3>Réserver LIVA</h3>
+    <p id="modal-dates"></p>
+    <label>Nom complet<input type="text" id="res-name"></label>
+    <label>Email<input type="email" id="res-email"></label>
+    <label>Téléphone<input type="tel" id="res-phone"></label>
+    <label>Nombre de personnes (max 5)<input type="number" id="res-persons" min="1" max="5" value="2"></label>
+    <p id="modal-price">Montant total : 0 €</p>
+    <div class="modal-buttons">
+      <button id="res-cancel">Annuler</button>
+      <button id="res-confirm" disabled>Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.TEST_PAYMENT = true;
+</script>
+
+<script src="/assets/js/liva-calendar.js"></script>
+
+</body>
+</html>

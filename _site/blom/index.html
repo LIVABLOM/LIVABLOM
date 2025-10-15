@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLŌM – Spa privatif et hébergement romantique à Guesnain</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+
+  <!-- SEO & Open Graph -->
+  <meta name="description" content="Offrez-vous une parenthèse romantique à BLŌM : logement de charme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit-déjeuner offert.">
+  <meta property="og:title" content="BLŌM – Spa privatif et hébergement romantique à Guesnain">
+  <meta property="og:description" content="Offrez-vous une parenthèse romantique à BLŌM : logement de charme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit-déjeuner offert.">
+  <meta property="og:image" content="http://localhost:4000/assets/galerie/blom/blom22.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/blom/">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BLŌM – Spa privatif et hébergement romantique à Guesnain">
+  <meta name="twitter:description" content="Offrez-vous une parenthèse romantique à BLŌM : logement de charme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit-déjeuner offert.">
+  <meta name="twitter:image" content="http://localhost:4000/assets/galerie/blom/blom22.jpg">
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Lightbox2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Partage social -->
+  <link rel="stylesheet" href="/assets/css/share.css">
+
+  <!-- Styles animations -->
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 1s ease-out both; }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+  </style>
+
+  
+    <link rel="canonical" href="https://www.livablom.fr/blom/">
+  
+</head>
+<body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden">
+
+<!-- ================= Maintenance ================= -->
+<script>
+  const isAdmin = window.location.search.includes("admin=true");
+  if (!isAdmin && true) {
+    document.write(`
+      <div class="flex flex-col items-center justify-center h-screen text-center px-4 bg-white animate-fadeIn">
+        <img src="/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="w-32 h-auto mb-6 animate-fadeIn delay-100">
+        <h1 class="text-4xl font-extrabold mb-4 text-gray-900 animate-fadeIn delay-200">Site en maintenance</h1>
+        <p class="text-lg text-gray-700 mb-6 max-w-xl animate-fadeIn delay-300">
+          Nous travaillons actuellement sur le site pour vous offrir une meilleure expérience.
+          Vous pouvez toujours nous contacter via le bouton ci-dessous.
+        </p>
+        <a href="/contact" class="px-8 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition animate-fadeIn delay-400">
+          Contactez-nous
+        </a>
+      </div>
+    `);
+  }
+</script>
+
+<script>
+  if (isAdmin) {
+    document.querySelectorAll('a[href^="/"]').forEach(link => {
+      const url = new URL(link.href, window.location.origin);
+      if (!url.searchParams.has("admin")) {
+        url.searchParams.set("admin", "true");
+        link.href = url.toString();
+      }
+    });
+  }
+</script>
+<!-- ============================================ -->
+
+<header class="bg-black text-white w-full px-6 py-4 relative z-50 flex justify-between items-center">
+  <div class="flex items-center space-x-4">
+    <img src="/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="h-10 w-auto">
+    <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
+  </div>
+
+  <!-- Menu desktop -->
+  <nav class="hidden sm:flex space-x-6">
+    <a href="/" class="hover:underline">Accueil</a>
+    <a href="/galerie" class="hover:underline">Galerie</a>
+    <a href="/prestations" class="hover:underline">Prestations</a>
+    <a href="/contact" class="hover:underline">Contact</a>
+  </nav>
+
+  <!-- Hamburger mobile -->
+  <button id="menu-toggle" class="sm:hidden focus:outline-none" aria-label="Ouvrir le menu">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
+
+  <!-- Menu mobile -->
+  <div id="mobile-menu" class="hidden absolute right-0 top-16 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50 w-48 sm:hidden">
+    <a href="/" class="block hover:underline">Accueil</a>
+    <a href="/galerie" class="block hover:underline">Galerie</a>
+    <a href="/prestations" class="block hover:underline">Prestations</a>
+    <a href="/contact" class="block hover:underline">Contact</a>
+  </div>
+</header>
+
+<main class="flex-grow">
+  <!-- Balises Open Graph pour le partage -->
+<meta property="og:title" content="BLŌM – Spa privatif et hébergement romantique à Guesnain" />
+
+<meta property="og:description" content="Offrez-vous une parenthèse romantique à BLŌM : spa privatif, salle de massage et petit déjeuner offert, à Guesnain près de Douai." />
+
+<meta property="og:image" content="/assets/galerie/blom/blom22.jpg" />
+
+<meta property="og:url" content="http://localhost:4000/blom/" />
+
+<meta property="og:type" content="website" />
+
+<meta property="og:locale" content="fr_FR" />
+
+<!-- Données structurées pour Google (schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "BLŌM – Suite romantique avec spa et massage",
+  "image": "http://localhost:4000/assets/galerie/blom/blom22.jpg",
+  "description": "Logement haut de gamme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit déjeuner offert.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "338 boulevard Ambroise Croizat",
+    "addressLocality": "Guesnain",
+    "postalCode": "59287",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "50.3666",
+    "longitude": "3.0808"
+  },
+  "priceRange": "€€€",
+  "telephone": "+33 6 00 00 00 00",
+  "url": "https://livablom.github.io/blom/",
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Spa privatif" },
+    { "@type": "LocationFeatureSpecification", "name": "Salle de massage" },
+    { "@type": "LocationFeatureSpecification", "name": "Petit déjeuner offert" },
+    { "@type": "LocationFeatureSpecification", "name": "Arrivée autonome" }
+  ],
+  "containedInPlace": {
+    "@type": "Place",
+    "name": "Douaisis"
+  }
+}
+</script>
+
+<section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
+  <div class="max-w-6xl mx-auto space-y-16">
+
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente &amp; Évasion</h1>
+
+    <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
+      Découvrez BLŌM, un refuge romantique où le bien-être prend tout son sens
+      · Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux.
+      · À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
+    </p>
+
+    <!-- Bandeau hygiène -->
+    <div class="bg-red-600 text-white text-sm px-6 py-3 rounded-full shadow-md text-center max-w-md mx-auto mb-6 animate-pulse">
+      Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
+    </div>
+
+    <!-- Bloc 1 -->
+    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200 transition-all">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif" class="w-full h-auto max-w-full object-cover filter brightness-75" />
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Jacuzzi privatif</h2>
+        <p>Chez BLŌM, l’eau de votre spa est totalement vidée et renouvelée pour chaque nouveau client. Vous êtes assurés d’une hygiène parfaite et d’une expérience 100 % privative. Jacuzzi intérieur à température idéale pour un moment de détente à deux. Ambiance tamisée et intimité garantie.</p>
+      </div>
+    </div>
+
+    <!-- Bloc 2 -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
+      <div class="w-full md:w-1/2 flex flex-col gap-4">
+        <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
+          <img src="/assets/galerie/blom/blom31.jpg" alt="Table de massage manuelle" class="w-full h-auto object-cover filter brightness-75" />
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+        <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
+          <img src="/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique" class="w-full h-auto object-cover filter brightness-75" />
+          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Espace Massage</h2>
+        <p>Deux types de massage : manuel à partager en duo, ou table de massage électrique avec 16 programmes et fonction chauffante, parfaite pour un moment de détente en solo ou à deux.</p>
+      </div>
+    </div>
+
+    <!-- Bloc 3 -->
+    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon" class="w-full h-auto object-cover filter brightness-75" />
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Lit King Size &amp; Salon</h2>
+        <p>Un lit spacieux avec coin salon et TV connectée. Idéal pour un séjour romantique dans un cadre cosy.</p>
+      </div>
+    </div>
+
+    <!-- Bloc 4 -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500 transition-all">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="/assets/galerie/blom/blom10.jpg" alt="Table romantique dressée" class="w-full h-auto object-cover filter brightness-75" />
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Table Romantique</h2>
+        <p>Vous souhaitez apporter votre dîner ? Une table romantique vous attend, dressée avec soin pour sublimer votre soirée.</p>
+      </div>
+    </div>
+
+    <!-- Bloc témoignages -->
+    <div class="mt-20 bg-black text-white">
+      <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
+      <div class="relative max-w-3xl mx-auto overflow-hidden">
+        <div id="carousel" class="flex transition-transform duration-700">
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(0)">
+            <p class="italic text-lg truncate">“Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce pr...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– M.P</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(1)">
+            <p class="italic text-lg truncate">“Tres bon moment passé dans ce logement pour une soiree romantique. Abdel est un hote tres attenti...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Melissa</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(2)">
+            <p class="italic text-lg truncate">“Nous y avons passé une nuit, notre arrivée a été très chaleureuse avec une petite musique d’ambia...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Sylvie</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(3)">
+            <p class="italic text-lg truncate">“Nous avons passé une nuit incroyable, tout était parfait.  La maison est incroyable surtout la sa...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Anaïs</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(4)">
+            <p class="italic text-lg truncate">“C’était notre deuxième séjour dans ce logement, toujours aussi impeccable ! Les petites attention...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Alexandra</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(5)">
+            <p class="italic text-lg truncate">“Tout était parfait, hôte aux petits soins.
+”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Fanny</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(6)">
+            <p class="italic text-lg truncate">“Par où commencer... Abdel est un hôte au top : respectueux, disponible, réactif, attentionné. Le ...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Anissa</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(7)">
+            <p class="italic text-lg truncate">“Nous avons passé un merveilleux week-end. Tout était tout simplement parfait : propre, soigné, av...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Pauline</span>
+          </div>
+          
+          <div class="min-w-full px-4 cursor-pointer" onclick="openModal(8)">
+            <p class="italic text-lg truncate">“Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages,...”</p>
+            <span class="block mt-2 text-sm text-gray-400">– Emilie</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal témoignages -->
+    <div id="testimonialModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+      <div class="bg-black text-white max-w-2xl p-6 rounded-xl relative">
+        <button id="closeBtn" class="absolute top-2 right-2 text-white text-xl">✖</button>
+        <div id="modalText" class="whitespace-pre-line"></div>
+        <div class="flex justify-between mt-4">
+          <button id="prevBtn" class="px-4 py-2 bg-gray-700 rounded">◀</button>
+          <button id="nextBtn" class="px-4 py-2 bg-gray-700 rounded">▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts carrousel + modal -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentIndex = 0;
+      const carousel = document.getElementById("carousel");
+      const items = carousel.children;
+      const totalItems = items.length;
+
+      const fullTestimonials = [
+        
+        `Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester.. Rien à dire à part merci ☺️`,
+        
+        `Tres bon moment passé dans ce logement pour une soiree romantique. Abdel est un hote tres attentionné et disponible. Toutes les communications se font par message au long du sejour pour passer un tres bon moment avec de nombreux services. Le logement est tres propre, le jaccuzzi nettoyé entre chaque locataire. Nous avons été tres contents. La table est mise pour un diner romantique et le petit dejeuner organisé pour l’intimite des locataires est parfait. Hote et logement a recommander`,
+        
+        `Nous y avons passé une nuit, notre arrivée a été très chaleureuse avec une petite musique d’ambiance et plusieurs petites attentions qui font plaisir. Tout était impeccable, la déco très jolie et romantique. Le Jacuzzi était impeccable également, vidé et nettoyé au préalable. Nous recommanderons ce logement autour de nous et reviendrons sans hésiter.`,
+        
+        `Nous avons passé une nuit incroyable, tout était parfait.  La maison est incroyable surtout la salle de massage en plus du jacuzzi 😍👌🏼.`,
+        
+        `C’était notre deuxième séjour dans ce logement, toujours aussi impeccable ! Les petites attentions sont vraiment appréciables. Une excellente parenthèse sans enfant, qui nous a fait beaucoup de bien. Nous reviendrons avec grand plaisir.  Je recommande à 100 % ! 😀`,
+        
+        `Tout était parfait, hôte aux petits soins.`,
+        
+        `Par où commencer... Abdel est un hôte au top : respectueux, disponible, réactif, attentionné. Le logement est situé dans un endroit très calme et sécurisé, d&#39;une propreté nickel. Nous avons passé un week-end mémorable et nous reviendrons sans hésiter. Nous partagerons l&#39;annonce car c&#39;est de loin le meilleur logement de ce type que nous avons testé. Allez-y vraiment les yeux fermés. Au-delà de nos attentes. Une bonne continuation à Abdel et merci encore pour tout.`,
+        
+        `Nous avons passé un merveilleux week-end. Tout était tout simplement parfait : propre, soigné, avec plein de petites attentions qui font vraiment la différence. L’appartement est conforme à l’annonce, très bien équipé, cosy, et décoré avec goût. Mention spéciale à l’hôte, très réactif et attentionné, qui a su répondre rapidement à nos questions et s’assurer que tout se passait bien.  Nous reviendrons sans hésiter et recommandons ce logement les yeux fermés !`,
+        
+        `Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu&#39;on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !`,
+        
+      ];
+
+      function showCarouselSlide(index) {
+        const offset = -index * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+      }
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalItems;
+        showCarouselSlide(currentIndex);
+      }, 5000);
+
+      Array.from(items).forEach((item, i) => {
+        item.addEventListener("click", () => {
+          currentIndex = i;
+          updateModalText();
+          document.getElementById("testimonialModal").classList.remove("hidden");
+          document.getElementById("testimonialModal").classList.add("flex");
+        });
+      });
+
+      function updateModalText() {
+        document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+        updateModalText();
+      });
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % fullTestimonials.length;
+        updateModalText();
+      });
+      document.getElementById("closeBtn").addEventListener("click", () => {
+        document.getElementById("testimonialModal").classList.add("hidden");
+        document.getElementById("testimonialModal").classList.remove("flex");
+      });
+    });
+    </script>
+
+<!-- Appel à l'action : Réserver BLŌM -->
+<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
+
+  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+    <!-- Changement : ouverture page séparée -->
+    <a href="/assets/html/blom-calendar.html" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+      Réserver maintenant
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://livablom.github.io/LIVABLOM" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+   Partager sur Facebook
+</a>
+
+  </div>
+</div>
+</div></section>
+
+</main>
+
+<footer class="bg-black text-white text-center py-6">
+  <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
+  <div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 text-sm">
+    <a href="/mentions" class="underline hover:text-gray-300 transition">Mentions légales & CGV</a>
+    <a href="/politique-confidentialite" class="underline hover:text-gray-300 transition">Politique de confidentialité</a>
+    <a href="/politique-cookies" class="underline hover:text-gray-300 transition">Politique cookies</a>
+  </div>
+</footer>
+
+<!-- Scripts JS -->
+
+<!-- Injecter backend URL pour calendriers -->
+<script>
+  window.BACKEND_URL = "http://localhost:3000";
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
+
+<!-- Menu mobile -->
+<script>
+  const toggleButton = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  toggleButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+    mobileMenu.classList.toggle("flex");
+  });
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    });
+  });
+</script>
+
+<!-- CookieConsent -->
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script>
+window.addEventListener("load", function(){
+  window.cookieconsent.initialise({
+    palette: { popup: { background: "#000" }, button: { background: "#fbbf24", text: "#000" } },
+    theme: "classic", type: "opt-in",
+    content: {
+      message: "Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous l’utilisation des cookies analytiques ?",
+      allow: "Accepter", deny: "Refuser",
+      link: "En savoir plus",
+      href: "/politique-confidentialite"
+    }
+  });
+});
+</script>
+
+</body>
+</html>

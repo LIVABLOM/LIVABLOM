@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales & CGV</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+
+  <!-- SEO & Open Graph -->
+  <meta name="description" content="Logements haut de gamme à Guesnain (Douaisis) : spa romantique BLŌM pour les couples &amp; maison LIVA pour familles ou pros.">
+  <meta property="og:title" content="Mentions légales & CGV">
+  <meta property="og:description" content="Logements haut de gamme à Guesnain (Douaisis) : spa romantique BLŌM pour les couples & maison LIVA pour familles ou pros.">
+  <meta property="og:image" content="http://localhost:4000/assets/images/photolivablom1.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:4000/mentions">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mentions légales & CGV">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="http://localhost:4000">
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Lightbox2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Partage social -->
+  <link rel="stylesheet" href="/assets/css/share.css">
+
+  <!-- Styles animations -->
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 1s ease-out both; }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+  </style>
+
+  
+    <link rel="canonical" href="https://www.livablom.fr/mentions">
+  
+</head>
+<body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden">
+
+<!-- ================= Maintenance ================= -->
+<script>
+  const isAdmin = window.location.search.includes("admin=true");
+  if (!isAdmin && true) {
+    document.write(`
+      <div class="flex flex-col items-center justify-center h-screen text-center px-4 bg-white animate-fadeIn">
+        <img src="/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="w-32 h-auto mb-6 animate-fadeIn delay-100">
+        <h1 class="text-4xl font-extrabold mb-4 text-gray-900 animate-fadeIn delay-200">Site en maintenance</h1>
+        <p class="text-lg text-gray-700 mb-6 max-w-xl animate-fadeIn delay-300">
+          Nous travaillons actuellement sur le site pour vous offrir une meilleure expérience.
+          Vous pouvez toujours nous contacter via le bouton ci-dessous.
+        </p>
+        <a href="/contact" class="px-8 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition animate-fadeIn delay-400">
+          Contactez-nous
+        </a>
+      </div>
+    `);
+  }
+</script>
+
+<script>
+  if (isAdmin) {
+    document.querySelectorAll('a[href^="/"]').forEach(link => {
+      const url = new URL(link.href, window.location.origin);
+      if (!url.searchParams.has("admin")) {
+        url.searchParams.set("admin", "true");
+        link.href = url.toString();
+      }
+    });
+  }
+</script>
+<!-- ============================================ -->
+
+<header class="bg-black text-white w-full px-6 py-4 relative z-50 flex justify-between items-center">
+  <div class="flex items-center space-x-4">
+    <img src="/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="h-10 w-auto">
+    <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
+  </div>
+
+  <!-- Menu desktop -->
+  <nav class="hidden sm:flex space-x-6">
+    <a href="/" class="hover:underline">Accueil</a>
+    <a href="/galerie" class="hover:underline">Galerie</a>
+    <a href="/prestations" class="hover:underline">Prestations</a>
+    <a href="/contact" class="hover:underline">Contact</a>
+  </nav>
+
+  <!-- Hamburger mobile -->
+  <button id="menu-toggle" class="sm:hidden focus:outline-none" aria-label="Ouvrir le menu">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
+
+  <!-- Menu mobile -->
+  <div id="mobile-menu" class="hidden absolute right-0 top-16 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50 w-48 sm:hidden">
+    <a href="/" class="block hover:underline">Accueil</a>
+    <a href="/galerie" class="block hover:underline">Galerie</a>
+    <a href="/prestations" class="block hover:underline">Prestations</a>
+    <a href="/contact" class="block hover:underline">Contact</a>
+  </div>
+</header>
+
+<main class="flex-grow">
+  <div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+  <div class="max-w-4xl mx-auto">
+
+    <h1 class="text-3xl font-bold mb-8 text-center">Mentions légales &amp; Conditions Générales de Vente</h1>
+
+    <!-- Informations légales -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Identité</h2>
+      <p><strong>Nom de la société :</strong> LIVABLŌM</p>
+      <p><strong>Gérant :</strong> BENHDACH Abdelkader</p>
+      <p><strong>SIRET :</strong> 953 343 019 00014</p>
+      <p><strong>Adresse :</strong> 338 boulevard Ambroise Croizat, 59287 GUESNAIN</p>
+    </section>
+
+    <!-- Règlement intérieur -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Règlement intérieur</h2>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Petit déjeuner toujours inclus pour les nuitées.</li>
+        <li>Heures d'arrivée : entre 19h00 et 22h00.</li>
+        <li>Heure de départ : avant 11h00.</li>
+        <li>Photographie commerciale et tournages non autorisés.</li>
+        <li>Animaux non acceptés.</li>
+        <li>Interdiction de fumer ou vapoter à l’intérieur.</li>
+        <li>Espace fumeur disponible à l’extérieur avec cendrier.</li>
+      </ul>
+    </section>
+
+    <!-- Conditions d'annulation -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Conditions d’annulation</h2>
+      <p>Les annulations doivent être effectuées au minimum 10 jours avant la date d’arrivée prévue.</p>
+    </section>
+
+    <!-- Prestations et tarifs -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Tarifs et formules</h2>
+
+      <h3 class="text-xl font-semibold mt-4">BLŌM (logement spa pour couples)</h3>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>Nuitée :</strong> Vendredi &amp; samedi : 169 €</li>
+        <li><strong>Nuitée :</strong> Dimanche : 190 €</li>
+        <li><strong>Nuitée :</strong> Lundi à jeudi : 150 €</li>
+        <li><strong>Formule journée :</strong> 11h00 à 16h00 – 130 € (sur demande et après validation)</li>
+        <li><strong>Formule 4h :</strong> sur demande uniquement</li>
+      </ul>
+
+      <h3 class="text-xl font-semibold mt-6">LIVA (logement tout confort pour couples, familles ou pros)</h3>
+      <ul class="list-disc list-inside space-y-2">
+        <li><strong>Tarifs :</strong> variables selon la période, à consulter sur demande ou via le formulaire de contact</li>
+        <li><strong>Équipements :</strong> 2 chambres, cuisine équipée, salon TV, wifi, parking gratuit</li>
+        <li><strong>Utilisation :</strong> nuitée, moyen séjour, déplacement professionnel</li>
+      </ul>
+    </section>
+
+    <!-- Données personnelles -->
+    <section class="mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Données personnelles &amp; RGPD</h2>
+      <p>Nous collectons uniquement les données nécessaires au traitement des réservations et aux échanges via notre formulaire de contact (nom, email, message).</p>
+      <p>Aucune donnée n’est revendue. Pour toute demande de suppression ou de modification de vos données, veuillez nous contacter à l'adresse : <a href="mailto:livablom59@gmail.com" class="underline hover:text-yellow-200">livablom59@gmail.com</a>.</p>
+    </section>
+
+    <p class="text-sm text-center text-yellow-300 mt-12">
+      Dernière mise à jour : juillet 2025
+    </p>
+
+  </div>
+</div>
+
+</main>
+
+<footer class="bg-black text-white text-center py-6">
+  <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
+  <div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 text-sm">
+    <a href="/mentions" class="underline hover:text-gray-300 transition">Mentions légales & CGV</a>
+    <a href="/politique-confidentialite" class="underline hover:text-gray-300 transition">Politique de confidentialité</a>
+    <a href="/politique-cookies" class="underline hover:text-gray-300 transition">Politique cookies</a>
+  </div>
+</footer>
+
+<!-- Scripts JS -->
+
+<!-- Injecter backend URL pour calendriers -->
+<script>
+  window.BACKEND_URL = "http://localhost:3000";
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
+
+<!-- Menu mobile -->
+<script>
+  const toggleButton = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  toggleButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+    mobileMenu.classList.toggle("flex");
+  });
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    });
+  });
+</script>
+
+<!-- CookieConsent -->
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script>
+window.addEventListener("load", function(){
+  window.cookieconsent.initialise({
+    palette: { popup: { background: "#000" }, button: { background: "#fbbf24", text: "#000" } },
+    theme: "classic", type: "opt-in",
+    content: {
+      message: "Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous l’utilisation des cookies analytiques ?",
+      allow: "Accepter", deny: "Refuser",
+      link: "En savoir plus",
+      href: "/politique-confidentialite"
+    }
+  });
+});
+</script>
+
+</body>
+</html>

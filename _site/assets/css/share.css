@@ -1,0 +1,21 @@
+.share-widget a {
+  display: inline-block;
+  background-color: #FF6600;       /* orange très visible */
+  color: white;
+  padding: 0.75em 1.5em;           /* bouton plus grand */
+  font-size: 1.1em;                /* texte plus lisible */
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+}
+.share-widget a:hover,
+.share-widget a:focus {
+  background-color: #E65C00;      /* orange un peu plus foncé au survol */
+  transform: translateY(-2px);   /* effet léger de levée */
+}
+.share-widget a:active {
+  background-color: #CC5200;
+  transform: translateY(0);
+}
