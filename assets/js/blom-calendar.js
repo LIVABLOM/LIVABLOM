@@ -4,7 +4,7 @@
 
 async function getConfig() {
   try {
-    const res = await fetch("/api/config?ts=" + Date.now());
+    const res = await fetch("https://livablom-stripe-production.up.railway.app/api/config?ts=" + Date.now());
     if (!res.ok) throw new Error("Impossible de récupérer la config");
     return await res.json();
   } catch (err) {
