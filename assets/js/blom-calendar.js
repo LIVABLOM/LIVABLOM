@@ -4,14 +4,22 @@
 
 async function getConfig() {
   try {
-    const res = await fetch("https://livablom-stripe-production.up.railway.app/api/config?ts=" + Date.now());
+    const stripeBackend = window.location.hostname.includes("localhost")
+      ? "http://localhost:3000"
+      : "https://livablom-stripe-production.up.railway.app";
+
+    const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
     if (!res.ok) throw new Error("Impossible de récupérer la config");
-    return await res.json();
+    const data = await res.json();
+    console.log("💻 Front config =", data);
+    console.log("💻 Front testPayment =", data.testPayment);
+    return data;
   } catch (err) {
     console.error(err);
-    return { testPayment: true }; // fallback sécurisé en mode test
+    return { testPayment: false }; // fallback sécurisé
   }
 }
+
 
 function getTarif(date, nbPersonnes = 2) {
   const base = 150; // Tarif de base BLŌM
