@@ -95,3 +95,57 @@ body {
     color: black;
   }
 }
+  /* === Mobile / FullCalendar fixes === */
+
+/* Autoriser le scroll sur mobile (remplace body { overflow: hidden; }) */
+body {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; /* inertial scrolling iOS */
+}
+
+/* Forcer un comportement tactile correct sur le calendrier */
+#calendar {
+  touch-action: manipulation;    /* évite le conflit avec le scroll */
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-touch-action: manipulation;
+}
+
+/* Rendre les jours "clicables" sur mobile (curseur, amélioration du hit area) */
+.fc-daygrid-day,
+.fc-daygrid-day-frame,
+.fc-daygrid-day-top {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Améliore la réactivité long-press / tap (si FullCalendar supporte ces options) */
+.fc .fc-daygrid-day:hover {
+  filter: brightness(1.02);
+}
+
+/* Modal : permettre de scroller à l'intérieur si contenu dépasse (mobile) */
+.modal-bg {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  -webkit-touch-callout: none;
+}
+
+/* Boutons et inputs : agrandir la zone tactile sur mobile */
+.modal-content input,
+.modal-content button {
+  min-height: 40px;
+  font-size: 16px;
+  touch-action: manipulation;
+}
+
+/* Optionnel : réduire sensibilité du sélecteur de date (empêche glisser accidentellement) */
+.fc .fc-daygrid-day-frame > * {
+  pointer-events: auto;
+}
+
+/* Si tu veux désactiver le "double-tap to zoom" sur pages spécifiques, ajoute :
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   mais attention : empêche le pinch-zoom pour l'accessibilité. */
+
