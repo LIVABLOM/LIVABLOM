@@ -1,3 +1,5 @@
+// === CALENDRIER LIVA AVEC SUPPORT MOBILE & STRIPE ===
+
 function getTarif(date, nbPersonnes = 2) {
   const base = 79; // Tarif de base LIVA
   if (nbPersonnes <= 2) return base;
@@ -18,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let reservedRanges = [];
 
-  // Modal
+  // === Modal ===
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedStart = null;
   let selectedEnd = null;
 
-  // Validation du formulaire
+  // === Validation formulaire ===
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("input", validateForm);
   });
 
-  // Calcul et affichage dynamique du montant total
+  // === Calcul dynamique du montant ===
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
     const nbPersons = parseInt(inputPersons.value) || 2;
@@ -62,11 +64,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   inputPersons.addEventListener("input", updatePrice);
 
+  // === Initialisation du calendrier ===
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
+    selectMirror: true,
+    unselectAuto: true,
     firstDay: 1,
+    eventLongPressDelay: 0,
+    selectLongPressDelay: 0,
+    longPressDelay: 0,
+    handleWindowResize: true,
+    height: "auto",
 
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
@@ -79,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1);
-
         if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
@@ -105,10 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
-
         const evts = await res.json();
         reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
-
         const fcEvents = evts.map(e => ({
           title: "Réservé",
           start: e.start,
@@ -118,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
           borderColor: "#ff0000",
           allDay: true
         }));
-
         success(fcEvents);
       } catch (err) {
         console.error(err);
@@ -129,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cal.render();
 
+  // === Actions modal ===
   btnCancel.addEventListener("click", () => modal.style.display = "none");
 
   btnConfirm.addEventListener("click", async () => {
@@ -178,3 +185,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+// === Correctifs CSS mobiles (à mettre dans ton fichier CSS principal) ===
+// #calendar {
+//   touch-action: manipulation;
+//   user-select: none;
+// }
+// .fc-daygrid-day {
+//   cursor: pointer;
+// }
