@@ -67,7 +67,7 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
     </div>
 
-    <!-- Blocs prestations (Jacuzzi, Massage, Lit, Table) -->
+    <!-- Blocs prestations : Jacuzzi, Massage, Lit, Table -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif"
@@ -150,6 +150,92 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       </div>
     </div>
 
-    <!-- Scripts carrousel + modal -->
-    <script>
-   
+    <!-- Appel à l'action : Réserver BLŌM -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+      <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+      <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
+
+      <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+        <a href="/assets/html/blom-calendar.html" 
+           class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+          Réserver maintenant
+        </a>
+        {% include share.html %}
+      </div>
+    </div>
+
+    <!-- Modal calendrier BLŌM -->
+    <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
+      <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
+        <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
+        <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour BLŌM</h3>
+        <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FullCalendar -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<script>
+let calendars = {}; // stocke les instances pour BLOM et LIVA
+
+function openCalendar(logement) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  document.getElementById(modalId).classList.remove("hidden");
+  document.getElementById(modalId).classList.add("flex");
+
+  if (!calendars[logement]) {
+    initCalendar(logement);
+  }
+}
+
+function closeCalendar(logement, event) {
+  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
+  const modal = document.getElementById(modalId);
+  if (!event || event.target === modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+async function initCalendar(logement) {
+  try {
+    const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
+    const events = await res.json();
+
+    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
+    const calendarEl = document.getElementById(containerId);
+
+    const toISODate = (d) => {
+      const x = new Date(d);
+      const y = x.getFullYear();
+      const m = String(x.getMonth() + 1).padStart(2, "0");
+      const day = String(x.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    };
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      locale: "fr",
+      firstDay: 1,
+      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+      events: events.map(e => ({
+        start: toISODate(e.start),
+        end: toISODate(e.end),
+        display: "background",
+        color: "#ff0000"
+      }))
+    });
+
+    calendar.render();
+    calendars[logement] = calendar;
+  } catch (err) {
+    console.error(err);
+  }
+}
+</script>
