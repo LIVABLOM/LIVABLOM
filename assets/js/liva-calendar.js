@@ -1,4 +1,24 @@
-// === CALENDRIER LIVA AVEC SUPPORT MOBILE & STRIPE ===
+// ========================================================
+// 🌸 LIVA Calendar JS - version adaptative
+// ========================================================
+
+async function getConfig() {
+  try {
+    const stripeBackend = window.location.hostname.includes("localhost")
+      ? "http://localhost:3000"
+      : "https://livablom-stripe-production.up.railway.app";
+
+    const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
+    if (!res.ok) throw new Error("Impossible de récupérer la config");
+    const data = await res.json();
+    console.log("💻 Front config =", data);
+    console.log("💻 Front testPayment =", data.testPayment);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return { testPayment: true }; // fallback sécurisé
+  }
+}
 
 function getTarif(date, nbPersonnes = 2) {
   const base = 79; // Tarif de base LIVA
@@ -6,7 +26,7 @@ function getTarif(date, nbPersonnes = 2) {
   return base + (nbPersonnes - 2) * 20;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const el = document.getElementById("calendar");
   if (!el) return;
 
@@ -18,9 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
     ? "http://localhost:3000"
     : "https://livablom-stripe-production.up.railway.app";
 
+  // Récupération config serveur
+  const config = await getConfig();
+  const testPayment = config.testPayment;
+  console.log("💻 Front testPayment :", testPayment);
+
   let reservedRanges = [];
 
-  // === Modal ===
+  // Modal
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -34,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedStart = null;
   let selectedEnd = null;
 
-  // === Validation formulaire ===
+  // Validation du formulaire
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
@@ -45,10 +70,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
-    input.addEventListener("input", validateForm);
+    input.addEventListener("input", () => {
+      validateForm();
+      updatePrice();
+    });
   });
 
-  // === Calcul dynamique du montant ===
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
     const nbPersons = parseInt(inputPersons.value) || 2;
@@ -59,25 +86,15 @@ document.addEventListener("DOMContentLoaded", function () {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-    priceDisplay.textContent = `Montant total : ${total} €`;
+    const displayAmount = testPayment ? 1 : total;
+    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
-  inputPersons.addEventListener("input", updatePrice);
-
-  // === Initialisation du calendrier ===
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
-    selectMirror: true,
-    unselectAuto: true,
     firstDay: 1,
-    eventLongPressDelay: 0,
-    selectLongPressDelay: 0,
-    longPressDelay: 0,
-    handleWindowResize: true,
-    height: "auto",
-
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -89,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1);
+
         if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
@@ -96,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return true;
     },
-
     select: function (info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
@@ -109,13 +126,14 @@ document.addEventListener("DOMContentLoaded", function () {
       updatePrice();
       modal.style.display = "flex";
     },
-
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
+
         const evts = await res.json();
         reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
+
         const fcEvents = evts.map(e => ({
           title: "Réservé",
           start: e.start,
@@ -125,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
           borderColor: "#ff0000",
           allDay: true
         }));
+
         success(fcEvents);
       } catch (err) {
         console.error(err);
@@ -135,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   cal.render();
 
-  // === Actions modal ===
   btnCancel.addEventListener("click", () => modal.style.display = "none");
 
   btnConfirm.addEventListener("click", async () => {
@@ -157,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
       cur.setDate(cur.getDate() + 1);
     }
 
-    const montant = window.TEST_PAYMENT ? 1 : total;
+    const montant = testPayment ? 1 : total;
 
     if (!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
 
@@ -185,12 +203,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-
-// === Correctifs CSS mobiles (à mettre dans ton fichier CSS principal) ===
-// #calendar {
-//   touch-action: manipulation;
-//   user-select: none;
-// }
-// .fc-daygrid-day {
-//   cursor: pointer;
-// }
