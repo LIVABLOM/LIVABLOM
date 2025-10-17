@@ -67,7 +67,7 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
     </div>
 
-    <!-- Bloc 1 -->
+    <!-- Blocs prestations (Jacuzzi, Massage, Lit, Table) -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif"
@@ -80,7 +80,6 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       </div>
     </div>
 
-    <!-- Bloc 2 -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
       <div class="w-full md:w-1/2 flex flex-col gap-4">
         <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
@@ -100,7 +99,6 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       </div>
     </div>
 
-    <!-- Bloc 3 -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon"
@@ -113,7 +111,6 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       </div>
     </div>
 
-    <!-- Bloc 4 -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Table romantique dressée"
@@ -155,202 +152,4 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
 
     <!-- Scripts carrousel + modal -->
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      let currentIndex = 0;
-      const carousel = document.getElementById("carousel");
-      const items = carousel.children;
-      const totalItems = items.length;
-
-      const fullTestimonials = [
-        {% for temoignage in site.data.avis_blom %}
-        `{{ temoignage.texte | strip_newlines | escape }}`,
-        {% endfor %}
-      ];
-
-      function showCarouselSlide(index) {
-        const offset = -index * 100;
-        carousel.style.transform = `translateX(${offset}%)`;
-      }
-
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalItems;
-        showCarouselSlide(currentIndex);
-      }, 5000);
-
-      Array.from(items).forEach((item, i) => {
-        item.addEventListener("click", () => {
-          currentIndex = i;
-          updateModalText();
-          document.getElementById("testimonialModal").classList.remove("hidden");
-          document.getElementById("testimonialModal").classList.add("flex");
-        });
-      });
-
-      function updateModalText() {
-        document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-      }
-
-      document.getElementById("prevBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-        updateModalText();
-      });
-      document.getElementById("nextBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % fullTestimonials.length;
-        updateModalText();
-      });
-      document.getElementById("closeBtn").addEventListener("click", () => {
-        document.getElementById("testimonialModal").classList.add("hidden");
-        document.getElementById("testimonialModal").classList.remove("flex");
-      });
-    });
-    </script>
-
-    <script>
-let calendars = {}; // Stocke les instances de calendrier
-let selectedStart = null;
-let selectedEnd = null;
-
-// Tarifs des logements
-const tarifs = {
-  LIVA: 79,  // Base pour 2 personnes
-  BLOM: { // Exemple BLŌM : tarif selon jour
-    weekday: 150,
-    fridaySaturday: 169,
-    sunday: 190
-  }
-};
-
-// Ouvre le modal calendrier
-function openCalendar(logement) {
-  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-  const modal = document.getElementById(modalId);
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  if (!calendars[logement]) {
-    initCalendar(logement);
-  }
-}
-
-// Ferme le modal calendrier
-function closeCalendar(logement, event) {
-  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-  const modal = document.getElementById(modalId);
-  if (!event || event.target === modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
-}
-
-// Retourne le tarif LIVA ou BLOM pour une date
-function getTarif(logement, date, nbPersonnes = 2) {
-  if (logement === "LIVA") {
-    if (nbPersonnes <= 2) return tarifs.LIVA;
-    return tarifs.LIVA + (nbPersonnes - 2) * 20;
-  } else if (logement === "BLOM") {
-    const day = new Date(date).getDay(); // 0 = dimanche, 5 = vendredi, 6 = samedi
-    if (day === 5 || day === 6) return tarifs.BLOM.fridaySaturday;
-    if (day === 0) return tarifs.BLOM.sunday;
-    return tarifs.BLOM.weekday;
-  }
-}
-
-// Initialise le calendrier
-async function initCalendar(logement) {
-  try {
-    const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
-    const events = await res.json();
-
-    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
-    const calendarEl = document.getElementById(containerId);
-
-    const toISODate = (d) => {
-      const x = new Date(d);
-      const y = x.getFullYear();
-      const m = String(x.getMonth() + 1).padStart(2, "0");
-      const day = String(x.getDate()).padStart(2, "0");
-      return `${y}-${m}-${day}`;
-    };
-
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      height: "auto",
-      locale: "fr",
-      firstDay: 1,
-      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
-      events: events.map(ev => ({
-        title: "Réservé",
-        start: toISODate(ev.start),
-        end: toISODate(ev.end),
-        allDay: true,
-        display: "block",
-        backgroundColor: "#e63946"
-      })),
-      displayEventTime: false,
-      selectable: true,
-      selectLongPressDelay: 0,
-      navLinks: true,
-
-      select: function(info) {
-        selectedStart = info.startStr;
-        selectedEnd = info.endStr;
-
-        // Ouvre le modal
-        const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-        const modal = document.getElementById(modalId);
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-
-        // Champs du formulaire
-        const inputName = document.getElementById("res-name");
-        const inputEmail = document.getElementById("res-email");
-        const inputPhone = document.getElementById("res-phone");
-        const inputPersons = document.getElementById("res-persons");
-        const priceDisplay = document.getElementById("modal-price");
-
-        inputName.value = "";
-        inputEmail.value = "";
-        inputPhone.value = "";
-        inputPersons.value = 2;
-
-        function updatePrice() {
-          const nbPersons = parseInt(inputPersons.value) || 2;
-          let total = 0;
-          let cur = new Date(selectedStart);
-          const fin = new Date(selectedEnd);
-          while (cur < fin) {
-            total += getTarif(logement, cur.toISOString().split("T")[0], nbPersons);
-            cur.setDate(cur.getDate() + 1);
-          }
-          priceDisplay.textContent = `Montant total : ${total} €`;
-        }
-
-        updatePrice();
-        inputPersons.addEventListener("input", updatePrice);
-      }
-    });
-
-    calendar.render();
-    calendars[logement] = calendar;
-  } catch (err) {
-    console.error(err);
-    alert("Impossible de charger le calendrier. Vérifiez la connexion au serveur.");
-  }
-}
-</script>
-
-
-<!-- Appel à l'action : Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
-  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
-
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <!-- Changement : ouverture page séparée -->
-    <a href="/assets/html/blom-calendar.html" 
-       class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
-    </a>
-    {% include share.html %}
-  </div>
-</div>
+   
