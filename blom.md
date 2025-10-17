@@ -67,61 +67,9 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
     </div>
 
-    <!-- Blocs prestations : Jacuzzi, Massage, Lit, Table -->
-    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200 transition-all">
-      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif"
-             class="w-full h-auto max-w-full object-cover filter brightness-75" />
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-      </div>
-      <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Jacuzzi privatif</h2>
-        <p>Chez BLŌM, l’eau de votre spa est totalement vidée et renouvelée pour chaque nouveau client. Vous êtes assurés d’une hygiène parfaite et d’une expérience 100 % privative. Jacuzzi intérieur à température idéale pour un moment de détente à deux. Ambiance tamisée et intimité garantie.</p>
-      </div>
-    </div>
-
-    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
-      <div class="w-full md:w-1/2 flex flex-col gap-4">
-        <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
-          <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage manuelle"
-               class="w-full h-auto object-cover filter brightness-75" />
-          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        </div>
-        <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
-          <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique"
-               class="w-full h-auto object-cover filter brightness-75" />
-          <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        </div>
-      </div>
-      <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Espace Massage</h2>
-        <p>Deux types de massage : manuel à partager en duo, ou table de massage électrique avec 16 programmes et fonction chauffante, parfaite pour un moment de détente en solo ou à deux.</p>
-      </div>
-    </div>
-
-    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
-      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon"
-             class="w-full h-auto object-cover filter brightness-75" />
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-      </div>
-      <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Lit King Size & Salon</h2>
-        <p>Un lit spacieux avec coin salon et TV connectée. Idéal pour un séjour romantique dans un cadre cosy.</p>
-      </div>
-    </div>
-
-    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500 transition-all">
-      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Table romantique dressée"
-             class="w-full h-auto object-cover filter brightness-75" />
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-      </div>
-      <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Table Romantique</h2>
-        <p>Vous souhaitez apporter votre dîner ? Une table romantique vous attend, dressée avec soin pour sublimer votre soirée.</p>
-      </div>
-    </div>
+    <!-- Blocs prestations (Jacuzzi, Massage, Lit King Size, Table Romantique) -->
+    <!-- Garde les mêmes blocs que ton blom.md original -->
+    {% include blom-prestations.html %}
 
     <!-- Bloc témoignages -->
     <div class="mt-20 bg-black text-white">
@@ -150,6 +98,58 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       </div>
     </div>
 
+    <!-- Scripts carrousel + modal -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentIndex = 0;
+      const carousel = document.getElementById("carousel");
+      const items = carousel.children;
+      const totalItems = items.length;
+
+      const fullTestimonials = [
+        {% for temoignage in site.data.avis_blom %}
+        `{{ temoignage.texte | strip_newlines | escape }}`,
+        {% endfor %}
+      ];
+
+      function showCarouselSlide(index) {
+        const offset = -index * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+      }
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalItems;
+        showCarouselSlide(currentIndex);
+      }, 5000);
+
+      Array.from(items).forEach((item, i) => {
+        item.addEventListener("click", () => {
+          currentIndex = i;
+          updateModalText();
+          document.getElementById("testimonialModal").classList.remove("hidden");
+          document.getElementById("testimonialModal").classList.add("flex");
+        });
+      });
+
+      function updateModalText() {
+        document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+        updateModalText();
+      });
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % fullTestimonials.length;
+        updateModalText();
+      });
+      document.getElementById("closeBtn").addEventListener("click", () => {
+        document.getElementById("testimonialModal").classList.add("hidden");
+        document.getElementById("testimonialModal").classList.remove("flex");
+      });
+    });
+    </script>
+
     <!-- Appel à l'action : Réserver BLŌM -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
       <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
@@ -164,78 +164,49 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       </div>
     </div>
 
-    <!-- Modal calendrier BLŌM -->
-    <div id="calendarModalBlom" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 px-4" onclick="closeCalendar('BLOM', event)">
-      <div class="bg-white rounded-xl shadow-xl relative w-full max-w-5xl mx-auto p-6" onclick="event.stopPropagation()">
-        <button onclick="closeCalendar('BLOM')" class="absolute top-2 right-4 text-3xl font-bold text-gray-600 hover:text-black">&times;</button>
-        <h3 class="text-2xl font-bold text-center mt-2 mb-6">Choisissez vos dates pour BLŌM</h3>
-        <div id="calendar-container-blom" class="w-full h-[500px] md:h-[600px]"></div>
-      </div>
-    </div>
-
-  </div>
 </section>
 
-<!-- FullCalendar -->
+<!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <script>
-let calendars = {}; // stocke les instances pour BLOM et LIVA
-
-function openCalendar(logement) {
-  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-  document.getElementById(modalId).classList.remove("hidden");
-  document.getElementById(modalId).classList.add("flex");
-
-  if (!calendars[logement]) {
-    initCalendar(logement);
-  }
-}
-
-function closeCalendar(logement, event) {
-  const modalId = logement === "BLOM" ? "calendarModalBlom" : "calendarModalLiva";
-  const modal = document.getElementById(modalId);
-  if (!event || event.target === modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
-}
-
-async function initCalendar(logement) {
+async function initBlomCalendar() {
   try {
-    const res = await fetch(`https://calendar-proxy-production-231c.up.railway.app/api/reservations/${logement}`);
+    const res = await fetch('https://calendar-proxy-production-231c.up.railway.app/api/reservations/BLOM');
     const events = await res.json();
-
-    const containerId = logement === "BLOM" ? "calendar-container-blom" : "calendar-container-liva";
-    const calendarEl = document.getElementById(containerId);
-
-    const toISODate = (d) => {
-      const x = new Date(d);
-      const y = x.getFullYear();
-      const m = String(x.getMonth() + 1).padStart(2, "0");
-      const day = String(x.getDate()).padStart(2, "0");
-      return `${y}-${m}-${day}`;
-    };
+    const calendarEl = document.getElementById('calendar-container-blom');
+    if (!calendarEl) return;
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      height: "auto",
-      locale: "fr",
+      initialView: 'dayGridMonth',
+      height: 'auto',
+      locale: 'fr',
       firstDay: 1,
-      headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek" },
+      headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek' },
       events: events.map(e => ({
-        start: toISODate(e.start),
-        end: toISODate(e.end),
-        display: "background",
-        color: "#ff0000"
-      }))
+        start: e.start,
+        end: e.end,
+        display: 'background',
+        color: '#ff0000'
+      })),
+      selectable: true,
+      selectMirror: true,
+      dateClick: function(info) {
+        alert("Date sélectionnée : " + info.dateStr);
+        // Ici tu peux ajouter le code pour ouvrir le formulaire de réservation BLŌM
+      }
     });
 
     calendar.render();
-    calendars[logement] = calendar;
   } catch (err) {
     console.error(err);
+    alert("Impossible de charger le calendrier BLŌM.");
   }
 }
+
+// Init après chargement
+document.addEventListener("DOMContentLoaded", () => {
+  initBlomCalendar();
+});
 </script>
