@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 BLOM Calendar JS - version mobile-friendly & robuste
+// 🌸 BLOM Calendar JS - version adaptative + mobile fix
 // ========================================================
 
 async function getConfig() {
@@ -15,17 +15,16 @@ async function getConfig() {
     return data;
   } catch (err) {
     console.error(err);
-    return { testPayment: false }; // fallback sécurisé
+    return { testPayment: false };
   }
 }
 
 function getTarif(date, nbPersonnes = 2) {
-  const jour = new Date(date).getDay(); // 0 = dimanche, 1 = lundi ...
+  const jour = new Date(date).getDay();
   let base;
-  if (jour === 0) base = 190;        // Dimanche
-  else if (jour === 5 || jour === 6) base = 169; // Vendredi et samedi
-  else base = 150;                   // Lundi → Jeudi
-
+  if (jour === 0) base = 190;
+  else if (jour === 5 || jour === 6) base = 169;
+  else base = 150;
   return nbPersonnes <= 2 ? base : base + (nbPersonnes - 2) * 20;
 }
 
@@ -41,13 +40,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     : "https://livablom-stripe-production.up.railway.app";
 
   const config = await getConfig();
-  const testPayment = config.testPayment;
+  const testPayment = config.testPayment ?? false;
 
   let reservedRanges = [];
-  let selectedStart = null;
-  let selectedEnd = null;
 
-  // --- Modal ---
+  // Modal & formulaire
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -58,39 +55,40 @@ document.addEventListener("DOMContentLoaded", async function () {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
+  let selectedStart = null;
+  let selectedEnd = null;
+
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    const nbPersons = parseInt(inputPersons.value);
-    const valid =
-      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
-    btnConfirm.disabled = !valid;
+    const nb = parseInt(inputPersons.value);
+    btnConfirm.disabled = !(name && email && phone && nb >= 1 && nb <= 2);
   }
 
-  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
+  function updatePrice() {
+    if (!selectedStart || !selectedEnd) return;
+    const nb = parseInt(inputPersons.value) || 2;
+    let cur = new Date(selectedStart);
+    const fin = new Date(selectedEnd);
+    let total = 0;
+    while (cur < fin) {
+      total += getTarif(cur.toISOString().split("T")[0], nb);
+      cur.setDate(cur.getDate() + 1);
+    }
+    const montant = testPayment ? 1 : total;
+    priceDisplay.textContent = `Montant total : ${montant} €`;
+  }
+
+  [inputName, inputEmail, inputPhone, inputPersons].forEach((input) => {
     input.addEventListener("input", () => {
       validateForm();
       updatePrice();
     });
   });
 
-  function updatePrice() {
-    if (!selectedStart || !selectedEnd) return;
-    const nbPersons = parseInt(inputPersons.value) || 2;
-    let cur = new Date(selectedStart);
-    const fin = new Date(selectedEnd);
-    let total = 0;
-    while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
-      cur.setDate(cur.getDate() + 1);
-    }
-    const displayAmount = testPayment ? 1 : total;
-    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
-  }
-
   function isReserved(date) {
-    return reservedRanges.some(range => {
+    return reservedRanges.some((range) => {
       const start = new Date(range.start);
       const end = new Date(range.end);
       end.setDate(end.getDate() - 1);
@@ -104,25 +102,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     selectable: true,
     firstDay: 1,
 
-    selectAllow: function (selectInfo) {
-      const start = selectInfo.start;
-      const end = selectInfo.end;
+    selectAllow(info) {
+      const start = info.start;
+      const end = info.end;
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (start < today) return false;
       for (let range of reservedRanges) {
-        const rangeStart = new Date(range.start);
-        const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1);
-        if (start <= rangeEnd && end > rangeStart) {
-          if (start.getTime() === rangeEnd.getTime()) continue;
-          return false;
-        }
+        const rs = new Date(range.start);
+        const re = new Date(range.end);
+        re.setDate(re.getDate() - 1);
+        if (start <= re && end > rs) return false;
       }
       return true;
     },
 
-    select: function (info) {
+    select(info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
@@ -135,17 +130,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       modal.style.display = "flex";
     },
 
-    dateClick: function (info) {
+    dateClick(info) {
       const date = info.date;
       const today = new Date();
-      today.setHours(0,0,0,0);
-      if (date < today) return; // ignore passé
-      if (isReserved(date)) return; // ignore réservé
+      today.setHours(0, 0, 0, 0);
+      if (date < today || isReserved(date)) return;
 
       selectedStart = info.dateStr;
-      selectedEnd = new Date(date);
-      selectedEnd.setDate(selectedEnd.getDate() + 1);
-      selectedEnd = selectedEnd.toISOString().split("T")[0];
+      const endDate = new Date(date);
+      endDate.setDate(endDate.getDate() + 1);
+      selectedEnd = endDate.toISOString().split("T")[0];
 
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
       inputName.value = "";
@@ -162,22 +156,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur");
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
-        const fcEvents = evts.map(e => ({
+        reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
+        const fcEvents = evts.map((e) => ({
           title: "Réservé",
           start: e.start,
           end: e.end,
           display: "background",
           backgroundColor: "#ff0000",
           borderColor: "#ff0000",
-          allDay: true
+          allDay: true,
         }));
         success(fcEvents);
       } catch (err) {
         console.error(err);
         failure(err);
       }
-    }
+    },
   });
 
   cal.render();
@@ -188,9 +182,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    let nbPersons = parseInt(inputPersons.value);
-
-    if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 2) {
+    const nb = parseInt(inputPersons.value);
+    if (!name || !email || !phone || isNaN(nb) || nb < 1 || nb > 2) {
       alert("Veuillez remplir tous les champs correctement (max 2 personnes).");
       return;
     }
@@ -199,13 +192,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0], nb);
       cur.setDate(cur.getDate() + 1);
     }
-
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
+    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nb} personne(s) ?`))
+      return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -216,11 +209,11 @@ document.addEventListener("DOMContentLoaded", async function () {
           startDate: selectedStart,
           endDate: selectedEnd,
           amount: montant,
-          personnes: nbPersons,
+          personnes: nb,
           name,
           email,
-          phone
-        })
+          phone,
+        }),
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
