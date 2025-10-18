@@ -110,7 +110,31 @@
   </div>
 </div>
 
+<!-- Script principal du calendrier -->
 <script src="/assets/js/blom-calendar.js"></script>
+
+<!-- ✅ Correctif mobile pour le clic sur les dates -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let touchTimer;
+
+    // Simule un clic lorsqu'on tape rapidement (pour corriger le bug FullCalendar mobile)
+    document.addEventListener("touchstart", (e) => {
+      touchTimer = setTimeout(() => {
+        e.target.click();
+      }, 120);
+    });
+
+    document.addEventListener("touchend", () => {
+      clearTimeout(touchTimer);
+    });
+
+    // Empêche le glisser de bloquer la sélection
+    document.addEventListener("touchmove", () => {
+      clearTimeout(touchTimer);
+    });
+  });
+</script>
 
 </body>
 </html>
