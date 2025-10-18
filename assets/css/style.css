@@ -6,6 +6,8 @@ body, html {
   font-family: 'Helvetica Neue', sans-serif;
   overflow: auto; /* scroll autorisé pour mobile */
   -webkit-overflow-scrolling: touch; /* inertial scrolling iOS */
+  background: #000; /* fond noir global */
+  color: #fff;      /* texte blanc global */
 }
 
 /* ===== Conteneur principal ===== */
@@ -84,10 +86,40 @@ body, html {
 
 /* ===== FullCalendar fixes ===== */
 #calendar {
-  touch-action: manipulation; /* évite le conflit scroll/glisser */
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-touch-action: manipulation;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #111;       /* fond noir du calendrier */
+  color: #fff;            /* texte blanc */
+  border-radius: 12px;
+  height: calc(100vh - 140px);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Les jours du calendrier */
+.fc-daygrid-day {
+  background: #111;       /* fond noir */
+  color: #fff;            /* texte blanc */
+}
+
+/* Les jours réservés */
+.fc-event,
+.fc-event-background {
+  background-color: #ff0000 !important; /* réservé en rouge */
+  border-color: #ff0000 !important;
+  color: #fff !important;
+}
+
+/* Texte des entêtes (jours de la semaine, titre mois) */
+.fc .fc-col-header-cell-cushion,
+.fc .fc-toolbar-title {
+  color: #fff;
+}
+
+/* Sélection de dates (tap ou drag) */
+.fc .fc-daygrid-day.fc-day-selected {
+  background-color: #333 !important;   /* sélection visible */
 }
 
 /* Rendre les jours "clicables" sur mobile */
