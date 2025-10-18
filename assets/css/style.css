@@ -141,9 +141,12 @@ body {
 }
 
 /* Optionnel : réduire sensibilité du sélecteur de date (empêche glisser accidentellement) */
-.fc .fc-daygrid-day-frame > * {
+.fc-daygrid-day, .fc-daygrid-day-frame {
   pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
+
 
 /* Si tu veux désactiver le "double-tap to zoom" sur pages spécifiques, ajoute :
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
