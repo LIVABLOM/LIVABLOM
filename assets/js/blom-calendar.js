@@ -164,25 +164,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
-   cal.render();
+     cal.render();
 
-  // ✅ FIX MOBILE TAP SELECTION (FullCalendar)
-  // Simule un "select" quand on tape sur un jour sur mobile
+  // ✅ FIX MOBILE TAP SELECTION + PRÉSERVE DRAG SUR DESKTOP
+  let touchStartTime = 0;
+
   document.addEventListener("pointerdown", (e) => {
-    const dayCell = e.target.closest(".fc-daygrid-day");
-    if (dayCell && e.pointerType === "touch") {
-      e.preventDefault(); // évite le double-tap zoom
+    if (e.pointerType !== "touch") return; // uniquement tactile
+    touchStartTime = Date.now();
+  });
+
+  document.addEventListener("pointerup", (e) => {
+    if (e.pointerType !== "touch") return; // uniquement tactile
+    const duration = Date.now() - touchStartTime;
+
+    // Si le doigt est resté peu de temps (tap simple, pas glissement)
+    if (duration < 300) {
+      const dayCell = e.target.closest(".fc-daygrid-day");
+      if (!dayCell) return;
       const dateStr = dayCell.getAttribute("data-date");
       if (!dateStr) return;
 
-      // Crée une sélection d'un jour pour FullCalendar
       const start = new Date(dateStr);
       const end = new Date(start);
       end.setDate(end.getDate() + 1);
 
       cal.select({ start, end, allDay: true });
     }
-  }, { passive: true });
+  });
 
 
   // Gestion des boutons modal
