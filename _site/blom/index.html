@@ -159,22 +159,17 @@
     { "@type": "LocationFeatureSpecification", "name": "Petit déjeuner offert" },
     { "@type": "LocationFeatureSpecification", "name": "Arrivée autonome" }
   ],
-  "containedInPlace": {
-    "@type": "Place",
-    "name": "Douaisis"
-  }
+  "containedInPlace": { "@type": "Place", "name": "Douaisis" }
 }
 </script>
 
 <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
   <div class="max-w-6xl mx-auto space-y-16">
 
+    <!-- Titre et description -->
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente &amp; Évasion</h1>
-
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
-      Découvrez BLŌM, un refuge romantique où le bien-être prend tout son sens
-      · Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux.
-      · À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
+      Découvrez BLŌM, un refuge romantique où le bien-être prend tout son sens · Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux. · À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
     </p>
 
     <!-- Bandeau hygiène -->
@@ -182,7 +177,7 @@
       Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
     </div>
 
-    <!-- Bloc 1 -->
+    <!-- Bloc 1 : Jacuzzi -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif" class="w-full h-auto max-w-full object-cover filter brightness-75" />
@@ -194,7 +189,7 @@
       </div>
     </div>
 
-    <!-- Bloc 2 -->
+    <!-- Bloc 2 : Espace Massage -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300 transition-all">
       <div class="w-full md:w-1/2 flex flex-col gap-4">
         <div class="relative w-full rounded-xl overflow-hidden shadow-lg">
@@ -212,7 +207,7 @@
       </div>
     </div>
 
-    <!-- Bloc 3 -->
+    <!-- Bloc 3 : Lit & Salon -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon" class="w-full h-auto object-cover filter brightness-75" />
@@ -224,7 +219,7 @@
       </div>
     </div>
 
-    <!-- Bloc 4 -->
+    <!-- Bloc 4 : Table Romantique -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
         <img src="/assets/galerie/blom/blom10.jpg" alt="Table romantique dressée" class="w-full h-auto object-cover filter brightness-75" />
@@ -306,89 +301,90 @@
 
     <!-- Scripts carrousel + modal -->
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      let currentIndex = 0;
-      const carousel = document.getElementById("carousel");
-      const items = carousel.children;
-      const totalItems = items.length;
+      document.addEventListener("DOMContentLoaded", () => {
+        let currentIndex = 0;
+        const carousel = document.getElementById("carousel");
+        const items = carousel.children;
+        const totalItems = items.length;
+        const fullTestimonials = [
+          
+          Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester.. Rien à dire à part merci ☺️,
+          
+          Tres bon moment passé dans ce logement pour une soiree romantique. Abdel est un hote tres attentionné et disponible. Toutes les communications se font par message au long du sejour pour passer un tres bon moment avec de nombreux services. Le logement est tres propre, le jaccuzzi nettoyé entre chaque locataire. Nous avons été tres contents. La table est mise pour un diner romantique et le petit dejeuner organisé pour l’intimite des locataires est parfait. Hote et logement a recommander,
+          
+          Nous y avons passé une nuit, notre arrivée a été très chaleureuse avec une petite musique d’ambiance et plusieurs petites attentions qui font plaisir. Tout était impeccable, la déco très jolie et romantique. Le Jacuzzi était impeccable également, vidé et nettoyé au préalable. Nous recommanderons ce logement autour de nous et reviendrons sans hésiter.,
+          
+          Nous avons passé une nuit incroyable, tout était parfait.  La maison est incroyable surtout la salle de massage en plus du jacuzzi 😍👌🏼.,
+          
+          C’était notre deuxième séjour dans ce logement, toujours aussi impeccable ! Les petites attentions sont vraiment appréciables. Une excellente parenthèse sans enfant, qui nous a fait beaucoup de bien. Nous reviendrons avec grand plaisir.  Je recommande à 100 % ! 😀,
+          
+          Tout était parfait, hôte aux petits soins.,
+          
+          Par où commencer... Abdel est un hôte au top : respectueux, disponible, réactif, attentionné. Le logement est situé dans un endroit très calme et sécurisé, d&#39;une propreté nickel. Nous avons passé un week-end mémorable et nous reviendrons sans hésiter. Nous partagerons l&#39;annonce car c&#39;est de loin le meilleur logement de ce type que nous avons testé. Allez-y vraiment les yeux fermés. Au-delà de nos attentes. Une bonne continuation à Abdel et merci encore pour tout.,
+          
+          Nous avons passé un merveilleux week-end. Tout était tout simplement parfait : propre, soigné, avec plein de petites attentions qui font vraiment la différence. L’appartement est conforme à l’annonce, très bien équipé, cosy, et décoré avec goût. Mention spéciale à l’hôte, très réactif et attentionné, qui a su répondre rapidement à nos questions et s’assurer que tout se passait bien.  Nous reviendrons sans hésiter et recommandons ce logement les yeux fermés !,
+          
+          Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu&#39;on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !,
+          
+        ];
 
-      const fullTestimonials = [
-        
-        `Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable, on avait envie d’y rester.. Rien à dire à part merci ☺️`,
-        
-        `Tres bon moment passé dans ce logement pour une soiree romantique. Abdel est un hote tres attentionné et disponible. Toutes les communications se font par message au long du sejour pour passer un tres bon moment avec de nombreux services. Le logement est tres propre, le jaccuzzi nettoyé entre chaque locataire. Nous avons été tres contents. La table est mise pour un diner romantique et le petit dejeuner organisé pour l’intimite des locataires est parfait. Hote et logement a recommander`,
-        
-        `Nous y avons passé une nuit, notre arrivée a été très chaleureuse avec une petite musique d’ambiance et plusieurs petites attentions qui font plaisir. Tout était impeccable, la déco très jolie et romantique. Le Jacuzzi était impeccable également, vidé et nettoyé au préalable. Nous recommanderons ce logement autour de nous et reviendrons sans hésiter.`,
-        
-        `Nous avons passé une nuit incroyable, tout était parfait.  La maison est incroyable surtout la salle de massage en plus du jacuzzi 😍👌🏼.`,
-        
-        `C’était notre deuxième séjour dans ce logement, toujours aussi impeccable ! Les petites attentions sont vraiment appréciables. Une excellente parenthèse sans enfant, qui nous a fait beaucoup de bien. Nous reviendrons avec grand plaisir.  Je recommande à 100 % ! 😀`,
-        
-        `Tout était parfait, hôte aux petits soins.`,
-        
-        `Par où commencer... Abdel est un hôte au top : respectueux, disponible, réactif, attentionné. Le logement est situé dans un endroit très calme et sécurisé, d&#39;une propreté nickel. Nous avons passé un week-end mémorable et nous reviendrons sans hésiter. Nous partagerons l&#39;annonce car c&#39;est de loin le meilleur logement de ce type que nous avons testé. Allez-y vraiment les yeux fermés. Au-delà de nos attentes. Une bonne continuation à Abdel et merci encore pour tout.`,
-        
-        `Nous avons passé un merveilleux week-end. Tout était tout simplement parfait : propre, soigné, avec plein de petites attentions qui font vraiment la différence. L’appartement est conforme à l’annonce, très bien équipé, cosy, et décoré avec goût. Mention spéciale à l’hôte, très réactif et attentionné, qui a su répondre rapidement à nos questions et s’assurer que tout se passait bien.  Nous reviendrons sans hésiter et recommandons ce logement les yeux fermés !`,
-        
-        `Une pépite ! Un Abdel très sympathique, des instructions claires, une petite maison sur 2 étages, un salon cosy, une table joliment dressée, une salle de massage, un jacuzzi bien chaud, des peignoirs bien pratiques, un lit king size super confortable (dommage qu&#39;on ne pouvait pas le ramener dans la voiture !), un petit déj bien consistant en tête à tête. Rien à redire !`,
-        
-      ];
+        function showCarouselSlide(index) {
+          const offset = -index * 100;
+          carousel.style.transform = `translateX(${offset}%)`;
+        }
 
-      function showCarouselSlide(index) {
-        const offset = -index * 100;
-        carousel.style.transform = `translateX(${offset}%)`;
-      }
+        setInterval(() => {
+          currentIndex = (currentIndex + 1) % totalItems;
+          showCarouselSlide(currentIndex);
+        }, 5000);
 
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalItems;
-        showCarouselSlide(currentIndex);
-      }, 5000);
+        Array.from(items).forEach((item, i) => {
+          item.addEventListener("click", () => {
+            currentIndex = i;
+            updateModalText();
+            document.getElementById("testimonialModal").classList.remove("hidden");
+            document.getElementById("testimonialModal").classList.add("flex");
+          });
+        });
 
-      Array.from(items).forEach((item, i) => {
-        item.addEventListener("click", () => {
-          currentIndex = i;
+        function updateModalText() {
+          document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+        }
+
+        document.getElementById("prevBtn").addEventListener("click", () => {
+          currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
           updateModalText();
-          document.getElementById("testimonialModal").classList.remove("hidden");
-          document.getElementById("testimonialModal").classList.add("flex");
+        });
+
+        document.getElementById("nextBtn").addEventListener("click", () => {
+          currentIndex = (currentIndex + 1) % fullTestimonials.length;
+          updateModalText();
+        });
+
+        document.getElementById("closeBtn").addEventListener("click", () => {
+          document.getElementById("testimonialModal").classList.add("hidden");
+          document.getElementById("testimonialModal").classList.remove("flex");
         });
       });
-
-      function updateModalText() {
-        document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-      }
-
-      document.getElementById("prevBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-        updateModalText();
-      });
-      document.getElementById("nextBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % fullTestimonials.length;
-        updateModalText();
-      });
-      document.getElementById("closeBtn").addEventListener("click", () => {
-        document.getElementById("testimonialModal").classList.add("hidden");
-        document.getElementById("testimonialModal").classList.remove("flex");
-      });
-    });
     </script>
 
-<!-- Appel à l'action : Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
-  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
-
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <!-- Changement : ouverture page séparée -->
-    <a href="/assets/html/blom-calendar.html" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
-    </a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://livablom.github.io/LIVABLOM" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+    <!-- Appel à l'action : Réserver BLŌM -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+      <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+      <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
+      <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+        <a href="/assets/html/blom-calendar.html" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+          Réserver maintenant
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://livablom.github.io/LIVABLOM" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
    Partager sur Facebook
 </a>
 
+      </div>
+    </div>
+
   </div>
-</div>
-</div></section>
+</section>
 
 </main>
 

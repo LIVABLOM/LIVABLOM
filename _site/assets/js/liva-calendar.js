@@ -1,10 +1,32 @@
+// ========================================================
+// 🌸 LIVA Calendar JS - version adaptative
+// ========================================================
+
+async function getConfig() {
+  try {
+    const stripeBackend = window.location.hostname.includes("localhost")
+      ? "http://localhost:3000"
+      : "https://livablom-stripe-production.up.railway.app";
+
+    const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
+    if (!res.ok) throw new Error("Impossible de récupérer la config");
+    const data = await res.json();
+    console.log("💻 Front config =", data);
+    console.log("💻 Front testPayment =", data.testPayment);
+    return data;
+  } catch (err) {
+    console.error(err);
+    return { testPayment: true }; // fallback sécurisé
+  }
+}
+
 function getTarif(date, nbPersonnes = 2) {
   const base = 79; // Tarif de base LIVA
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const el = document.getElementById("calendar");
   if (!el) return;
 
@@ -15,6 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const stripeBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:3000"
     : "https://livablom-stripe-production.up.railway.app";
+
+  // Récupération config serveur
+  const config = await getConfig();
+  const testPayment = config.testPayment;
+  console.log("💻 Front testPayment :", testPayment);
 
   let reservedRanges = [];
 
@@ -43,10 +70,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
-    input.addEventListener("input", validateForm);
+    input.addEventListener("input", () => {
+      validateForm();
+      updatePrice();
+    });
   });
 
-  // Calcul et affichage dynamique du montant total
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
     const nbPersons = parseInt(inputPersons.value) || 2;
@@ -57,17 +86,15 @@ document.addEventListener("DOMContentLoaded", function () {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-    priceDisplay.textContent = `Montant total : ${total} €`;
+    const displayAmount = testPayment ? 1 : total;
+    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
-
-  inputPersons.addEventListener("input", updatePrice);
 
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
     firstDay: 1,
-
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -87,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return true;
     },
-
     select: function (info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
@@ -100,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
       updatePrice();
       modal.style.display = "flex";
     },
-
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
@@ -150,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
       cur.setDate(cur.getDate() + 1);
     }
 
-    const montant = window.TEST_PAYMENT ? 1 : total;
+    const montant = testPayment ? 1 : total;
 
     if (!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
 

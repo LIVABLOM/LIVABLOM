@@ -2,17 +2,28 @@
 // 🌸 BLOM Calendar JS - version adaptative
 // ========================================================
 
+// Récupération de la config Stripe
 async function getConfig() {
   try {
-    const res = await fetch("/api/config?ts=" + Date.now());
+    const stripeBackend = window.location.hostname.includes("localhost")
+      ? "http://localhost:3000"
+      : "https://livablom-stripe-production.up.railway.app";
+
+    const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
     if (!res.ok) throw new Error("Impossible de récupérer la config");
-    return await res.json();
+
+    const data = await res.json();
+    console.log("💻 Front config =", data);
+    console.log("💻 Front testPayment =", data.testPayment);
+
+    return data;
   } catch (err) {
     console.error(err);
-    return { testPayment: true }; // fallback sécurisé en mode test
+    return { testPayment: false }; // fallback sécurisé
   }
 }
 
+// Calcul du tarif en fonction du nombre de personnes
 function getTarif(date, nbPersonnes = 2) {
   const base = 150; // Tarif de base BLŌM
   if (nbPersonnes <= 2) return base;
@@ -34,10 +45,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Récupération config serveur
   const config = await getConfig();
   const testPayment = config.testPayment;
+  console.log("💻 Front testPayment :", testPayment);
 
   let reservedRanges = [];
 
-  // Modal
+  // Modal réservation
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -51,18 +63,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedStart = null;
   let selectedEnd = null;
 
+  // Validation du formulaire
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
-    const valid =
-      name &&
-      email &&
-      phone &&
-      !isNaN(nbPersons) &&
-      nbPersons >= 1 &&
-      nbPersons <= 2;
+    const valid = name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
     btnConfirm.disabled = !valid;
   }
 
@@ -73,20 +80,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   });
 
+  // Mise à jour du prix
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
+
     const nbPersons = parseInt(inputPersons.value) || 2;
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
+
     while (cur < fin) {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
+
     const displayAmount = testPayment ? 1 : total;
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
+  // Initialisation du calendrier FullCalendar
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
@@ -97,28 +109,31 @@ document.addEventListener("DOMContentLoaded", async function () {
       const end = selectInfo.end;
       const today = new Date();
       today.setHours(0, 0, 0, 0);
+
       if (start < today) return false;
 
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1);
-
         if (start <= rangeEnd && end > rangeStart) {
           if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
       }
+
       return true;
     },
     select: function (info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
+
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
       inputName.value = "";
       inputEmail.value = "";
       inputPhone.value = "";
       inputPersons.value = 2;
+
       validateForm();
       updatePrice();
       modal.style.display = "flex";
@@ -149,8 +164,37 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
-  cal.render();
+     cal.render();
 
+  // ✅ FIX MOBILE TAP SELECTION + PRÉSERVE DRAG SUR DESKTOP
+  let touchStartTime = 0;
+
+  document.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "touch") return; // uniquement tactile
+    touchStartTime = Date.now();
+  });
+
+  document.addEventListener("pointerup", (e) => {
+    if (e.pointerType !== "touch") return; // uniquement tactile
+    const duration = Date.now() - touchStartTime;
+
+    // Si le doigt est resté peu de temps (tap simple, pas glissement)
+    if (duration < 300) {
+      const dayCell = e.target.closest(".fc-daygrid-day");
+      if (!dayCell) return;
+      const dateStr = dayCell.getAttribute("data-date");
+      if (!dateStr) return;
+
+      const start = new Date(dateStr);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 1);
+
+      cal.select({ start, end, allDay: true });
+    }
+  });
+
+
+  // Gestion des boutons modal
   btnCancel.addEventListener("click", () => (modal.style.display = "none"));
 
   btnConfirm.addEventListener("click", async () => {
@@ -164,6 +208,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
     }
 
+    // Calcul du total
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
@@ -191,6 +236,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           phone
         })
       });
+
       const data = await res.json();
       if (data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
@@ -199,4 +245,5 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
+
 });

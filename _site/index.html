@@ -142,6 +142,205 @@
 
 </div>
 
+<!-- Inclure le moteur de recherche ici, sous les deux blocs -->
+<div class="max-w-6xl mx-auto my-8 px-4">
+  <input type="text" id="searchInput" placeholder="Rechercher un logement..." class="w-full border rounded px-4 py-2 mb-6 text-black text-lg" />
+
+  <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</div>
+
+<script>
+  const pages = [
+    
+      {
+        title: "BLŌM – Spa privatif et hébergement romantique à Guesnain",
+        url: "/blom/",
+        tags: null,
+        description: "Offrez-vous une parenthèse romantique à BLŌM : logement de charme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit-déjeuner offert.",
+        image: "/assets/galerie/blom/blom22.jpg"
+      },
+    
+      {
+        title: "Confirmation de réservation",
+        url: "/confirmation/",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Contact",
+        url: "/contact",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Galerie BLŌM",
+        url: "/galerie-blom",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Galerie LIVA",
+        url: "/galerie-liva",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Galerie",
+        url: "/galerie",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Confort moderne ou spa privé, choisissez votre séjour.",
+        url: "/",
+        tags: null,
+        description: "",
+        image: "/assets/images/photolivablom1.png"
+      },
+    
+      {
+        title: "LIVA – Maison tout équipée à Guesnain pour couples, familles, ou dans le cadre d&#39;une activité pro",
+        url: "/liva/",
+        tags: null,
+        description: "Séjour premium à LIVA : logement spacieux, cuisine équipée, parking privé et sécurisé, idéal pour familles, couples et professionnels dans le Douaisis.",
+        image: "/assets/galerie/liva/salon1.jpg"
+      },
+    
+      {
+        title: "Mentions légales &amp; CGV",
+        url: "/mentions",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Réservation réussie",
+        url: "/merci/",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Politique de confidentialité",
+        url: "/politique-confidentialite",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Politique de cookies",
+        url: "/politique-cookies",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Prestations BLŌM",
+        url: "/prestations-blom",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Prestations LIVA",
+        url: "/prestations-liva",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "Prestations",
+        url: "/prestations",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "",
+        url: "/assets/main.css",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "",
+        url: "/sitemap.xml",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "",
+        url: "/robots.txt",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+      {
+        title: "",
+        url: "/feed.xml",
+        tags: null,
+        description: "",
+        image: "/assets/galerie/blom22.jpg"
+      },
+    
+  ];
+
+  const input = document.getElementById("searchInput");
+  const resultsDiv = document.getElementById("searchResults");
+
+  input.addEventListener("input", () => {
+    const query = input.value.toLowerCase().trim();
+    if (!query) {
+      resultsDiv.innerHTML = "";
+      return;
+    }
+
+    const matched = pages
+      .filter(p => p.title.toLowerCase().includes(query) ||
+                   p.description.toLowerCase().includes(query) ||
+                   (p.tags && p.tags.some(t => t.toLowerCase().includes(query))))
+      .sort(p => {
+        // spa/massage en priorité
+        if ((query.includes("spa") || query.includes("massage")) && p.tags.includes("spa")) return -1;
+        return 0;
+      });
+
+    resultsDiv.innerHTML = matched.map(p => `
+      <a href="${p.url}" class="block rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1">
+        <div class="relative w-full h-48">
+          <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover"/>
+        </div>
+        <div class="p-4 bg-white text-black">
+          <h3 class="font-bold text-xl mb-1">${p.title}</h3>
+          <p class="text-sm text-gray-700">${p.description}</p>
+        </div>
+      </a>
+    `).join("");
+  });
+</script>
+
+
 </main>
 
 <footer class="bg-black text-white text-center py-6">
