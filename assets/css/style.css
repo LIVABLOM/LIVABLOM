@@ -1,55 +1,173 @@
-/* ======== CALENDRIER BLŌM ======== */
-body {
-  background-color: #000;
-  color: #fff;
+/* =========================================================
+   🌸 STYLES GÉNÉRAUX
+   ========================================================= */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Helvetica Neue', sans-serif;
+  overflow: auto; /* Scroll autorisé pour mobile */
+  -webkit-overflow-scrolling: touch; /* Inertial scrolling iOS */
+  background: #000; /* Fond noir global */
+  color: #fff; /* Texte blanc global */
 }
 
-#calendar {
-  max-width: 900px;
-  margin: 40px auto;
-  background-color: #000;
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.fc-theme-standard .fc-scrollgrid {
-  border: none;
-  background-color: #000;
-  color: #fff;
-}
-
-.fc-daygrid-day-number {
-  color: #fff;
-}
-
-.fc-day-today {
-  background-color: #111 !important;
-  border-radius: 6px;
-}
-
-.fc-daygrid-day.reserved-day {
-  background-color: #660000 !important;
+/* =========================================================
+   🏠 CONTENEUR PRINCIPAL
+   ========================================================= */
+.home-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
   position: relative;
-  opacity: 0.7;
 }
 
-.fc-daygrid-day.reserved-day::after {
-  content: "🔒";
+/* =========================================================
+   🟩 SECTIONS LIVA ET BLŌM
+   ========================================================= */
+.section-liva,
+.section-blom {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.section-liva {
+  background-color: #f7f7f7;
+  color: #000;
+}
+
+.section-blom {
+  background-color: #000;
+  color: #fff;
+}
+
+/* =========================================================
+   🌺 LOGO CENTRAL
+   ========================================================= */
+.logo-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.4em;
-  opacity: 0.3;
-  pointer-events: none;
+  z-index: 10;
+  text-align: center;
 }
 
-.fc-button {
-  background-color: #660000 !important;
-  border: none !important;
+.logo-center img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1rem;
+}
+
+.logo-center h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* =========================================================
+   📱 RESPONSIVE MOBILE
+   ========================================================= */
+@media (max-width: 768px) {
+  .mobile-stack {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .half-screen {
+    height: 50vh;
+    width: 100%;
+  }
+
+  .center-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+  }
+
+  .center-logo img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0.5rem;
+  }
+
+  .center-logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+  }
+}
+
+/* =========================================================
+   📅 FULLCALENDAR - PERSONNALISATION
+   ========================================================= */
+#calendar {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #111; /* Fond noir du calendrier */
+  color: #fff;
+  border-radius: 12px;
+  height: calc(100vh - 140px);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Jours du calendrier */
+.fc-daygrid-day {
+  background: #111;
+  color: #fff;
+}
+
+/* Jours réservés */
+.fc-event,
+.fc-event-background {
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
   color: #fff !important;
 }
 
-.fc-button:hover {
-  background-color: #990000 !important;
+/* En-têtes (jours de la semaine, titre du mois) */
+.fc .fc-col-header-cell-cushion,
+.fc .fc-toolbar-title {
+  color: #fff;
 }
+
+/* Sélection de dates (tap ou drag) */
+.fc .fc-daygrid-day.fc-day-selected {
+  background-color: #333 !important;
+}
+
+/* Clics mobiles */
+.fc-daygrid-day,
+.fc-daygrid-day-frame,
+.fc-daygrid-day-top {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+
+/* Hover visuel */
+.fc .fc-daygrid-day:hover {
+  filter: brightness(1.02);
+}
+
+/* =========================================================
+   🪟 MODAL RÉSERVATION
+   ========================================================= */
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  di
