@@ -23,19 +23,22 @@
 
 <div id="calendar"></div>
 
-<!-- Modal réservation -->
-<div class="modal-bg" id="reservationModal">
+<!-- === MODAL DE RÉSERVATION === -->
+<div class="modal-bg" style="display: none;">
   <div class="modal-content">
-    <h3>Réserver BLŌM</h3>
-    <p id="modal-dates"></p>
-    <label>Nom complet<input type="text" id="res-name"></label>
-    <label>Email<input type="email" id="res-email"></label>
-    <label>Téléphone<input type="tel" id="res-phone"></label>
-    <label>Nombre de personnes (max 2)<input type="number" id="res-persons" min="1" max="2" value="2"></label>
-    <p id="modal-price">Montant total : 0 €</p>
+    <h2>Réservation BLŌM</h2>
+
+    <label for="start-date">Date de début</label>
+    <input type="text" id="start-date" readonly>
+
+    <label for="end-date">Date de fin</label>
+    <input type="text" id="end-date" readonly>
+
+    <p id="modal-price">Prix estimé :</p>
+
     <div class="modal-buttons">
-      <button id="res-cancel">Annuler</button>
-      <button id="res-confirm" disabled>Confirmer</button>
+      <button id="modal-cancel">Annuler</button>
+      <button id="modal-confirm">Confirmer</button>
     </div>
   </div>
 </div>
