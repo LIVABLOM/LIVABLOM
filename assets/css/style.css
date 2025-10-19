@@ -1,17 +1,16 @@
-/* Général */
+/* ===== Général ===== */
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: 'Helvetica Neue', sans-serif;
+  overflow: auto; /* scroll autorisé pour mobile */
+  -webkit-overflow-scrolling: touch; /* inertial scrolling iOS */
+  background: #000; /* fond noir global */
+  color: #fff;      /* texte blanc global */
 }
 
-/* Empêche le scroll inutile */
-body {
-  overflow: hidden;
-}
-
-/* Conteneur principal */
+/* ===== Conteneur principal ===== */
 .home-container {
   display: flex;
   height: 100vh;
@@ -19,7 +18,7 @@ body {
   position: relative;
 }
 
-/* Sections LIVA et BLŌM */
+/* ===== Sections LIVA et BLŌM ===== */
 .section-liva,
 .section-blom {
   width: 50%;
@@ -31,17 +30,10 @@ body {
   text-align: center;
 }
 
-.section-liva {
-  background-color: #f7f7f7;
-  color: #000;
-}
+.section-liva { background-color: #f7f7f7; color: #000; }
+.section-blom { background-color: #000; color: #fff; }
 
-.section-blom {
-  background-color: #000;
-  color: #fff;
-}
-
-/* Logo central */
+/* ===== Logo central ===== */
 .logo-center {
   position: absolute;
   top: 50%;
@@ -62,18 +54,16 @@ body {
   font-weight: bold;
 }
 
-/* LIVA / BLŌM stylisé dans le titre *
+/* ===== Mobile responsive ===== */
 @media (max-width: 768px) {
   .mobile-stack {
     flex-direction: column;
     height: 100vh;
   }
-
   .half-screen {
     height: 50vh;
     width: 100%;
   }
-
   .center-logo {
     position: absolute;
     top: 50%;
@@ -82,73 +72,130 @@ body {
     z-index: 10;
     text-align: center;
   }
-
   .center-logo img {
     width: 80px;
     height: 80px;
     margin-bottom: 0.5rem;
   }
-
   .center-logo h1 {
     font-size: 1.5rem;
     font-weight: bold;
     color: black;
   }
 }
-  /* === Mobile / FullCalendar fixes === */
 
-/* Autoriser le scroll sur mobile (remplace body { overflow: hidden; }) */
-body {
-  overflow: auto;
-  -webkit-overflow-scrolling: touch; /* inertial scrolling iOS */
-}
-
-/* Forcer un comportement tactile correct sur le calendrier */
+/* ===== FullCalendar fixes ===== */
 #calendar {
-  touch-action: manipulation;    /* évite le conflit avec le scroll */
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-touch-action: manipulation;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #111;       /* fond noir du calendrier */
+  color: #fff;            /* texte blanc */
+  border-radius: 12px;
+  height: calc(100vh - 140px);
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Rendre les jours "clicables" sur mobile (curseur, amélioration du hit area) */
+/* Les jours du calendrier */
+.fc-daygrid-day {
+  background: #111;       /* fond noir */
+  color: #fff;            /* texte blanc */
+}
+
+/* Les jours réservés */
+.fc-event,
+.fc-event-background {
+  background-color: #ff0000 !important; /* réservé en rouge */
+  border-color: #ff0000 !important;
+  color: #fff !important;
+}
+
+/* Texte des entêtes (jours de la semaine, titre mois) */
+.fc .fc-col-header-cell-cushion,
+.fc .fc-toolbar-title {
+  color: #fff;
+}
+
+/* Sélection de dates (tap ou drag) */
+.fc .fc-daygrid-day.fc-day-selected {
+  background-color: #333 !important;   /* sélection visible */
+}
+
+/* Rendre les jours "clicables" sur mobile */
 .fc-daygrid-day,
 .fc-daygrid-day-frame,
 .fc-daygrid-day-top {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  pointer-events: auto;
 }
 
-/* Améliore la réactivité long-press / tap (si FullCalendar supporte ces options) */
+/* Hover et retour visuel */
 .fc .fc-daygrid-day:hover {
   filter: brightness(1.02);
 }
 
-/* Modal : permettre de scroller à l'intérieur si contenu dépasse (mobile) */
+/* ===== Modal ===== */
 .modal-bg {
-  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   -webkit-touch-callout: none;
 }
 
-/* Boutons et inputs : agrandir la zone tactile sur mobile */
-.modal-content input,
-.modal-content button {
+.modal-content {
+  background: #222;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #111;
+  color: #fff;
   min-height: 40px;
   font-size: 16px;
   touch-action: manipulation;
 }
 
-/* Optionnel : réduire sensibilité du sélecteur de date (empêche glisser accidentellement) */
-.fc-daygrid-day, .fc-daygrid-day-frame {
-  pointer-events: auto;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+.modal-buttons {
+  text-align: right;
+  margin-top: 15px;
 }
 
+.modal-buttons button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  min-height: 40px;
+  font-size: 16px;
+  touch-action: manipulation;
+}
 
-/* Si tu veux désactiver le "double-tap to zoom" sur pages spécifiques, ajoute :
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-   mais attention : empêche le pinch-zoom pour l'accessibilité. */
-
+/* Prix dynamique */
+#modal-price {
+  font-weight: bold;
+  margin-top: 10px;
+}
