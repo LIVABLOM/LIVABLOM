@@ -1,178 +1,113 @@
-// ========================================================
-// 🌸 BLOM Calendar JS - tap mobile + drag multi-jours
-// ========================================================
+document.addEventListener('DOMContentLoaded', function() {
+  const calendarEl = document.getElementById('calendar');
 
-async function getConfig() {
-  try {
-    const stripeBackend = window.location.hostname.includes("localhost")
-      ? "http://localhost:3000"
-      : "https://livablom-stripe-production.up.railway.app";
-    const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
-    if (!res.ok) throw new Error("Impossible de récupérer la config");
-    return await res.json();
-  } catch (err) {
-    console.error("getConfig error:", err);
-    return { testPayment: false };
-  }
-}
+  const reservedDates = [
+    '2025-10-05', '2025-10-06',
+    '2025-10-19', '2025-10-20'
+  ]; // exemple, remplace par ton vrai tableau de réservations
 
-function getTarif(date, nbPersonnes = 2) {
-  const base = 150;
-  if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
-}
+  // Fonction pour vérifier si une date est réservée
+  const isReserved = (dateStr) => reservedDates.includes(dateStr);
 
-document.addEventListener("DOMContentLoaded", async function () {
-  const el = document.getElementById("calendar");
-  if (!el) return;
+  // Fonction pour bloquer les dates passées et réservées
+  const isSelectable = (date) => {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const current = new Date(date);
+    current.setHours(0,0,0,0);
+    return current >= today && !isReserved(date.toISOString().split('T')[0]);
+  };
 
-  const calendarBackend = window.location.hostname.includes("localhost")
-    ? "http://localhost:4000"
-    : "https://calendar-proxy-production-ed46.up.railway.app";
-
-  const stripeBackend = window.location.hostname.includes("localhost")
-    ? "http://localhost:3000"
-    : "https://livablom-stripe-production.up.railway.app";
-
-  const config = await getConfig();
-  const testPayment = config.testPayment;
-  let reservedRanges = [];
-
-  const modal = document.getElementById("reservationModal");
-  const modalDates = document.getElementById("modal-dates");
-  const inputName = document.getElementById("res-name");
-  const inputEmail = document.getElementById("res-email");
-  const inputPhone = document.getElementById("res-phone");
-  const inputPersons = document.getElementById("res-persons");
-  const priceDisplay = document.getElementById("modal-price");
-  const btnCancel = document.getElementById("res-cancel");
-  const btnConfirm = document.getElementById("res-confirm");
-
-  let selectedStart = null;
-  let selectedEnd = null;
-
-  function validateForm() {
-    const name = inputName.value.trim();
-    const email = inputEmail.value.trim();
-    const phone = inputPhone.value.trim();
-    const nbPersons = parseInt(inputPersons.value);
-    btnConfirm.disabled = !(name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2);
-  }
-
-  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
-    input.addEventListener("input", () => {
-      validateForm();
-      updatePrice();
-    });
-  });
-
-  function updatePrice() {
-    if (!selectedStart || !selectedEnd) return;
-    const nbPersons = parseInt(inputPersons.value) || 2;
-    let cur = new Date(selectedStart);
-    const fin = new Date(selectedEnd);
-    let total = 0;
-    while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
-      cur.setDate(cur.getDate() + 1);
-    }
-    priceDisplay.textContent = `Montant total : ${testPayment ? 1 : total} €`;
-  }
-
-  const cal = new FullCalendar.Calendar(el, {
-    initialView: "dayGridMonth",
-    locale: "fr",
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    locale: 'fr',
     selectable: true,
-    selectMirror: true,
-    firstDay: 1,
-    height: "100%",
-    headerToolbar: {
-      left: "prev,next today",
-      center: "title",
-      right: "dayGridMonth,timeGridWeek"
-    },
-    selectAllow: function(selectInfo) {
-      const start = selectInfo.start;
-      const end = selectInfo.end;
-      const today = new Date(); today.setHours(0,0,0,0);
-      if (start < today) return false;
-      for (let range of reservedRanges) {
-        const rangeStart = new Date(range.start);
-        const rangeEnd = new Date(range.end); rangeEnd.setDate(rangeEnd.getDate()-1);
-        if (start <= rangeEnd && end > rangeStart) {
-          if (start.getTime()===rangeEnd.getTime()) continue;
-          return false;
+    unselectAuto: true,
+    longPressDelay: 150,   // améliore la réactivité sur mobile
+    selectLongPressDelay: 150,
+    height: 'auto',
+    fixedWeekCount: false,
+    showNonCurrentDates: false,
+
+    // Événements réservés (en rouge)
+    events: reservedDates.map(date => ({
+      start: date,
+      end: date,
+      display: 'background',
+      color: '#a00'
+    })),
+
+    // Empêche la sélection de dates passées / réservées
+    selectAllow: function(selectionInfo) {
+      const start = selectionInfo.start;
+      const end = selectionInfo.end;
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      // Vérifie si une date réservée se trouve dans la sélection
+      let valid = true;
+      for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+        const dateStr = d.toISOString().split('T')[0];
+        if (isReserved(dateStr) || d < today) {
+          valid = false;
+          break;
         }
       }
-      return true;
+      return valid;
     },
+
+    // Correction tactile pour mobile
+    dateClick: function(info) {
+      const dateStr = info.dateStr;
+      if (!isSelectable(info.date)) return; // ignore clic si date non valide
+      // Sur mobile, on ne “glisse” pas bien → on va gérer les clics unitaires
+      openModal(dateStr, dateStr);
+    },
+
+    // Sélection de plusieurs jours (desktop)
     select: function(info) {
-      selectedStart = info.startStr;
-      selectedEnd = info.endStr;
-      modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-      inputName.value = ""; inputEmail.value = ""; inputPhone.value = ""; inputPersons.value = 2;
-      validateForm(); updatePrice();
-      modal.style.display = "flex";
-    },
-    events: async function(fetchInfo, success, failure) {
-      try {
-        const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-        if (!res.ok) throw new Error("Erreur serveur calendrier");
-        const evts = await res.json();
-        reservedRanges = evts.map(e=>({start:e.start,end:e.end}));
-        const fcEvents = evts.map(e=>({
-          title:"Réservé",
-          start:e.start,
-          end:e.end,
-          display:"background",
-          backgroundColor:"#ff0000",
-          borderColor:"#ff0000",
-          allDay:true
-        }));
-        success(fcEvents);
-      } catch(err) { console.error(err); failure(err); }
+      if (!isSelectable(info.start)) return;
+      openModal(info.startStr, info.endStr);
     }
   });
 
-  cal.render();
+  calendar.render();
 
-  // Modal buttons
-  btnCancel.addEventListener("click", ()=>{ modal.style.display="none"; cal.unselect(); });
-  btnConfirm.addEventListener("click", async ()=>{
-    const name = inputName.value.trim();
-    const email = inputEmail.value.trim();
-    const phone = inputPhone.value.trim();
-    let nbPersons = parseInt(inputPersons.value);
-    if(!name||!email||!phone||isNaN(nbPersons)||nbPersons<1||nbPersons>2){ alert("Veuillez remplir tous les champs correctement (max 2 personnes)."); return; }
-    let cur = new Date(selectedStart); const fin = new Date(selectedEnd); let total=0;
-    while(cur<fin){ total+=getTarif(cur.toISOString().split("T")[0],nbPersons); cur.setDate(cur.getDate()+1);}
-    const montant = testPayment?1:total;
-    if(!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
-    try {
-      const res = await fetch(`${stripeBackend}/api/checkout`,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({logement:"BLŌM",startDate:selectedStart,endDate:selectedEnd,amount:montant,personnes:nbPersons,name,email,phone})
-      });
-      const data = await res.json();
-      if(data.url) window.location.href=data.url;
-      else alert("Impossible de créer la réservation.");
-    } catch(err){ console.error(err); alert("Erreur lors de la création de la réservation."); }
+  /* ====== Modal ====== */
+  const modalBg = document.querySelector('.modal-bg');
+  const modalStart = document.getElementById('start-date');
+  const modalEnd = document.getElementById('end-date');
+  const modalPrice = document.getElementById('modal-price');
+  const modalCancel = document.getElementById('modal-cancel');
+  const modalConfirm = document.getElementById('modal-confirm');
+
+  function openModal(start, end) {
+    modalStart.value = start;
+    modalEnd.value = end;
+    updatePrice();
+    modalBg.style.display = 'flex';
+  }
+
+  modalCancel.addEventListener('click', () => {
+    modalBg.style.display = 'none';
   });
 
-  // Mobile tap short vs drag
-  let touchStartTime = 0, touchMoved = false;
-  document.addEventListener("pointerdown", e=>{ if(e.pointerType!=="touch") return; touchStartTime=Date.now(); touchMoved=false; },{passive:true});
-  document.addEventListener("pointermove", e=>{ if(e.pointerType!=="touch") return; touchMoved=true; },{passive:true});
-  document.addEventListener("pointerup", e=>{
-    if(e.pointerType!=="touch") return;
-    const duration = Date.now()-touchStartTime;
-    if(!touchMoved && duration<300){
-      const dayCell = e.target.closest(".fc-daygrid-day"); if(!dayCell) return;
-      const dateStr = dayCell.getAttribute("data-date"); if(!dateStr) return;
-      const start=new Date(dateStr), end=new Date(start); end.setDate(end.getDate()+1);
-      try{ cal.select({start,end,allDay:true}); } catch(err){ dayCell.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); }
-    }
-  },{passive:true});
+  modalConfirm.addEventListener('click', () => {
+    alert(`Demande envoyée pour :\nDu ${modalStart.value} au ${modalEnd.value}`);
+    modalBg.style.display = 'none';
+  });
 
+  // Calcul automatique du prix selon le jour
+  function updatePrice() {
+    const startDate = new Date(modalStart.value);
+    const endDate = new Date(modalEnd.value);
+    const diff = Math.ceil((endDate - startDate) / (1000*60*60*24)) || 1;
+    const weekday = startDate.getDay();
+    let price = 150; // base semaine
+
+    if (weekday === 0) price = 190; // dimanche
+    if (weekday === 5 || weekday === 6) price = 169; // vendredi/samedi
+
+    modalPrice.textContent = `Prix estimé : ${price * diff} €`;
+  }
 });
