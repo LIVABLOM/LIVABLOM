@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 BLOM Calendar JS - version robuste avec tarifs corrects
+// 🌸 BLOM Calendar JS - version robuste (tap mobile + drag)
 // ========================================================
 
 async function getConfig() {
@@ -17,16 +17,8 @@ async function getConfig() {
   }
 }
 
-// Tarif par nuitée : 150€ du lundi au jeudi, 169€ vendredi/samedi, 190€ dimanche
-// Formules journée sur contact
 function getTarif(date, nbPersonnes = 2) {
-  const d = new Date(date);
-  const day = d.getDay(); // 0 = dimanche, 5 = vendredi, 6 = samedi
-  let base;
-  if (day === 0) base = 190;
-  else if (day === 5 || day === 6) base = 169;
-  else base = 150;
-
+  const base = 150;
   if (nbPersonnes <= 2) return base;
   return base + (nbPersonnes - 2) * 20;
 }
@@ -38,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     return;
   }
 
+  // Backends
   const calendarBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:4000"
     : "https://calendar-proxy-production-ed46.up.railway.app";
@@ -50,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const testPayment = config.testPayment;
   let reservedRanges = [];
 
-  // Modal refs
+  // Références au modal
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -69,7 +62,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
-    const valid = name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
+    const valid =
+      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
     btnConfirm.disabled = !valid;
   }
 
@@ -94,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
-  // FullCalendar init
+  // Initialisation FullCalendar
   let cal;
   try {
     cal = new FullCalendar.Calendar(el, {
@@ -114,9 +108,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const end = selectInfo.end;
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-
-        // Interdit de sélectionner des dates passées
-        if (end <= today) return false;
+        if (start < today) return false;
 
         for (let range of reservedRanges) {
           const rangeStart = new Date(range.start);
@@ -157,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           success(fcEvents);
 
-          // Blocage clic sur dates réservées
+          // Empêcher clic sur jours réservés
           setTimeout(() => {
             document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
               const date = day.getAttribute("data-date");
@@ -188,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     return;
   }
 
-  // Modal buttons
+  // Boutons du modal
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
     cal.unselect();
@@ -269,17 +261,20 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (e.pointerType !== "touch") return;
       const duration = Date.now() - touchStartTime;
       if (!touchMoved && duration < 300) {
-        const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
+        const dayCell = e.target.closest(".fc-daygrid-day");
         if (!dayCell) return;
         const dateStr = dayCell.getAttribute("data-date");
         if (!dateStr) return;
 
-        // ignore les dates désactivées
+        // Ignore les dates désactivées
         if (dayCell.style.pointerEvents === "none") return;
 
         const start = new Date(dateStr);
         const end = new Date(start);
         end.setDate(end.getDate() + 1);
+
+        // --- CHECK selectAllow pour mobile ---
+        if (!cal.options.selectAllow({ start, end })) return;
 
         try {
           cal.select({ start, end, allDay: true });
