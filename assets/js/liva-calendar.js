@@ -1,5 +1,5 @@
 // ========================================================
-// 🌿 LIVA Calendar JS - version stable + rouge foncé
+// 🌿 LIVA Calendar JS - version stable & mobile-friendly
 // ========================================================
 
 async function getConfig() {
@@ -10,23 +10,20 @@ async function getConfig() {
 
     const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
     if (!res.ok) throw new Error("Impossible de récupérer la config");
-    const data = await res.json();
-    console.log("💻 Front config =", data);
-    console.log("💻 Front testPayment =", data.testPayment);
-    return data;
+    return await res.json();
   } catch (err) {
     console.error(err);
-    return { testPayment: true }; // fallback sécurisé
+    return { testPayment: true };
   }
 }
 
+// --- Tarification LIVA ---
 function getTarif(date, nbPersonnes = 2) {
-  const base = 79; // Tarif de base LIVA
-  if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
+  const base = 79; // tarif de base
+  return nbPersonnes <= 2 ? base : base + (nbPersonnes - 2) * 20;
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
   const el = document.getElementById("calendar");
   if (!el) return;
 
@@ -38,13 +35,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     ? "http://localhost:3000"
     : "https://livablom-stripe-production.up.railway.app";
 
-  // Récupération config serveur
   const config = await getConfig();
   const testPayment = config.testPayment;
-  console.log("💻 Front testPayment :", testPayment);
+  console.log("✅ Config LIVA récupérée :", config);
 
-  // Variables
-  window.reservedRanges = [];
+  let reservedRanges = [];
+  let selectedStart = null;
+  let selectedEnd = null;
+
+  // --- Modal elements ---
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -55,65 +54,90 @@ document.addEventListener("DOMContentLoaded", async function () {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
-  let selectedStart = null;
-  let selectedEnd = null;
-
-  // Validation du formulaire
+  // --- Validation formulaire ---
   function validateForm() {
-    const name = inputName.value.trim();
-    const email = inputEmail.value.trim();
-    const phone = inputPhone.value.trim();
-    const nbPersons = parseInt(inputPersons.value);
-    const valid = name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5;
+    const valid =
+      inputName.value.trim() &&
+      inputEmail.value.trim() &&
+      inputPhone.value.trim() &&
+      !isNaN(parseInt(inputPersons.value)) &&
+      parseInt(inputPersons.value) >= 1 &&
+      parseInt(inputPersons.value) <= 5;
     btnConfirm.disabled = !valid;
   }
 
-  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
+  [inputName, inputEmail, inputPhone, inputPersons].forEach(input =>
     input.addEventListener("input", () => {
       validateForm();
       updatePrice();
-    });
-  });
+    })
+  );
 
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
-    const nbPersons = parseInt(inputPersons.value) || 2;
+    const nb = parseInt(inputPersons.value) || 2;
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0], nb);
       cur.setDate(cur.getDate() + 1);
     }
-    const displayAmount = testPayment ? 1 : total;
-    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
+    priceDisplay.textContent = `Montant total : ${testPayment ? 1 : total} €`;
   }
 
+  // --- FullCalendar config ---
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
     firstDay: 1,
-    selectAllow: function (selectInfo) {
+    handleWindowResize: true,
+    height: "auto",
+    aspectRatio: 1,
+    headerToolbar: {
+      left: "prev,next today",
+      center: "title",
+      right: ""
+    },
+
+    // ✅ Autorise la sélection même sur mobile
+    selectAllow(selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (start < today) return false;
 
-      for (let range of window.reservedRanges) {
+      for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1);
-
         if (start <= rangeEnd && end > rangeStart) {
-          if (start.getTime() === rangeEnd.getTime()) continue;
           return false;
         }
       }
       return true;
     },
-    select: function (info) {
+
+    // ✅ Gestion du clic tactile sur mobile
+    dateClick(info) {
+      selectedStart = info.dateStr;
+      const nextDay = new Date(info.date);
+      nextDay.setDate(nextDay.getDate() + 1);
+      selectedEnd = nextDay.toISOString().split("T")[0];
+
+      modalDates.textContent = `Nuit du ${selectedStart}`;
+      inputName.value = "";
+      inputEmail.value = "";
+      inputPhone.value = "";
+      inputPersons.value = 2;
+      validateForm();
+      updatePrice();
+      modal.style.display = "flex";
+    },
+
+    select(info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
@@ -125,27 +149,28 @@ document.addEventListener("DOMContentLoaded", async function () {
       updatePrice();
       modal.style.display = "flex";
     },
-    events: async function (fetchInfo, success, failure) {
+
+    events: async (fetchInfo, success, failure) => {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
-        if (!res.ok) throw new Error("Erreur serveur");
+        if (!res.ok) throw new Error("Erreur serveur calendrier LIVA");
 
         const evts = await res.json();
-        window.reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
         const fcEvents = evts.map(e => ({
           title: "Réservé",
           start: e.start,
           end: e.end,
           display: "background",
-          backgroundColor: "#7a0000", // Rouge foncé
-          borderColor: "#7a0000",
+          backgroundColor: "#800000", // 🔴 rouge foncé
+          borderColor: "#800000",
           allDay: true
         }));
 
         success(fcEvents);
       } catch (err) {
-        console.error(err);
+        console.error("Erreur chargement réservations :", err);
         failure(err);
       }
     }
@@ -153,15 +178,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   cal.render();
 
-  btnCancel.addEventListener("click", () => modal.style.display = "none");
+  // --- Actions modal ---
+  btnCancel.addEventListener("click", () => (modal.style.display = "none"));
 
   btnConfirm.addEventListener("click", async () => {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    let nbPersons = parseInt(inputPersons.value);
+    const nb = parseInt(inputPersons.value);
 
-    if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 5) {
+    if (!name || !email || !phone || isNaN(nb) || nb < 1 || nb > 5) {
       alert("Veuillez remplir tous les champs correctement (max 5 personnes).");
       return;
     }
@@ -170,13 +196,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0], nb);
       cur.setDate(cur.getDate() + 1);
     }
 
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
+    if (!confirm(`Confirmer la réservation LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -187,56 +213,19 @@ document.addEventListener("DOMContentLoaded", async function () {
           startDate: selectedStart,
           endDate: selectedEnd,
           amount: montant,
-          personnes: nbPersons,
+          personnes: nb,
           name,
           email,
           phone
         })
       });
+
       const data = await res.json();
       if (data.url) window.location.href = data.url;
-      else alert("Impossible de créer la réservation.");
+      else alert("Erreur : paiement non initialisé.");
     } catch (err) {
       console.error(err);
       alert("Erreur lors de la création de la réservation.");
     }
   });
-});
-
-// --- Correctif visuel et blocage des dates réservées ---
-document.addEventListener("DOMContentLoaded", () => {
-  const style = document.createElement("style");
-  style.innerHTML = `
-    /* Rouge foncé pour les dates réservées */
-    .fc-daygrid-day.reserved-day {
-      background-color: #7a0000 !important;
-      opacity: 0.8 !important;
-      cursor: not-allowed !important;
-    }
-    /* Empêche toute interaction sur les jours réservés */
-    .fc-daygrid-day.reserved-day * {
-      pointer-events: none !important;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Marquer les jours réservés dynamiquement
-  const observer = new MutationObserver(() => {
-    document.querySelectorAll(".fc-daygrid-day").forEach(day => {
-      const dateStr = day.getAttribute("data-date");
-      if (!dateStr) return;
-      const isReserved = window.reservedRanges?.some(r => {
-        const start = new Date(r.start);
-        const end = new Date(r.end);
-        end.setDate(end.getDate() - 1);
-        const d = new Date(dateStr);
-        return d >= start && d <= end;
-      });
-      if (isReserved) day.classList.add("reserved-day");
-      else day.classList.remove("reserved-day");
-    });
-  });
-
-  const calendarEl = document.getElementById("calendar");
-  if (calendarEl) observer.observe(calendarEl, { childList: true, subtree: true });
 });
