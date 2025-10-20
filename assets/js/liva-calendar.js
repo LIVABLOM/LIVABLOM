@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 LIVA Calendar JS - version adaptative
+// 🌿 LIVA Calendar JS - version stable + rouge foncé
 // ========================================================
 
 async function getConfig() {
@@ -43,9 +43,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const testPayment = config.testPayment;
   console.log("💻 Front testPayment :", testPayment);
 
-  let reservedRanges = [];
-
-  // Modal
+  // Variables
+  window.reservedRanges = [];
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       today.setHours(0, 0, 0, 0);
       if (start < today) return false;
 
-      for (let range of reservedRanges) {
+      for (let range of window.reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1);
@@ -132,15 +131,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (!res.ok) throw new Error("Erreur serveur");
 
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
+        window.reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
         const fcEvents = evts.map(e => ({
           title: "Réservé",
           start: e.start,
           end: e.end,
           display: "background",
-          backgroundColor: "#ff0000",
-          borderColor: "#ff0000",
+          backgroundColor: "#7a0000", // Rouge foncé
+          borderColor: "#7a0000",
           allDay: true
         }));
 
@@ -202,4 +201,42 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
+});
+
+// --- Correctif visuel et blocage des dates réservées ---
+document.addEventListener("DOMContentLoaded", () => {
+  const style = document.createElement("style");
+  style.innerHTML = `
+    /* Rouge foncé pour les dates réservées */
+    .fc-daygrid-day.reserved-day {
+      background-color: #7a0000 !important;
+      opacity: 0.8 !important;
+      cursor: not-allowed !important;
+    }
+    /* Empêche toute interaction sur les jours réservés */
+    .fc-daygrid-day.reserved-day * {
+      pointer-events: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Marquer les jours réservés dynamiquement
+  const observer = new MutationObserver(() => {
+    document.querySelectorAll(".fc-daygrid-day").forEach(day => {
+      const dateStr = day.getAttribute("data-date");
+      if (!dateStr) return;
+      const isReserved = window.reservedRanges?.some(r => {
+        const start = new Date(r.start);
+        const end = new Date(r.end);
+        end.setDate(end.getDate() - 1);
+        const d = new Date(dateStr);
+        return d >= start && d <= end;
+      });
+      if (isReserved) day.classList.add("reserved-day");
+      else day.classList.remove("reserved-day");
+    });
+  });
+
+  const calendarEl = document.getElementById("calendar");
+  if (calendarEl) observer.observe(calendarEl, { childList: true, subtree: true });
 });
