@@ -17,10 +17,15 @@ async function getConfig() {
   }
 }
 
-function getTarif(date, nbPersonnes = 2) {
-  const base = 150;
-  if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
+// === Tarifs BLŌM ===
+function getTarif(dateStr, nbPersonnes = 2) {
+  const date = new Date(dateStr);
+  const day = date.getDay(); // 0 = Dimanche, 1 = Lundi ... 6 = Samedi
+  let base;
+  if (day === 5 || day === 6) base = 169; // Vendredi ou Samedi
+  else if (day === 0) base = 190;          // Dimanche
+  else base = 150;                          // Lundi à Jeudi
+  return base; // maximum 2 personnes incluses
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -43,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const testPayment = config.testPayment;
   let reservedRanges = [];
 
-  // Références au modal
+  // === Modal refs ===
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -57,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedStart = null;
   let selectedEnd = null;
 
+  // === Form validation ===
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
@@ -76,114 +82,105 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
-    const nbPersons = parseInt(inputPersons.value) || 2;
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0]);
       cur.setDate(cur.getDate() + 1);
     }
     const displayAmount = testPayment ? 1 : total;
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
-  // Initialisation FullCalendar
-  let cal;
-  try {
-    cal = new FullCalendar.Calendar(el, {
-      initialView: "dayGridMonth",
-      locale: "fr",
-      selectable: true,
-      selectMirror: true,
-      firstDay: 1,
-      height: "100%",
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek",
-      },
-      selectAllow: function (selectInfo) {
-        const start = selectInfo.start;
-        const end = selectInfo.end;
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (start < today) return false;
+  // === FullCalendar init ===
+  const cal = new FullCalendar.Calendar(el, {
+    initialView: "dayGridMonth",
+    locale: "fr",
+    selectable: true,
+    selectMirror: true,
+    firstDay: 1,
+    height: "100%",
+    headerToolbar: {
+      left: "prev,next today",
+      center: "title",
+      right: "dayGridMonth,timeGridWeek",
+    },
+    selectAllow: function (selectInfo) {
+      const start = selectInfo.start;
+      const end = selectInfo.end;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (start < today) return false;
 
-        for (let range of reservedRanges) {
-          const rangeStart = new Date(range.start);
-          const rangeEnd = new Date(range.end);
-          rangeEnd.setDate(rangeEnd.getDate() - 1);
-          if (start <= rangeEnd && end > rangeStart) {
-            return false;
-          }
-        }
-        return true;
-      },
-      select: function (info) {
-        selectedStart = info.startStr;
-        selectedEnd = info.endStr;
-        modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-        inputName.value = "";
-        inputEmail.value = "";
-        inputPhone.value = "";
-        inputPersons.value = 2;
-        validateForm();
-        updatePrice();
-        modal.style.display = "flex";
-      },
-      events: async function (fetchInfo, success, failure) {
-        try {
-          const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-          if (!res.ok) throw new Error("Erreur serveur calendrier");
-          const evts = await res.json();
-          reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
+      for (let range of reservedRanges) {
+        const rangeStart = new Date(range.start);
+        const rangeEnd = new Date(range.end);
+        rangeEnd.setDate(rangeEnd.getDate() - 1);
+        if (start <= rangeEnd && end > rangeStart) return false;
+      }
+      return true;
+    },
+    select: function (info) {
+      selectedStart = info.startStr;
+      selectedEnd = info.endStr;
+      modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
+      inputName.value = "";
+      inputEmail.value = "";
+      inputPhone.value = "";
+      inputPersons.value = 2;
+      validateForm();
+      updatePrice();
+      modal.style.display = "flex";
+    },
+    events: async function (fetchInfo, success, failure) {
+      try {
+        const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
+        if (!res.ok) throw new Error("Erreur serveur calendrier");
+        const evts = await res.json();
+        reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
 
-          const fcEvents = evts.map((e) => ({
-            title: "Réservé",
-            start: e.start,
-            end: e.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true,
-          }));
+        const fcEvents = evts.map((e) => ({
+          title: "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true,
+        }));
 
-          success(fcEvents);
+        success(fcEvents);
 
-          // === Empêcher clic sur jours réservés ===
-          setTimeout(() => {
-            document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
-              const date = day.getAttribute("data-date");
-              if (!date) return;
-              const isReserved = reservedRanges.some((r) => {
-                const s = new Date(r.start);
-                const e = new Date(r.end);
-                e.setDate(e.getDate() - 1);
-                return new Date(date) >= s && new Date(date) <= e;
-              });
-              if (isReserved) {
-                day.style.pointerEvents = "none";
-                day.style.opacity = "0.5";
-                day.style.cursor = "not-allowed";
-              }
+        // === Empêcher clic sur jours réservés ===
+        setTimeout(() => {
+          document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
+            const date = day.getAttribute("data-date");
+            if (!date) return;
+            const isReserved = reservedRanges.some((r) => {
+              const s = new Date(r.start);
+              const e = new Date(r.end);
+              e.setDate(e.getDate() - 1);
+              return new Date(date) >= s && new Date(date) <= e;
             });
-          }, 300);
+            if (isReserved) {
+              day.style.pointerEvents = "none";
+              day.style.opacity = "0.5";
+              day.style.cursor = "not-allowed";
+            }
+          });
+        }, 300);
 
-        } catch (err) {
-          console.error("events fetch error:", err);
-          failure(err);
-        }
-      },
-    });
+      } catch (err) {
+        console.error("events fetch error:", err);
+        failure(err);
+      }
+    },
+  });
 
-    cal.render();
-  } catch (err) {
-    console.error("Erreur initialisation FullCalendar :", err);
-    return;
-  }
+  cal.render();
 
-  // Boutons du modal
+  // === Modal buttons ===
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
     cal.unselect();
@@ -203,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0]);
       cur.setDate(cur.getDate() + 1);
     }
     const montant = testPayment ? 1 : total;
@@ -268,8 +265,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (!dayCell) return;
         const dateStr = dayCell.getAttribute("data-date");
         if (!dateStr) return;
-
-        // ignore les dates désactivées
         if (dayCell.style.pointerEvents === "none") return;
 
         const start = new Date(dateStr);
@@ -286,11 +281,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     { passive: true }
   );
 
-  // sécurité CSS runtime
+  // === CSS runtime sécurité ===
   const style = document.createElement("style");
   style.innerHTML = `
     .fc-daygrid-day, .fc-daygrid-day-frame { pointer-events: auto !important; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
     #calendar { -webkit-overflow-scrolling: touch; }
   `;
   document.head.appendChild(style);
+
+  // === Info Formule journée ===
+  const infoDiv = document.createElement("div");
+  infoDiv.style.textAlign = "center";
+  infoDiv.style.marginBottom = "10px";
+  infoDiv.style.color = "#fff";
+  infoDiv.innerHTML = `<strong>Formule journée (11h–16h) : 130 €</strong> — Merci de nous contacter pour réserver.`;
+  el.parentNode.insertBefore(infoDiv, el);
 });
