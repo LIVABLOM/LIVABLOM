@@ -246,4 +246,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
         method: "POST",
-        headers: { "Content-Type
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          logement: "LIVA",
+          startDate: selectedStart,
+          endDate: selectedEnd,
+          amount: montant,
+          personnes: nbPersons,
+          name,
+          email,
+          phone,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else alert("Impossible de créer la réservation.");
+    } catch (err) {
+      console.error("checkout error:", err);
+      alert("Erreur lors de la création de la réservation.");
+    }
+  });
+});
