@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 LIVA Calendar JS - version robuste (tap mobile + drag)
+// 🌿 LIVA Calendar JS – version stable mobile + desktop
 // ========================================================
 
 async function getConfig() {
@@ -17,19 +17,16 @@ async function getConfig() {
   }
 }
 
-// Tarif LIVA : 79€ pour 1 ou 2 personnes, +15€ par personne supplémentaire
+// 💶 Tarif LIVA : 79 € pour 1–2 personnes, +15 € par personne suppl.
 function getTarif(date, nbPersonnes = 2) {
   const base = 79;
-  const supplement = nbPersonnes > 2 ? (nbPersonnes - 2) * 15 : 0;
-  return base + supplement;
+  const suppl = nbPersonnes > 2 ? (nbPersonnes - 2) * 15 : 0;
+  return base + suppl;
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
   const el = document.getElementById("calendar");
-  if (!el) {
-    console.warn("Calendrier introuvable (#calendar)");
-    return;
-  }
+  if (!el) return console.warn("Calendrier introuvable (#calendar)");
 
   const calendarBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:4000"
@@ -43,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const testPayment = config.testPayment;
   let reservedRanges = [];
 
-  // Modal references
+  // 🪟 Modal
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -57,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedStart = null;
   let selectedEnd = null;
 
-  // Validation du formulaire
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
@@ -85,11 +81,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-    const displayAmount = testPayment ? 1 : total;
-    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
+    const display = testPayment ? 1 : total;
+    priceDisplay.textContent = `Montant total : ${display} €`;
   }
 
-  // Initialisation FullCalendar
+  // ========================================================
+  // 🗓️ Initialisation FullCalendar
+  // ========================================================
   let cal;
   try {
     cal = new FullCalendar.Calendar(el, {
@@ -104,24 +102,21 @@ document.addEventListener("DOMContentLoaded", async function () {
         center: "title",
         right: "dayGridMonth,timeGridWeek",
       },
-      selectAllow: function (selectInfo) {
-        const start = selectInfo.start;
-        const end = selectInfo.end;
+
+      selectAllow(info) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        if (start < today) return false;
+        if (info.start < today) return false;
 
-        for (let range of reservedRanges) {
-          const rangeStart = new Date(range.start);
-          const rangeEnd = new Date(range.end);
-          rangeEnd.setDate(rangeEnd.getDate() - 1);
-          if (start <= rangeEnd && end > rangeStart) {
-            return false;
-          }
-        }
-        return true;
+        return !reservedRanges.some((r) => {
+          const rs = new Date(r.start);
+          const re = new Date(r.end);
+          re.setDate(re.getDate() - 1);
+          return info.start <= re && info.end > rs;
+        });
       },
-      select: function (info) {
+
+      select(info) {
         selectedStart = info.startStr;
         selectedEnd = info.endStr;
         modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
@@ -133,11 +128,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         updatePrice();
         modal.style.display = "flex";
       },
-      events: async function (fetchInfo, success, failure) {
+
+      events: async (fetchInfo, success, failure) => {
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
           if (!res.ok) throw new Error("Erreur serveur calendrier");
           const evts = await res.json();
+
           reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
 
           const fcEvents = evts.map((e) => ({
@@ -152,7 +149,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           success(fcEvents);
 
-          // Bloquer les jours réservés
           setTimeout(() => {
             document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
               const date = day.getAttribute("data-date");
@@ -170,7 +166,6 @@ document.addEventListener("DOMContentLoaded", async function () {
               }
             });
           }, 300);
-
         } catch (err) {
           console.error("events fetch error:", err);
           failure(err);
@@ -180,11 +175,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     cal.render();
   } catch (err) {
-    console.error("Erreur initialisation FullCalendar :", err);
+    console.error("Erreur init FullCalendar:", err);
     return;
   }
 
-  // Boutons du modal
+  // ========================================================
+  // 🎯 Boutons Modal
+  // ========================================================
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
     cal.unselect();
@@ -194,17 +191,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    let nbPersons = parseInt(inputPersons.value);
-    if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 5) {
-      alert("Veuillez remplir tous les champs correctement (max 5 personnes).");
-      return;
-    }
+    const nb = parseInt(inputPersons.value);
+    if (!name || !email || !phone || isNaN(nb) || nb < 1 || nb > 5)
+      return alert("Veuillez remplir tous les champs (max 5 personnes).");
 
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0], nb);
       cur.setDate(cur.getDate() + 1);
     }
     const montant = testPayment ? 1 : total;
@@ -220,13 +215,12 @@ document.addEventListener("DOMContentLoaded", async function () {
           startDate: selectedStart,
           endDate: selectedEnd,
           amount: montant,
-          personnes: nbPersons,
+          personnes: nb,
           name,
           email,
           phone,
         }),
       });
-
       const data = await res.json();
       if (data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
@@ -236,60 +230,50 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
-  // ----------- Mobile tap short (1 jour) -------------
-  let touchStartTime = 0;
-  let touchMoved = false;
+  // ========================================================
+  // 📱 Tap court sur mobile (sélection 1 jour)
+  // ========================================================
+  let touchStart = 0, touchMoved = false;
 
-  document.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (e.pointerType !== "touch") return;
-      touchStartTime = Date.now();
-      touchMoved = false;
-    },
-    { passive: true }
-  );
+  document.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "touch") return;
+    touchStart = Date.now();
+    touchMoved = false;
+  }, { passive: true });
 
-  document.addEventListener(
-    "pointermove",
-    (e) => {
-      if (e.pointerType !== "touch") return;
-      touchMoved = true;
-    },
-    { passive: true }
-  );
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "touch") return;
+    touchMoved = true;
+  }, { passive: true });
 
-  document.addEventListener(
-    "pointerup",
-    (e) => {
-      if (e.pointerType !== "touch") return;
-      const duration = Date.now() - touchStartTime;
-      if (!touchMoved && duration < 300) {
-        const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
-        if (!dayCell) return;
-        const dateStr = dayCell.getAttribute("data-date");
-        if (!dateStr) return;
+  document.addEventListener("pointerup", (e) => {
+    if (e.pointerType !== "touch") return;
+    if (touchMoved || Date.now() - touchStart > 300) return;
 
-        if (dayCell.style.pointerEvents === "none") return;
+    const cell = e.target.closest(".fc-daygrid-day");
+    if (!cell || cell.style.pointerEvents === "none") return;
+    const dateStr = cell.getAttribute("data-date");
+    if (!dateStr) return;
 
-        const start = new Date(dateStr);
-        const end = new Date(start);
-        end.setDate(end.getDate() + 1);
+    const start = new Date(dateStr);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 1);
 
-        try {
-          cal.select({ start, end, allDay: true });
-        } catch {
-          dayCell.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
-        }
-      }
-    },
-    { passive: true }
-  );
+    try {
+      cal.select({ start, end, allDay: true });
+    } catch {
+      cell.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    }
+  }, { passive: true });
 
-  // Sécurité CSS runtime
+  // 🛠️ Sécurité CSS runtime
   const style = document.createElement("style");
   style.innerHTML = `
-    .fc-daygrid-day, .fc-daygrid-day-frame { pointer-events: auto !important; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .fc-daygrid-day, .fc-daygrid-day-frame {
+      pointer-events: auto !important;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
     #calendar { -webkit-overflow-scrolling: touch; }
   `;
   document.head.appendChild(style);
