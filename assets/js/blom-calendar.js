@@ -17,10 +17,18 @@ async function getConfig() {
   }
 }
 
-// Tarif BLŌM
-function getTarif(date, nbPersonnes = 2) {
-  const base = 150;
-  return base; // max 2 personnes
+// Tarif BLŌM selon le jour de la semaine
+function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
+  if (testPayment) return 1; // Paiement test toujours 1 €
+
+  const date = new Date(dateStr);
+  const day = date.getDay(); // 0 = dimanche, 1 = lundi, ..., 6 = samedi
+
+  let tarifBase = 150; // Lundi à jeudi
+  if (day === 5 || day === 6) tarifBase = 169; // Vendredi et samedi
+  if (day === 0) tarifBase = 190; // Dimanche
+
+  return tarifBase; // max 2 personnes
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -80,11 +88,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
       cur.setDate(cur.getDate() + 1);
     }
-    const displayAmount = testPayment ? 1 : total;
-    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
+    priceDisplay.textContent = `Montant total : ${total} €`;
   }
 
   // Initialisation FullCalendar
@@ -194,12 +201,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const fin = new Date(selectedEnd);
     let total = 0;
     while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
       cur.setDate(cur.getDate() + 1);
     }
-    const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € ?`)) return;
+    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${total} € ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -209,7 +215,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           logement: "BLŌM",
           startDate: selectedStart,
           endDate: selectedEnd,
-          amount: montant,
+          amount: total,
           personnes: nbPersons,
           name,
           email,
