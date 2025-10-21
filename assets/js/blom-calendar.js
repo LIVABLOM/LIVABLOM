@@ -1,8 +1,7 @@
 // ========================================================
-// 🌸 BLOM Calendar JS - version adaptative corrigée
+// 🌸 BLŌM Calendar JS - multi-date & mobile/desktop
 // ========================================================
 
-// Récupération de la config Stripe
 async function getConfig() {
   try {
     const stripeBackend = window.location.hostname.includes("localhost")
@@ -11,23 +10,17 @@ async function getConfig() {
 
     const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
     if (!res.ok) throw new Error("Impossible de récupérer la config");
-
-    const data = await res.json();
-    console.log("💻 Front config =", data);
-    console.log("💻 Front testPayment =", data.testPayment);
-
-    return data;
+    return await res.json();
   } catch (err) {
-    console.error(err);
-    return { testPayment: false }; // fallback sécurisé
+    console.error("getConfig error:", err);
+    return { testPayment: true };
   }
 }
 
-// Calcul du tarif en fonction du nombre de personnes
+// Tarif BLŌM
 function getTarif(date, nbPersonnes = 2) {
-  const base = 150; // Tarif de base BLŌM
-  if (nbPersonnes <= 2) return base;
-  return base + (nbPersonnes - 2) * 20;
+  const base = 150;
+  return base; // max 2 personnes
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -42,14 +35,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     ? "http://localhost:3000"
     : "https://livablom-stripe-production.up.railway.app";
 
-  // Récupération config serveur
   const config = await getConfig();
   const testPayment = config.testPayment;
-  console.log("💻 Front testPayment :", testPayment);
 
   let reservedRanges = [];
 
-  // Modal réservation
+  // Modal
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -63,160 +54,142 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedStart = null;
   let selectedEnd = null;
 
-  // Validation du formulaire
+  // Validation
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
-    const valid = name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
+    const valid =
+      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
     btnConfirm.disabled = !valid;
   }
 
-  [inputName, inputEmail, inputPhone, inputPersons].forEach(input => {
-    input.addEventListener("input", () => {
+  [inputName, inputEmail, inputPhone, inputPersons].forEach((i) => {
+    i.addEventListener("input", () => {
       validateForm();
       updatePrice();
     });
   });
 
-  // Mise à jour du prix
+  // Prix
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
-
     const nbPersons = parseInt(inputPersons.value) || 2;
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
-
     while (cur < fin) {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-
     const displayAmount = testPayment ? 1 : total;
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
-  // Initialisation du calendrier FullCalendar
+  // Initialisation FullCalendar
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
     selectable: true,
+    selectMirror: true,
     firstDay: 1,
+    height: "100%",
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-
       if (start < today) return false;
 
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
         rangeEnd.setDate(rangeEnd.getDate() - 1);
-        if (start <= rangeEnd && end > rangeStart) {
-          if (start.getTime() === rangeEnd.getTime()) continue;
-          return false;
-        }
+        if (start <= rangeEnd && end > rangeStart) return false;
       }
-
       return true;
     },
-
-    // ✅ Correction mobile : compatibilité tap & drag
     select: function (info) {
-      if (!info.startStr) return;
-
-      selectedStart = info.startStr;
-      selectedEnd = info.endStr;
-
+      selectedStart = info.startStr.split("T")[0];
+      selectedEnd = info.endStr.split("T")[0];
       modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
       inputName.value = "";
       inputEmail.value = "";
       inputPhone.value = "";
       inputPersons.value = 2;
-
       validateForm();
       updatePrice();
-
-      // Petit délai pour stabilité tactile
-      setTimeout(() => {
-        modal.style.display = "flex";
-      }, 50);
+      modal.style.display = "flex";
     },
-
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-        if (!res.ok) throw new Error("Erreur serveur");
-
+        if (!res.ok) throw new Error("Erreur serveur calendrier");
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
+        reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map(e => ({
+        const fcEvents = evts.map((e) => ({
           title: "Réservé",
           start: e.start,
           end: e.end,
           display: "background",
           backgroundColor: "#ff0000",
           borderColor: "#ff0000",
-          allDay: true
+          allDay: true,
         }));
-
         success(fcEvents);
+
+        // Bloquer jours réservés et passés
+        setTimeout(() => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
+            const dateStr = day.getAttribute("data-date");
+            if (!dateStr) return;
+            const dayDate = new Date(dateStr);
+            if (dayDate < today) {
+              day.classList.add("past-day");
+            }
+            const isReserved = reservedRanges.some((r) => {
+              const s = new Date(r.start);
+              const e = new Date(r.end);
+              e.setDate(e.getDate() - 1);
+              return dayDate >= s && dayDate <= e;
+            });
+            if (isReserved) {
+              day.style.pointerEvents = "none";
+              day.style.opacity = "0.5";
+              day.style.cursor = "not-allowed";
+            }
+          });
+        }, 300);
       } catch (err) {
         console.error(err);
         failure(err);
       }
-    }
+    },
   });
 
   cal.render();
 
-  // ✅ Fix mobile supplémentaire : ouverture au simple tap
-  el.addEventListener("touchend", (e) => {
-    const dayEl = e.target.closest(".fc-daygrid-day");
-    if (!dayEl) return;
-
-    const dateStr = dayEl.getAttribute("data-date");
-    if (!dateStr) return;
-
-    // Évite double ouverture
-    if (modal.style.display === "flex") return;
-
-    selectedStart = dateStr;
-    const nextDay = new Date(dateStr);
-    nextDay.setDate(nextDay.getDate() + 1);
-    selectedEnd = nextDay.toISOString().split("T")[0];
-
-    modalDates.textContent = `Le ${selectedStart}`;
-    inputName.value = "";
-    inputEmail.value = "";
-    inputPhone.value = "";
-    inputPersons.value = 2;
-
-    validateForm();
-    updatePrice();
-    modal.style.display = "flex";
+  // Modal buttons
+  btnCancel.addEventListener("click", () => {
+    modal.style.display = "none";
+    cal.unselect();
   });
-
-  // Gestion des boutons modal
-  btnCancel.addEventListener("click", () => (modal.style.display = "none"));
 
   btnConfirm.addEventListener("click", async () => {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     let nbPersons = parseInt(inputPersons.value);
-
     if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 2) {
       alert("Veuillez remplir tous les champs correctement (max 2 personnes).");
       return;
     }
 
-    // Calcul du total
     let cur = new Date(selectedStart);
     const fin = new Date(selectedEnd);
     let total = 0;
@@ -224,10 +197,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € pour ${nbPersons} personne(s) ?`)) return;
+    if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${montant} € ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -241,16 +213,52 @@ document.addEventListener("DOMContentLoaded", async function () {
           personnes: nbPersons,
           name,
           email,
-          phone
-        })
+          phone,
+        }),
       });
-
       const data = await res.json();
       if (data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
     } catch (err) {
-      console.error(err);
+      console.error("checkout error:", err);
       alert("Erreur lors de la création de la réservation.");
     }
   });
+
+  // ----------- Mobile tap short (1 jour) -------------
+  let touchStartTime = 0;
+  let touchMoved = false;
+
+  document.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "touch") return;
+    touchStartTime = Date.now();
+    touchMoved = false;
+  }, { passive: true });
+
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "touch") return;
+    touchMoved = true;
+  }, { passive: true });
+
+  document.addEventListener("pointerup", (e) => {
+    if (e.pointerType !== "touch") return;
+    const duration = Date.now() - touchStartTime;
+    if (!touchMoved && duration < 300) {
+      const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
+      if (!dayCell) return;
+      const dateStr = dayCell.getAttribute("data-date");
+      if (!dateStr) return;
+      if (dayCell.style.pointerEvents === "none") return;
+
+      const start = new Date(dateStr);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 1);
+
+      try {
+        cal.select({ start, end, allDay: true });
+      } catch {
+        dayCell.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+      }
+    }
+  }, { passive: true });
 });
