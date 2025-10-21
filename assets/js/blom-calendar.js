@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 BLOM Calendar JS - version adaptative
+// 🌸 BLOM Calendar JS - version adaptative corrigée
 // ========================================================
 
 // Récupération de la config Stripe
@@ -124,7 +124,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       return true;
     },
+
+    // ✅ Correction mobile : compatibilité tap & drag
     select: function (info) {
+      if (!info.startStr) return;
+
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
 
@@ -136,8 +140,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       validateForm();
       updatePrice();
-      modal.style.display = "flex";
+
+      // Petit délai pour stabilité tactile
+      setTimeout(() => {
+        modal.style.display = "flex";
+      }, 50);
     },
+
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
@@ -165,6 +174,33 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   cal.render();
+
+  // ✅ Fix mobile supplémentaire : ouverture au simple tap
+  el.addEventListener("touchend", (e) => {
+    const dayEl = e.target.closest(".fc-daygrid-day");
+    if (!dayEl) return;
+
+    const dateStr = dayEl.getAttribute("data-date");
+    if (!dateStr) return;
+
+    // Évite double ouverture
+    if (modal.style.display === "flex") return;
+
+    selectedStart = dateStr;
+    const nextDay = new Date(dateStr);
+    nextDay.setDate(nextDay.getDate() + 1);
+    selectedEnd = nextDay.toISOString().split("T")[0];
+
+    modalDates.textContent = `Le ${selectedStart}`;
+    inputName.value = "";
+    inputEmail.value = "";
+    inputPhone.value = "";
+    inputPersons.value = 2;
+
+    validateForm();
+    updatePrice();
+    modal.style.display = "flex";
+  });
 
   // Gestion des boutons modal
   btnCancel.addEventListener("click", () => (modal.style.display = "none"));
@@ -217,5 +253,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
-
 });
