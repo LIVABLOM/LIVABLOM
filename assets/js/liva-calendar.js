@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 LIVA Calendar JS - multi-sélection desktop + mobile
+// 🌸 LIVA Calendar JS - multi-sélection desktop & mobile
 // ========================================================
 
 async function getConfig() {
@@ -39,9 +39,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const config = await getConfig();
   const testPayment = config.testPayment;
   let reservedRanges = [];
-  const selectedDates = new Set();
 
-  // Modal references
+  // Modal références
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -52,32 +51,37 @@ document.addEventListener("DOMContentLoaded", async function () {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
-  // Validation du formulaire
+  let selectedStart = null;
+  let selectedEnd = null;
+
+  // Validation formulaire
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
-    btnConfirm.disabled = !(
-      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5
-    );
+    const valid =
+      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5;
+    btnConfirm.disabled = !valid;
   }
 
-  [inputName, inputEmail, inputPhone, inputPersons].forEach(i =>
+  [inputName, inputEmail, inputPhone, inputPersons].forEach((i) => {
     i.addEventListener("input", () => {
       validateForm();
       updatePrice();
-    })
-  );
-
-  // Mise à jour du prix en fonction des dates sélectionnées
-  function updatePrice() {
-    if (selectedDates.size === 0) return;
-    const nbPersons = parseInt(inputPersons.value) || 2;
-    let total = 0;
-    selectedDates.forEach(dateStr => {
-      total += getTarif(dateStr, nbPersons);
     });
+  });
+
+  function updatePrice() {
+    if (!selectedStart || !selectedEnd) return;
+    const nbPersons = parseInt(inputPersons.value) || 2;
+    let cur = new Date(selectedStart);
+    const fin = new Date(selectedEnd);
+    let total = 0;
+    while (cur < fin) {
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      cur.setDate(cur.getDate() + 1);
+    }
     const displayAmount = testPayment ? 1 : total;
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
@@ -99,52 +103,37 @@ document.addEventListener("DOMContentLoaded", async function () {
       const start = selectInfo.start;
       const end = selectInfo.end;
       const today = new Date();
-      today.setHours(0,0,0,0);
-
+      today.setHours(0, 0, 0, 0);
       if (start < today) return false;
 
-      for (let r of reservedRanges) {
-        const rs = new Date(r.start);
-        const re = new Date(r.end);
-        re.setDate(re.getDate() - 1);
-        if (start <= re && end > rs) return false;
+      for (let range of reservedRanges) {
+        const rangeStart = new Date(range.start);
+        const rangeEnd = new Date(range.end);
+        rangeEnd.setDate(rangeEnd.getDate() - 1);
+        if (start <= rangeEnd && end > rangeStart) return false;
       }
       return true;
     },
     select: function (info) {
-      let cur = new Date(info.start);
-      const end = new Date(info.end);
-
-      while (cur < end) {
-        const dayStr = cur.toISOString().split("T")[0];
-        if (selectedDates.has(dayStr)) {
-          selectedDates.delete(dayStr);
-        } else {
-          selectedDates.add(dayStr);
-        }
-        cur.setDate(cur.getDate() + 1);
-      }
-
-      cal.getEvents().forEach(ev => ev.remove()); // highlight via CSS
-      cal.render();
-
-      if (selectedDates.size > 0) {
-        const datesArr = Array.from(selectedDates).sort();
-        modalDates.textContent = `Dates sélectionnées : ${datesArr.join(", ")}`;
-        modal.style.display = "flex";
-        updatePrice();
-      } else {
-        modal.style.display = "none";
-      }
+      selectedStart = info.startStr;
+      selectedEnd = info.endStr;
+      modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
+      inputName.value = "";
+      inputEmail.value = "";
+      inputPhone.value = "";
+      inputPersons.value = 2;
+      validateForm();
+      updatePrice();
+      modal.style.display = "flex";
     },
-    events: async function(fetchInfo, success, failure) {
+    events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur calendrier");
         const evts = await res.json();
-        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
+        reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map(e => ({
+        const fcEvents = evts.map((e) => ({
           title: "Réservé",
           start: e.start,
           end: e.end,
@@ -158,10 +147,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Bloquer les jours réservés
         setTimeout(() => {
-          document.querySelectorAll(".fc-daygrid-day").forEach(day => {
+          document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
             const date = day.getAttribute("data-date");
             if (!date) return;
-            const isReserved = reservedRanges.some(r => {
+            const isReserved = reservedRanges.some((r) => {
               const s = new Date(r.start);
               const e = new Date(r.end);
               e.setDate(e.getDate() - 1);
@@ -179,15 +168,34 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("events fetch error:", err);
         failure(err);
       }
-    }
+    },
   });
 
   cal.render();
 
-  // Gestion modal
+  // ----------- Tap rapide sur mobile pour 1 jour -------------
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    setTimeout(() => { // attendre rendu complet
+      document.querySelectorAll(".fc-daygrid-day").forEach((dayCell) => {
+        dayCell.addEventListener("click", (e) => {
+          if (dayCell.style.pointerEvents === "none") return;
+          const dateStr = dayCell.getAttribute("data-date");
+          if (!dateStr) return;
+
+          const start = new Date(dateStr);
+          const end = new Date(start);
+          end.setDate(end.getDate() + 1);
+
+          try { cal.select({ start, end, allDay: true }); }
+          catch { /* fallback si erreur */ }
+        });
+      });
+    }, 500);
+  }
+
+  // Boutons modal
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
-    selectedDates.clear();
     cal.unselect();
   });
 
@@ -195,25 +203,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    const nbPersons = parseInt(inputPersons.value);
-
+    let nbPersons = parseInt(inputPersons.value);
     if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 5) {
       alert("Veuillez remplir tous les champs correctement (max 5 personnes).");
       return;
     }
 
-    if (selectedDates.size === 0) {
-      alert("Veuillez sélectionner au moins une date.");
-      return;
-    }
-
+    let cur = new Date(selectedStart);
+    const fin = new Date(selectedEnd);
     let total = 0;
-    selectedDates.forEach(dateStr => {
-      total += getTarif(dateStr, nbPersons);
-    });
+    while (cur < fin) {
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
+      cur.setDate(cur.getDate() + 1);
+    }
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver LIVA pour ${Array.from(selectedDates).sort().join(", ")} pour ${montant} € ?`)) return;
+    if (!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -221,7 +226,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           logement: "LIVA",
-          dates: Array.from(selectedDates).sort(),
+          startDate: selectedStart,
+          endDate: selectedEnd,
           amount: montant,
           personnes: nbPersons,
           name,
@@ -238,4 +244,5 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
+
 });
