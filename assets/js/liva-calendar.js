@@ -1,5 +1,5 @@
 // ========================================================
-// 🌿 LIVA Calendar JS – version stable mobile + desktop
+// 🌸 LIVA Calendar JS - Sélection multiple & mobile friendly
 // ========================================================
 
 async function getConfig() {
@@ -17,16 +17,19 @@ async function getConfig() {
   }
 }
 
-// 💶 Tarif LIVA : 79 € pour 1–2 personnes, +15 € par personne suppl.
+// Tarif LIVA : 79€ pour 1 ou 2 personnes, +15€ par personne supplémentaire
 function getTarif(date, nbPersonnes = 2) {
   const base = 79;
-  const suppl = nbPersonnes > 2 ? (nbPersonnes - 2) * 15 : 0;
-  return base + suppl;
+  const supplement = nbPersonnes > 2 ? (nbPersonnes - 2) * 15 : 0;
+  return base + supplement;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async function () {
   const el = document.getElementById("calendar");
-  if (!el) return console.warn("Calendrier introuvable (#calendar)");
+  if (!el) {
+    console.warn("Calendrier introuvable (#calendar)");
+    return;
+  }
 
   const calendarBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:4000"
@@ -40,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const testPayment = config.testPayment;
   let reservedRanges = [];
 
-  // 🪟 Modal
+  // Modal références
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -51,8 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
-  let selectedStart = null;
-  let selectedEnd = null;
+  let selectedDates = new Set(); // 🟢 Ensemble des dates sélectionnées
 
   function validateForm() {
     const name = inputName.value.trim();
@@ -72,69 +74,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function updatePrice() {
-    if (!selectedStart || !selectedEnd) return;
+    if (selectedDates.size === 0) return;
     const nbPersons = parseInt(inputPersons.value) || 2;
-    let cur = new Date(selectedStart);
-    const fin = new Date(selectedEnd);
     let total = 0;
-    while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nbPersons);
-      cur.setDate(cur.getDate() + 1);
+    for (let date of selectedDates) {
+      total += getTarif(date, nbPersons);
     }
-    const display = testPayment ? 1 : total;
-    priceDisplay.textContent = `Montant total : ${display} €`;
+    const displayAmount = testPayment ? 1 : total;
+    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
-  // ========================================================
-  // 🗓️ Initialisation FullCalendar
-  // ========================================================
+  // Initialisation du calendrier
   let cal;
   try {
     cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
       locale: "fr",
-      selectable: true,
-      selectMirror: true,
+      selectable: false,
       firstDay: 1,
       height: "100%",
       headerToolbar: {
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek",
+        right: "",
       },
-
-      selectAllow(info) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (info.start < today) return false;
-
-        return !reservedRanges.some((r) => {
-          const rs = new Date(r.start);
-          const re = new Date(r.end);
-          re.setDate(re.getDate() - 1);
-          return info.start <= re && info.end > rs;
-        });
-      },
-
-      select(info) {
-        selectedStart = info.startStr;
-        selectedEnd = info.endStr;
-        modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-        inputName.value = "";
-        inputEmail.value = "";
-        inputPhone.value = "";
-        inputPersons.value = 2;
-        validateForm();
-        updatePrice();
-        modal.style.display = "flex";
-      },
-
-      events: async (fetchInfo, success, failure) => {
+      events: async function (fetchInfo, success, failure) {
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
           if (!res.ok) throw new Error("Erreur serveur calendrier");
           const evts = await res.json();
-
           reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
 
           const fcEvents = evts.map((e) => ({
@@ -149,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           success(fcEvents);
 
+          // Désactive les jours réservés
           setTimeout(() => {
             document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
               const date = day.getAttribute("data-date");
@@ -161,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               });
               if (isReserved) {
                 day.style.pointerEvents = "none";
-                day.style.opacity = "0.5";
+                day.style.opacity = "0.4";
                 day.style.cursor = "not-allowed";
               }
             });
@@ -172,39 +141,114 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       },
     });
-
     cal.render();
   } catch (err) {
-    console.error("Erreur init FullCalendar:", err);
+    console.error("Erreur initialisation FullCalendar :", err);
     return;
   }
 
   // ========================================================
-  // 🎯 Boutons Modal
+  // 🗓️ SÉLECTION MULTIPLE (clic ou appui long)
+  // ========================================================
+  let multiSelectMode = false;
+  let touchStartTime = 0;
+
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.pointerType !== "touch") return;
+      touchStartTime = Date.now();
+      setTimeout(() => {
+        if (Date.now() - touchStartTime > 500) {
+          multiSelectMode = true;
+          console.log("📱 Mode multi-sélection activé");
+        }
+      }, 550);
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "pointerup",
+    (e) => {
+      if (e.pointerType !== "touch" && e.pointerType !== "mouse") return;
+      const cell = e.target.closest(".fc-daygrid-day");
+      if (!cell || cell.style.pointerEvents === "none") return;
+
+      const dateStr = cell.getAttribute("data-date");
+      if (!dateStr) return;
+
+      // Mode multi-sélection
+      if (multiSelectMode) {
+        if (selectedDates.has(dateStr)) {
+          selectedDates.delete(dateStr);
+          cell.classList.remove("fc-day-selected-custom");
+        } else {
+          selectedDates.add(dateStr);
+          cell.classList.add("fc-day-selected-custom");
+        }
+      } else {
+        // Sélection simple
+        selectedDates.clear();
+        document
+          .querySelectorAll(".fc-day-selected-custom")
+          .forEach((d) => d.classList.remove("fc-day-selected-custom"));
+        selectedDates.add(dateStr);
+        cell.classList.add("fc-day-selected-custom");
+      }
+
+      updateSelectedDisplay();
+    },
+    { passive: true }
+  );
+
+  // Désactive le mode multi après 5 secondes
+  setInterval(() => {
+    if (multiSelectMode) multiSelectMode = false;
+  }, 5000);
+
+  function updateSelectedDisplay() {
+    if (selectedDates.size === 0) return;
+
+    const dates = Array.from(selectedDates).sort();
+    modalDates.textContent =
+      dates.length > 1 ? dates.join(", ") : `Le ${dates[0]}`;
+
+    modal.style.display = "flex";
+    validateForm();
+    updatePrice();
+  }
+
+  // ========================================================
+  // 🔘 Gestion du modal
   // ========================================================
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
-    cal.unselect();
+    selectedDates.clear();
+    document
+      .querySelectorAll(".fc-day-selected-custom")
+      .forEach((d) => d.classList.remove("fc-day-selected-custom"));
   });
 
   btnConfirm.addEventListener("click", async () => {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    const nb = parseInt(inputPersons.value);
-    if (!name || !email || !phone || isNaN(nb) || nb < 1 || nb > 5)
-      return alert("Veuillez remplir tous les champs (max 5 personnes).");
+    let nbPersons = parseInt(inputPersons.value);
 
-    let cur = new Date(selectedStart);
-    const fin = new Date(selectedEnd);
-    let total = 0;
-    while (cur < fin) {
-      total += getTarif(cur.toISOString().split("T")[0], nb);
-      cur.setDate(cur.getDate() + 1);
+    if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 5) {
+      alert("Veuillez remplir tous les champs correctement (max 5 personnes).");
+      return;
     }
+
+    const total = Array.from(selectedDates).reduce(
+      (sum, d) => sum + getTarif(d, nbPersons),
+      0
+    );
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € ?`)) return;
+    if (!confirm(`Réserver LIVA pour ${selectedDates.size} jour(s), total ${montant} € ?`))
+      return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -212,15 +256,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           logement: "LIVA",
-          startDate: selectedStart,
-          endDate: selectedEnd,
+          dates: Array.from(selectedDates),
           amount: montant,
-          personnes: nb,
+          personnes: nbPersons,
           name,
           email,
           phone,
         }),
       });
+
       const data = await res.json();
       if (data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
@@ -230,50 +274,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ========================================================
-  // 📱 Tap court sur mobile (sélection 1 jour)
-  // ========================================================
-  let touchStart = 0, touchMoved = false;
-
-  document.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchStart = Date.now();
-    touchMoved = false;
-  }, { passive: true });
-
-  document.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchMoved = true;
-  }, { passive: true });
-
-  document.addEventListener("pointerup", (e) => {
-    if (e.pointerType !== "touch") return;
-    if (touchMoved || Date.now() - touchStart > 300) return;
-
-    const cell = e.target.closest(".fc-daygrid-day");
-    if (!cell || cell.style.pointerEvents === "none") return;
-    const dateStr = cell.getAttribute("data-date");
-    if (!dateStr) return;
-
-    const start = new Date(dateStr);
-    const end = new Date(start);
-    end.setDate(end.getDate() + 1);
-
-    try {
-      cal.select({ start, end, allDay: true });
-    } catch {
-      cell.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
-    }
-  }, { passive: true });
-
-  // 🛠️ Sécurité CSS runtime
+  // Sécurité CSS runtime
   const style = document.createElement("style");
   style.innerHTML = `
-    .fc-daygrid-day, .fc-daygrid-day-frame {
-      pointer-events: auto !important;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .fc-daygrid-day, .fc-daygrid-day-frame { pointer-events: auto !important; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
     #calendar { -webkit-overflow-scrolling: touch; }
   `;
   document.head.appendChild(style);
