@@ -231,3 +231,19 @@ body, html {
 .fc-day-selected-custom:hover {
   background: rgba(255, 255, 255, 0.25);
 }
+/* Pour les jours sélectionnés */
+.fc-day-selected {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid #fff !important;
+  border-radius: 6px;
+}
+
+/* Assurer que pointer-events et touch fonctionnent sur mobile */
+.fc-daygrid-day,
+.fc-daygrid-day-frame,
+.fc-daygrid-day-top {
+  cursor: pointer;
+  pointer-events: auto !important;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
