@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 LIVA Calendar JS - Sélection multiple & mobile friendly
+// 🌸 LIVA Calendar JS - multi-sélection desktop + mobile
 // ========================================================
 
 async function getConfig() {
@@ -26,10 +26,7 @@ function getTarif(date, nbPersonnes = 2) {
 
 document.addEventListener("DOMContentLoaded", async function () {
   const el = document.getElementById("calendar");
-  if (!el) {
-    console.warn("Calendrier introuvable (#calendar)");
-    return;
-  }
+  if (!el) return;
 
   const calendarBackend = window.location.hostname.includes("localhost")
     ? "http://localhost:4000"
@@ -42,8 +39,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   const config = await getConfig();
   const testPayment = config.testPayment;
   let reservedRanges = [];
+  const selectedDates = new Set();
 
-  // Modal références
+  // Modal references
   const modal = document.getElementById("reservationModal");
   const modalDates = document.getElementById("modal-dates");
   const inputName = document.getElementById("res-name");
@@ -54,201 +52,168 @@ document.addEventListener("DOMContentLoaded", async function () {
   const btnCancel = document.getElementById("res-cancel");
   const btnConfirm = document.getElementById("res-confirm");
 
-  let selectedDates = new Set(); // 🟢 Ensemble des dates sélectionnées
-
+  // Validation du formulaire
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
-    const valid =
-      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5;
-    btnConfirm.disabled = !valid;
+    btnConfirm.disabled = !(
+      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 5
+    );
   }
 
-  [inputName, inputEmail, inputPhone, inputPersons].forEach((i) => {
+  [inputName, inputEmail, inputPhone, inputPersons].forEach(i =>
     i.addEventListener("input", () => {
       validateForm();
       updatePrice();
-    });
-  });
+    })
+  );
 
+  // Mise à jour du prix en fonction des dates sélectionnées
   function updatePrice() {
     if (selectedDates.size === 0) return;
     const nbPersons = parseInt(inputPersons.value) || 2;
     let total = 0;
-    for (let date of selectedDates) {
-      total += getTarif(date, nbPersons);
-    }
+    selectedDates.forEach(dateStr => {
+      total += getTarif(dateStr, nbPersons);
+    });
     const displayAmount = testPayment ? 1 : total;
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
-  // Initialisation du calendrier
-  let cal;
-  try {
-    cal = new FullCalendar.Calendar(el, {
-      initialView: "dayGridMonth",
-      locale: "fr",
-      selectable: false,
-      firstDay: 1,
-      height: "100%",
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "",
-      },
-      events: async function (fetchInfo, success, failure) {
-        try {
-          const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
-          if (!res.ok) throw new Error("Erreur serveur calendrier");
-          const evts = await res.json();
-          reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
-
-          const fcEvents = evts.map((e) => ({
-            title: "Réservé",
-            start: e.start,
-            end: e.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true,
-          }));
-
-          success(fcEvents);
-
-          // Désactive les jours réservés
-          setTimeout(() => {
-            document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
-              const date = day.getAttribute("data-date");
-              if (!date) return;
-              const isReserved = reservedRanges.some((r) => {
-                const s = new Date(r.start);
-                const e = new Date(r.end);
-                e.setDate(e.getDate() - 1);
-                return new Date(date) >= s && new Date(date) <= e;
-              });
-              if (isReserved) {
-                day.style.pointerEvents = "none";
-                day.style.opacity = "0.4";
-                day.style.cursor = "not-allowed";
-              }
-            });
-          }, 300);
-        } catch (err) {
-          console.error("events fetch error:", err);
-          failure(err);
-        }
-      },
-    });
-    cal.render();
-  } catch (err) {
-    console.error("Erreur initialisation FullCalendar :", err);
-    return;
-  }
-
-  // ========================================================
-  // 🗓️ SÉLECTION MULTIPLE (clic ou appui long)
-  // ========================================================
-  let multiSelectMode = false;
-  let touchStartTime = 0;
-
-  document.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (e.pointerType !== "touch") return;
-      touchStartTime = Date.now();
-      setTimeout(() => {
-        if (Date.now() - touchStartTime > 500) {
-          multiSelectMode = true;
-          console.log("📱 Mode multi-sélection activé");
-        }
-      }, 550);
+  // Initialisation FullCalendar
+  const cal = new FullCalendar.Calendar(el, {
+    initialView: "dayGridMonth",
+    locale: "fr",
+    selectable: true,
+    selectMirror: true,
+    firstDay: 1,
+    height: "100%",
+    headerToolbar: {
+      left: "prev,next today",
+      center: "title",
+      right: "dayGridMonth,timeGridWeek",
     },
-    { passive: true }
-  );
+    selectAllow: function (selectInfo) {
+      const start = selectInfo.start;
+      const end = selectInfo.end;
+      const today = new Date();
+      today.setHours(0,0,0,0);
 
-  document.addEventListener(
-    "pointerup",
-    (e) => {
-      if (e.pointerType !== "touch" && e.pointerType !== "mouse") return;
-      const cell = e.target.closest(".fc-daygrid-day");
-      if (!cell || cell.style.pointerEvents === "none") return;
+      if (start < today) return false;
 
-      const dateStr = cell.getAttribute("data-date");
-      if (!dateStr) return;
+      for (let r of reservedRanges) {
+        const rs = new Date(r.start);
+        const re = new Date(r.end);
+        re.setDate(re.getDate() - 1);
+        if (start <= re && end > rs) return false;
+      }
+      return true;
+    },
+    select: function (info) {
+      let cur = new Date(info.start);
+      const end = new Date(info.end);
 
-      // Mode multi-sélection
-      if (multiSelectMode) {
-        if (selectedDates.has(dateStr)) {
-          selectedDates.delete(dateStr);
-          cell.classList.remove("fc-day-selected-custom");
+      while (cur < end) {
+        const dayStr = cur.toISOString().split("T")[0];
+        if (selectedDates.has(dayStr)) {
+          selectedDates.delete(dayStr);
         } else {
-          selectedDates.add(dateStr);
-          cell.classList.add("fc-day-selected-custom");
+          selectedDates.add(dayStr);
         }
-      } else {
-        // Sélection simple
-        selectedDates.clear();
-        document
-          .querySelectorAll(".fc-day-selected-custom")
-          .forEach((d) => d.classList.remove("fc-day-selected-custom"));
-        selectedDates.add(dateStr);
-        cell.classList.add("fc-day-selected-custom");
+        cur.setDate(cur.getDate() + 1);
       }
 
-      updateSelectedDisplay();
+      cal.getEvents().forEach(ev => ev.remove()); // highlight via CSS
+      cal.render();
+
+      if (selectedDates.size > 0) {
+        const datesArr = Array.from(selectedDates).sort();
+        modalDates.textContent = `Dates sélectionnées : ${datesArr.join(", ")}`;
+        modal.style.display = "flex";
+        updatePrice();
+      } else {
+        modal.style.display = "none";
+      }
     },
-    { passive: true }
-  );
+    events: async function(fetchInfo, success, failure) {
+      try {
+        const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
+        if (!res.ok) throw new Error("Erreur serveur calendrier");
+        const evts = await res.json();
+        reservedRanges = evts.map(e => ({ start: e.start, end: e.end }));
 
-  // Désactive le mode multi après 5 secondes
-  setInterval(() => {
-    if (multiSelectMode) multiSelectMode = false;
-  }, 5000);
+        const fcEvents = evts.map(e => ({
+          title: "Réservé",
+          start: e.start,
+          end: e.end,
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true,
+        }));
 
-  function updateSelectedDisplay() {
-    if (selectedDates.size === 0) return;
+        success(fcEvents);
 
-    const dates = Array.from(selectedDates).sort();
-    modalDates.textContent =
-      dates.length > 1 ? dates.join(", ") : `Le ${dates[0]}`;
+        // Bloquer les jours réservés
+        setTimeout(() => {
+          document.querySelectorAll(".fc-daygrid-day").forEach(day => {
+            const date = day.getAttribute("data-date");
+            if (!date) return;
+            const isReserved = reservedRanges.some(r => {
+              const s = new Date(r.start);
+              const e = new Date(r.end);
+              e.setDate(e.getDate() - 1);
+              return new Date(date) >= s && new Date(date) <= e;
+            });
+            if (isReserved) {
+              day.style.pointerEvents = "none";
+              day.style.opacity = "0.5";
+              day.style.cursor = "not-allowed";
+            }
+          });
+        }, 300);
 
-    modal.style.display = "flex";
-    validateForm();
-    updatePrice();
-  }
+      } catch (err) {
+        console.error("events fetch error:", err);
+        failure(err);
+      }
+    }
+  });
 
-  // ========================================================
-  // 🔘 Gestion du modal
-  // ========================================================
+  cal.render();
+
+  // Gestion modal
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
     selectedDates.clear();
-    document
-      .querySelectorAll(".fc-day-selected-custom")
-      .forEach((d) => d.classList.remove("fc-day-selected-custom"));
+    cal.unselect();
   });
 
   btnConfirm.addEventListener("click", async () => {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
-    let nbPersons = parseInt(inputPersons.value);
+    const nbPersons = parseInt(inputPersons.value);
 
     if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 5) {
       alert("Veuillez remplir tous les champs correctement (max 5 personnes).");
       return;
     }
 
-    const total = Array.from(selectedDates).reduce(
-      (sum, d) => sum + getTarif(d, nbPersons),
-      0
-    );
+    if (selectedDates.size === 0) {
+      alert("Veuillez sélectionner au moins une date.");
+      return;
+    }
+
+    let total = 0;
+    selectedDates.forEach(dateStr => {
+      total += getTarif(dateStr, nbPersons);
+    });
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver LIVA pour ${selectedDates.size} jour(s), total ${montant} € ?`))
-      return;
+    if (!confirm(`Réserver LIVA pour ${Array.from(selectedDates).sort().join(", ")} pour ${montant} € ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
@@ -256,7 +221,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           logement: "LIVA",
-          dates: Array.from(selectedDates),
+          dates: Array.from(selectedDates).sort(),
           amount: montant,
           personnes: nbPersons,
           name,
@@ -273,12 +238,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
-
-  // Sécurité CSS runtime
-  const style = document.createElement("style");
-  style.innerHTML = `
-    .fc-daygrid-day, .fc-daygrid-day-frame { pointer-events: auto !important; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-    #calendar { -webkit-overflow-scrolling: touch; }
-  `;
-  document.head.appendChild(style);
 });
