@@ -170,4 +170,64 @@ body, html {
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.7);
-  di
+  display: none; /* correction : display manquant */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #222;
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #111;
+  color: #fff;
+}
+
+.modal-buttons {
+  text-align: right;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#modal-price {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* =========================================================
+   🎨 SÉLECTION MULTIPLE PERSONNALISÉE
+   ========================================================= */
+.fc-day-selected-custom {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid #fff;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.fc-day-selected-custom:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
