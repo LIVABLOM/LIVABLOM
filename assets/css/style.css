@@ -128,12 +128,6 @@ body, html {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   pointer-events: auto;
-}
-
-/* Jours sélectionnés */
-.fc-day-selected {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 1px solid #fff !important;
   border-radius: 6px;
 }
 
@@ -145,22 +139,29 @@ body, html {
   color: #fff !important;
 }
 
-/* Jours passés */
+/* Jours passés grisés */
 .fc-daygrid-day.past-day {
-  opacity: 0.5;
+  background-color: #333 !important;
+  color: #777 !important;
   pointer-events: none;
   cursor: not-allowed;
 }
 
-/* Hover visuel */
-.fc .fc-daygrid-day:hover {
-  filter: brightness(1.02);
+/* Jours sélectionnés */
+.fc-daygrid-day.fc-day-selected {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid #fff !important;
 }
 
 /* En-têtes (jours de la semaine, titre du mois) */
 .fc .fc-col-header-cell-cushion,
 .fc .fc-toolbar-title {
   color: #fff;
+}
+
+/* Hover visuel */
+.fc .fc-daygrid-day:hover:not(.past-day) {
+  filter: brightness(1.02);
 }
 
 /* =========================================================
@@ -216,7 +217,6 @@ body, html {
   cursor: pointer;
 }
 
-/* Prix réservation */
 #modal-price {
   font-weight: bold;
   margin-top: 10px;
