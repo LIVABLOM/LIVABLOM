@@ -6,10 +6,10 @@ body, html {
   padding: 0;
   height: 100%;
   font-family: 'Helvetica Neue', sans-serif;
-  overflow: auto; /* Scroll autorisé pour mobile */
-  -webkit-overflow-scrolling: touch; /* Inertial scrolling iOS */
-  background: #000; /* Fond noir global */
-  color: #fff; /* Texte blanc global */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #000;
+  color: #fff;
 }
 
 /* =========================================================
@@ -113,7 +113,7 @@ body, html {
   max-width: 1000px;
   margin: 0 auto;
   padding: 10px;
-  background: #111; /* Fond noir du calendrier */
+  background: #111;
   color: #fff;
   border-radius: 12px;
   height: calc(100vh - 140px);
@@ -124,6 +124,17 @@ body, html {
 .fc-daygrid-day {
   background: #111;
   color: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+
+/* Jours sélectionnés */
+.fc-day-selected {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid #fff !important;
+  border-radius: 6px;
 }
 
 /* Jours réservés */
@@ -134,32 +145,22 @@ body, html {
   color: #fff !important;
 }
 
-/* En-têtes (jours de la semaine, titre du mois) */
-.fc .fc-col-header-cell-cushion,
-.fc .fc-toolbar-title {
-  color: #fff;
-}
-
-/* Sélection de dates */
-.fc-day-selected {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 1px solid #fff !important;
-  border-radius: 6px;
-}
-
-/* Assurer le clic mobile / pointer-events */
-.fc-daygrid-day,
-.fc-daygrid-day-frame,
-.fc-daygrid-day-top {
-  cursor: pointer;
-  pointer-events: auto !important;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+/* Jours passés */
+.fc-daygrid-day.past-day {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 /* Hover visuel */
 .fc .fc-daygrid-day:hover {
   filter: brightness(1.02);
+}
+
+/* En-têtes (jours de la semaine, titre du mois) */
+.fc .fc-col-header-cell-cushion,
+.fc .fc-toolbar-title {
+  color: #fff;
 }
 
 /* =========================================================
@@ -213,4 +214,10 @@ body, html {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+/* Prix réservation */
+#modal-price {
+  font-weight: bold;
+  margin-top: 10px;
 }
