@@ -86,6 +86,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     priceDisplay.textContent = `Montant total : ${displayAmount} €`;
   }
 
+  // Formatage simple YYYY-MM-DD pour popup
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
   // Initialisation FullCalendar
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
@@ -117,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     select: function (info) {
       selectedStart = info.startStr;
       selectedEnd = info.endStr;
-      modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
+      modalDates.textContent = `Du ${formatDate(selectedStart)} au ${formatDate(selectedEnd)}`;
       inputName.value = "";
       inputEmail.value = "";
       inputPhone.value = "";
@@ -145,16 +154,30 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         success(fcEvents);
 
-        // Bloquer les jours réservés
+        // Bloquer jours passés et jours réservés
         setTimeout(() => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
           document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
             const date = day.getAttribute("data-date");
             if (!date) return;
+
+            const dayDate = new Date(date);
+
+            // Désactiver les jours passés
+            if (dayDate < today) {
+              day.style.pointerEvents = "none";
+              day.style.opacity = "0.5";
+              day.style.cursor = "not-allowed";
+            }
+
+            // Désactiver jours réservés
             const isReserved = reservedRanges.some((r) => {
               const s = new Date(r.start);
               const e = new Date(r.end);
               e.setDate(e.getDate() - 1);
-              return new Date(date) >= s && new Date(date) <= e;
+              return dayDate >= s && dayDate <= e;
             });
             if (isReserved) {
               day.style.pointerEvents = "none";
@@ -175,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // ----------- Tap rapide sur mobile pour 1 jour -------------
   if (/Mobi|Android/i.test(navigator.userAgent)) {
-    setTimeout(() => { // attendre rendu complet
+    setTimeout(() => {
       document.querySelectorAll(".fc-daygrid-day").forEach((dayCell) => {
         dayCell.addEventListener("click", (e) => {
           if (dayCell.style.pointerEvents === "none") return;
@@ -187,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           end.setDate(end.getDate() + 1);
 
           try { cal.select({ start, end, allDay: true }); }
-          catch { /* fallback si erreur */ }
+          catch { /* fallback */ }
         });
       });
     }, 500);
@@ -218,31 +241,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     const montant = testPayment ? 1 : total;
 
-    if (!confirm(`Réserver LIVA du ${selectedStart} au ${selectedEnd} pour ${montant} € ?`)) return;
+    if (!confirm(`Réserver LIVA du ${formatDate(selectedStart)} au ${formatDate(selectedEnd)} pour ${montant} € ?`)) return;
 
     try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          logement: "LIVA",
-          startDate: selectedStart,
-          endDate: selectedEnd,
-          amount: montant,
-          personnes: nbPersons,
-          name,
-          email,
-          phone,
-        }),
-      });
-
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
-      else alert("Impossible de créer la réservation.");
-    } catch (err) {
-      console.error("checkout error:", err);
-      alert("Erreur lors de la création de la réservation.");
-    }
-  });
-
-});
+        headers: { "Content-Type
