@@ -140,19 +140,21 @@ body, html {
   color: #fff;
 }
 
-/* Sélection de dates (tap ou drag) */
-.fc .fc-daygrid-day.fc-day-selected {
-  background-color: #333 !important;
+/* Sélection de dates */
+.fc-day-selected {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid #fff !important;
+  border-radius: 6px;
 }
 
-/* Clics mobiles */
+/* Assurer le clic mobile / pointer-events */
 .fc-daygrid-day,
 .fc-daygrid-day-frame,
 .fc-daygrid-day-top {
   cursor: pointer;
+  pointer-events: auto !important;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  pointer-events: auto;
 }
 
 /* Hover visuel */
@@ -170,7 +172,7 @@ body, html {
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.7);
-  display: none; /* correction : display manquant */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -211,39 +213,4 @@ body, html {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-#modal-price {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-/* =========================================================
-   🎨 SÉLECTION MULTIPLE PERSONNALISÉE
-   ========================================================= */
-.fc-day-selected-custom {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid #fff;
-  border-radius: 8px;
-  transition: all 0.2s ease-in-out;
-}
-
-.fc-day-selected-custom:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-/* Pour les jours sélectionnés */
-.fc-day-selected {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 1px solid #fff !important;
-  border-radius: 6px;
-}
-
-/* Assurer que pointer-events et touch fonctionnent sur mobile */
-.fc-daygrid-day,
-.fc-daygrid-day-frame,
-.fc-daygrid-day-top {
-  cursor: pointer;
-  pointer-events: auto !important;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
