@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     priceDisplay.textContent = `Montant total : ${total} €`;
   }
 
-  // Initialisation FullCalendar
+  // ---- Initialisation FullCalendar ----
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
@@ -112,8 +112,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1);
-        if (start <= rangeEnd && end > rangeStart) return false;
+        rangeEnd.setDate(rangeEnd.getDate() + 1); // fin non incluse
+        if (start < rangeEnd && end > rangeStart) return false;
       }
       return true;
     },
@@ -135,58 +135,94 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (!res.ok) throw new Error("Erreur serveur calendrier");
         const evts = await res.json();
 
-// ✅ On corrige ici : on soustrait 1 jour à la date de fin
-reservedRanges = evts.map((e) => {
-  const start = new Date(e.start);
-  const end = new Date(e.end);
-  end.setDate(end.getDate() - 1); // important : fin non incluse comme sur Airbnb
-  return { start, end };
-});
+        // 🔹 Correction : ajuster la fin des événements
+        reservedRanges = evts.map(e => {
+          const start = new Date(e.start);
+          const end = new Date(e.end);
+          end.setDate(end.getDate() - 1); // fin non incluse comme Airbnb
+          return { start, end };
+        });
 
-const fcEvents = reservedRanges.map((r) => ({
-  title: "Réservé",
-  start: r.start,
-  end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000), // pour bien colorer jusqu’à la veille de départ
-  display: "background",
-  backgroundColor: "#ff0000",
-  borderColor: "#ff0000",
-  allDay: true,
-}));
+        const fcEvents = reservedRanges.map(r => ({
+          title: "Réservé",
+          start: r.start,
+          end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000),
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true,
+        }));
 
-success(fcEvents);
-
+        success(fcEvents);
 
         // Bloquer jours réservés et passés
         setTimeout(() => {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
 
-          document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
+          document.querySelectorAll(".fc-daygrid-day").forEach(day => {
             const dateStr = day.getAttribute("data-date");
             if (!dateStr) return;
             const dayDate = new Date(dateStr);
-            if (dayDate < today) {
-              day.classList.add("past-day");
-            }
-            const isReserved = reservedRanges.some((r) => {
+
+            const isReserved = reservedRanges.some(r => {
               const s = new Date(r.start);
               const e = new Date(r.end);
               e.setDate(e.getDate() - 1);
               return dayDate >= s && dayDate <= e;
             });
-            if (isReserved) {
+
+            if (dayDate < today || isReserved) {
               day.style.pointerEvents = "none";
               day.style.opacity = "0.5";
               day.style.cursor = "not-allowed";
+            } else {
+              day.style.pointerEvents = "";
+              day.style.opacity = "1";
+              day.style.cursor = "pointer";
             }
           });
-        }, 300);
+        }, 100);
+
       } catch (err) {
         console.error(err);
         failure(err);
       }
     },
   });
+
+  // 🔹 Fonction pour rafraîchir le calendrier après réservation
+  async function refreshCalendar() {
+    const events = cal.getEvents();
+    events.forEach(evt => evt.remove());
+
+    try {
+      const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
+      if (!res.ok) throw new Error("Erreur serveur calendrier");
+      const evts = await res.json();
+
+      reservedRanges = evts.map(e => {
+        const start = new Date(e.start);
+        const end = new Date(e.end);
+        end.setDate(end.getDate() - 1);
+        return { start, end };
+      });
+
+      reservedRanges.forEach(r => {
+        cal.addEvent({
+          title: "Réservé",
+          start: r.start,
+          end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000),
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true,
+        });
+      });
+    } catch (err) {
+      console.error("Erreur refresh calendrier :", err);
+    }
+  }
 
   cal.render();
 
@@ -232,8 +268,15 @@ success(fcEvents);
         }),
       });
       const data = await res.json();
-      if (data.url) window.location.href = data.url;
-      else alert("Impossible de créer la réservation.");
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Impossible de créer la réservation.");
+        // 🔹 Rafraîchir le calendrier après réservation
+        await refreshCalendar();
+      }
+
     } catch (err) {
       console.error("checkout error:", err);
       alert("Erreur lors de la création de la réservation.");
