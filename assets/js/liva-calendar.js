@@ -140,19 +140,27 @@ document.addEventListener("DOMContentLoaded", async function () {
         const res = await fetch(`${calendarBackend}/api/reservations/LIVA?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur calendrier");
         const evts = await res.json();
-        reservedRanges = evts.map((e) => ({ start: e.start, end: e.end }));
 
-        const fcEvents = evts.map((e) => ({
-          title: "Réservé",
-          start: e.start,
-          end: e.end,
-          display: "background",
-          backgroundColor: "#ff0000",
-          borderColor: "#ff0000",
-          allDay: true,
-        }));
+// ✅ Correction : on rend la date de fin exclusive (Airbnb-style)
+reservedRanges = evts.map((e) => {
+  const start = new Date(e.start);
+  const end = new Date(e.end);
+  end.setDate(end.getDate() - 1); // fin exclue
+  return { start, end };
+});
 
-        success(fcEvents);
+const fcEvents = reservedRanges.map((r) => ({
+  title: "Réservé",
+  start: r.start,
+  end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000), // pour bien colorer jusqu’à la veille du départ
+  display: "background",
+  backgroundColor: "#ff0000",
+  borderColor: "#ff0000",
+  allDay: true,
+}));
+
+success(fcEvents);
+
 
         // Bloquer jours passés et jours réservés
         setTimeout(() => {
