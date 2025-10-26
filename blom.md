@@ -57,6 +57,10 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       Découvrez BLŌM, un refuge romantique où le bien-être prend tout son sens · Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux. · À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
     </p>
 
+    <p class="text-center mt-4">
+  🌸 <a href="/hygiene-spa-blom/" class="underline hover:text-gray-300">En savoir plus sur notre protocole d’hygiène spa</a>
+</p>
+
     <!-- Bandeau hygiène -->
     <div class="bg-red-600 text-white text-sm px-6 py-3 rounded-full shadow-md text-center max-w-md mx-auto mb-6 animate-pulse">
       Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
