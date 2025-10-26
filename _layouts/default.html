@@ -53,28 +53,53 @@
 <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden">
 
 <!-- ================= Maintenance ================= -->
+<div 
+  id="maintenance-banner" 
+  class="hidden fixed inset-0 bg-white flex flex-col items-center justify-center text-center z-50 px-4"
+>
+  <!-- Logo -->
+  <img 
+    src="{{ site.baseurl }}/assets/images/logo-livablom.png" 
+    alt="Logo LIVABLŌM" 
+    class="w-32 h-auto mb-6"
+  >
 
-<div id="maintenance-banner" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-center text-center z-50">
-  <img src="{{ site.baseurl }}/assets/images/logo-livablom.png" alt="Logo LIVABLŌM" class="w-32 h-auto mb-6">
-  <h1 class="text-4xl font-extrabold mb-4 text-gray-900">Site en maintenance</h1>
+  <!-- Titre -->
+  <h1 class="text-4xl font-extrabold mb-4 text-gray-900">
+    Site en maintenance
+  </h1>
+
+  <!-- Message -->
   <p class="text-lg text-gray-700 mb-6 max-w-xl">
     Nous travaillons actuellement sur le site pour vous offrir une meilleure expérience.<br>
     Vous pouvez toujours nous contacter via le bouton ci-dessous.
   </p>
-  <a href="{{ site.baseurl }}/contact" class="px-8 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition">
+
+  <!-- Bouton de contact -->
+  <a 
+    href="{{ site.baseurl }}/contact" 
+    class="px-8 py-3 bg-black text-white font-semibold rounded shadow hover:bg-gray-800 transition"
+  >
     Contactez-nous
   </a>
 </div>
 
 <script>
+  // Vérifie si l'utilisateur est admin
   const isAdmin = window.location.search.includes("admin=true");
+
+  // Vérifie si la maintenance est active depuis le site config
   const maintenanceActive = {{ site.maintenance | jsonify }};
 
+  // Affiche la bannière uniquement si l'utilisateur n'est pas admin et que la maintenance est active
   if (!isAdmin && maintenanceActive) {
-    document.getElementById("maintenance-banner").classList.remove("hidden");
-    // Le reste du contenu reste accessible en scrollant 👇
+    const banner = document.getElementById("maintenance-banner");
+    banner.classList.remove("hidden");
+    // TODO : si tu veux bloquer le scroll derrière, ajouter :
+    // document.body.style.overflow = 'hidden';
   }
 </script>
+
 <!-- ============================================ -->
 
 
