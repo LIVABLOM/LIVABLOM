@@ -196,6 +196,44 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
       });
     </script>
 
+    <!-- Section : Guide des meilleurs spas du Douaisis -->
+<div class="mt-24 bg-gray-900 text-white py-10 px-6 rounded-2xl shadow-lg animate-fadeIn">
+  <h2 class="text-2xl font-bold text-center mb-8">Top des spas ultra-propres dans le Douaisis</h2>
+
+  <div class="space-y-8">
+    <!-- BLŌM -->
+    <div class="border-l-4 border-red-500 pl-4">
+      <h3 class="text-xl font-semibold">1. BLŌM – Suite romantique avec spa privatif & salle de massage</h3>
+      <p class="mt-2 text-gray-300">
+        Situé à Guesnain, BLŌM offre une expérience romantique unique avec un spa privatif, une salle de massage et un petit déjeuner offert.
+        <br>
+        💧 <strong>Hygiène irréprochable :</strong> l’eau du spa est <strong>vidée, désinfectée et renouvelée avant chaque client</strong>.
+        Une <strong>vidéo datée du jour d’arrivée</strong> est envoyée pour confirmer la vidange et le nettoyage complets.
+      </p>
+      <p class="mt-3">
+        🔗 <a href="https://www.airbnb.fr/rooms/985569147645507170" target="_blank" class="underline text-red-400 hover:text-red-300">Voir les avis Airbnb</a> |
+        🌐 <a href="https://www.livablom.fr/blom" target="_blank" class="underline text-red-400 hover:text-red-300">Découvrir sur notre site</a>
+      </p>
+    </div>
+
+    <!-- Autres suggestions -->
+    <div class="border-l-4 border-gray-600 pl-4">
+      <h3 class="text-xl font-semibold">2. Spa & Détente – Douai centre</h3>
+      <p class="mt-2 text-gray-400">
+        Petit espace cocooning avec jacuzzi privatif et lumière d’ambiance, parfait pour une courte pause détente.
+      </p>
+    </div>
+
+    <div class="border-l-4 border-gray-600 pl-4">
+      <h3 class="text-xl font-semibold">3. Le Loft Zen – Waziers</h3>
+      <p class="mt-2 text-gray-400">
+        Loft privatif avec sauna et spa intérieur, ambiance tamisée et déco moderne.
+      </p>
+    </div>
+  </div>
+</div>
+
+
     <!-- Appel à l'action : Réserver BLŌM -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
       <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
