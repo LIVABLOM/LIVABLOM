@@ -45,7 +45,7 @@ keywords: "spa propre Douai, spa hygiène Guesnain, eau vidée spa privatif, pro
   </h2>
   <p style="max-width:600px; margin:0 auto 40px auto; line-height:1.6;">
     Le jour de votre arrivée, <strong>une courte vidéo datée vous est envoyée</strong> par message,
-    montrant le spa rempli et prêt pour votre détente.  
+    montrant le spa vidé, nettoyé prêt à être rempli et chauffé pour votre détente.  
     Une preuve concrète de notre engagement pour une hygiène irréprochable.
   </p>
 
