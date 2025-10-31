@@ -7,6 +7,14 @@ permalink: /blom/
 keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain, massage couple Douai, hébergement bien-être Nord, jacuzzi privatif Douai, nuit détente romantique, LIVABLŌM, BLŌM"
 ---
 
+<!-- SEO local BLŌM -->
+<meta name="robots" content="index, follow">
+<meta name="geo.region" content="FR-59">
+<meta name="geo.placename" content="Guesnain">
+<meta name="geo.position" content="50.3567;3.0879">
+<meta name="ICBM" content="50.3567, 3.0879">
+<link rel="canonical" href="https://www.livablom.fr/blom/">
+
 <!-- Balises Open Graph pour le partage -->
 <meta property="og:title" content="BLŌM – Spa privatif et hébergement romantique à Guesnain">
 <meta property="og:description" content="Offrez-vous une parenthèse romantique à BLŌM : spa privatif, salle de massage et petit déjeuner offert, à Guesnain près de Douai.">
@@ -20,9 +28,13 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
 {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "name": "BLŌM – Suite romantique avec spa et massage",
-  "image": "{{ site.url }}{{ site.baseurl }}/assets/galerie/blom/blom22.jpg",
-  "description": "Logement haut de gamme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit déjeuner offert.",
+  "name": "BLŌM – Suite romantique avec spa privatif à Guesnain",
+  "image": [
+    "https://www.livablom.fr/assets/galerie/blom/blom22.jpg",
+    "https://www.livablom.fr/assets/galerie/blom/blom31.jpg",
+    "https://www.livablom.fr/assets/galerie/blom/blom10.jpg"
+  ],
+  "description": "Suite romantique et intimiste à Guesnain, dans le Douaisis, avec spa privatif dont l’eau est changée entre chaque client, salle de massage privative et table romantique dressée sur demande.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "338 boulevard Ambroise Croizat",
@@ -32,21 +44,63 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "50.3666",
-    "longitude": "3.0808"
+    "latitude": 50.3567,
+    "longitude": 3.0879
   },
-  "priceRange": "€€€",
-  "telephone": "+33 6 00 00 00 00",
-  "url": "https://www.livablom.fr/blom/",
+  "url": "https://www.livablom.fr/blom",
+  "telephone": "+33 6 95 19 37 80",
+  "priceRange": "€130 - €190",
   "amenityFeature": [
-    { "@type": "LocationFeatureSpecification", "name": "Spa privatif" },
-    { "@type": "LocationFeatureSpecification", "name": "Salle de massage" },
-    { "@type": "LocationFeatureSpecification", "name": "Petit déjeuner offert" },
-    { "@type": "LocationFeatureSpecification", "name": "Arrivée autonome" }
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Spa privatif",
+      "description": "Jacuzzi intérieur avec eau changée après chaque client"
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Salle de massage privative",
+      "description": "Table de massage électronique à 16 programmes ou massages en duo"
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Table romantique dressée sur demande",
+      "description": "Possibilité de dîner sur place, table dressée pour les couples"
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Lit King Size et salon TV",
+      "description": "Chambre cosy et coin salon avec TV connectée"
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Petit-déjeuner offert",
+      "description": "Inclus ou sur demande selon la formule"
+    }
   ],
-  "containedInPlace": { "@type": "Place", "name": "Douaisis" }
+  "checkinTime": "17:00",
+  "checkoutTime": "11:00",
+  "starRating": {
+    "@type": "Rating",
+    "ratingValue": "4.9",
+    "bestRating": "5"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "9.7",
+    "bestRating": "10",
+    "reviewCount": "84"
+  },
+  "makesOffer": {
+    "@type": "Offer",
+    "price": "150.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-01-01",
+    "url": "https://www.livablom.fr/contact"
+  }
 }
 </script>
+
 
 <section class="bg-black text-white py-12 px-4 w-full overflow-x-hidden">
   <div class="max-w-6xl mx-auto space-y-16">
