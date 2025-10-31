@@ -37,7 +37,7 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
   },
   "priceRange": "€€€",
   "telephone": "+33 6 00 00 00 00",
-  "url": "https://livablom.github.io/blom/",
+  "url": "https://www.livablom.fr/blom/",
   "amenityFeature": [
     { "@type": "LocationFeatureSpecification", "name": "Spa privatif" },
     { "@type": "LocationFeatureSpecification", "name": "Salle de massage" },
