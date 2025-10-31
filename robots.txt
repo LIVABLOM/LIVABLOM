@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Priorité à la page BLŌM
+Sitemap: https://www.livablom.fr/sitemap.xml
+
+# Recommandation explicite à Google :
+# On insiste pour que la page BLŌM soit explorée et indexée rapidement
+User-agent: Googlebot
+Allow: /blom/
+Disallow: /drafts/
+Disallow: /private/
+Crawl-delay: 1
+
+# Page principale à indexer en priorité
+Priority: https://www.livablom.fr/blom/
