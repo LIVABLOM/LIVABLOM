@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "BLŌM – Spa privatif et hébergement romantique à Guesnain"
-description: "Offrez-vous une parenthèse romantique à BLŌM : logement de charme réservé aux couples dans le Douaisis, avec spa privatif, salle de massage et petit-déjeuner offert."
+title: "BLŌM – Spa privatif à Guesnain | Week-end romantique Douaisis"
+description: "BLŌM à Guesnain : spa privatif, salle de massage privée, table romantique sur demande, intimité totale pour un week-end détente près de Douai."
 image: "/assets/galerie/blom/blom22.jpg"
 permalink: /blom/
-keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain, massage couple Douai, hébergement bien-être Nord, jacuzzi privatif Douai, nuit détente romantique, LIVABLŌM, BLŌM"
+keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement couple Douai, jacuzzi privatif Guesnain, salle massage privative, BLŌM, LIVABLŌM"
 ---
 
 <!-- SEO local BLŌM -->
@@ -15,26 +15,26 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
 <meta name="ICBM" content="50.3567, 3.0879">
 <link rel="canonical" href="https://www.livablom.fr/blom/">
 
-<!-- Balises Open Graph pour le partage -->
-<meta property="og:title" content="BLŌM – Spa privatif et hébergement romantique à Guesnain">
-<meta property="og:description" content="Offrez-vous une parenthèse romantique à BLŌM : spa privatif, salle de massage et petit déjeuner offert, à Guesnain près de Douai.">
+<!-- Balises Open Graph -->
+<meta property="og:title" content="BLŌM – Spa privatif à Guesnain | Week-end romantique Douaisis">
+<meta property="og:description" content="Suite romantique avec spa privatif à Guesnain, salle de massage privée et table romantique sur demande. Intimité totale pour couples.">
 <meta property="og:image" content="{{ site.baseurl }}/assets/galerie/blom/blom22.jpg">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 
-<!-- Données structurées pour Google (schema.org) -->
+<!-- Données structurées LocalBusiness pour Google -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "name": "BLŌM – Suite romantique avec spa privatif à Guesnain",
+  "name": "BLŌM – Spa privatif à Guesnain",
   "image": [
     "https://www.livablom.fr/assets/galerie/blom/blom22.jpg",
     "https://www.livablom.fr/assets/galerie/blom/blom31.jpg",
     "https://www.livablom.fr/assets/galerie/blom/blom10.jpg"
   ],
-  "description": "Suite romantique et intimiste à Guesnain, dans le Douaisis, avec spa privatif dont l’eau est changée entre chaque client, salle de massage privative et table romantique dressée sur demande.",
+  "description": "BLŌM à Guesnain : spa privatif avec eau changée à chaque client, salle de massage privative, table romantique sur demande, intimité garantie pour couples.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "338 boulevard Ambroise Croizat",
@@ -47,57 +47,16 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
     "latitude": 50.3567,
     "longitude": 3.0879
   },
-  "url": "https://www.livablom.fr/blom",
+  "url": "https://www.livablom.fr/blom/",
   "telephone": "+33 6 95 19 37 80",
   "priceRange": "€130 - €190",
   "amenityFeature": [
-    {
-      "@type": "LocationFeatureSpecification",
-      "name": "Spa privatif",
-      "description": "Jacuzzi intérieur avec eau changée après chaque client"
-    },
-    {
-      "@type": "LocationFeatureSpecification",
-      "name": "Salle de massage privative",
-      "description": "Table de massage électronique à 16 programmes ou massages en duo"
-    },
-    {
-      "@type": "LocationFeatureSpecification",
-      "name": "Table romantique dressée sur demande",
-      "description": "Possibilité de dîner sur place, table dressée pour les couples"
-    },
-    {
-      "@type": "LocationFeatureSpecification",
-      "name": "Lit King Size et salon TV",
-      "description": "Chambre cosy et coin salon avec TV connectée"
-    },
-    {
-      "@type": "LocationFeatureSpecification",
-      "name": "Petit-déjeuner offert",
-      "description": "Inclus ou sur demande selon la formule"
-    }
-  ],
-  "checkinTime": "17:00",
-  "checkoutTime": "11:00",
-  "starRating": {
-    "@type": "Rating",
-    "ratingValue": "4.9",
-    "bestRating": "5"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "9.7",
-    "bestRating": "10",
-    "reviewCount": "84"
-  },
-  "makesOffer": {
-    "@type": "Offer",
-    "price": "150.00",
-    "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
-    "validFrom": "2025-01-01",
-    "url": "https://www.livablom.fr/contact"
-  }
+    {"@type": "LocationFeatureSpecification","name": "Spa privatif","description": "Jacuzzi intérieur avec eau changée après chaque client"},
+    {"@type": "LocationFeatureSpecification","name": "Salle de massage privative","description": "Table de massage électronique à 16 programmes ou massages en duo"},
+    {"@type": "LocationFeatureSpecification","name": "Table romantique dressée sur demande","description": "Possibilité de dîner sur place, table dressée pour les couples"},
+    {"@type": "LocationFeatureSpecification","name": "Lit King Size et salon TV","description": "Chambre cosy et coin salon avec TV connectée"},
+    {"@type": "LocationFeatureSpecification","name": "Petit-déjeuner offert","description": "Inclus ou sur demande selon la formule"}
+  ]
 }
 </script>
 
@@ -108,8 +67,13 @@ keywords: "spa privatif Douaisis, suite romantique Douai, logement spa Guesnain,
     <!-- Titre et description -->
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
-      Découvrez BLŌM, un refuge romantique où le bien-être prend tout son sens · Au rez-de-chaussée, un salon chaleureux invite à la détente, tandis que le spa privatif vous enveloppe dans une atmosphère paisible. Une table élégamment dressée vous attend pour des moments de partage à deux. · À l’étage, un espace dédié au bien-être : une chambre spacieuse et raffinée, une douche moderne et une salle de massage apaisante. Chaque détail est pensé pour offrir sérénité, volupté et moments intimes.
-    </p>
+Bienvenue à BLŌM, votre refuge romantique à Guesnain, au cœur du Douaisis. Profitez d’un spa privatif dont l’eau est entièrement changée et désinfectée entre chaque client pour une hygiène irréprochable. 
+Découvrez notre salle de massage privative, équipée d’une table électronique à 16 programmes, ou partagez des massages en duo. 
+Pour sublimer votre soirée, apportez votre dîner et nous dressons une table romantique avec soin. 
+Chaque espace est pensé pour préserver votre intimité et offrir un week-end de détente et de bien-être à deux. 
+BLŌM est le choix idéal pour un séjour cosy et romantique près de Douai, où confort, sérénité et intimité se rencontrent.
+</p>
+
 
     <p class="text-center mt-4">
   🌸 <a href="/hygiene-spa-blom/" class="underline hover:text-gray-300">En savoir plus sur notre protocole d’hygiène spa</a>
