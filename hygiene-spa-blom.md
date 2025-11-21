@@ -59,13 +59,16 @@ keywords: "spa propre Douai, spa hygiène Guesnain, eau vidée spa privatif, pro
     <p>“Le spa est d’une hygiène irréprochable, c’est rare de voir ça ailleurs.” – <span style="color:#FFD700;">Laura, décembre 2023</span></p>
   </div>
 
-  <!-- Appel à l’action -->
-  <div style="background-color:#d4af37; color:#000; padding:30px 20px; border-radius:15px; display:inline-block;">
-    <h3 style="font-size:1.5rem; font-weight:bold; margin-bottom:10px;">Réservez votre moment bien-être chez BLŌM</h3>
-    <p style="margin-bottom:20px;">Profitez d’un spa privatif à l’hygiène garantie, dans une ambiance romantique et apaisante.</p>
-    <a href="/blom/" style="background-color:#000; color:#FFD700; padding:10px 20px; border-radius:50px; font-weight:bold; text-decoration:none; display:inline-block;">
-      Découvrir BLŌM et réserver
-    </a>
+   <!-- Appel à l'action : Réserver BLŌM -->
+  <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+    <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+    <p class="mb-4">Profitez d’un spa privatif à l’hygiène garantie, dans une ambiance romantique et apaisante</p>
+    <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+      <a href="/blom/" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+        Réserver maintenant
+      </a>
+      {% include share.html %}
+    </div>
   </div>
 
 </section>
