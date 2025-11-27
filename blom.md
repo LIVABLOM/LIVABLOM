@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "BLŌM – Spa privatif à Guesnain | Week-end romantique Douaisis"
-description: "BLŌM à Guesnain : spa privatif, salle de massage privée, table romantique sur demande, intimité totale pour un week-end détente près de Douai."
+title: "BLŌM – Gîte avec spa privatif à Guesnain (Douaisis) | Suite Romantique"
+description: "Découvrez BLŌM à Guesnain : gîte romantique avec spa privatif, jacuzzi, salle de massage, lit king size, petit-déjeuner inclus. Séjour ultra propre dans le Douaisis."
 image: "/assets/galerie/blom/blom22.jpg"
 permalink: /blom/
 keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement couple Douai, jacuzzi privatif Guesnain, salle massage privative, BLŌM, LIVABLŌM"
