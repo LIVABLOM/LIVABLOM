@@ -4,7 +4,8 @@ title: "BLŌM – Gîte avec spa privatif à Guesnain (Douaisis) | Suite Romanti
 description: "Découvrez BLŌM à Guesnain : gîte romantique avec spa privatif, jacuzzi, salle de massage, lit king size, petit-déjeuner inclus. Séjour ultra propre dans le Douaisis."
 image: "/assets/galerie/blom/blom22.jpg"
 permalink: /blom/
-keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement couple Douai, jacuzzi privatif Guesnain, salle massage privative, BLŌM, LIVABLŌM"
+keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement couple Douai, jacuzzi privatif Guesnain, spa ultra propre, eau changée, salle massage privative, BLŌM, LIVABLŌM"
+
 ---
 
 <!-- SEO local BLŌM -->
@@ -66,6 +67,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
 
     <!-- Titre et description -->
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
+    <h2 class="sr-only">Suite romantique avec spa privatif et hygiène irréprochable à Guesnain</h2>
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
 Bienvenue à BLŌM, votre suite romantique avec spa privatif à Guesnain, au cœur du Douaisis. 
 Situé à seulement 5 minutes de Douai et 10 minutes de Sin-le-Noble, BLŌM est un hébergement haut de gamme spécialement conçu pour les couples. 
@@ -90,7 +92,7 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
     <!-- Bloc 1 : Jacuzzi -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200 transition-all">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif" class="w-full h-auto max-w-full object-cover filter brightness-75" />
+        <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif BLŌM à Guesnain dans le douaisis" class="w-full h-auto max-w-full object-cover filter brightness-75" />
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
@@ -221,7 +223,18 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
       });
     </script>
 
-    
+    <div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
+  <h2 class="text-2xl font-bold">Pourquoi choisir BLŌM ?</h2>
+  <p>BLŌM est l’un des rares logements du Douaisis à garantir une hygiène spa irréprochable.</p>
+  <ul class="space-y-2 text-lg">
+    <li>• Eau du spa entièrement vidée, désinfectée et remplacée à chaque client</li>
+    <li>• Suite 100 % privative pour couples uniquement</li>
+    <li>• Table romantique dressée sur demande</li>
+    <li>• Salle de massage privative (table électrique + massages en duo)</li>
+    <li>• Proximité Douai, Sin-le-Noble, Dechy, Waziers</li>
+  </ul>
+</div>
+
 
     <!-- Appel à l'action : Réserver BLŌM -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
