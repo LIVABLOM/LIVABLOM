@@ -234,6 +234,29 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
     <li>• Proximité Douai, Sin-le-Noble, Dechy, Waziers</li>
   </ul>
 </div>
+<section class="mt-20 max-w-4xl mx-auto text-white space-y-6">
+  <h2 class="text-2xl font-bold text-center">FAQ – BLŌM, spa privatif à Guesnain</h2>
+
+  <div>
+    <h3 class="text-xl font-semibold">L’eau du spa est-elle changée entre chaque client ?</h3>
+    <p>Oui, c’est notre engagement principal. Le jacuzzi est entièrement vidé, désinfecté et rempli d’eau neuve avant chaque arrivée.</p>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-semibold">BLŌM est-il vraiment privatif ?</h3>
+    <p>Oui, toute la suite vous est entièrement réservée : spa, massage, salon et espace nuit.</p>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-semibold">Peut-on apporter son repas pour le dîner romantique ?</h3>
+    <p>Oui. Nous dressons une table romantique sur demande pour sublimer votre soirée.</p>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-semibold">Où se situe BLŌM ?</h3>
+    <p>Nous sommes à Guesnain (Douaisis), à 5 minutes de Douai, proche de Sin-le-Noble, Dechy et Waziers.</p>
+  </div>
+</section>
 
 
     <!-- Appel à l'action : Réserver BLŌM -->
