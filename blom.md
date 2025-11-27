@@ -67,11 +67,14 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <!-- Titre et description -->
     <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
-Bienvenue à BLŌM, votre refuge romantique à Guesnain, au cœur du Douaisis. Profitez d’un spa privatif dont l’eau est entièrement changée et désinfectée entre chaque client pour une hygiène irréprochable. 
-Découvrez notre salle de massage privative, équipée d’une table électronique à 16 programmes, ou partagez des massages en duo. 
-Pour sublimer votre soirée, apportez votre dîner et nous dressons une table romantique avec soin. 
-Chaque espace est pensé pour préserver votre intimité et offrir un week-end de détente et de bien-être à deux. 
-BLŌM est le choix idéal pour un séjour cosy et romantique près de Douai, où confort, sérénité et intimité se rencontrent.
+Bienvenue à BLŌM, votre suite romantique avec spa privatif à Guesnain, au cœur du Douaisis. 
+Situé à seulement 5 minutes de Douai et 10 minutes de Sin-le-Noble, BLŌM est un hébergement haut de gamme spécialement conçu pour les couples. 
+
+Nous sommes l’un des rares logements du secteur à garantir une hygiène irréprochable :  
+**le spa est intégralement vidé, désinfecté et rempli avec une eau neuve pour chaque nouveau client**, afin de vous offrir une expérience 100 % privée, propre et sécurisée.
+
+Profitez également d’une salle de massage privative, d’un lit king size, d’un coin salon cosy et d’une table romantique dressée sur demande pour votre soirée.
+
 </p>
 
 
@@ -91,7 +94,7 @@ BLŌM est le choix idéal pour un séjour cosy et romantique près de Douai, où
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Jacuzzi privatif</h2>
+        <h2 class="text-2xl font-semibold">Jacuzzi privatif – Spa vidé et désinfecté pour chaque client</h2>
         <p>Chez BLŌM, l’eau de votre spa est totalement vidée et renouvelée pour chaque nouveau client. Vous êtes assurés d’une hygiène parfaite et d’une expérience 100 % privative. Jacuzzi intérieur à température idéale pour un moment de détente à deux. Ambiance tamisée et intimité garantie.</p>
       </div>
     </div>
@@ -109,7 +112,7 @@ BLŌM est le choix idéal pour un séjour cosy et romantique près de Douai, où
         </div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Espace Massage</h2>
+        <h2 class="text-2xl font-semibold">Espace massage privatif à deux – détente romantique près de Douai</h2>
         <p>Deux types de massage : manuel à partager en duo, ou table de massage électrique avec 16 programmes et fonction chauffante, parfaite pour un moment de détente en solo ou à deux.</p>
       </div>
     </div>
@@ -121,7 +124,7 @@ BLŌM est le choix idéal pour un séjour cosy et romantique près de Douai, où
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Lit King Size & Salon</h2>
+        <h2 class="text-2xl font-semibold">Suite romantique avec lit king size et salon TV</h2>
         <p>Un lit spacieux avec coin salon et TV connectée. Idéal pour un séjour romantique dans un cadre cosy.</p>
       </div>
     </div>
@@ -133,14 +136,14 @@ BLŌM est le choix idéal pour un séjour cosy et romantique près de Douai, où
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
-        <h2 class="text-2xl font-semibold">Table Romantique</h2>
+        <h2 class="text-2xl font-semibold">Table romantique dressée – option idéale pour une soirée en amoureux</h2>
         <p>Vous souhaitez apporter votre dîner ? Une table romantique vous attend, dressée avec soin pour sublimer votre soirée.</p>
       </div>
     </div>
 
     <!-- Bloc témoignages -->
     <div class="mt-20 bg-black text-white">
-      <h2 class="text-2xl font-bold text-center mb-6">Ils ont séjourné chez BLŌM</h2>
+      <h2 class="text-2xl font-bold text-center mb-6">Avis clients – Ils ont séjourné dans notre spa privatif à Guesnain</h2>
       <div class="relative max-w-3xl mx-auto overflow-hidden">
         <div id="carousel" class="flex transition-transform duration-700">
           {% for avis in site.data.avis_blom %}
