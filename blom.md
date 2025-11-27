@@ -239,7 +239,7 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
 
   <div>
     <h3 class="text-xl font-semibold">L’eau du spa est-elle changée entre chaque client ?</h3>
-    <p>Oui, c’est notre engagement principal. Le jacuzzi est entièrement vidé, désinfecté et rempli d’eau neuve avant chaque arrivée.</p>
+    <p>Oui, c’est notre engagement principal. Le jacuzzi est entièrement vidé, désinfecté et rempli d’eau neuve avant chaque arrivée.Envoie d'une vidéo le jour de votre arrivée</p>
   </div>
 
   <div>
