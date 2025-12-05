@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 LIVA Calendar JS - multi-sélection desktop & mobile
+// 🌸 LIVA Calendar JS corrigé - jours réservés non cliquables
 // ========================================================
 
 async function getConfig() {
@@ -17,7 +17,6 @@ async function getConfig() {
   }
 }
 
-// Tarif LIVA : 79€ pour 1 ou 2 personnes, +15€ par personne supplémentaire
 function getTarif(date, nbPersonnes = 2) {
   const base = 79;
   const supplement = nbPersonnes > 2 ? (nbPersonnes - 2) * 15 : 0;
@@ -54,7 +53,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedStart = null;
   let selectedEnd = null;
 
-  // Validation formulaire
   function validateForm() {
     const name = inputName.value.trim();
     const email = inputEmail.value.trim();
@@ -82,11 +80,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons);
       cur.setDate(cur.getDate() + 1);
     }
-    const displayAmount = testPayment ? 1 : total;
-    priceDisplay.textContent = `Montant total : ${displayAmount} €`;
+    priceDisplay.textContent = `Montant total : ${testPayment ? 1 : total} €`;
   }
 
-  // Formatage simple YYYY-MM-DD pour popup
   function formatDate(dateStr) {
     const d = new Date(dateStr);
     const year = d.getFullYear();
@@ -95,7 +91,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     return `${year}-${month}-${day}`;
   }
 
-  // Initialisation FullCalendar
   const cal = new FullCalendar.Calendar(el, {
     initialView: "dayGridMonth",
     locale: "fr",
@@ -118,7 +113,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        rangeEnd.setDate(rangeEnd.getDate() - 1);
         if (start <= rangeEnd && end > rangeStart) return false;
       }
       return true;
@@ -141,28 +135,26 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (!res.ok) throw new Error("Erreur serveur calendrier");
         const evts = await res.json();
 
-// ✅ Correction : on rend la date de fin exclusive (Airbnb-style)
-reservedRanges = evts.map((e) => {
-  const start = new Date(e.start);
-  const end = new Date(e.end);
-  end.setDate(end.getDate() - 1); // fin exclue
-  return { start, end };
-});
+        reservedRanges = evts.map((e) => {
+          const start = new Date(e.start);
+          const end = new Date(e.end);
+          end.setDate(end.getDate() - 1); // fin exclue
+          return { start, end };
+        });
 
-const fcEvents = reservedRanges.map((r) => ({
-  title: "Réservé",
-  start: r.start,
-  end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000), // pour bien colorer jusqu’à la veille du départ
-  display: "background",
-  backgroundColor: "#ff0000",
-  borderColor: "#ff0000",
-  allDay: true,
-}));
+        const fcEvents = reservedRanges.map((r) => ({
+          title: "Réservé",
+          start: r.start,
+          end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000),
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true,
+        }));
 
-success(fcEvents);
+        success(fcEvents);
 
-
-        // Bloquer jours passés et jours réservés
+        // Bloquer les jours réservés et passés
         setTimeout(() => {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
@@ -170,22 +162,16 @@ success(fcEvents);
           document.querySelectorAll(".fc-daygrid-day").forEach((day) => {
             const date = day.getAttribute("data-date");
             if (!date) return;
-
             const dayDate = new Date(date);
 
-            // Désactiver les jours passés
             if (dayDate < today) {
               day.style.pointerEvents = "none";
               day.style.opacity = "0.5";
               day.style.cursor = "not-allowed";
             }
 
-            // Désactiver jours réservés
             const isReserved = reservedRanges.some((r) => {
-              const s = new Date(r.start);
-              const e = new Date(r.end);
-              e.setDate(e.getDate() - 1);
-              return dayDate >= s && dayDate <= e;
+              return dayDate >= r.start && dayDate <= r.end;
             });
             if (isReserved) {
               day.style.pointerEvents = "none";
@@ -204,7 +190,7 @@ success(fcEvents);
 
   cal.render();
 
-  // ----------- Tap rapide sur mobile pour 1 jour -------------
+  // Mobile tap rapide
   if (/Mobi|Android/i.test(navigator.userAgent)) {
     setTimeout(() => {
       document.querySelectorAll(".fc-daygrid-day").forEach((dayCell) => {
@@ -224,7 +210,7 @@ success(fcEvents);
     }, 500);
   }
 
-  // Boutons modal
+  // Modal buttons
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
     cal.unselect();
@@ -266,7 +252,6 @@ success(fcEvents);
           phone,
         }),
       });
-
       const data = await res.json();
       if (data.url) window.location.href = data.url;
       else alert("Impossible de créer la réservation.");
