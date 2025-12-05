@@ -68,9 +68,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const email = inputEmail.value.trim();
     const phone = inputPhone.value.trim();
     const nbPersons = parseInt(inputPersons.value);
-    btnConfirm.disabled = !(
-      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2
-    );
+    const valid =
+      name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2;
+    btnConfirm.disabled = !valid;
   }
 
   [inputName, inputEmail, inputPhone, inputPersons].forEach((i) => {
@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   });
 
-  // Prix
   function updatePrice() {
     if (!selectedStart || !selectedEnd) return;
     const nbPersons = parseInt(inputPersons.value) || 2;
@@ -110,44 +109,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (start < today) return false;
 
       for (let range of reservedRanges) {
-        if (start < range.end && end > range.start) return false;
+        const rangeStart = new Date(range.start);
+        const rangeEnd = new Date(range.end);
+        if (start <= rangeEnd && end > rangeStart) return false;
       }
       return true;
-    },
-    events: async function (fetchInfo, success, failure) {
-      try {
-        const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-        if (!res.ok) throw new Error("Erreur serveur calendrier");
-        const evts = await res.json();
-
-        reservedRanges = evts.map(e => ({
-          start: new Date(e.start),
-          end: new Date(e.end),
-        }));
-
-        const fcEvents = reservedRanges.map(r => ({
-          title: "Réservé",
-          start: r.start,
-          end: r.end,
-          display: "background",
-          backgroundColor: "#ff0000",
-          borderColor: "#ff0000",
-          allDay: true,
-        }));
-
-        success(fcEvents);
-      } catch (err) {
-        console.error(err);
-        failure(err);
-      }
-    },
-    dayCellDidMount: function (info) {
-      for (let r of reservedRanges) {
-        if (info.date >= r.start && info.date < r.end) {
-          info.el.style.pointerEvents = "none"; // bloque le clic sur la case
-          info.el.title = "Date réservée";
-        }
-      }
     },
     select: function (info) {
       selectedStart = info.startStr.split("T")[0];
@@ -161,9 +127,75 @@ document.addEventListener("DOMContentLoaded", async function () {
       updatePrice();
       modal.style.display = "flex";
     },
+    events: async function (fetchInfo, success, failure) {
+      try {
+        const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
+        if (!res.ok) throw new Error("Erreur serveur calendrier");
+        const evts = await res.json();
+
+        // Préparer reservedRanges correctement
+        reservedRanges = evts.map(e => {
+          const start = new Date(e.start);
+          const end = new Date(e.end);
+          end.setDate(end.getDate() - 1); // fin non incluse
+          return { start, end };
+        });
+
+        const fcEvents = reservedRanges.map(r => ({
+          title: "Réservé",
+          start: r.start,
+          end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000), // colorer correctement
+          display: "background",
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000",
+          allDay: true,
+        }));
+
+        success(fcEvents);
+      } catch (err) {
+        console.error("❌ events fetch error:", err);
+        failure(err);
+      }
+    },
   });
 
   cal.render();
+
+  // ----------- Mobile tap court (1 jour) -------------
+  let touchStartTime = 0;
+  let touchMoved = false;
+
+  document.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "touch") return;
+    touchStartTime = Date.now();
+    touchMoved = false;
+  }, { passive: true });
+
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "touch") return;
+    touchMoved = true;
+  }, { passive: true });
+
+  document.addEventListener("pointerup", (e) => {
+    if (e.pointerType !== "touch") return;
+    const duration = Date.now() - touchStartTime;
+    if (!touchMoved && duration < 300) {
+      const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
+      if (!dayCell) return;
+      const dateStr = dayCell.getAttribute("data-date");
+      if (!dateStr) return;
+
+      const start = new Date(dateStr);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 1);
+
+      // ✅ Vérifier que la sélection est autorisée
+      const allow = cal.opt('selectAllow')({ start, end });
+      if (!allow) return;
+
+      cal.select({ start, end, allDay: true });
+    }
+  }, { passive: true });
 
   // Modal buttons
   btnCancel.addEventListener("click", () => {
@@ -214,40 +246,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
-
-  // Mobile tap short (1 jour)
-  let touchStartTime = 0;
-  let touchMoved = false;
-
-  document.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchStartTime = Date.now();
-    touchMoved = false;
-  }, { passive: true });
-
-  document.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchMoved = true;
-  }, { passive: true });
-
-  document.addEventListener("pointerup", (e) => {
-    if (e.pointerType !== "touch") return;
-    const duration = Date.now() - touchStartTime;
-    if (!touchMoved && duration < 300) {
-      const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
-      if (!dayCell) return;
-      const dateStr = dayCell.getAttribute("data-date");
-      if (!dateStr) return;
-
-      const start = new Date(dateStr);
-      const end = new Date(start);
-      end.setDate(end.getDate() + 1);
-
-      // Bloquer si date réservée
-      const allow = cal.opt('selectAllow')({ start, end });
-      if (!allow) return;
-
-      cal.select({ start, end, allDay: true });
-    }
-  }, { passive: true });
 });
