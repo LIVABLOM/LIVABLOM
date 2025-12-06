@@ -161,41 +161,57 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   cal.render();
 
-  // ----------- Mobile tap court (1 jour) -------------
-  let touchStartTime = 0;
-  let touchMoved = false;
+  // --- Mobile: attacher un handler fiable sur chaque jour via dayCellDidMount ---
+cal.setOption('dayCellDidMount', function(info) {
+  // Bloquer la cellule si jour passé ou réservé
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
-  document.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchStartTime = Date.now();
-    touchMoved = false;
-  }, { passive: true });
+  const dayDate = new Date(info.date);
+  let isBlocked = false;
+  if (dayDate < today) isBlocked = true;
 
-  document.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchMoved = true;
-  }, { passive: true });
-
-  document.addEventListener("pointerup", (e) => {
-    if (e.pointerType !== "touch") return;
-    const duration = Date.now() - touchStartTime;
-    if (!touchMoved && duration < 300) {
-      const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
-      if (!dayCell) return;
-      const dateStr = dayCell.getAttribute("data-date");
-      if (!dateStr) return;
-
-      const start = new Date(dateStr);
-      const end = new Date(start);
-      end.setDate(end.getDate() + 1);
-
-      // ✅ Vérifier que la sélection est autorisée
-      const allow = cal.opt('selectAllow')({ start, end });
-      if (!allow) return;
-
-      cal.select({ start, end, allDay: true });
+  for (let r of reservedRanges) {
+    if (dayDate >= r.start && dayDate < r.end) {
+      isBlocked = true;
+      break;
     }
-  }, { passive: true });
+  }
+
+  if (isBlocked) {
+    info.el.style.pointerEvents = "none";
+    info.el.style.opacity = "0.5";
+    info.el.title = "Date réservée ou non disponible";
+    return;
+  }
+
+  // Si mobile, tap = 1 jour
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    if (!info.el.dataset.mobileHandlerAttached) {
+      info.el.dataset.mobileHandlerAttached = "1";
+      info.el.addEventListener('click', () => {
+
+        // Vérification en temps réel
+        const nowDate = new Date(info.date);
+        nowDate.setHours(0,0,0,0);
+
+        for (let r of reservedRanges) {
+          if (nowDate >= r.start && nowDate < r.end) return;
+        }
+
+        const start = new Date(info.date);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 1);
+
+        const allow = cal.opt('selectAllow')({ start, end });
+        if (!allow) return;
+
+        cal.select({ start, end, allDay: true });
+      }, { passive: true });
+    }
+  }
+});
+
 
   // Modal buttons
   btnCancel.addEventListener("click", () => {
