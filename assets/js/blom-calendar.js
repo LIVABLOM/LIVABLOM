@@ -101,6 +101,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     selectMirror: true,
     firstDay: 1,
     height: "100%",
+
+    // sélection autorisée : bloque les dates passées et les plages qui chevauchent reservedRanges
     selectAllow: function (selectInfo) {
       const start = selectInfo.start;
       const end = selectInfo.end;
@@ -111,10 +113,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let range of reservedRanges) {
         const rangeStart = new Date(range.start);
         const rangeEnd = new Date(range.end);
-        if (start <= rangeEnd && end > rangeStart) return false;
+        // si chevauchement -> interdit
+        if (start < rangeEnd && end > rangeStart) return false;
       }
       return true;
     },
+
+    // quand la sélection est faite, on ouvre la modal (startStr / endStr)
     select: function (info) {
       selectedStart = info.startStr.split("T")[0];
       selectedEnd = info.endStr.split("T")[0];
@@ -127,28 +132,29 @@ document.addEventListener("DOMContentLoaded", async function () {
       updatePrice();
       modal.style.display = "flex";
     },
+
+    // fetch des événements (calendars externes + BDD) via calendar-proxy
     events: async function (fetchInfo, success, failure) {
       try {
         const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
         if (!res.ok) throw new Error("Erreur serveur calendrier");
         const evts = await res.json();
 
-        // Préparer reservedRanges correctement
-        reservedRanges = evts.map(e => {
-          const start = new Date(e.start);
-          const end = new Date(e.end);
-          end.setDate(end.getDate() - 1); // fin non incluse
-          return { start, end };
-        });
+        // reservedRanges contient start (inclus) et end (exclu) en Date objects
+        reservedRanges = evts.map(e => ({
+          start: new Date(e.start),
+          end: new Date(e.end)
+        }));
 
+        // FullCalendar traite end comme exclusif — afficher en background rend la plage bloquante visuelle
         const fcEvents = reservedRanges.map(r => ({
           title: "Réservé",
           start: r.start,
-          end: new Date(r.end.getTime() + 24 * 60 * 60 * 1000), // colorer correctement
+          end: r.end,
           display: "background",
-          backgroundColor: "#ff0000",
-          borderColor: "#ff0000",
           allDay: true,
+          backgroundColor: "#ff0000",
+          borderColor: "#ff0000"
         }));
 
         success(fcEvents);
@@ -157,78 +163,83 @@ document.addEventListener("DOMContentLoaded", async function () {
         failure(err);
       }
     },
+
+    // dayCellDidMount est exécuté à chaque rendu de cellule — on y attache le handler mobile
+    dayCellDidMount: function (info) {
+      // calculs de blocage
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const dayDate = new Date(info.date);
+      let isBlocked = false;
+
+      if (dayDate < today) isBlocked = true;
+
+      for (let r of reservedRanges) {
+        // si dayDate est dans [r.start, r.end) => bloqué
+        if (dayDate >= r.start && dayDate < r.end) {
+          isBlocked = true;
+          break;
+        }
+      }
+
+      if (isBlocked) {
+        info.el.style.pointerEvents = "none";
+        info.el.style.opacity = "0.5";
+        info.el.title = "Date réservée ou non disponible";
+        return;
+      }
+
+      // s'assurer que la cellule est cliquable pour les dates libres
+      info.el.style.pointerEvents = "auto";
+      info.el.style.opacity = ""; // restaurer si modifié auparavant
+
+      // n'attacher handlers que sur mobile et une seule fois par cellule
+      if (/Mobi|Android/i.test(navigator.userAgent)) {
+        if (!info.el.dataset.mobileHandlerAttached) {
+          info.el.dataset.mobileHandlerAttached = "1";
+
+          const doSelect = (ev) => {
+            // Bloquer si la date est devenue réservée entre temps
+            const start = new Date(info.date);
+            const end = new Date(start); end.setDate(end.getDate() + 1);
+
+            for (let r of reservedRanges) {
+              if (start >= r.start && start < r.end) return;
+            }
+
+            const allow = cal.opt("selectAllow")({ start, end });
+            if (!allow) return;
+
+            try { cal.select({ start, end, allDay: true }); }
+            catch (err) { /* silent */ }
+          };
+
+          // touchend : meilleur pour tap simple sur mobiles (iOS/Android)
+          info.el.addEventListener("touchend", function (e) {
+            // ignore multi-touch
+            if (e.touches && e.touches.length > 1) return;
+            // small safety: if the touch was a scroll, browsers may not call click — we still try
+            try { e.preventDefault(); } catch (e) {}
+            doSelect(e);
+          }, { passive: false });
+
+          // fallback click
+          info.el.addEventListener("click", function (e) {
+            doSelect(e);
+          }, { passive: true });
+
+          // pointerup extra fallback for some browsers
+          info.el.addEventListener("pointerup", function (e) {
+            if (e.pointerType === "touch") doSelect(e);
+          }, { passive: true });
+        }
+      }
+    }
   });
 
+  // render AFTER avoir défini dayCellDidMount dans les options
   cal.render();
-// --- Mobile: clic fiable pour un jour (touchend + click fallback) ---
-cal.setOption("dayCellDidMount", function (info) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dayDate = new Date(info.date);
-  let isBlocked = false;
 
-  if (dayDate < today) isBlocked = true;
-  for (let r of reservedRanges) {
-    if (dayDate >= r.start && dayDate < r.end) { isBlocked = true; break; }
-  }
-
-  if (isBlocked) {
-    info.el.style.pointerEvents = "none";
-    info.el.style.opacity = "0.5";
-    info.el.title = "Date réservée ou non disponible";
-    return;
-  }
-
-  // garantir que la cellule est cliquable
-  info.el.style.pointerEvents = "auto";
-
-  // handler commun (vérifications + select)
-  const doSelect = (ev) => {
-    // si l'événement est un TouchEvent, empêcher le comportement natif
-    if (ev && ev.type === "touchend") {
-      // si c'est un vrai touchend généré par scroll, on ignore (touchmove handled elsewhere)
-      // on peut preventDefault pour éviter double-processing
-      try { ev.preventDefault(); } catch(e) {}
-    }
-
-    // double-vérif temps réel
-    const start = new Date(info.date);
-    const end = new Date(start); end.setDate(end.getDate() + 1);
-
-    for (let r of reservedRanges) {
-      if (start >= r.start && start < r.end) return;
-    }
-    const allow = cal.opt("selectAllow")({ start, end });
-    if (!allow) return;
-
-    try { cal.select({ start, end, allDay: true }); }
-    catch (err) { /* silent */ }
-  };
-
-  // n'attache pas deux fois
-  if (!info.el.dataset.mobileHandlerAttached) {
-    info.el.dataset.mobileHandlerAttached = "1";
-
-    // prefer touchend for mobile (covers iOS/Android)
-    info.el.addEventListener("touchend", function (e) {
-      // ignore multi-touch
-      if (e.touches && e.touches.length > 1) return;
-      doSelect(e);
-    }, { passive: false });
-
-    // fallback click/pointerup for browsers that do emit click
-    info.el.addEventListener("click", function (e) {
-      doSelect(e);
-    }, { passive: true });
-
-    // pointerup as extra fallback
-    info.el.addEventListener("pointerup", function (e) {
-      if (e.pointerType === "touch") doSelect(e);
-    }, { passive: true });
-  }
-});
-
-
-  // Modal buttons
+  // Modal buttons (ne pas toucher)
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
     cal.unselect();
