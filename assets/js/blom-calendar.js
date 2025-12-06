@@ -165,6 +165,29 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   cal.render();
 
+  // ========================================================
+  // ✅ Mobile tap rapide (1 jour) - version corrigée
+  // ========================================================
+  setTimeout(() => {
+    document.querySelectorAll(".fc-daygrid-day").forEach((dayCell) => {
+      dayCell.addEventListener("click", (e) => {
+        if (dayCell.style.pointerEvents === "none") return;
+        const dateStr = dayCell.getAttribute("data-date");
+        if (!dateStr) return;
+
+        const start = new Date(dateStr);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 1);
+
+        // Bloquer si date réservée
+        const allow = cal.opt('selectAllow')({ start, end });
+        if (!allow) return;
+
+        cal.select({ start, end, allDay: true });
+      });
+    });
+  }, 500);
+
   // Modal buttons
   btnCancel.addEventListener("click", () => {
     modal.style.display = "none";
@@ -214,40 +237,4 @@ document.addEventListener("DOMContentLoaded", async function () {
       alert("Erreur lors de la création de la réservation.");
     }
   });
-
-  // Mobile tap short (1 jour)
-  let touchStartTime = 0;
-  let touchMoved = false;
-
-  document.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchStartTime = Date.now();
-    touchMoved = false;
-  }, { passive: true });
-
-  document.addEventListener("pointermove", (e) => {
-    if (e.pointerType !== "touch") return;
-    touchMoved = true;
-  }, { passive: true });
-
-  document.addEventListener("pointerup", (e) => {
-    if (e.pointerType !== "touch") return;
-    const duration = Date.now() - touchStartTime;
-    if (!touchMoved && duration < 300) {
-      const dayCell = e.target.closest && e.target.closest(".fc-daygrid-day");
-      if (!dayCell) return;
-      const dateStr = dayCell.getAttribute("data-date");
-      if (!dateStr) return;
-
-      const start = new Date(dateStr);
-      const end = new Date(start);
-      end.setDate(end.getDate() + 1);
-
-      // Bloquer si date réservée
-      const allow = cal.opt('selectAllow')({ start, end });
-      if (!allow) return;
-
-      cal.select({ start, end, allDay: true });
-    }
-  }, { passive: true });
 });
