@@ -161,16 +161,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   cal.render();
 
-  // --- Mobile: attacher un handler fiable sur chaque jour via dayCellDidMount ---
-cal.setOption('dayCellDidMount', function(info) {
-  // Bloquer la cellule si jour passé ou réservé
+ // --- Mobile: clic fiable pour un jour --- 
+cal.setOption("dayCellDidMount", function (info) {
   const today = new Date();
-  today.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
 
   const dayDate = new Date(info.date);
   let isBlocked = false;
+
+  // Date passée
   if (dayDate < today) isBlocked = true;
 
+  // Date réservée
   for (let r of reservedRanges) {
     if (dayDate >= r.start && dayDate < r.end) {
       isBlocked = true;
@@ -185,29 +187,32 @@ cal.setOption('dayCellDidMount', function(info) {
     return;
   }
 
-  // Si mobile, tap = 1 jour
+  // 🔥 Important : réactiver le clic pour les jours libres
+  info.el.style.pointerEvents = "auto";
+
+  // Mobile uniquement
   if (/Mobi|Android/i.test(navigator.userAgent)) {
     if (!info.el.dataset.mobileHandlerAttached) {
       info.el.dataset.mobileHandlerAttached = "1";
-      info.el.addEventListener('click', () => {
+      info.el.addEventListener(
+        "click",
+        () => {
+          const start = new Date(info.date);
+          const end = new Date(start);
+          end.setDate(end.getDate() + 1);
 
-        // Vérification en temps réel
-        const nowDate = new Date(info.date);
-        nowDate.setHours(0,0,0,0);
+          // Double vérification
+          for (let r of reservedRanges) {
+            if (start >= r.start && start < r.end) return;
+          }
 
-        for (let r of reservedRanges) {
-          if (nowDate >= r.start && nowDate < r.end) return;
-        }
+          const allow = cal.opt("selectAllow")({ start, end });
+          if (!allow) return;
 
-        const start = new Date(info.date);
-        const end = new Date(start);
-        end.setDate(end.getDate() + 1);
-
-        const allow = cal.opt('selectAllow')({ start, end });
-        if (!allow) return;
-
-        cal.select({ start, end, allDay: true });
-      }, { passive: true });
+          cal.select({ start, end, allDay: true });
+        },
+        { passive: true }
+      );
     }
   }
 });
