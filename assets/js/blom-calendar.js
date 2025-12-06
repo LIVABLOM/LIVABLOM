@@ -142,12 +142,29 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     },
     dayCellDidMount: function (info) {
+      // Bloquer les dates réservées
       for (let r of reservedRanges) {
         if (info.date >= r.start && info.date < r.end) {
-          info.el.style.pointerEvents = "none"; // bloque le clic sur la case
+          info.el.style.pointerEvents = "none";
           info.el.title = "Date réservée";
+          return;
         }
       }
+
+      // ✅ Mobile tap rapide (1 jour)
+      info.el.addEventListener("pointerup", (e) => {
+        if (e.pointerType !== "touch") return;
+
+        const start = new Date(info.date);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 1);
+
+        // Vérifie que la date est autorisée
+        const allow = info.view.calendar.opt('selectAllow')({ start, end });
+        if (!allow) return;
+
+        info.view.calendar.select({ start, end, allDay: true });
+      });
     },
     select: function (info) {
       selectedStart = info.startStr.split("T")[0];
@@ -164,29 +181,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   cal.render();
-
-  // ========================================================
-  // ✅ Mobile tap rapide (1 jour) - version corrigée
-  // ========================================================
-  setTimeout(() => {
-    document.querySelectorAll(".fc-daygrid-day").forEach((dayCell) => {
-      dayCell.addEventListener("click", (e) => {
-        if (dayCell.style.pointerEvents === "none") return;
-        const dateStr = dayCell.getAttribute("data-date");
-        if (!dateStr) return;
-
-        const start = new Date(dateStr);
-        const end = new Date(start);
-        end.setDate(end.getDate() + 1);
-
-        // Bloquer si date réservée
-        const allow = cal.opt('selectAllow')({ start, end });
-        if (!allow) return;
-
-        cal.select({ start, end, allDay: true });
-      });
-    });
-  }, 500);
 
   // Modal buttons
   btnCancel.addEventListener("click", () => {
