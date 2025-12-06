@@ -160,24 +160,15 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 
   cal.render();
-
- // --- Mobile: clic fiable pour un jour --- 
+// --- Mobile: clic fiable pour un jour (touchend + click fallback) ---
 cal.setOption("dayCellDidMount", function (info) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
+  const today = new Date(); today.setHours(0,0,0,0);
   const dayDate = new Date(info.date);
   let isBlocked = false;
 
-  // Date passée
   if (dayDate < today) isBlocked = true;
-
-  // Date réservée
   for (let r of reservedRanges) {
-    if (dayDate >= r.start && dayDate < r.end) {
-      isBlocked = true;
-      break;
-    }
+    if (dayDate >= r.start && dayDate < r.end) { isBlocked = true; break; }
   }
 
   if (isBlocked) {
@@ -187,33 +178,52 @@ cal.setOption("dayCellDidMount", function (info) {
     return;
   }
 
-  // 🔥 Important : réactiver le clic pour les jours libres
+  // garantir que la cellule est cliquable
   info.el.style.pointerEvents = "auto";
 
-  // Mobile uniquement
-  if (/Mobi|Android/i.test(navigator.userAgent)) {
-    if (!info.el.dataset.mobileHandlerAttached) {
-      info.el.dataset.mobileHandlerAttached = "1";
-      info.el.addEventListener(
-        "click",
-        () => {
-          const start = new Date(info.date);
-          const end = new Date(start);
-          end.setDate(end.getDate() + 1);
-
-          // Double vérification
-          for (let r of reservedRanges) {
-            if (start >= r.start && start < r.end) return;
-          }
-
-          const allow = cal.opt("selectAllow")({ start, end });
-          if (!allow) return;
-
-          cal.select({ start, end, allDay: true });
-        },
-        { passive: true }
-      );
+  // handler commun (vérifications + select)
+  const doSelect = (ev) => {
+    // si l'événement est un TouchEvent, empêcher le comportement natif
+    if (ev && ev.type === "touchend") {
+      // si c'est un vrai touchend généré par scroll, on ignore (touchmove handled elsewhere)
+      // on peut preventDefault pour éviter double-processing
+      try { ev.preventDefault(); } catch(e) {}
     }
+
+    // double-vérif temps réel
+    const start = new Date(info.date);
+    const end = new Date(start); end.setDate(end.getDate() + 1);
+
+    for (let r of reservedRanges) {
+      if (start >= r.start && start < r.end) return;
+    }
+    const allow = cal.opt("selectAllow")({ start, end });
+    if (!allow) return;
+
+    try { cal.select({ start, end, allDay: true }); }
+    catch (err) { /* silent */ }
+  };
+
+  // n'attache pas deux fois
+  if (!info.el.dataset.mobileHandlerAttached) {
+    info.el.dataset.mobileHandlerAttached = "1";
+
+    // prefer touchend for mobile (covers iOS/Android)
+    info.el.addEventListener("touchend", function (e) {
+      // ignore multi-touch
+      if (e.touches && e.touches.length > 1) return;
+      doSelect(e);
+    }, { passive: false });
+
+    // fallback click/pointerup for browsers that do emit click
+    info.el.addEventListener("click", function (e) {
+      doSelect(e);
+    }, { passive: true });
+
+    // pointerup as extra fallback
+    info.el.addEventListener("pointerup", function (e) {
+      if (e.pointerType === "touch") doSelect(e);
+    }, { passive: true });
   }
 });
 
