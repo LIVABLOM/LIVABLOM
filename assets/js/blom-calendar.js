@@ -1,86 +1,169 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS - diagnostic + mobile-safe handlers (v6 fix)
+// 🌸 BLŌM Calendar JS - Version Pro (Clean + Style + Mobile)
 // ========================================================
 
-/*
-  Remplace intégralement ton fichier par celui-ci.
-  Corrections :
-   - remplace cal.opt(...) par cal.getOption(...)
-   - garde les logs et handlers diagnostiques
-*/
-
 (async function () {
-  // --- small CSS injection to avoid gesture interception ---
+
+  // -------------------------------------------------
+  // 1) CSS : Style + mobile behaviour
+  // -------------------------------------------------
   const css = `
-  /* Ensure touches are handled as taps by the browser, avoid passive drag interception */
-  #calendar, #calendar * { touch-action: manipulation !important; -webkit-user-select: none !important; -ms-user-select: none !important; user-select: none !important; }
-  /* Make sure FullCalendar internal containers are transparent and cells are interactive */
-  #calendar .fc-scrollgrid { background: transparent !important; }
-  #calendar .fc-daygrid-day { background: #111 !important; pointer-events: auto !important; }
-  /* Ensure modal sits on top */
-  #reservationModal { z-index: 2000; }
+    /* GENERAL - prevent weird mobile behaviors */
+    #calendar, #calendar * {
+      touch-action: manipulation !important;
+      -webkit-user-select: none !important;
+      user-select: none !important;
+    }
+
+    /* THEME MODE SOMBRE */
+    #calendar .fc {
+      background: #111 !important;
+      color: #fff !important;
+      border-color: #333 !important;
+      font-family: "Inter", sans-serif;
+    }
+
+    /* cells */
+    #calendar .fc-daygrid-day {
+      background: #181818 !important;
+      border-color: #222 !important;
+      transition: background 0.15s ease;
+      pointer-events: auto !important;
+    }
+
+    /* hover effect (desktop only) */
+    @media (hover: hover) {
+      #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) {
+        background: #242424 !important;
+        cursor: pointer;
+      }
+    }
+
+    /* past days */
+    #calendar .fc-day-disabled {
+      opacity: 0.35 !important;
+    }
+
+    /* reserved days */
+    #calendar .fc-daygrid-day[data-reserved="true"] {
+      background: #4a0000 !important;
+      opacity: 0.8;
+      pointer-events: none !important;
+    }
+
+    /* Modal better style */
+    #reservationModal {
+      z-index: 2000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #reservationModal .modal-content {
+      background: #1b1b1b;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 420px;
+      color: #fff;
+      border: 1px solid #333;
+    }
+
+    #reservationModal input,
+    #reservationModal select {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0 12px;
+      border-radius: 6px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      color: #fff;
+    }
+
+    #reservationModal button {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    #res-confirm {
+      background: #6f4cff;
+      color: #fff;
+    }
+
+    #res-cancel {
+      background: #333;
+      color: #fff;
+    }
   `;
+
   const styleNode = document.createElement("style");
   styleNode.type = "text/css";
   styleNode.appendChild(document.createTextNode(css));
   document.head.appendChild(styleNode);
 
-  // --- helpers ---
-  function debug(...args) {
-    if (window && window.console && window.console.log) {
-      console.log("[BLOM-CAL]", ...args);
-    }
+  // -------------------------------------------------
+  // 2) Helpers
+  // -------------------------------------------------
+
+  function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
+    if (testPayment) return 1;
+    const d = new Date(dateStr);
+    const day = d.getDay();
+    if (day === 5 || day === 6) return 169;
+    if (day === 0) return 190;
+    return 150;
   }
 
-  // load config
   async function getConfig() {
     try {
-      const stripeBackend = window.location.hostname.includes("localhost")
+      const stripeBackend = location.hostname.includes("localhost")
         ? "http://localhost:3000"
         : "https://livablom-stripe-production.up.railway.app";
-
-      const res = await fetch(`${stripeBackend}/api/config?ts=${Date.now()}`);
-      if (!res.ok) throw new Error("Impossible de récupérer la config");
+      const res = await fetch(`${stripeBackend}/api/config`);
       return await res.json();
-    } catch (err) {
-      console.error("[BLOM-CAL] getConfig error:", err);
+    } catch {
       return { testPayment: true };
     }
   }
 
-  function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
-    if (testPayment) return 1;
-    const date = new Date(dateStr);
-    const day = date.getDay();
-    let tarifBase = 150;
-    if (day === 5 || day === 6) tarifBase = 169;
-    if (day === 0) tarifBase = 190;
-    return tarifBase;
+  function sumPrice(startStr, endStr, nbPersons, testPayment) {
+    let total = 0;
+    let cur = new Date(startStr);
+    const end = new Date(endStr);
+
+    while (cur < end) {
+      total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
+      cur.setDate(cur.getDate() + 1);
+    }
+    return total;
   }
 
-  document.addEventListener("DOMContentLoaded", async function () {
-    const el = document.getElementById("calendar");
-    if (!el) {
-      debug("Calendar container (#calendar) not found.");
-      return;
-    }
-    debug("Calendar container found.");
+  // -------------------------------------------------
+  // 3) DOM READY
+  // -------------------------------------------------
 
-    const calendarBackend = window.location.hostname.includes("localhost")
+  document.addEventListener("DOMContentLoaded", async () => {
+    const el = document.getElementById("calendar");
+    if (!el) return;
+
+    const calendarBackend = location.hostname.includes("localhost")
       ? "http://localhost:4000"
       : "https://calendar-proxy-production-ed46.up.railway.app";
 
-    const stripeBackend = window.location.hostname.includes("localhost")
+    const stripeBackend = location.hostname.includes("localhost")
       ? "http://localhost:3000"
       : "https://livablom-stripe-production.up.railway.app";
 
     const config = await getConfig();
     const testPayment = config.testPayment;
-    debug("Config loaded. testPayment =", testPayment);
 
-    let reservedRanges = [];
-
-    // Modal refs
+    // Modal references
     const modal = document.getElementById("reservationModal");
     const modalDates = document.getElementById("modal-dates");
     const inputName = document.getElementById("res-name");
@@ -91,229 +174,174 @@
     const btnCancel = document.getElementById("res-cancel");
     const btnConfirm = document.getElementById("res-confirm");
 
+    let reservedRanges = [];
     let selectedStart = null;
     let selectedEnd = null;
 
+    function updatePriceDisplay() {
+      if (!selectedStart || !selectedEnd) return;
+      const nbPers = parseInt(inputPersons.value) || 2;
+      priceDisplay.textContent =
+        `Montant total : ${sumPrice(selectedStart, selectedEnd, nbPers, testPayment)} €`;
+    }
+
     function validateForm() {
-      const name = (inputName && inputName.value || "").trim();
-      const email = (inputEmail && inputEmail.value || "").trim();
-      const phone = (inputPhone && inputPhone.value || "").trim();
-      const nbPersons = parseInt(inputPersons && inputPersons.value) || NaN;
+      const name = inputName.value.trim();
+      const email = inputEmail.value.trim();
+      const phone = inputPhone.value.trim();
+      const nbP = parseInt(inputPersons.value);
+
       btnConfirm.disabled = !(
-        name && email && phone && !isNaN(nbPersons) && nbPersons >= 1 && nbPersons <= 2
+        name && email && phone && nbP >= 1 && nbP <= 2
       );
     }
 
-    [inputName, inputEmail, inputPhone, inputPersons].forEach((i) => {
-      if (i) i.addEventListener("input", () => { validateForm(); updatePrice(); });
+    [inputName, inputEmail, inputPhone, inputPersons].forEach(el => {
+      el.addEventListener("input", () => {
+        validateForm();
+        updatePriceDisplay();
+      });
     });
 
-    function updatePrice() {
-      if (!selectedStart || !selectedEnd) return;
-      const nbPersons = parseInt(inputPersons && inputPersons.value) || 2;
-      let cur = new Date(selectedStart);
-      const fin = new Date(selectedEnd);
-      let total = 0;
-      while (cur < fin) {
-        total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
-        cur.setDate(cur.getDate() + 1);
-      }
-      if (priceDisplay) priceDisplay.textContent = `Montant total : ${total} €`;
-    }
+    // -------------------------------------------------
+    // FullCalendar
+    // -------------------------------------------------
 
-    // instantiate calendar
-    debug("Creating FullCalendar instance...");
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
-      locale: "fr",
       selectable: true,
-      selectMirror: true,
       firstDay: 1,
-      height: "100%",
+      locale: "fr",
+      height: "auto",
 
-      // mobile tap fallback (FullCalendar dateClick)
-      dateClick: function(info) {
-        debug("dateClick fired for", info.dateStr);
-        const start = new Date(info.dateStr);
-        const end = new Date(start);
-        end.setDate(end.getDate() + 1);
-
-        // check allow (v6 API)
-        const allow = cal.getOption("selectAllow")({ start, end });
-        debug("dateClick -> allow:", allow);
-        if (!allow) return;
-        cal.select({ start, end, allDay: true });
+      dateClick(info) {
+        const s = new Date(info.dateStr);
+        const e = new Date(s); e.setDate(e.getDate() + 1);
+        if (!cal.opt("selectAllow")({ start: s, end: e })) return;
+        cal.select({ start: s, end: e, allDay: true });
       },
 
-      selectAllow: function (selectInfo) {
-        const start = selectInfo.start;
-        const end = selectInfo.end;
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        if (start < today) return false;
-        for (let range of reservedRanges) {
-          if (start < range.end && end > range.start) return false;
-        }
-        return true;
+      selectAllow(sel) {
+        const today = new Date(); today.setHours(0,0,0,0);
+        if (sel.start < today) return false;
+        return !reservedRanges.some(r => sel.start < r.end && sel.end > r.start);
       },
 
-      events: async function (fetchInfo, success, failure) {
-        debug("Fetching events from backend...");
+      events: async (fetchInfo, success, failure) => {
         try {
-          const res = await fetch(`${calendarBackend}/api/reservations/BLOM?ts=${Date.now()}`);
-          if (!res.ok) throw new Error("Erreur serveur calendrier");
-          const evts = await res.json();
-          reservedRanges = evts.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
-          debug("Reserved ranges loaded:", reservedRanges);
-          const fcEvents = reservedRanges.map(r => ({
-            title: "Réservé",
-            start: r.start,
-            end: r.end,
-            display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
-            allDay: true,
+          const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
+          const data = await res.json();
+
+          reservedRanges = data.map(e => ({
+            start: new Date(e.start),
+            end: new Date(e.end)
           }));
-          success(fcEvents);
+
+          success(
+            reservedRanges.map(r => ({
+              title: "Réservé",
+              start: r.start,
+              end: r.end,
+              display: "background",
+              backgroundColor: "#900",
+              borderColor: "#900",
+              allDay: true
+            }))
+          );
         } catch (err) {
-          console.error("[BLOM-CAL] events fetch error:", err);
           failure(err);
         }
       },
 
-      dayCellDidMount: function(info) {
-        // mark reserved days as non-interactive
-        for (let r of reservedRanges) {
-          if (info.date >= r.start && info.date < r.end) {
-            info.el.style.pointerEvents = "none";
-            info.el.title = "Date réservée";
-            debug("dayCellDidMount: disabled", info.date.toISOString().split("T")[0]);
-            return;
-          }
-        }
-        // attach lightweight listeners to each cell (safe: attached per cell)
-        try {
-          // avoid adding duplicate listeners
-          if (!info.el.__blom_listeners_installed) {
-            // click (desktop & many mobiles)
-            info.el.addEventListener("click", (ev) => {
-              debug("cell click on", ev.currentTarget.getAttribute("data-date"));
-              // emulate dateClick behaviour:
-              const dateStr = ev.currentTarget.getAttribute("data-date");
-              if (!dateStr) return;
-              const start = new Date(dateStr);
-              const end = new Date(start); end.setDate(end.getDate() + 1);
-              const allow = cal.getOption("selectAllow")({ start, end });
-              debug("cell click -> allow:", allow);
-              if (!allow) return;
-              cal.select({ start, end, allDay: true });
-            }, { passive: true });
+      dayCellDidMount(info) {
+        const isReserved = reservedRanges.some(r =>
+          info.date >= r.start && info.date < r.end
+        );
 
-            // pointerup for touch fallback
-            info.el.addEventListener("pointerup", (ev) => {
-              if (ev.pointerType && ev.pointerType !== "touch") return;
-              debug("cell pointerup on", ev.currentTarget.getAttribute("data-date"), "pointerType:", ev.pointerType);
-              const dateStr = ev.currentTarget.getAttribute("data-date");
-              if (!dateStr) return;
-              const start = new Date(dateStr);
-              const end = new Date(start); end.setDate(end.getDate() + 1);
-              const allow = cal.getOption("selectAllow")({ start, end });
-              debug("pointerup -> allow:", allow);
-              if (!allow) return;
-              cal.select({ start, end, allDay: true });
-            }, { passive: true });
-
-            info.el.__blom_listeners_installed = true;
-            debug("Listeners installed on cell", info.date.toISOString().split("T")[0]);
-          }
-        } catch (err) {
-          console.error("[BLOM-CAL] dayCellDidMount listeners error:", err);
+        if (isReserved) {
+          info.el.setAttribute("data-reserved", "true");
+          return;
         }
+
+        // Touch-friendly event
+        info.el.addEventListener("pointerup", ev => {
+          if (ev.pointerType === "touch") {
+            const dateStr = info.el.getAttribute("data-date");
+            const s = new Date(dateStr);
+            const e = new Date(s); e.setDate(e.getDate() + 1);
+            if (!cal.opt("selectAllow")({ start: s, end: e })) return;
+            cal.select({ start: s, end: e, allDay: true });
+          }
+        }, { passive: true });
+
+        // Desktop click
+        info.el.addEventListener("click", () => {
+          const dateStr = info.el.getAttribute("data-date");
+          const s = new Date(dateStr);
+          const e = new Date(s); e.setDate(e.getDate() + 1);
+          if (!cal.opt("selectAllow")({ start: s, end: e })) return;
+          cal.select({ start: s, end: e, allDay: true });
+        });
       },
 
-      select: function (info) {
-        debug("select fired:", info.startStr, "->", info.endStr);
+      select(info) {
         selectedStart = info.startStr.split("T")[0];
         selectedEnd = info.endStr.split("T")[0];
-        if (modalDates) modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-        if (inputName) inputName.value = "";
-        if (inputEmail) inputEmail.value = "";
-        if (inputPhone) inputPhone.value = "";
-        if (inputPersons) inputPersons.value = 2;
+
+        modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
+        inputName.value = "";
+        inputEmail.value = "";
+        inputPhone.value = "";
+        inputPersons.value = 2;
+
         validateForm();
-        updatePrice();
-        if (modal) modal.style.display = "flex";
-      }
-
-    }); // end FullCalendar config
-
-    debug("Rendering calendar...");
-    cal.render();
-
-    // After render: scan produced cells and log counts (diagnostic)
-    setTimeout(() => {
-      const cells = document.querySelectorAll("#calendar .fc-daygrid-day");
-      debug("Day cells count after render:", cells.length);
-      // ensure they have data-date attributes
-      let missing = 0;
-      cells.forEach((c) => { if (!c.getAttribute("data-date")) missing++; });
-      debug("Cells missing data-date:", missing);
-
-      // If there's an overlay element potentially blocking, log its info
-      const potentialOverlay = document.querySelector("#calendar .fc-scrollgrid");
-      if (potentialOverlay) {
-        const bb = potentialOverlay.getBoundingClientRect();
-        debug("fc-scrollgrid bounding box:", bb);
-      } else {
-        debug("fc-scrollgrid not found (unexpected).");
-      }
-
-    }, 600);
-
-    // Modal buttons
-    if (btnCancel) btnCancel.addEventListener("click", () => { if (modal) modal.style.display = "none"; cal.unselect(); });
-    if (btnConfirm) btnConfirm.addEventListener("click", async () => {
-      const name = inputName && inputName.value.trim();
-      const email = inputEmail && inputEmail.value.trim();
-      const phone = inputPhone && inputPhone.value.trim();
-      const nbPersons = parseInt(inputPersons && inputPersons.value);
-      if (!name || !email || !phone || isNaN(nbPersons) || nbPersons < 1 || nbPersons > 2) {
-        alert("Veuillez remplir tous les champs correctement (max 2 personnes).");
-        return;
-      }
-      let cur = new Date(selectedStart);
-      const fin = new Date(selectedEnd);
-      let total = 0;
-      while (cur < fin) {
-        total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
-        cur.setDate(cur.getDate() + 1);
-      }
-      if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${total} € ?`)) return;
-      try {
-        const res = await fetch(`${stripeBackend}/api/checkout`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            logement: "BLŌM",
-            startDate: selectedStart,
-            endDate: selectedEnd,
-            amount: total,
-            personnes: nbPersons,
-            name,
-            email,
-            phone,
-          }),
-        });
-        const data = await res.json();
-        if (data.url) window.location.href = data.url;
-        else alert("Impossible de créer la réservation.");
-      } catch (err) {
-        console.error("[BLOM-CAL] checkout error:", err);
-        alert("Erreur lors de la création de la réservation.");
+        updatePriceDisplay();
+        modal.style.display = "flex";
       }
     });
 
-    debug("blom-calendar.js loaded and handlers attached.");
-  }); // DOMContentLoaded end
+    cal.render();
 
-})(); // IIFE end
+    // -------------------------------------------------
+    // Modal buttons
+    // -------------------------------------------------
+
+    btnCancel.addEventListener("click", () => {
+      modal.style.display = "none";
+      cal.unselect();
+    });
+
+    btnConfirm.addEventListener("click", async () => {
+      const name = inputName.value.trim();
+      const email = inputEmail.value.trim();
+      const phone = inputPhone.value.trim();
+      const nbP = parseInt(inputPersons.value);
+
+      const total = sumPrice(selectedStart, selectedEnd, nbP, testPayment);
+
+      if (!confirm(`Confirmer la réservation du ${selectedStart} au ${selectedEnd} pour ${total} € ?`))
+        return;
+
+      const res = await fetch(`${stripeBackend}/api/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          logement: "BLŌM",
+          startDate: selectedStart,
+          endDate: selectedEnd,
+          amount: total,
+          personnes: nbP,
+          name,
+          email,
+          phone
+        })
+      });
+
+      const data = await res.json();
+      if (data.url) location.href = data.url;
+      else alert("Impossible de créer la réservation.");
+    });
+
+  });
+
+})();
