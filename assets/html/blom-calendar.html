@@ -118,6 +118,15 @@
         font-size: 0.9rem;
       }
     }
+    /* CORRECTION : enlever l'overlay qui bloque les clics sur mobile */
+#calendar .fc-scrollgrid {
+  background: transparent !important;
+}
+
+#calendar .fc-daygrid-day {
+  background: #111; /* ou #000 si tu veux plus sombre */
+}
+
   </style>
 </head>
 <body>
