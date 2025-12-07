@@ -1,13 +1,12 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS - diagnostic + mobile-safe handlers
+// 🌸 BLŌM Calendar JS - diagnostic + mobile-safe handlers (v6 fix)
 // ========================================================
 
 /*
   Remplace intégralement ton fichier par celui-ci.
-  Il :
-   - injecte quelques CSS utiles (touch-action / pointer-events)
-   - installe dateClick (FullCalendar) + click + pointerup sur les cellules
-   - affiche des logs clairs pour diagnostiquer
+  Corrections :
+   - remplace cal.opt(...) par cal.getOption(...)
+   - garde les logs et handlers diagnostiques
 */
 
 (async function () {
@@ -139,8 +138,8 @@
         const end = new Date(start);
         end.setDate(end.getDate() + 1);
 
-        // check allow
-        const allow = cal.opt("selectAllow")({ start, end });
+        // check allow (v6 API)
+        const allow = cal.getOption("selectAllow")({ start, end });
         debug("dateClick -> allow:", allow);
         if (!allow) return;
         cal.select({ start, end, allDay: true });
@@ -204,7 +203,7 @@
               if (!dateStr) return;
               const start = new Date(dateStr);
               const end = new Date(start); end.setDate(end.getDate() + 1);
-              const allow = cal.opt("selectAllow")({ start, end });
+              const allow = cal.getOption("selectAllow")({ start, end });
               debug("cell click -> allow:", allow);
               if (!allow) return;
               cal.select({ start, end, allDay: true });
@@ -218,7 +217,7 @@
               if (!dateStr) return;
               const start = new Date(dateStr);
               const end = new Date(start); end.setDate(end.getDate() + 1);
-              const allow = cal.opt("selectAllow")({ start, end });
+              const allow = cal.getOption("selectAllow")({ start, end });
               debug("pointerup -> allow:", allow);
               if (!allow) return;
               cal.select({ start, end, allDay: true });
