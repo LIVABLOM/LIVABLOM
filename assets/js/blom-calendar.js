@@ -1,57 +1,27 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS - Version Finalisée Pro (Clean + Mobile + Desktop)
+// 🌸 BLŌM Calendar JS - Version Finale (Desktop + Mobile)
 // ========================================================
 
 (async function () {
 
-  // -------------------------------------------------
-  // 1) CSS : Style + mobile behaviour
-  // -------------------------------------------------
+  // -------------------------------
+  // 1) CSS : style + mobile safe
+  // -------------------------------
   const css = `
-    /* GENERAL - prevent weird mobile behaviors */
     #calendar, #calendar * {
       touch-action: manipulation !important;
       -webkit-user-select: none !important;
       user-select: none !important;
     }
 
-    /* THEME MODE SOMBRE */
-    #calendar .fc {
-      background: #111 !important;
-      color: #fff !important;
-      border-color: #333 !important;
-      font-family: "Inter", sans-serif;
-    }
-
-    /* cells */
-    #calendar .fc-daygrid-day {
-      background: #181818 !important;
-      border-color: #222 !important;
-      transition: background 0.15s ease;
-      pointer-events: auto !important;
-    }
-
-    /* hover effect (desktop only) */
+    #calendar .fc { background: #111 !important; color: #fff !important; font-family: "Inter", sans-serif; }
+    #calendar .fc-daygrid-day { background: #181818 !important; border-color: #222 !important; transition: background 0.15s ease; pointer-events: auto !important; }
     @media (hover: hover) {
-      #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) {
-        background: #242424 !important;
-        cursor: pointer;
-      }
+      #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #242424 !important; cursor: pointer; }
     }
+    #calendar .fc-day-disabled { opacity: 0.35 !important; }
+    #calendar .fc-daygrid-day[data-reserved="true"] { background: #4a0000 !important; opacity: 0.8; pointer-events: none !important; }
 
-    /* past days */
-    #calendar .fc-day-disabled {
-      opacity: 0.35 !important;
-    }
-
-    /* reserved days */
-    #calendar .fc-daygrid-day[data-reserved="true"] {
-      background: #4a0000 !important;
-      opacity: 0.8;
-      pointer-events: none !important;
-    }
-
-    /* Modal better style */
     #reservationModal {
       z-index: 2000;
       background: rgba(0,0,0,0.75);
@@ -61,7 +31,6 @@
       align-items: center;
       padding: 20px;
     }
-
     #reservationModal .modal-content {
       background: #1b1b1b;
       padding: 20px;
@@ -71,9 +40,7 @@
       color: #fff;
       border: 1px solid #333;
     }
-
-    #reservationModal input,
-    #reservationModal select {
+    #reservationModal input, #reservationModal select {
       width: 100%;
       padding: 8px;
       margin: 6px 0 12px;
@@ -82,33 +49,19 @@
       border: 1px solid #444;
       color: #fff;
     }
-
-    #reservationModal button {
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      margin-top: 8px;
-      width: 100%;
-    }
-
-    #res-confirm {
-      background: #6f4cff;
-      color: #fff;
-    }
-
-    #res-cancel {
-      background: #333;
-      color: #fff;
-    }
+    #reservationModal button { padding: 12px; border-radius: 8px; border: none; margin-top: 8px; width: 100%; }
+    #res-confirm { background: #6f4cff; color: #fff; }
+    #res-cancel { background: #333; color: #fff; }
   `;
+
   const styleNode = document.createElement("style");
   styleNode.type = "text/css";
   styleNode.appendChild(document.createTextNode(css));
   document.head.appendChild(styleNode);
 
-  // -------------------------------------------------
+  // -------------------------------
   // 2) Helpers
-  // -------------------------------------------------
+  // -------------------------------
   function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
     if (testPayment) return 1;
     const d = new Date(dateStr);
@@ -141,9 +94,9 @@
     return total;
   }
 
-  // -------------------------------------------------
+  // -------------------------------
   // 3) DOM READY
-  // -------------------------------------------------
+  // -------------------------------
   document.addEventListener("DOMContentLoaded", async () => {
     const el = document.getElementById("calendar");
     if (!el) return;
@@ -151,15 +104,13 @@
     const calendarBackend = location.hostname.includes("localhost")
       ? "http://localhost:4000"
       : "https://calendar-proxy-production-ed46.up.railway.app";
-
     const stripeBackend = location.hostname.includes("localhost")
       ? "http://localhost:3000"
       : "https://livablom-stripe-production.up.railway.app";
-
     const config = await getConfig();
     const testPayment = config.testPayment;
 
-    // Modal references
+    // Modal refs
     const modal = document.getElementById("reservationModal");
     const modalDates = document.getElementById("modal-dates");
     const inputName = document.getElementById("res-name");
@@ -186,28 +137,32 @@
       const email = inputEmail.value.trim();
       const phone = inputPhone.value.trim();
       const nbP = parseInt(inputPersons.value);
-
-      btnConfirm.disabled = !(
-        name && email && phone && nbP >= 1 && nbP <= 2
-      );
+      btnConfirm.disabled = !(name && email && phone && nbP >= 1 && nbP <= 2);
     }
 
     [inputName, inputEmail, inputPhone, inputPersons].forEach(el => {
-      el.addEventListener("input", () => {
-        validateForm();
-        updatePriceDisplay();
-      });
+      el.addEventListener("input", () => { validateForm(); updatePriceDisplay(); });
     });
 
-    // -------------------------------------------------
-    // FullCalendar
-    // -------------------------------------------------
+    // -------------------------------
+    // 4) FullCalendar
+    // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
       selectable: true,
       firstDay: 1,
       locale: "fr",
       height: "auto",
+
+      // Mobile tap
+      dateClick(info) {
+        // ignore desktop click (handled natively)
+        if (!info.jsEvent.pointerType || info.jsEvent.pointerType === "mouse") return;
+        const s = new Date(info.dateStr);
+        const e = new Date(s); e.setDate(e.getDate() + 1);
+        if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
+        cal.select({ start: s, end: e, allDay: true });
+      },
 
       selectAllow(sel) {
         const today = new Date(); today.setHours(0,0,0,0);
@@ -219,37 +174,29 @@
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
-          reservedRanges = data.map(e => ({
-            start: new Date(e.start),
-            end: new Date(e.end)
-          }));
-          success(
-            reservedRanges.map(r => ({
-              title: "Réservé",
-              start: r.start,
-              end: r.end,
-              display: "background",
-              backgroundColor: "#900",
-              borderColor: "#900",
-              allDay: true
-            }))
-          );
+          reservedRanges = data.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
+          success(reservedRanges.map(r => ({
+            title: "Réservé",
+            start: r.start,
+            end: r.end,
+            display: "background",
+            backgroundColor: "#900",
+            borderColor: "#900",
+            allDay: true
+          })));
         } catch (err) {
           failure(err);
         }
       },
 
       dayCellDidMount(info) {
-        const isReserved = reservedRanges.some(r =>
-          info.date >= r.start && info.date < r.end
-        );
-
+        const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
         if (isReserved) {
           info.el.setAttribute("data-reserved", "true");
           return;
         }
 
-        // Touch-friendly event
+        // Mobile touch
         info.el.addEventListener("pointerup", ev => {
           if (ev.pointerType === "touch") {
             const dateStr = info.el.getAttribute("data-date");
@@ -259,15 +206,6 @@
             cal.select({ start: s, end: e, allDay: true });
           }
         }, { passive: true });
-
-        // Desktop click
-        info.el.addEventListener("click", () => {
-          const dateStr = info.el.getAttribute("data-date");
-          const s = new Date(dateStr);
-          const e = new Date(s); e.setDate(e.getDate() + 1);
-          if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
-          cal.select({ start: s, end: e, allDay: true });
-        });
       },
 
       select(info) {
@@ -288,9 +226,9 @@
 
     cal.render();
 
-    // -------------------------------------------------
-    // Modal buttons
-    // -------------------------------------------------
+    // -------------------------------
+    // 5) Modal buttons
+    // -------------------------------
     btnCancel.addEventListener("click", () => {
       modal.style.display = "none";
       cal.unselect();
