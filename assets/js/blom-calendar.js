@@ -1,67 +1,28 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS - Version Finale (Desktop + Mobile)
+// 🌸 BLŌM Calendar JS - Version finale (jour de départ libre)
 // ========================================================
 
 (async function () {
 
-  // -------------------------------
-  // 1) CSS : style + mobile safe
-  // -------------------------------
   const css = `
-    #calendar, #calendar * {
-      touch-action: manipulation !important;
-      -webkit-user-select: none !important;
-      user-select: none !important;
-    }
-
+    #calendar, #calendar * { touch-action: manipulation !important; user-select: none !important; }
     #calendar .fc { background: #111 !important; color: #fff !important; font-family: "Inter", sans-serif; }
     #calendar .fc-daygrid-day { background: #181818 !important; border-color: #222 !important; transition: background 0.15s ease; pointer-events: auto !important; }
-    @media (hover: hover) {
-      #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #242424 !important; cursor: pointer; }
-    }
+    @media (hover: hover) { #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #242424 !important; cursor: pointer; } }
     #calendar .fc-day-disabled { opacity: 0.35 !important; }
     #calendar .fc-daygrid-day[data-reserved="true"] { background: #4a0000 !important; opacity: 0.8; pointer-events: none !important; }
-
-    #reservationModal {
-      z-index: 2000;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    #reservationModal .modal-content {
-      background: #1b1b1b;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 420px;
-      color: #fff;
-      border: 1px solid #333;
-    }
-    #reservationModal input, #reservationModal select {
-      width: 100%;
-      padding: 8px;
-      margin: 6px 0 12px;
-      border-radius: 6px;
-      background: #2a2a2a;
-      border: 1px solid #444;
-      color: #fff;
-    }
+    #reservationModal { z-index: 2000; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; padding: 20px; }
+    #reservationModal .modal-content { background: #1b1b1b; padding: 20px; border-radius: 10px; width: 90%; max-width: 420px; color: #fff; border: 1px solid #333; }
+    #reservationModal input, #reservationModal select { width: 100%; padding: 8px; margin: 6px 0 12px; border-radius: 6px; background: #2a2a2a; border: 1px solid #444; color: #fff; }
     #reservationModal button { padding: 12px; border-radius: 8px; border: none; margin-top: 8px; width: 100%; }
     #res-confirm { background: #6f4cff; color: #fff; }
     #res-cancel { background: #333; color: #fff; }
   `;
-
   const styleNode = document.createElement("style");
   styleNode.type = "text/css";
   styleNode.appendChild(document.createTextNode(css));
   document.head.appendChild(styleNode);
 
-  // -------------------------------
-  // 2) Helpers
-  // -------------------------------
   function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
     if (testPayment) return 1;
     const d = new Date(dateStr);
@@ -78,9 +39,7 @@
         : "https://livablom-stripe-production.up.railway.app";
       const res = await fetch(`${stripeBackend}/api/config`);
       return await res.json();
-    } catch {
-      return { testPayment: true };
-    }
+    } catch { return { testPayment: true }; }
   }
 
   function sumPrice(startStr, endStr, nbPersons, testPayment) {
@@ -94,9 +53,6 @@
     return total;
   }
 
-  // -------------------------------
-  // 3) DOM READY
-  // -------------------------------
   document.addEventListener("DOMContentLoaded", async () => {
     const el = document.getElementById("calendar");
     if (!el) return;
@@ -107,10 +63,10 @@
     const stripeBackend = location.hostname.includes("localhost")
       ? "http://localhost:3000"
       : "https://livablom-stripe-production.up.railway.app";
+
     const config = await getConfig();
     const testPayment = config.testPayment;
 
-    // Modal refs
     const modal = document.getElementById("reservationModal");
     const modalDates = document.getElementById("modal-dates");
     const inputName = document.getElementById("res-name");
@@ -144,9 +100,6 @@
       el.addEventListener("input", () => { validateForm(); updatePriceDisplay(); });
     });
 
-    // -------------------------------
-    // 4) FullCalendar
-    // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
       selectable: true,
@@ -154,13 +107,10 @@
       locale: "fr",
       height: "auto",
 
-      // Mobile tap
       dateClick(info) {
-        // ignore desktop click (handled natively)
-        if (!info.jsEvent.pointerType || info.jsEvent.pointerType === "mouse") return;
         const s = new Date(info.dateStr);
         const e = new Date(s); e.setDate(e.getDate() + 1);
-        if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
+        if (!cal.opt("selectAllow")({ start: s, end: e })) return;
         cal.select({ start: s, end: e, allDay: true });
       },
 
@@ -174,95 +124,73 @@
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
-          reservedRanges = data.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
+          reservedRanges = data.map(e => {
+            const start = new Date(e.start);
+            const end = new Date(e.end);
+            end.setDate(end.getDate() - 1); // jour de départ libre
+            return { start, end };
+          });
           success(reservedRanges.map(r => ({
             title: "Réservé",
             start: r.start,
-            end: r.end,
+            end: new Date(r.end.getTime() + 24*60*60*1000),
             display: "background",
             backgroundColor: "#900",
             borderColor: "#900",
             allDay: true
           })));
-        } catch (err) {
-          failure(err);
-        }
+        } catch (err) { failure(err); }
       },
 
       dayCellDidMount(info) {
-        const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
-        if (isReserved) {
-          info.el.setAttribute("data-reserved", "true");
-          return;
-        }
+        const isReserved = reservedRanges.some(r => info.date >= r.start && info.date <= r.end);
+        if (isReserved) { info.el.setAttribute("data-reserved","true"); return; }
 
-        // Mobile touch
         info.el.addEventListener("pointerup", ev => {
-          if (ev.pointerType === "touch") {
-            const dateStr = info.el.getAttribute("data-date");
-            const s = new Date(dateStr);
-            const e = new Date(s); e.setDate(e.getDate() + 1);
-            if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
-            cal.select({ start: s, end: e, allDay: true });
-          }
-        }, { passive: true });
+          if (ev.pointerType && ev.pointerType !== "touch") return;
+          const dateStr = info.el.getAttribute("data-date");
+          const s = new Date(dateStr); const e = new Date(s); e.setDate(e.getDate()+1);
+          if (!cal.opt("selectAllow")({start:s,end:e})) return;
+          cal.select({start:s,end:e,allDay:true});
+        }, {passive:true});
+
+        info.el.addEventListener("click", () => {
+          const dateStr = info.el.getAttribute("data-date");
+          const s = new Date(dateStr); const e = new Date(s); e.setDate(e.getDate()+1);
+          if (!cal.opt("selectAllow")({start:s,end:e})) return;
+          cal.select({start:s,end:e,allDay:true});
+        });
       },
 
       select(info) {
         selectedStart = info.startStr.split("T")[0];
         selectedEnd = info.endStr.split("T")[0];
-
         modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-        inputName.value = "";
-        inputEmail.value = "";
-        inputPhone.value = "";
-        inputPersons.value = 2;
-
-        validateForm();
-        updatePriceDisplay();
+        inputName.value = ""; inputEmail.value=""; inputPhone.value=""; inputPersons.value=2;
+        validateForm(); updatePriceDisplay();
         modal.style.display = "flex";
       }
     });
 
     cal.render();
 
-    // -------------------------------
-    // 5) Modal buttons
-    // -------------------------------
-    btnCancel.addEventListener("click", () => {
-      modal.style.display = "none";
-      cal.unselect();
-    });
+    btnCancel.addEventListener("click", () => { modal.style.display="none"; cal.unselect(); });
 
     btnConfirm.addEventListener("click", async () => {
       const name = inputName.value.trim();
       const email = inputEmail.value.trim();
       const phone = inputPhone.value.trim();
       const nbP = parseInt(inputPersons.value);
-
       const total = sumPrice(selectedStart, selectedEnd, nbP, testPayment);
-
-      if (!confirm(`Confirmer la réservation du ${selectedStart} au ${selectedEnd} pour ${total} € ?`))
-        return;
+      if (!confirm(`Réserver BLŌM du ${selectedStart} au ${selectedEnd} pour ${total} € ?`)) return;
 
       const res = await fetch(`${stripeBackend}/api/checkout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          logement: "BLŌM",
-          startDate: selectedStart,
-          endDate: selectedEnd,
-          amount: total,
-          personnes: nbP,
-          name,
-          email,
-          phone
-        })
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({ logement:"BLŌM", startDate:selectedStart, endDate:selectedEnd, amount:total, personnes:nbP, name, email, phone })
       });
-
       const data = await res.json();
-      if (data.url) location.href = data.url;
-      else alert("Impossible de créer la réservation.");
+      if(data.url) location.href=data.url; else alert("Impossible de créer la réservation.");
     });
 
   });
