@@ -154,10 +154,8 @@
       locale: "fr",
       height: "auto",
 
-      // Mobile tap
+      // Desktop + Mobile click
       dateClick(info) {
-        // ignore desktop click (handled natively)
-        if (!info.jsEvent.pointerType || info.jsEvent.pointerType === "mouse") return;
         const s = new Date(info.dateStr);
         const e = new Date(s); e.setDate(e.getDate() + 1);
         if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
