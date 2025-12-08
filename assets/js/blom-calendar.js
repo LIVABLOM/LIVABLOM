@@ -154,14 +154,6 @@
       locale: "fr",
       height: "auto",
 
-      // Desktop + Mobile click
-      dateClick(info) {
-        const s = new Date(info.dateStr);
-        const e = new Date(s); e.setDate(e.getDate() + 1);
-        if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
-        cal.select({ start: s, end: e, allDay: true });
-      },
-
       selectAllow(sel) {
         const today = new Date(); today.setHours(0,0,0,0);
         if (sel.start < today) return false;
@@ -194,7 +186,7 @@
           return;
         }
 
-        // Mobile touch
+        // Mobile
         info.el.addEventListener("pointerup", ev => {
           if (ev.pointerType === "touch") {
             const s = new Date(info.date);
@@ -204,9 +196,12 @@
           }
         }, { passive: true });
 
-        // Desktop click (single day)
-        info.el.addEventListener("click", ev => {
-          if (info.el.getAttribute("data-reserved") === "true") return;
+        // Desktop : mousedown + mouseup pour un seul jour
+        let isMouseDown = false;
+        info.el.addEventListener("mousedown", () => { isMouseDown = true; });
+        info.el.addEventListener("mouseup", () => {
+          if (!isMouseDown) return;
+          isMouseDown = false;
           const s = new Date(info.date);
           const e = new Date(s); e.setDate(e.getDate() + 1);
           if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
