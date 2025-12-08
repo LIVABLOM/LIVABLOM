@@ -197,13 +197,21 @@
         // Mobile touch
         info.el.addEventListener("pointerup", ev => {
           if (ev.pointerType === "touch") {
-            const dateStr = info.el.getAttribute("data-date");
-            const s = new Date(dateStr);
+            const s = new Date(info.date);
             const e = new Date(s); e.setDate(e.getDate() + 1);
             if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
             cal.select({ start: s, end: e, allDay: true });
           }
         }, { passive: true });
+
+        // Desktop click (single day)
+        info.el.addEventListener("click", ev => {
+          if (info.el.getAttribute("data-reserved") === "true") return;
+          const s = new Date(info.date);
+          const e = new Date(s); e.setDate(e.getDate() + 1);
+          if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
+          cal.select({ start: s, end: e, allDay: true });
+        });
       },
 
       select(info) {
