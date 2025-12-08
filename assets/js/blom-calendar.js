@@ -154,32 +154,33 @@
       locale: "fr",
       height: "auto",
 
-      // -------------------------------
-      // Select logic
-      // -------------------------------
       selectAllow(sel) {
         const today = new Date(); today.setHours(0,0,0,0);
         if (sel.start < today) return false;
 
-        // Bloquer la sélection uniquement si elle chevauche les réservations,
-        // mais autoriser le début sur le jour de départ d'une réservation précédente
+        // Autoriser le début sur le jour de fin d'une réservation précédente
         return !reservedRanges.some(r => {
           const selStart = sel.start;
           const selEnd = sel.end;
           const resStart = r.start;
           const resEnd = r.end;
+
+          // Bloquer si chevauche mais pas si selStart === resEnd (jour de départ libre)
           return selStart < resEnd && selEnd > resStart && selStart.getTime() !== resEnd.getTime();
         });
       },
 
-      // -------------------------------
-      // Récupérer les réservations
-      // -------------------------------
       events: async (fetchInfo, success, failure) => {
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
-          reservedRanges = data.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
+
+          // Important : end = jour de départ suivant pour FullCalendar (exclusif)
+          reservedRanges = data.map(e => ({
+            start: new Date(e.start),
+            end: new Date(e.end)
+          }));
+
           success(reservedRanges.map(r => ({
             title: "Réservé",
             start: r.start,
@@ -194,17 +195,11 @@
         }
       },
 
-      // -------------------------------
-      // Marquer les jours réservés
-      // -------------------------------
       dayCellDidMount(info) {
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
         if (isReserved) info.el.setAttribute("data-reserved", "true");
       },
 
-      // -------------------------------
-      // Action à la sélection
-      // -------------------------------
       select(info) {
         selectedStart = info.startStr.split("T")[0];
         selectedEnd = info.endStr.split("T")[0];
