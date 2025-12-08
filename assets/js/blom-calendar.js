@@ -157,7 +157,13 @@
       selectAllow(sel) {
         const today = new Date(); today.setHours(0,0,0,0);
         if (sel.start < today) return false;
-        return !reservedRanges.some(r => sel.start < r.end && sel.end > r.start);
+
+        // Autoriser le jour de fin d'une réservation précédente comme début
+        return !reservedRanges.some(r => {
+          const rangeStart = r.start;
+          const rangeEnd = r.end;
+          return sel.start < rangeEnd && sel.end > rangeStart && sel.start.getTime() !== rangeEnd.getTime();
+        });
       },
 
       events: async (fetchInfo, success, failure) => {
