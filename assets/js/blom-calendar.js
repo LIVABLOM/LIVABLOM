@@ -154,37 +154,17 @@
       locale: "fr",
       height: "auto",
 
-      // -------------------------------
-      // Selection autorisée
-      // -------------------------------
       selectAllow(sel) {
         const today = new Date(); today.setHours(0,0,0,0);
         if (sel.start < today) return false;
-
-        // Bloquer uniquement si chevauche une réservation (mais pas le jour de départ d'une réservation précédente)
-        return !reservedRanges.some(r => {
-          const selStart = sel.start;
-          const selEnd = sel.end;
-          const resStart = r.start;
-          const resEnd = r.end;
-          return selStart < resEnd && selEnd > resStart && selStart.getTime() !== resEnd.getTime();
-        });
+        return !reservedRanges.some(r => sel.start < r.end && sel.end > r.start);
       },
 
-      // -------------------------------
-      // Récupérer les réservations
-      // -------------------------------
       events: async (fetchInfo, success, failure) => {
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
-
-          // ⚠️ Clé : FullCalendar 'end' exclusif → ajouter 1 jour
-          reservedRanges = data.map(e => ({
-            start: new Date(e.start),
-            end: new Date(new Date(e.end).getTime() + 24*60*60*1000)
-          }));
-
+          reservedRanges = data.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
           success(reservedRanges.map(r => ({
             title: "Réservé",
             start: r.start,
@@ -199,17 +179,36 @@
         }
       },
 
-      // -------------------------------
-      // Marquer les jours réservés
-      // -------------------------------
       dayCellDidMount(info) {
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
-        if (isReserved) info.el.setAttribute("data-reserved", "true");
+        if (isReserved) {
+          info.el.setAttribute("data-reserved", "true");
+          return;
+        }
+
+        // Mobile
+        info.el.addEventListener("pointerup", ev => {
+          if (ev.pointerType === "touch") {
+            const s = new Date(info.date);
+            const e = new Date(s); e.setDate(e.getDate() + 1);
+            if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
+            cal.select({ start: s, end: e, allDay: true });
+          }
+        }, { passive: true });
+
+        // Desktop : mousedown + mouseup pour un seul jour
+        let isMouseDown = false;
+        info.el.addEventListener("mousedown", () => { isMouseDown = true; });
+        info.el.addEventListener("mouseup", () => {
+          if (!isMouseDown) return;
+          isMouseDown = false;
+          const s = new Date(info.date);
+          const e = new Date(s); e.setDate(e.getDate() + 1);
+          if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
+          cal.select({ start: s, end: e, allDay: true });
+        });
       },
 
-      // -------------------------------
-      // Action à la sélection
-      // -------------------------------
       select(info) {
         selectedStart = info.startStr.split("T")[0];
         selectedEnd = info.endStr.split("T")[0];
