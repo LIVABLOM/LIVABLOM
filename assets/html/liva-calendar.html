@@ -19,12 +19,6 @@
     font-family: Arial, sans-serif; 
   }
 
-  h1 { 
-    text-align: center; 
-    margin: 10px 0; 
-    font-size: 1.8rem; 
-  }
-
   #calendar { 
     width: 100%; 
     max-width: 1000px; 
@@ -32,7 +26,13 @@
     padding: 10px; 
     background: #f9f9f9; 
     border-radius: 12px; 
-    height: calc(100vh - 140px);
+    height: calc(100vh - 140px); /* Ajusté pour le bouton retour et le prix */
+  }
+
+  h1 { 
+    text-align: center; 
+    margin: 10px 0; 
+    font-size: 1.8rem; 
   }
 
   .back-button {
@@ -59,7 +59,7 @@
   .modal-bg {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.5);
     display: none;
     justify-content: center;
     align-items: center;
@@ -71,13 +71,14 @@
     padding: 20px;
     border-radius: 12px;
     width: 90%;
-    max-width: 420px;
-    border: 1px solid #ccc;
+    max-width: 400px;
   }
   .modal-content label { display:block; margin-top:10px; }
   .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
   .modal-buttons { text-align:right; margin-top:15px; }
   .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
+
+  /* Prix dynamique */
   #modal-price { font-weight: bold; margin-top:10px; }
 </style>
 </head>
@@ -105,7 +106,6 @@
     <div class="modal-buttons">
       <button id="res-cancel">Annuler</button>
       <button id="res-confirm" disabled>Confirmer</button>
-      <p id="res-error" style="color:red; display:none; margin-top:8px;"></p>
     </div>
   </div>
 </div>
