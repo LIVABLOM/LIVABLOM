@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS - Version Finale (Desktop + Mobile)
+// 🌸 BLŌM Calendar JS - Mode "Date départ -> Nuits" (Desktop + Mobile)
 // ========================================================
 
 (async function () {
@@ -36,7 +36,7 @@
       padding: 20px;
       border-radius: 10px;
       width: 90%;
-      max-width: 420px;
+      max-width: 480px;
       color: #fff;
       border: 1px solid #333;
     }
@@ -52,6 +52,7 @@
     #reservationModal button { padding: 12px; border-radius: 8px; border: none; margin-top: 8px; width: 100%; }
     #res-confirm { background: #6f4cff; color: #fff; }
     #res-cancel { background: #333; color: #fff; }
+    #res-error { color: #ff8b8b; margin-top: 6px; display: none; }
   `;
 
   const styleNode = document.createElement("style");
@@ -62,6 +63,17 @@
   // -------------------------------
   // 2) Helpers
   // -------------------------------
+  function addDays(date, days) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function formatDateISO(date) {
+    return date.toISOString().split('T')[0];
+  }
+
   function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
     if (testPayment) return 1;
     const d = new Date(dateStr);
@@ -83,15 +95,34 @@
     }
   }
 
-  function sumPrice(startStr, endStr, nbPersons, testPayment) {
+  function sumPriceByNights(startStr, nights, nbPersons, testPayment) {
     let total = 0;
     let cur = new Date(startStr);
-    const end = new Date(endStr);
-    while (cur < end) {
+    for (let i = 0; i < nights; i++) {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
       cur.setDate(cur.getDate() + 1);
     }
     return total;
+  }
+
+  // check availability: start (Date), nights (integer)
+  // reservedRanges contains {start: Date, end: Date} with end EXCLUSIVE
+  function isRangeAvailable(startDate, nights, reservedRanges) {
+    const selStart = new Date(startDate);
+    selStart.setHours(0,0,0,0);
+    const selEnd = addDays(selStart, nights); // exclusive
+
+    // validate not in the past
+    const today = new Date(); today.setHours(0,0,0,0);
+    if (selStart < today) return false;
+
+    // overlap test: selStart < r.end && selEnd > r.start
+    for (const r of reservedRanges) {
+      if (selStart < r.end && selEnd > r.start) {
+        return false;
+      }
+    }
+    return true;
   }
 
   // -------------------------------
@@ -101,70 +132,75 @@
     const el = document.getElementById("calendar");
     if (!el) return;
 
+    // Modal elements expected in DOM:
+    // #reservationModal
+    // #modal-start (text)
+    // #res-nights (number input)
+    // #res-persons (number input)
+    // #modal-price (span)
+    // #res-name, #res-email, #res-phone
+    // #res-confirm, #res-cancel, #res-error
+    const modal = document.getElementById("reservationModal");
+    const modalStart = document.getElementById("modal-start");
+    const inputNights = document.getElementById("res-nights");
+    const inputPersons = document.getElementById("res-persons");
+    const priceDisplay = document.getElementById("modal-price");
+    const inputName = document.getElementById("res-name");
+    const inputEmail = document.getElementById("res-email");
+    const inputPhone = document.getElementById("res-phone");
+    const btnCancel = document.getElementById("res-cancel");
+    const btnConfirm = document.getElementById("res-confirm");
+    const errorBox = document.getElementById("res-error");
+
+    if (!modal || !modalStart || !inputNights || !inputPersons || !priceDisplay || !btnConfirm) {
+      console.warn("Reservation modal elements manquants — vérifier le HTML (ids requis).");
+      // still continue but cannot open modal
+    }
+
     const calendarBackend = location.hostname.includes("localhost")
       ? "http://localhost:4000"
       : "https://calendar-proxy-production-ed46.up.railway.app";
     const stripeBackend = location.hostname.includes("localhost")
       ? "http://localhost:3000"
       : "https://livablom-stripe-production.up.railway.app";
+
     const config = await getConfig();
     const testPayment = config.testPayment;
 
-    // Modal refs
-    const modal = document.getElementById("reservationModal");
-    const modalDates = document.getElementById("modal-dates");
-    const inputName = document.getElementById("res-name");
-    const inputEmail = document.getElementById("res-email");
-    const inputPhone = document.getElementById("res-phone");
-    const inputPersons = document.getElementById("res-persons");
-    const priceDisplay = document.getElementById("modal-price");
-    const btnCancel = document.getElementById("res-cancel");
-    const btnConfirm = document.getElementById("res-confirm");
-
-    let reservedRanges = [];
-    let selectedStart = null;
-    let selectedEnd = null;
-
-    function updatePriceDisplay() {
-      if (!selectedStart || !selectedEnd) return;
-      const nbPers = parseInt(inputPersons.value) || 2;
-      priceDisplay.textContent =
-        `Montant total : ${sumPrice(selectedStart, selectedEnd, nbPers, testPayment)} €`;
-    }
-
-    function validateForm() {
-      const name = inputName.value.trim();
-      const email = inputEmail.value.trim();
-      const phone = inputPhone.value.trim();
-      const nbP = parseInt(inputPersons.value);
-      btnConfirm.disabled = !(name && email && phone && nbP >= 1 && nbP <= 2);
-    }
-
-    [inputName, inputEmail, inputPhone, inputPersons].forEach(el => {
-      el.addEventListener("input", () => { validateForm(); updatePriceDisplay(); });
-    });
+    let reservedRanges = []; // {start: Date, end: Date} end is EXCLUSIVE
+    let clickedStart = null; // Date
+    // default inputs
+    if (inputNights) inputNights.value = 1;
+    if (inputPersons) inputPersons.value = 2;
 
     // -------------------------------
-    // 4) FullCalendar
+    // FullCalendar setup (selectable disabled, we use dateClick flow)
     // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
-      selectable: true,
+      selectable: false, // we handle selection via modal
       firstDay: 1,
       locale: "fr",
       height: "auto",
-
-      selectAllow(sel) {
-        const today = new Date(); today.setHours(0,0,0,0);
-        if (sel.start < today) return false;
-        return !reservedRanges.some(r => sel.start < r.end && sel.end > r.start);
-      },
 
       events: async (fetchInfo, success, failure) => {
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
-          reservedRanges = data.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
+
+          // IMPORTANT: ensure end is exclusive for FullCalendar by adding 1 day
+          // assume API returns e.start and e.end as ISO dates (end = last booked night)
+          reservedRanges = data.map(e => {
+            const s = new Date(e.start);
+            const rawEnd = new Date(e.end);
+            // if API already returns end exclusive, this will shift by 1 day erroneously.
+            // But previous debugging showed we need to make end exclusive: add 1 day.
+            const exEnd = addDays(rawEnd, 1);
+            s.setHours(0,0,0,0);
+            exEnd.setHours(0,0,0,0);
+            return { start: s, end: exEnd };
+          });
+
           success(reservedRanges.map(r => ({
             title: "Réservé",
             start: r.start,
@@ -180,90 +216,138 @@
       },
 
       dayCellDidMount(info) {
+        // mark reserved days visually (info.date is the cell's date)
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
-        if (isReserved) {
-          info.el.setAttribute("data-reserved", "true");
-          return;
-        }
-
-        // Mobile
-        info.el.addEventListener("pointerup", ev => {
-          if (ev.pointerType === "touch") {
-            const s = new Date(info.date);
-            const e = new Date(s); e.setDate(e.getDate() + 1);
-            if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
-            cal.select({ start: s, end: e, allDay: true });
-          }
-        }, { passive: true });
-
-        // Desktop : mousedown + mouseup pour un seul jour
-        let isMouseDown = false;
-        info.el.addEventListener("mousedown", () => { isMouseDown = true; });
-        info.el.addEventListener("mouseup", () => {
-          if (!isMouseDown) return;
-          isMouseDown = false;
-          const s = new Date(info.date);
-          const e = new Date(s); e.setDate(e.getDate() + 1);
-          if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
-          cal.select({ start: s, end: e, allDay: true });
-        });
+        if (isReserved) info.el.setAttribute("data-reserved", "true");
       },
 
-      select(info) {
-        selectedStart = info.startStr.split("T")[0];
-        selectedEnd = info.endStr.split("T")[0];
+      // dateClick triggered on both desktop click and mobile tap
+      dateClick(info) {
+        const dateClicked = new Date(info.dateStr);
+        dateClicked.setHours(0,0,0,0);
 
-        modalDates.textContent = `Du ${selectedStart} au ${selectedEnd}`;
-        inputName.value = "";
-        inputEmail.value = "";
-        inputPhone.value = "";
-        inputPersons.value = 2;
+        // If cell is reserved (in reservedRanges), do nothing
+        const blocked = reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end);
+        if (blocked) return;
 
-        validateForm();
-        updatePriceDisplay();
-        modal.style.display = "flex";
+        // open modal to choose nights
+        clickedStart = dateClicked;
+        if (modalStart) modalStart.textContent = formatDateISO(clickedStart);
+        if (inputNights) inputNights.value = 1;
+        if (inputPersons) inputPersons.value = 2;
+        if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
+        // update price
+        const price = sumPriceByNights(formatDateISO(clickedStart), parseInt(inputNights.value,10)||1, parseInt(inputPersons.value,10)||2, testPayment);
+        if (priceDisplay) priceDisplay.textContent = `Montant total : ${price} €`;
+
+        if (modal) modal.style.display = 'flex';
       }
     });
 
     cal.render();
 
     // -------------------------------
-    // 5) Modal buttons
+    // Modal behaviour: update price & validate availability
     // -------------------------------
-    btnCancel.addEventListener("click", () => {
-      modal.style.display = "none";
-      cal.unselect();
+    function updateModalPriceAndAvailability() {
+      if (!clickedStart) return;
+      const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
+      const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
+
+      // check availability
+      const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
+      if (errorBox) {
+        if (!ok) {
+          errorBox.style.display = 'block';
+          errorBox.textContent = "La période sélectionnée chevauche une réservation existante. Choisissez moins de nuits ou une autre date.";
+        } else {
+          errorBox.style.display = 'none';
+          errorBox.textContent = '';
+        }
+      }
+
+      // update price
+      const total = sumPriceByNights(formatDateISO(clickedStart), nights, persons, testPayment);
+      if (priceDisplay) priceDisplay.textContent = `Montant total : ${total} €`;
+      // enable/disable confirm
+      if (btnConfirm) btnConfirm.disabled = !ok;
+    }
+
+    if (inputNights) inputNights.addEventListener('input', updateModalPriceAndAvailability);
+    if (inputPersons) inputPersons.addEventListener('input', updateModalPriceAndAvailability);
+
+    // cancel
+    if (btnCancel) btnCancel.addEventListener('click', () => {
+      if (modal) modal.style.display = 'none';
+      clickedStart = null;
     });
 
-    btnConfirm.addEventListener("click", async () => {
-      const name = inputName.value.trim();
-      const email = inputEmail.value.trim();
-      const phone = inputPhone.value.trim();
-      const nbP = parseInt(inputPersons.value);
+    // confirm -> proceed to backend / stripe
+    if (btnConfirm) btnConfirm.addEventListener('click', async () => {
+      if (!clickedStart) return;
+      const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
+      const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
 
-      const total = sumPrice(selectedStart, selectedEnd, nbP, testPayment);
-
-      if (!confirm(`Confirmer la réservation du ${selectedStart} au ${selectedEnd} pour ${total} € ?`))
+      // final availability check
+      if (!isRangeAvailable(clickedStart, nights, reservedRanges)) {
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Période non disponible. Réessayez.'; }
         return;
+      }
 
-      const res = await fetch(`${stripeBackend}/api/checkout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          logement: "BLŌM",
-          startDate: selectedStart,
-          endDate: selectedEnd,
-          amount: total,
-          personnes: nbP,
-          name,
-          email,
-          phone
-        })
-      });
+      // collect contact
+      const name = inputName ? inputName.value.trim() : '';
+      const email = inputEmail ? inputEmail.value.trim() : '';
+      const phone = inputPhone ? inputPhone.value.trim() : '';
 
-      const data = await res.json();
-      if (data.url) location.href = data.url;
-      else alert("Impossible de créer la réservation.");
+      if (!name || !email || !phone) {
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir nom, email et téléphone.'; }
+        return;
+      }
+
+      const startDate = formatDateISO(clickedStart);
+      const endDateObj = addDays(clickedStart, nights); // exclusive end
+      const endDate = formatDateISO(endDateObj);
+
+      const total = sumPriceByNights(startDate, nights, persons, testPayment);
+
+      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} (${nights} nuits) pour ${total} € ?`)) return;
+
+      // create checkout session
+      try {
+        const res = await fetch(`${stripeBackend}/api/checkout`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            logement: "BLŌM",
+            startDate,
+            endDate, // end exclusive (backend should understand)
+            amount: total,
+            personnes: persons,
+            name,
+            email,
+            phone
+          })
+        });
+        const data = await res.json();
+        if (data.url) {
+          // optionally close modal before redirect
+          if (modal) modal.style.display = 'none';
+          location.href = data.url;
+        } else {
+          alert("Impossible de créer la réservation. Réessayez plus tard.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Erreur réseau lors de la création de la réservation.");
+      }
+    });
+
+    // close modal on outside click (optional)
+    if (modal) modal.addEventListener('click', (ev) => {
+      if (ev.target === modal) {
+        modal.style.display = 'none';
+        clickedStart = null;
+      }
     });
 
   });
