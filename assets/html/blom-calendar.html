@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendrier BLŌM</title>
 
   <!-- FullCalendar CSS & JS -->
@@ -50,7 +50,7 @@
       font-weight: bold;
     }
 
-    /* Modal */
+    /* Modal styles (adaptés au nouveau flux) */
     .modal-bg {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -59,6 +59,7 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
+      padding: 20px;
     }
 
     .modal-content {
@@ -66,67 +67,79 @@
       color: #fff;
       padding: 20px;
       border-radius: 12px;
-      width: 90%;
-      max-width: 400px;
-    }
-
-    .modal-content label {
-      display: block;
-      margin-top: 10px;
-    }
-
-    .modal-content input {
       width: 100%;
-      padding: 5px;
-      margin-top: 5px;
-      border-radius: 5px;
+      max-width: 480px;
+      box-sizing: border-box;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+    }
+
+    .modal-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .modal-row label {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.95rem;
+    }
+
+    .modal-row input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border-radius: 6px;
       border: 1px solid #555;
       background: #111;
       color: #fff;
-    }
-
-    .modal-buttons {
-      text-align: right;
-      margin-top: 15px;
-    }
-
-    .modal-buttons button {
-      margin-left: 5px;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      box-sizing: border-box;
     }
 
     #modal-price {
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 12px;
     }
+
+    #res-error {
+      color: #ff8b8b;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .modal-buttons button {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #res-confirm { background: #6f4cff; color: #fff; }
+    #res-cancel { background: #333; color: #fff; }
 
     /* Responsive */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      #calendar {
-        padding: 5px;
-      }
-
-      .back-button a {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-      }
+      h1 { font-size: 1.4rem; }
+      #calendar { padding: 5px; height: calc(100vh - 120px); }
+      .modal-row { flex-direction: column; align-items: stretch; }
     }
+
     /* CORRECTION : enlever l'overlay qui bloque les clics sur mobile */
-#calendar .fc-scrollgrid {
-  background: transparent !important;
-}
-
-#calendar .fc-daygrid-day {
-  background: #111; /* ou #000 si tu veux plus sombre */
-}
-
+    #calendar .fc-scrollgrid { background: transparent !important; }
+    #calendar .fc-daygrid-day { background: #111; }
   </style>
 </head>
 <body>
@@ -142,35 +155,52 @@
   <!-- Calendrier -->
   <div id="calendar"></div>
 
-  <!-- Modal réservation -->
+  <!-- Modal réservation (nouveau flux : date départ -> nuits -> confirmer) -->
   <div class="modal-bg" id="reservationModal">
-    <div class="modal-content">
-      <h3>Réserver BLŌM</h3>
-      <p id="modal-dates"></p>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h3 id="modal-title">Réserver BLŌM</h3>
 
-      <label>Nom complet
-        <input type="text" id="res-name">
-      </label>
-      <label>Email
-        <input type="email" id="res-email">
-      </label>
-      <label>Téléphone
-        <input type="tel" id="res-phone">
-      </label>
-      <label>Nombre de personnes (max 2)
-        <input type="number" id="res-persons" min="1" max="2" value="2">
-      </label>
+      <p>Arrivée : <strong id="modal-start">--</strong></p>
+
+      <div class="modal-row">
+        <label>
+          Nuits
+          <input id="res-nights" type="number" min="1" value="1" />
+        </label>
+
+        <label>
+          Personnes
+          <input id="res-persons" type="number" min="1" max="2" value="2" />
+        </label>
+      </div>
 
       <p id="modal-price">Montant total : 0 €</p>
 
+      <label>
+        Nom complet
+        <input type="text" id="res-name" placeholder="Nom et prénom" />
+      </label>
+
+      <label>
+        Email
+        <input type="email" id="res-email" placeholder="email@exemple.com" />
+      </label>
+
+      <label>
+        Téléphone
+        <input type="tel" id="res-phone" placeholder="0600000000" />
+      </label>
+
+      <div id="res-error" aria-live="polite"></div>
+
       <div class="modal-buttons">
-        <button id="res-cancel">Annuler</button>
-        <button id="res-confirm" disabled>Confirmer</button>
+        <button id="res-cancel" type="button">Annuler</button>
+        <button id="res-confirm" type="button" disabled>Confirmer</button>
       </div>
     </div>
   </div>
 
-  <!-- Script principal -->
+  <!-- Script principal (assure-toi que c'est la version "date départ -> nuits") -->
   <script src="/assets/js/blom-calendar.js"></script>
 
 </body>
