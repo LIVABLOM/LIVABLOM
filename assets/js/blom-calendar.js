@@ -78,8 +78,8 @@
     if (testPayment) return 1;
     const d = new Date(dateStr);
     const day = d.getDay();
-    if (day === 5 || day === 6) return 169;
-    if (day === 0) return 190;
+    if (day === 5 || day === 6) return 169;   // vendredi / samedi
+    if (day === 0) return 190;                // dimanche
     return 150;
   }
 
@@ -105,18 +105,15 @@
     return total;
   }
 
-  // check availability: start (Date), nights (integer)
-  // reservedRanges contains {start: Date, end: Date} with end EXCLUSIVE
+  // Check if selection overlaps reserved dates
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const selStart = new Date(startDate);
     selStart.setHours(0,0,0,0);
     const selEnd = addDays(selStart, nights); // exclusive
 
-    // validate not in the past
     const today = new Date(); today.setHours(0,0,0,0);
     if (selStart < today) return false;
 
-    // overlap test: selStart < r.end && selEnd > r.start
     for (const r of reservedRanges) {
       if (selStart < r.end && selEnd > r.start) {
         return false;
@@ -132,14 +129,7 @@
     const el = document.getElementById("calendar");
     if (!el) return;
 
-    // Modal elements expected in DOM:
-    // #reservationModal
-    // #modal-start (text)
-    // #res-nights (number input)
-    // #res-persons (number input)
-    // #modal-price (span)
-    // #res-name, #res-email, #res-phone
-    // #res-confirm, #res-cancel, #res-error
+    // Modal elements
     const modal = document.getElementById("reservationModal");
     const modalStart = document.getElementById("modal-start");
     const inputNights = document.getElementById("res-nights");
@@ -152,14 +142,10 @@
     const btnConfirm = document.getElementById("res-confirm");
     const errorBox = document.getElementById("res-error");
 
-    if (!modal || !modalStart || !inputNights || !inputPersons || !priceDisplay || !btnConfirm) {
-      console.warn("Reservation modal elements manquants — vérifier le HTML (ids requis).");
-      // still continue but cannot open modal
-    }
-
     const calendarBackend = location.hostname.includes("localhost")
       ? "http://localhost:4000"
       : "https://calendar-proxy-production-ed46.up.railway.app";
+
     const stripeBackend = location.hostname.includes("localhost")
       ? "http://localhost:3000"
       : "https://livablom-stripe-production.up.railway.app";
@@ -167,18 +153,18 @@
     const config = await getConfig();
     const testPayment = config.testPayment;
 
-    let reservedRanges = []; // {start: Date, end: Date} end is EXCLUSIVE
-    let clickedStart = null; // Date
-    // default inputs
+    let reservedRanges = [];
+    let clickedStart = null;
+
     if (inputNights) inputNights.value = 1;
     if (inputPersons) inputPersons.value = 2;
 
     // -------------------------------
-    // FullCalendar setup (selectable disabled, we use dateClick flow)
+    // FullCalendar
     // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
-      selectable: false, // we handle selection via modal
+      selectable: false,
       firstDay: 1,
       locale: "fr",
       height: "auto",
@@ -188,14 +174,14 @@
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
 
-          // IMPORTANT: ensure end is exclusive for FullCalendar by adding 1 day
-          // assume API returns e.start and e.end as ISO dates (end = last booked night)
+          // CORRECTION → ne plus ajouter 1 jour au end
           reservedRanges = data.map(e => {
             const s = new Date(e.start);
             const rawEnd = new Date(e.end);
-            // if API already returns end exclusive, this will shift by 1 day erroneously.
-            // But previous debugging showed we need to make end exclusive: add 1 day.
-            const exEnd = addDays(rawEnd, 1);
+
+            // end = jour de départ → ne doit pas être réservé
+            const exEnd = rawEnd;  // <--- FIX
+
             s.setHours(0,0,0,0);
             exEnd.setHours(0,0,0,0);
             return { start: s, end: exEnd };
@@ -216,28 +202,33 @@
       },
 
       dayCellDidMount(info) {
-        // mark reserved days visually (info.date is the cell's date)
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
         if (isReserved) info.el.setAttribute("data-reserved", "true");
       },
 
-      // dateClick triggered on both desktop click and mobile tap
       dateClick(info) {
         const dateClicked = new Date(info.dateStr);
         dateClicked.setHours(0,0,0,0);
 
-        // If cell is reserved (in reservedRanges), do nothing
         const blocked = reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end);
         if (blocked) return;
 
-        // open modal to choose nights
         clickedStart = dateClicked;
         if (modalStart) modalStart.textContent = formatDateISO(clickedStart);
         if (inputNights) inputNights.value = 1;
         if (inputPersons) inputPersons.value = 2;
-        if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
-        // update price
-        const price = sumPriceByNights(formatDateISO(clickedStart), parseInt(inputNights.value,10)||1, parseInt(inputPersons.value,10)||2, testPayment);
+
+        if (errorBox) {
+          errorBox.style.display = 'none';
+          errorBox.textContent = '';
+        }
+
+        const price = sumPriceByNights(
+          formatDateISO(clickedStart),
+          1,
+          parseInt(inputPersons.value, 10),
+          testPayment
+        );
         if (priceDisplay) priceDisplay.textContent = `Montant total : ${price} €`;
 
         if (modal) modal.style.display = 'flex';
@@ -247,72 +238,69 @@
     cal.render();
 
     // -------------------------------
-    // Modal behaviour: update price & validate availability
+    // Modal price + availability
     // -------------------------------
     function updateModalPriceAndAvailability() {
       if (!clickedStart) return;
       const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
       const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
 
-      // check availability
       const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
+
       if (errorBox) {
         if (!ok) {
           errorBox.style.display = 'block';
-          errorBox.textContent = "La période sélectionnée chevauche une réservation existante. Choisissez moins de nuits ou une autre date.";
+          errorBox.textContent = "La période sélectionnée chevauche une réservation existante.";
         } else {
           errorBox.style.display = 'none';
           errorBox.textContent = '';
         }
       }
 
-      // update price
       const total = sumPriceByNights(formatDateISO(clickedStart), nights, persons, testPayment);
       if (priceDisplay) priceDisplay.textContent = `Montant total : ${total} €`;
-      // enable/disable confirm
+
       if (btnConfirm) btnConfirm.disabled = !ok;
     }
 
     if (inputNights) inputNights.addEventListener('input', updateModalPriceAndAvailability);
     if (inputPersons) inputPersons.addEventListener('input', updateModalPriceAndAvailability);
 
-    // cancel
+    // Cancel modal
     if (btnCancel) btnCancel.addEventListener('click', () => {
       if (modal) modal.style.display = 'none';
       clickedStart = null;
     });
 
-    // confirm -> proceed to backend / stripe
+    // Confirm reservation
     if (btnConfirm) btnConfirm.addEventListener('click', async () => {
       if (!clickedStart) return;
+
       const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
       const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
 
-      // final availability check
       if (!isRangeAvailable(clickedStart, nights, reservedRanges)) {
-        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Période non disponible. Réessayez.'; }
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Période non disponible.'; }
         return;
       }
 
-      // collect contact
       const name = inputName ? inputName.value.trim() : '';
       const email = inputEmail ? inputEmail.value.trim() : '';
       const phone = inputPhone ? inputPhone.value.trim() : '';
 
       if (!name || !email || !phone) {
-        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir nom, email et téléphone.'; }
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir tous les champs.'; }
         return;
       }
 
       const startDate = formatDateISO(clickedStart);
-      const endDateObj = addDays(clickedStart, nights); // exclusive end
+      const endDateObj = addDays(clickedStart, nights);
       const endDate = formatDateISO(endDateObj);
 
       const total = sumPriceByNights(startDate, nights, persons, testPayment);
 
       if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} (${nights} nuits) pour ${total} € ?`)) return;
 
-      // create checkout session
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
           method: "POST",
@@ -320,7 +308,7 @@
           body: JSON.stringify({
             logement: "BLŌM",
             startDate,
-            endDate, // end exclusive (backend should understand)
+            endDate,
             amount: total,
             personnes: persons,
             name,
@@ -328,21 +316,21 @@
             phone
           })
         });
+
         const data = await res.json();
+
         if (data.url) {
-          // optionally close modal before redirect
           if (modal) modal.style.display = 'none';
           location.href = data.url;
         } else {
-          alert("Impossible de créer la réservation. Réessayez plus tard.");
+          alert("Erreur lors de la création de la réservation.");
         }
       } catch (err) {
-        console.error(err);
-        alert("Erreur réseau lors de la création de la réservation.");
+        alert("Erreur réseau lors de la réservation.");
       }
     });
 
-    // close modal on outside click (optional)
+    // Close modal on outside click
     if (modal) modal.addEventListener('click', (ev) => {
       if (ev.target === modal) {
         modal.style.display = 'none';
