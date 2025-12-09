@@ -19,6 +19,16 @@
     font-family: Arial, sans-serif; 
   }
 
+  #calendar { 
+    width: 100%; 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 10px; 
+    background: #f9f9f9; 
+    border-radius: 12px; 
+    height: calc(100vh - 140px); 
+  }
+
   h1 { 
     text-align: center; 
     margin: 10px 0; 
@@ -39,16 +49,6 @@
     font-weight: bold;
   }
 
-  #calendar { 
-    width: 100%; 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    padding: 10px; 
-    background: #f9f9f9; 
-    border-radius: 12px; 
-    height: calc(100vh - 140px);
-  }
-
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
     #calendar { padding: 5px; }
@@ -56,33 +56,29 @@
   }
 
   /* Modal style */
-  .modal-bg {
+  #reservationModal {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.5);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
   }
-  .modal-content {
+  #reservationModal .modal-content {
     background: #fff;
     color: #000;
     padding: 20px;
     border-radius: 12px;
     width: 90%;
     max-width: 480px;
-    border: 1px solid #ccc;
   }
-  .modal-content label { display:block; margin-top:10px; }
-  .modal-content input { width:100%; padding:8px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+  #reservationModal label { display:block; margin-top:10px; }
+  #reservationModal input { width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc; }
   .modal-buttons { text-align:right; margin-top:15px; }
-  .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
-
-  /* Prix dynamique */
-  #modal-price { font-weight: bold; margin-top:10px; }
-
-  #res-error { color: #ff8b8b; margin-top:6px; display:none; }
+  .modal-buttons button { margin-left:5px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
+  #modal-price { font-weight:bold; margin-top:10px; }
+  #res-error { color:#ff8b8b; margin-top:6px; display:none; }
 </style>
 </head>
 <body>
@@ -94,11 +90,10 @@
   <a href="/liva/">← Retour vers LIVA</a>
 </div>
 
-<!-- Calendrier -->
 <div id="calendar"></div>
 
 <!-- Modal réservation -->
-<div class="modal-bg" id="reservationModal">
+<div id="reservationModal">
   <div class="modal-content">
     <h3>Réserver LIVA</h3>
     <p id="modal-dates"></p>
@@ -106,14 +101,19 @@
     <label>Email<input type="email" id="res-email"></label>
     <label>Téléphone<input type="tel" id="res-phone"></label>
     <label>Nombre de personnes (max 5)<input type="number" id="res-persons" min="1" max="5" value="2"></label>
+    <!-- Le nombre de nuits sera ajouté dynamiquement par le JS -->
     <p id="modal-price">Montant total : 0 €</p>
-    <p id="res-error"></p>
+    <div id="res-error"></div>
     <div class="modal-buttons">
       <button id="res-cancel">Annuler</button>
       <button id="res-confirm" disabled>Confirmer</button>
     </div>
   </div>
 </div>
+
+<script>
+  window.TEST_PAYMENT = true;
+</script>
 
 <script src="/assets/js/liva-calendar.js"></script>
 
