@@ -19,6 +19,12 @@
     font-family: Arial, sans-serif; 
   }
 
+  h1 { 
+    text-align: center; 
+    margin: 10px 0; 
+    font-size: 1.8rem; 
+  }
+
   #calendar { 
     width: 100%; 
     max-width: 1000px; 
@@ -26,13 +32,7 @@
     padding: 10px; 
     background: #f9f9f9; 
     border-radius: 12px; 
-    height: calc(100vh - 140px); 
-  }
-
-  h1 { 
-    text-align: center; 
-    margin: 10px 0; 
-    font-size: 1.8rem; 
+    height: calc(100vh - 140px);
   }
 
   .back-button {
@@ -56,29 +56,29 @@
   }
 
   /* Modal style */
-  #reservationModal {
+  .modal-bg {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.75);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 1000;
   }
-  #reservationModal .modal-content {
+  .modal-content {
     background: #fff;
     color: #000;
     padding: 20px;
     border-radius: 12px;
     width: 90%;
-    max-width: 480px;
+    max-width: 420px;
+    border: 1px solid #ccc;
   }
-  #reservationModal label { display:block; margin-top:10px; }
-  #reservationModal input { width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc; }
+  .modal-content label { display:block; margin-top:10px; }
+  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
   .modal-buttons { text-align:right; margin-top:15px; }
-  .modal-buttons button { margin-left:5px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
-  #modal-price { font-weight:bold; margin-top:10px; }
-  #res-error { color:#ff8b8b; margin-top:6px; display:none; }
+  .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
+  #modal-price { font-weight: bold; margin-top:10px; }
 </style>
 </head>
 <body>
@@ -93,7 +93,7 @@
 <div id="calendar"></div>
 
 <!-- Modal réservation -->
-<div id="reservationModal">
+<div class="modal-bg" id="reservationModal">
   <div class="modal-content">
     <h3>Réserver LIVA</h3>
     <p id="modal-dates"></p>
@@ -101,12 +101,11 @@
     <label>Email<input type="email" id="res-email"></label>
     <label>Téléphone<input type="tel" id="res-phone"></label>
     <label>Nombre de personnes (max 5)<input type="number" id="res-persons" min="1" max="5" value="2"></label>
-    <!-- Le nombre de nuits sera ajouté dynamiquement par le JS -->
     <p id="modal-price">Montant total : 0 €</p>
-    <div id="res-error"></div>
     <div class="modal-buttons">
       <button id="res-cancel">Annuler</button>
       <button id="res-confirm" disabled>Confirmer</button>
+      <p id="res-error" style="color:red; display:none; margin-top:8px;"></p>
     </div>
   </div>
 </div>
