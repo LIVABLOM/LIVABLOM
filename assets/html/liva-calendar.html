@@ -1,120 +1,151 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calendrier LIVA</title>
-
-<!-- FullCalendar CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-<style>
-  html, body { 
-    height: 100%; 
-    margin: 0; 
-    padding: 0; 
-    background: #fff; 
-    color: #000; 
-    font-family: Arial, sans-serif; 
-  }
-
-  #calendar { 
-    width: 100%; 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    padding: 10px; 
-    background: #f9f9f9; 
-    border-radius: 12px; 
-    height: calc(100vh - 140px); /* Ajusté pour le bouton retour et le prix */
-  }
-
-  h1 { 
-    text-align: center; 
-    margin: 10px 0; 
-    font-size: 1.8rem; 
-  }
-
-  .back-button {
-    text-align: center; 
-    margin-bottom: 10px;
-  }
-
-  .back-button a {
-    padding: 8px 15px; 
-    background: #000; 
-    color: #fff; 
-    text-decoration: none; 
-    border-radius: 6px;
-    font-weight: bold;
-  }
-
-  @media (max-width: 768px) {
-    h1 { font-size: 1.4rem; }
-    #calendar { padding: 5px; }
-    .back-button a { padding: 6px 12px; font-size: 0.9rem; }
-  }
-
-  /* Modal style */
-  .modal-bg {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  .modal-content {
-    background: #fff;
-    color: #000;
-    padding: 20px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 400px;
-  }
-  .modal-content label { display:block; margin-top:10px; }
-  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
-  .modal-buttons { text-align:right; margin-top:15px; }
-  .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
-
-  /* Prix dynamique */
-  #modal-price { font-weight: bold; margin-top:10px; }
-</style>
-</head>
-<body>
-
-<h1>Calendrier des disponibilités - LIVA</h1>
-
-<!-- Bouton Retour vers LIVA -->
-<div class="back-button">
-  <a href="/liva/">← Retour vers LIVA</a>
-</div>
-
-<div id="calendar"></div>
-
-<!-- Modal réservation -->
-<div class="modal-bg" id="reservationModal">
-  <div class="modal-content">
-    <h3>Réserver LIVA</h3>
-    <p id="modal-dates"></p>
-    <label>Nom complet<input type="text" id="res-name"></label>
-    <label>Email<input type="email" id="res-email"></label>
-    <label>Téléphone<input type="tel" id="res-phone"></label>
-    <label>Nombre de personnes (max 5)<input type="number" id="res-persons" min="1" max="5" value="2"></label>
-    <p id="modal-price">Montant total : 0 €</p>
-    <div class="modal-buttons">
-      <button id="res-cancel">Annuler</button>
-      <button id="res-confirm" disabled>Confirmer</button>
-    </div>
-  </div>
-</div>
+<div id="liva-calendar-container" class="calendar-wrapper liva-calendar-wrapper"></div>
 
 <script>
-  window.TEST_PAYMENT = true;
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("liva-calendar-container");
+
+    fetch("/assets/calendars/liva_calendar.json")
+        .then(response => response.json())
+        .then(bookedRanges => {
+            const today = new Date();
+            let currentMonth = today.getMonth();
+            let currentYear = today.getFullYear();
+
+            function generateCalendar(month, year) {
+                container.innerHTML = "";
+
+                const calendar = document.createElement("div");
+                calendar.classList.add("calendar");
+
+                const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+                const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+
+                const header = document.createElement("div");
+                header.classList.add("calendar-header");
+                header.innerHTML = `
+                    <button class="prev-month">◀</button>
+                    <span>${monthNames[month]} ${year}</span>
+                    <button class="next-month">▶</button>
+                `;
+                calendar.appendChild(header);
+
+                const grid = document.createElement("div");
+                grid.classList.add("calendar-grid");
+
+                days.forEach(day => {
+                    const cell = document.createElement("div");
+                    cell.classList.add("calendar-day-name");
+                    cell.textContent = day;
+                    grid.appendChild(cell);
+                });
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const skipDays = firstDay === 0 ? 6 : firstDay - 1;
+                for (let i = 0; i < skipDays; i++) {
+                    const emptyCell = document.createElement("div");
+                    emptyCell.classList.add("empty");
+                    grid.appendChild(emptyCell);
+                }
+
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const cellDate = new Date(year, month, day);
+                    const cell = document.createElement("div");
+                    cell.classList.add("calendar-day");
+                    cell.textContent = day;
+
+                    const booked = bookedRanges.some(range => {
+                        const start = new Date(range.start);
+                        const end   = new Date(range.end);
+                        return cellDate >= start && cellDate < end; 
+                        // ⭐ PAREIL QUE BLOM → le jour de départ reste réservable
+                    });
+
+                    if (booked) {
+                        cell.classList.add("booked");
+                    } else {
+                        cell.classList.add("available");
+                        cell.addEventListener("click", () => selectDate(cellDate));
+                    }
+
+                    grid.appendChild(cell);
+                }
+
+                calendar.appendChild(grid);
+                container.appendChild(calendar);
+
+                document.querySelector(".prev-month").onclick = () => {
+                    currentMonth--;
+                    if (currentMonth < 0) {
+                        currentMonth = 11;
+                        currentYear--;
+                    }
+                    generateCalendar(currentMonth, currentYear);
+                };
+
+                document.querySelector(".next-month").onclick = () => {
+                    currentMonth++;
+                    if (currentMonth > 11) {
+                        currentMonth = 0;
+                        currentYear++;
+                    }
+                    generateCalendar(currentMonth, currentYear);
+                };
+            }
+
+            generateCalendar(currentMonth, currentYear);
+        });
+
+    function selectDate(date) {
+        const input = document.querySelector("#date");
+        if (input) input.value = date.toISOString().split("T")[0];
+    }
+});
 </script>
 
-<script src="/assets/js/liva-calendar.js"></script>
+<style>
+.calendar-wrapper {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+}
+.calendar {
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    align-items: center;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+.calendar-day,
+.calendar-day-name {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
 
-</body>
-</html>
+.booked {
+    background: red;
+    opacity: 0.4;
+    color: white;
+}
+
+.available {
+    background: #222;
+    cursor: pointer;
+}
+.available:hover {
+    background: #444;
+}
+</style>
