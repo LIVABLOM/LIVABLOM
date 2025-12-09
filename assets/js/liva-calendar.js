@@ -5,7 +5,7 @@
 (async function () {
 
   // -------------------------------
-  // 1) CSS : mobile safe
+  // 1) CSS : style + mobile safe
   // -------------------------------
   const css = `
     #calendar, #calendar * {
@@ -15,7 +15,7 @@
     }
 
     #calendar .fc { background: #f9f9f9 !important; color: #000 !important; font-family: "Inter", sans-serif; }
-    #calendar .fc-daygrid-day { background: #fdfdfd !important; border-color: #ddd !important; transition: background 0.15s ease; pointer-events: auto !important; }
+    #calendar .fc-daygrid-day { background: #fff !important; border-color: #ddd !important; transition: background 0.15s ease; pointer-events: auto !important; }
     @media (hover: hover) {
       #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #eee !important; cursor: pointer; }
     }
@@ -34,9 +34,9 @@
     #reservationModal .modal-content {
       background: #fff;
       padding: 20px;
-      border-radius: 12px;
+      border-radius: 10px;
       width: 90%;
-      max-width: 480px;
+      max-width: 420px;
       color: #000;
       border: 1px solid #ccc;
     }
@@ -52,7 +52,7 @@
     #reservationModal button { padding: 12px; border-radius: 8px; border: none; margin-top: 8px; width: 100%; }
     #res-confirm { background: #6f4cff; color: #fff; }
     #res-cancel { background: #333; color: #fff; }
-    #res-error { color: #ff8b8b; margin-top:6px; display:none; }
+    #res-error { color: #ff8b8b; margin-top: 6px; display: none; }
   `;
 
   const styleNode = document.createElement("style");
@@ -81,6 +81,18 @@
     return base + supplement;
   }
 
+  async function getConfig() {
+    try {
+      const stripeBackend = location.hostname.includes("localhost")
+        ? "http://localhost:3000"
+        : "https://livablom-stripe-production.up.railway.app";
+      const res = await fetch(`${stripeBackend}/api/config`);
+      return await res.json();
+    } catch {
+      return { testPayment: true };
+    }
+  }
+
   function sumPriceByNights(startStr, nights, nbPersons, testPayment) {
     let total = 0;
     let cur = new Date(startStr);
@@ -91,18 +103,14 @@
     return total;
   }
 
-  // check availability: start (Date), nights (integer)
-  // reservedRanges contains {start: Date, end: Date} with end EXCLUSIVE
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const selStart = new Date(startDate);
     selStart.setHours(0,0,0,0);
     const selEnd = addDays(selStart, nights); // exclusive
 
-    // validate not in the past
     const today = new Date(); today.setHours(0,0,0,0);
     if (selStart < today) return false;
 
-    // overlap test: selStart < r.end && selEnd > r.start
     for (const r of reservedRanges) {
       if (selStart < r.end && selEnd > r.start) {
         return false;
@@ -124,17 +132,10 @@
     const inputEmail = document.getElementById("res-email");
     const inputPhone = document.getElementById("res-phone");
     const inputPersons = document.getElementById("res-persons");
-    const inputNights = document.createElement("input");
-    inputNights.type = "number";
-    inputNights.min = 1;
-    inputNights.value = 1;
-    inputNights.style.marginBottom = "12px";
-    inputNights.id = "res-nights";
-    modal.querySelector(".modal-content").insertBefore(inputNights, modalDates.nextSibling);
     const priceDisplay = document.getElementById("modal-price");
-    const errorBox = document.getElementById("res-error");
     const btnCancel = document.getElementById("res-cancel");
     const btnConfirm = document.getElementById("res-confirm");
+    const errorBox = document.getElementById("res-error");
 
     const calendarBackend = location.hostname.includes("localhost")
       ? "http://localhost:4000"
@@ -143,15 +144,14 @@
       ? "http://localhost:3000"
       : "https://livablom-stripe-production.up.railway.app";
 
-    const configRes = await fetch(`${stripeBackend}/api/config`).then(r=>r.json());
-    const testPayment = configRes.testPayment;
+    const config = await getConfig();
+    const testPayment = config.testPayment;
 
     let reservedRanges = [];
     let clickedStart = null;
 
-    // -------------------------------
-    // FullCalendar
-    // -------------------------------
+    if (inputPersons) inputPersons.value = 2;
+
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
       selectable: false,
@@ -165,12 +165,12 @@
           const data = await res.json();
           reservedRanges = data.map(e => {
             const s = new Date(e.start);
-            const exEnd = addDays(new Date(e.end), 1);
+            const rawEnd = new Date(e.end);
+            const exEnd = addDays(rawEnd, 1); // end exclusive
             s.setHours(0,0,0,0);
             exEnd.setHours(0,0,0,0);
             return { start: s, end: exEnd };
           });
-
           success(reservedRanges.map(r => ({
             title: "Réservé",
             start: r.start,
@@ -189,83 +189,80 @@
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
         if (isReserved) info.el.setAttribute("data-reserved", "true");
 
+        // mobile touch
         info.el.addEventListener("pointerup", ev => {
-          const dateClicked = new Date(info.dateStr);
-          dateClicked.setHours(0,0,0,0);
-          const blocked = reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end);
-          if (!blocked) openModal(dateClicked);
+          if (ev.pointerType === "touch") {
+            const dateStr = info.el.getAttribute("data-date");
+            const s = new Date(dateStr);
+            const e = new Date(s); e.setDate(e.getDate() + 1);
+            if (reservedRanges.some(r => s >= r.start && s < r.end)) return;
+            clickedStart = s;
+            modalDates.textContent = `Date de départ : ${formatDateISO(clickedStart)}`;
+            inputName.value = "";
+            inputEmail.value = "";
+            inputPhone.value = "";
+            inputPersons.value = 2;
+            const price = sumPriceByNights(formatDateISO(clickedStart), 1, 2, testPayment);
+            if (priceDisplay) priceDisplay.textContent = `Montant total : ${price} €`;
+            if (modal) modal.style.display = 'flex';
+          }
         }, { passive: true });
+      },
+
+      dateClick(info) {
+        const dateClicked = new Date(info.dateStr);
+        dateClicked.setHours(0,0,0,0);
+        if (reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end)) return;
+
+        clickedStart = dateClicked;
+        modalDates.textContent = `Date de départ : ${formatDateISO(clickedStart)}`;
+        inputName.value = "";
+        inputEmail.value = "";
+        inputPhone.value = "";
+        inputPersons.value = 2;
+        const price = sumPriceByNights(formatDateISO(clickedStart), 1, 2, testPayment);
+        if (priceDisplay) priceDisplay.textContent = `Montant total : ${price} €`;
+        if (modal) modal.style.display = 'flex';
       }
     });
 
     cal.render();
 
     // -------------------------------
-    // Modal functions
+    // Modal buttons
     // -------------------------------
-    function openModal(startDate) {
-      clickedStart = startDate;
-      modalDates.textContent = `Date de départ : ${formatDateISO(clickedStart)}`;
-      inputNights.value = 1;
-      inputPersons.value = 2;
-      errorBox.style.display = 'none';
-      errorBox.textContent = '';
-      updatePriceAndAvailability();
-      modal.style.display = 'flex';
-    }
-
-    function updatePriceAndAvailability() {
-      if (!clickedStart) return;
-      const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
-      const nbPersons = Math.max(1, parseInt(inputPersons.value, 10) || 2);
-      const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
-      errorBox.style.display = ok ? 'none' : 'block';
-      errorBox.textContent = ok ? '' : "La période chevauche une réservation existante.";
-      priceDisplay.textContent = `Montant total : ${sumPriceByNights(formatDateISO(clickedStart), nights, nbPersons, testPayment)} €`;
-      btnConfirm.disabled = !ok;
-    }
-
-    [inputNights, inputPersons, inputName, inputEmail, inputPhone].forEach(el=>{
-      el.addEventListener('input', updatePriceAndAvailability);
-    });
-
-    btnCancel.addEventListener('click', ()=>{
+    if (btnCancel) btnCancel.addEventListener('click', () => {
+      if (modal) modal.style.display = 'none';
       clickedStart = null;
-      modal.style.display = 'none';
     });
 
-    btnConfirm.addEventListener('click', async ()=>{
+    if (btnConfirm) btnConfirm.addEventListener('click', async () => {
       if (!clickedStart) return;
-      const nights = Math.max(1, parseInt(inputNights.value, 10)||1);
-      const nbPersons = Math.max(1, parseInt(inputPersons.value, 10)||2);
-      if (!isRangeAvailable(clickedStart, nights, reservedRanges)) {
-        errorBox.style.display = 'block';
-        errorBox.textContent = "Période non disponible.";
-        return;
-      }
+      const persons = parseInt(inputPersons.value) || 2;
       const name = inputName.value.trim();
       const email = inputEmail.value.trim();
       const phone = inputPhone.value.trim();
       if (!name || !email || !phone) {
-        errorBox.style.display = 'block';
-        errorBox.textContent = "Veuillez remplir nom, email et téléphone.";
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir tous les champs.'; }
         return;
       }
       const startDate = formatDateISO(clickedStart);
-      const endDate = formatDateISO(addDays(clickedStart, nights));
-      const total = sumPriceByNights(startDate, nights, nbPersons, testPayment);
-      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} (${nights} nuits) pour ${total} € ?`)) return;
+      const endDate = addDays(clickedStart, 1);
+      const endDateStr = formatDateISO(endDate);
+      const total = sumPriceByNights(startDate, 1, persons, testPayment);
+
+      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDateStr} (${1} nuit) pour ${total} € ?`)) return;
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            logement:"LIVA",
+            logement: "LIVA",
             startDate,
-            endDate,
+            endDate: endDateStr,
             amount: total,
-            personnes: nbPersons,
+            personnes: persons,
             name,
             email,
             phone
@@ -273,21 +270,21 @@
         });
         const data = await res.json();
         if (data.url) {
-          modal.style.display = 'none';
+          if (modal) modal.style.display = 'none';
           location.href = data.url;
         } else {
           alert("Impossible de créer la réservation.");
         }
-      } catch(err){
+      } catch (err) {
         console.error(err);
-        alert("Erreur réseau.");
+        alert("Erreur réseau lors de la création de la réservation.");
       }
     });
 
-    modal.addEventListener('click', ev => {
+    if (modal) modal.addEventListener('click', ev => {
       if (ev.target === modal) {
-        clickedStart = null;
         modal.style.display = 'none';
+        clickedStart = null;
       }
     });
 
