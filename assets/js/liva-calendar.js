@@ -1,5 +1,5 @@
 // ========================================================
-// 🌿 LIVA Calendar JS - Mode "Date départ -> Nuits" (Desktop + Mobile)
+// 🌿 LIVA Calendar JS - Version Finale (Desktop + Mobile)
 // ========================================================
 
 (async function () {
@@ -14,8 +14,8 @@
       user-select: none !important;
     }
 
-    #calendar .fc { background: #f9f9f9 !important; color: #000 !important; font-family: "Inter", sans-serif; }
-    #calendar .fc-daygrid-day { background: #fff !important; border-color: #ddd !important; transition: background 0.15s ease; pointer-events: auto !important; }
+    #calendar .fc { background: #fff !important; color: #000 !important; font-family: "Inter", sans-serif; }
+    #calendar .fc-daygrid-day { background: #fdfdfd !important; border-color: #ddd !important; transition: background 0.15s ease; pointer-events: auto !important; }
     @media (hover: hover) {
       #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #eee !important; cursor: pointer; }
     }
@@ -52,7 +52,6 @@
     #reservationModal button { padding: 12px; border-radius: 8px; border: none; margin-top: 8px; width: 100%; }
     #res-confirm { background: #6f4cff; color: #fff; }
     #res-cancel { background: #333; color: #fff; }
-    #res-error { color: #ff8b8b; margin-top: 6px; display: none; }
   `;
 
   const styleNode = document.createElement("style");
@@ -63,17 +62,6 @@
   // -------------------------------
   // 2) Helpers
   // -------------------------------
-  function addDays(date, days) {
-    const d = new Date(date);
-    d.setDate(d.getDate() + days);
-    d.setHours(0,0,0,0);
-    return d;
-  }
-
-  function formatDateISO(date) {
-    return date.toISOString().split('T')[0];
-  }
-
   function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
     if (testPayment) return 1;
     const base = 79;
@@ -93,30 +81,23 @@
     }
   }
 
-  function sumPriceByNights(startStr, nights, nbPersons, testPayment) {
+  function sumPrice(startStr, endStr, nbPersons, testPayment) {
     let total = 0;
     let cur = new Date(startStr);
-    for (let i = 0; i < nights; i++) {
+    const end = new Date(endStr);
+    while (cur < end) {
       total += getTarif(cur.toISOString().split("T")[0], nbPersons, testPayment);
       cur.setDate(cur.getDate() + 1);
     }
     return total;
   }
 
-  function isRangeAvailable(startDate, nights, reservedRanges) {
-    const selStart = new Date(startDate);
-    selStart.setHours(0,0,0,0);
-    const selEnd = addDays(selStart, nights); // exclusive
-
-    const today = new Date(); today.setHours(0,0,0,0);
-    if (selStart < today) return false;
-
-    for (const r of reservedRanges) {
-      if (selStart < r.end && selEnd > r.start) {
-        return false;
-      }
-    }
-    return true;
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   }
 
   // -------------------------------
@@ -126,6 +107,16 @@
     const el = document.getElementById("calendar");
     if (!el) return;
 
+    const calendarBackend = location.hostname.includes("localhost")
+      ? "http://localhost:4000"
+      : "https://calendar-proxy-production-ed46.up.railway.app";
+    const stripeBackend = location.hostname.includes("localhost")
+      ? "http://localhost:3000"
+      : "https://livablom-stripe-production.up.railway.app";
+    const config = await getConfig();
+    const testPayment = config.testPayment;
+
+    // Modal refs
     const modal = document.getElementById("reservationModal");
     const modalDates = document.getElementById("modal-dates");
     const inputName = document.getElementById("res-name");
@@ -135,42 +126,51 @@
     const priceDisplay = document.getElementById("modal-price");
     const btnCancel = document.getElementById("res-cancel");
     const btnConfirm = document.getElementById("res-confirm");
-    const errorBox = document.getElementById("res-error");
-
-    const calendarBackend = location.hostname.includes("localhost")
-      ? "http://localhost:4000"
-      : "https://calendar-proxy-production-ed46.up.railway.app";
-    const stripeBackend = location.hostname.includes("localhost")
-      ? "http://localhost:3000"
-      : "https://livablom-stripe-production.up.railway.app";
-
-    const config = await getConfig();
-    const testPayment = config.testPayment;
 
     let reservedRanges = [];
-    let clickedStart = null;
+    let selectedStart = null;
+    let selectedEnd = null;
 
-    if (inputPersons) inputPersons.value = 2;
+    function updatePriceDisplay() {
+      if (!selectedStart || !selectedEnd) return;
+      const nbPers = parseInt(inputPersons.value) || 2;
+      priceDisplay.textContent =
+        `Montant total : ${sumPrice(selectedStart, selectedEnd, nbPers, testPayment)} €`;
+    }
 
+    function validateForm() {
+      const name = inputName.value.trim();
+      const email = inputEmail.value.trim();
+      const phone = inputPhone.value.trim();
+      const nbP = parseInt(inputPersons.value);
+      btnConfirm.disabled = !(name && email && phone && nbP >= 1 && nbP <= 5);
+    }
+
+    [inputName, inputEmail, inputPhone, inputPersons].forEach(el => {
+      el.addEventListener("input", () => { validateForm(); updatePriceDisplay(); });
+    });
+
+    // -------------------------------
+    // 4) FullCalendar
+    // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
-      selectable: false,
+      selectable: true,
       firstDay: 1,
       locale: "fr",
       height: "auto",
+
+      selectAllow(sel) {
+        const today = new Date(); today.setHours(0,0,0,0);
+        if (sel.start < today) return false;
+        return !reservedRanges.some(r => sel.start < r.end && sel.end > r.start);
+      },
 
       events: async (fetchInfo, success, failure) => {
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/LIVA`);
           const data = await res.json();
-          reservedRanges = data.map(e => {
-            const s = new Date(e.start);
-            const rawEnd = new Date(e.end);
-            const exEnd = addDays(rawEnd, 1); // end exclusive
-            s.setHours(0,0,0,0);
-            exEnd.setHours(0,0,0,0);
-            return { start: s, end: exEnd };
-          });
+          reservedRanges = data.map(e => ({ start: new Date(e.start), end: new Date(e.end) }));
           success(reservedRanges.map(r => ({
             title: "Réservé",
             start: r.start,
@@ -187,108 +187,80 @@
 
       dayCellDidMount(info) {
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
-        if (isReserved) info.el.setAttribute("data-reserved", "true");
+        if (isReserved) {
+          info.el.setAttribute("data-reserved", "true");
+          return;
+        }
 
-        // mobile touch
+        // Mobile touch
         info.el.addEventListener("pointerup", ev => {
           if (ev.pointerType === "touch") {
             const dateStr = info.el.getAttribute("data-date");
             const s = new Date(dateStr);
             const e = new Date(s); e.setDate(e.getDate() + 1);
-            if (reservedRanges.some(r => s >= r.start && s < r.end)) return;
-            clickedStart = s;
-            modalDates.textContent = `Date de départ : ${formatDateISO(clickedStart)}`;
-            inputName.value = "";
-            inputEmail.value = "";
-            inputPhone.value = "";
-            inputPersons.value = 2;
-            const price = sumPriceByNights(formatDateISO(clickedStart), 1, 2, testPayment);
-            if (priceDisplay) priceDisplay.textContent = `Montant total : ${price} €`;
-            if (modal) modal.style.display = 'flex';
+            if (!cal.getOption("selectAllow")({ start: s, end: e })) return;
+            cal.select({ start: s, end: e, allDay: true });
           }
         }, { passive: true });
       },
 
-      dateClick(info) {
-        const dateClicked = new Date(info.dateStr);
-        dateClicked.setHours(0,0,0,0);
-        if (reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end)) return;
+      select(info) {
+        selectedStart = info.startStr.split("T")[0];
+        selectedEnd = info.endStr.split("T")[0];
 
-        clickedStart = dateClicked;
-        modalDates.textContent = `Date de départ : ${formatDateISO(clickedStart)}`;
+        modalDates.textContent = `Du ${formatDate(selectedStart)} au ${formatDate(selectedEnd)}`;
         inputName.value = "";
         inputEmail.value = "";
         inputPhone.value = "";
         inputPersons.value = 2;
-        const price = sumPriceByNights(formatDateISO(clickedStart), 1, 2, testPayment);
-        if (priceDisplay) priceDisplay.textContent = `Montant total : ${price} €`;
-        if (modal) modal.style.display = 'flex';
+
+        validateForm();
+        updatePriceDisplay();
+        modal.style.display = "flex";
       }
     });
 
     cal.render();
 
     // -------------------------------
-    // Modal buttons
+    // 5) Modal buttons
     // -------------------------------
-    if (btnCancel) btnCancel.addEventListener('click', () => {
-      if (modal) modal.style.display = 'none';
-      clickedStart = null;
+    btnCancel.addEventListener("click", () => {
+      modal.style.display = "none";
+      cal.unselect();
     });
 
-    if (btnConfirm) btnConfirm.addEventListener('click', async () => {
-      if (!clickedStart) return;
-      const persons = parseInt(inputPersons.value) || 2;
+    btnConfirm.addEventListener("click", async () => {
       const name = inputName.value.trim();
       const email = inputEmail.value.trim();
       const phone = inputPhone.value.trim();
-      if (!name || !email || !phone) {
-        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir tous les champs.'; }
+      const nbP = parseInt(inputPersons.value);
+
+      const total = sumPrice(selectedStart, selectedEnd, nbP, testPayment);
+
+      if (!confirm(`Confirmer la réservation du ${formatDate(selectedStart)} au ${formatDate(selectedEnd)} pour ${total} € ?`))
         return;
-      }
-      const startDate = formatDateISO(clickedStart);
-      const endDate = addDays(clickedStart, 1);
-      const endDateStr = formatDateISO(endDate);
-      const total = sumPriceByNights(startDate, 1, persons, testPayment);
 
-      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDateStr} (${1} nuit) pour ${total} € ?`)) return;
+      const res = await fetch(`${stripeBackend}/api/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          logement: "LIVA",
+          startDate: selectedStart,
+          endDate: selectedEnd,
+          amount: total,
+          personnes: nbP,
+          name,
+          email,
+          phone
+        })
+      });
 
-      try {
-        const res = await fetch(`${stripeBackend}/api/checkout`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            logement: "LIVA",
-            startDate,
-            endDate: endDateStr,
-            amount: total,
-            personnes: persons,
-            name,
-            email,
-            phone
-          })
-        });
-        const data = await res.json();
-        if (data.url) {
-          if (modal) modal.style.display = 'none';
-          location.href = data.url;
-        } else {
-          alert("Impossible de créer la réservation.");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Erreur réseau lors de la création de la réservation.");
-      }
-    });
-
-    if (modal) modal.addEventListener('click', ev => {
-      if (ev.target === modal) {
-        modal.style.display = 'none';
-        clickedStart = null;
-      }
+      const data = await res.json();
+      if (data.url) location.href = data.url;
+      else alert("Impossible de créer la réservation.");
     });
 
   });
 
 })();
-cd
