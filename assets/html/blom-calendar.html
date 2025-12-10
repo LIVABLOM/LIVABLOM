@@ -20,11 +20,7 @@
       font-family: Arial, sans-serif;
     }
 
-    h1 {
-      text-align: center;
-      margin: 10px 0;
-      font-size: 1.8rem;
-    }
+    h1 { text-align: center; margin: 10px 0; font-size: 1.8rem; }
 
     #calendar {
       width: 100%;
@@ -36,10 +32,7 @@
       height: calc(100vh - 140px);
     }
 
-    .back-button {
-      text-align: center;
-      margin-bottom: 10px;
-    }
+    .back-button { text-align: center; margin-bottom: 10px; }
 
     .back-button a {
       padding: 8px 15px;
@@ -50,7 +43,7 @@
       font-weight: bold;
     }
 
-    /* Modal styles (adaptés au nouveau flux) */
+    /* Modal styles */
     .modal-bg {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -72,95 +65,48 @@
       box-sizing: border-box;
     }
 
-    .modal-content h3 {
-      margin-top: 0;
-    }
+    .modal-content h3 { margin-top: 0; }
 
-    .modal-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 8px;
-    }
+    .modal-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; }
+    .modal-row label { flex: 1; display: flex; flex-direction: column; font-size: 0.95rem; }
+    .modal-row input { width: 100%; padding: 8px; margin-top: 6px; border-radius: 6px; border: 1px solid #555; background: #111; color: #fff; box-sizing: border-box; }
 
-    .modal-row label {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      font-size: 0.95rem;
-    }
+    #modal-price { font-weight: bold; margin-top: 12px; }
+    #res-error { color: #ff8b8b; margin-top: 8px; display: none; }
 
-    .modal-row input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      border-radius: 6px;
-      border: 1px solid #555;
-      background: #111;
-      color: #fff;
-      box-sizing: border-box;
-    }
-
-    #modal-price {
-      font-weight: bold;
-      margin-top: 12px;
-    }
-
-    #res-error {
-      color: #ff8b8b;
-      margin-top: 8px;
-      display: none;
-    }
-
-    .modal-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .modal-buttons button {
-      padding: 10px 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
+    .modal-buttons { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+    .modal-buttons button { padding: 10px 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
     #res-confirm { background: #6f4cff; color: #fff; }
     #res-cancel { background: #333; color: #fff; }
 
-    /* Responsive */
     @media (max-width: 768px) {
       h1 { font-size: 1.4rem; }
       #calendar { padding: 5px; height: calc(100vh - 120px); }
       .modal-row { flex-direction: column; align-items: stretch; }
     }
 
-    /* CORRECTION : enlever l'overlay qui bloque les clics sur mobile */
+    /* Correction : overlay transparent */
     #calendar .fc-scrollgrid { background: transparent !important; }
     #calendar .fc-daygrid-day { background: #111; }
   </style>
 </head>
 <body>
 
-  <!-- Titre -->
   <h1>Calendrier des disponibilités - BLŌM</h1>
 
-  <!-- Bouton Retour -->
   <div class="back-button">
     <a href="/blom/">← Retour vers BLŌM</a>
   </div>
 
-  <!-- Calendrier -->
   <div id="calendar"></div>
 
-  <!-- Modal réservation (nouveau flux : date départ -> nuits -> confirmer) -->
+  <!-- Modal réservation -->
   <div class="modal-bg" id="reservationModal">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <h3 id="modal-title">Réserver BLŌM</h3>
 
-      <p>Arrivée : <strong id="modal-start">--</strong></p>
+      <!-- 🚨 Important : utiliser data-local-date pour stocker la date locale -->
+      <p>Arrivée : <strong id="modal-start" data-local-date="">--</strong></p>
 
       <div class="modal-row">
         <label>
@@ -200,7 +146,7 @@
     </div>
   </div>
 
-  <!-- Script principal (assure-toi que c'est la version "date départ -> nuits") -->
+  <!-- Script principal -->
   <script src="/assets/js/blom-calendar.js"></script>
 
 </body>
