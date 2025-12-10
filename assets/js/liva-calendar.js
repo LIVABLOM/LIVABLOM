@@ -1,5 +1,5 @@
 // ========================================================
-// 🌿 LIVA Calendar JS - Version Finale (Desktop + Mobile)
+// 🌿 LIVA Calendar JS - Version blanche & style identique à BLŌM pour comportement
 // ========================================================
 
 (async function () {
@@ -8,20 +8,75 @@
   // 1) CSS : style + mobile safe
   // -------------------------------
   const css = `
-    #calendar, #calendar * { touch-action: manipulation !important; -webkit-user-select: none !important; user-select: none !important; }
-    #calendar .fc { background: #fff !important; color: #000 !important; font-family: "Inter", sans-serif; }
-    #calendar .fc-daygrid-day { background: #fdfdfd !important; border-color: #ddd !important; transition: background 0.15s ease; pointer-events: auto !important; }
-    @media (hover: hover) { #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #eee !important; cursor: pointer; } }
-    #calendar .fc-day-disabled { opacity: 0.35 !important; }
-    #calendar .fc-daygrid-day[data-reserved="true"] { background: #ffcccc !important; opacity: 0.8; pointer-events: none !important; }
+    #calendar, #calendar * {
+      touch-action: manipulation !important;
+      -webkit-user-select: none !important;
+      user-select: none !important;
+    }
 
-    #reservationModal { z-index: 2000; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; padding: 20px; }
-    #reservationModal .modal-content { background: #fff; padding: 20px; border-radius: 10px; width: 90%; max-width: 480px; color: #000; border: 1px solid #ccc; }
-    #reservationModal input, #reservationModal select { width: 100%; padding: 8px; margin: 6px 0 12px; border-radius: 6px; background: #f9f9f9; border: 1px solid #ccc; color: #000; }
+    #calendar .fc { 
+      background: #ffffff !important;  /* Fond blanc */
+      color: #000 !important;          /* Texte noir */
+      font-family: "Inter", sans-serif; 
+    }
+
+    #calendar .fc-daygrid-day { 
+      background: #ffffff !important;  /* Fond blanc pour toutes les cellules */
+      border-color: #ddd !important; 
+      transition: background 0.15s ease; 
+      pointer-events: auto !important; 
+      color: #000 !important;
+    }
+
+    @media (hover: hover) {
+      #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { 
+        background: #eee !important; 
+        cursor: pointer; 
+      }
+    }
+
+    #calendar .fc-day-disabled { opacity: 0.35 !important; }
+
+    /* jours réservés rouge vif (comme BLŌM) */
+    #calendar .fc-daygrid-day[data-reserved="true"] { 
+      background: #900 !important; 
+      opacity: 0.9; 
+      pointer-events: none !important; 
+      color: #fff !important;
+    }
+
+    /* Modal style (texte noir, fond blanc dans HTML) */
+    #reservationModal {
+      z-index: 2000;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #reservationModal .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 480px;
+      color: #000;
+      border: 1px solid #ccc;
+    }
+    #reservationModal input, #reservationModal select {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0 12px;
+      border-radius: 6px;
+      background: #fafafa;
+      border: 1px solid #ccc;
+      color: #000;
+    }
     #reservationModal button { padding: 12px; border-radius: 8px; border: none; margin-top: 8px; width: 100%; }
-    #res-confirm { background: #6f4cff; color: #fff; }
-    #res-cancel { background: #333; color: #fff; }
-    #res-error { color: #ff8b8b; margin-top: 6px; display: none; }
+    #res-confirm { background: #0077ff; color: #fff; }
+    #res-cancel { background: #ccc; color: #000; }
+    #res-error { color: #c00; margin-top: 6px; display: none; }
   `;
 
   const styleNode = document.createElement("style");
@@ -30,7 +85,7 @@
   document.head.appendChild(styleNode);
 
   // -------------------------------
-  // 2) Helpers
+  // 2) Helpers (inchangés)
   // -------------------------------
   function addDays(date, days) {
     const d = new Date(date);
@@ -48,7 +103,7 @@
 
   function getTarif(dateStr, nbPersonnes = 2, testPayment = false) {
     if (testPayment) return 1;
-    let base = 79; // prix LIVA de base
+    const base = 79;
     const supplement = nbPersonnes > 2 ? (nbPersonnes - 2) * 15 : 0;
     return base + supplement;
   }
@@ -78,7 +133,7 @@
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const selStart = new Date(startDate);
     selStart.setHours(0,0,0,0);
-    const selEnd = addDays(selStart, nights);
+    const selEnd = addDays(selStart, nights); // exclusive
     const today = new Date(); today.setHours(0,0,0,0);
     if (selStart < today) return false;
     for (const r of reservedRanges) {
@@ -94,17 +149,8 @@
     const el = document.getElementById("calendar");
     if (!el) return;
 
-    const calendarBackend = location.hostname.includes("localhost")
-      ? "http://localhost:4000"
-      : "https://calendar-proxy-production-ed46.up.railway.app";
-    const stripeBackend = location.hostname.includes("localhost")
-      ? "http://localhost:3000"
-      : "https://livablom-stripe-production.up.railway.app";
-    const config = await getConfig();
-    const testPayment = config.testPayment;
-
     const modal = document.getElementById("reservationModal");
-    const modalStart = document.getElementById("modal-start");
+    const modalStart = document.getElementById("modal-start") || document.getElementById("modal-dates");
     const inputNights = document.getElementById("res-nights");
     const inputPersons = document.getElementById("res-persons");
     const priceDisplay = document.getElementById("modal-price");
@@ -114,6 +160,17 @@
     const btnCancel = document.getElementById("res-cancel");
     const btnConfirm = document.getElementById("res-confirm");
     const errorBox = document.getElementById("res-error");
+
+    const calendarBackend = location.hostname.includes("localhost")
+      ? "http://localhost:4000"
+      : "https://calendar-proxy-production-ed46.up.railway.app";
+
+    const stripeBackend = location.hostname.includes("localhost")
+      ? "http://localhost:3000"
+      : "https://livablom-stripe-production.up.railway.app";
+
+    const config = await getConfig();
+    const testPayment = config.testPayment;
 
     let reservedRanges = [];
     let clickedStart = null;
@@ -126,7 +183,7 @@
     // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
-      selectable: true,
+      selectable: false,
       firstDay: 1,
       locale: "fr",
       height: "auto",
@@ -135,11 +192,10 @@
         try {
           const res = await fetch(`${calendarBackend}/api/reservations/LIVA`);
           const data = await res.json();
+
           reservedRanges = data.map(e => {
-            const s = new Date(e.start);
-            const exEnd = new Date(e.end);
-            s.setHours(0,0,0,0);
-            exEnd.setHours(0,0,0,0);
+            const s = new Date(e.start); s.setHours(0,0,0,0);
+            const exEnd = new Date(e.end); exEnd.setHours(0,0,0,0);
             return { start: s, end: exEnd };
           });
 
@@ -148,8 +204,8 @@
             start: r.start,
             end: r.end,
             display: "background",
-            backgroundColor: "#ff0000",
-            borderColor: "#ff0000",
+            backgroundColor: "#900",
+            borderColor: "#900",
             allDay: true
           })));
         } catch (err) {
@@ -159,19 +215,27 @@
 
       dayCellDidMount(info) {
         const isReserved = reservedRanges.some(r => info.date >= r.start && info.date < r.end);
-        if (isReserved) info.el.setAttribute("data-reserved", "true");
+        if (isReserved) {
+          info.el.setAttribute("data-reserved", "true");
+        } else {
+          // Forcer fond blanc pour LIVA
+          info.el.style.backgroundColor = "#ffffff";
+          info.el.style.color = "#000000";
+        }
       },
 
       dateClick(info) {
         const today = new Date(); today.setHours(0,0,0,0);
+        const dateClicked = new Date(info.date.getFullYear(), info.date.getMonth(), info.date.getDate());
+        if (dateClicked < today) return;
 
-        clickedStart = new Date(info.date.getFullYear(), info.date.getMonth(), info.date.getDate());
-        if (clickedStart < today) return;
-
-        const blocked = reservedRanges.some(r => clickedStart >= r.start && clickedStart < r.end);
+        const blocked = reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end);
         if (blocked) return;
 
-        if (modalStart) modalStart.textContent = formatLocalDate(clickedStart);
+        clickedStart = dateClicked;
+        const displayStr = formatLocalDate(clickedStart);
+        if (modalStart) modalStart.textContent = `Arrivée : ${displayStr}`;
+
         if (inputNights) inputNights.value = 1;
         if (inputPersons) inputPersons.value = 2;
         if (errorBox) { errorBox.style.display = 'none'; errorBox.textContent = ''; }
@@ -194,29 +258,52 @@
       const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
 
       const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
-      if (errorBox) { errorBox.style.display = ok ? 'none' : 'block'; errorBox.textContent = ok ? '' : "La période sélectionnée chevauche une réservation existante."; }
+
+      if (errorBox) {
+        if (!ok) {
+          errorBox.style.display = 'block';
+          errorBox.textContent = "La période sélectionnée chevauche une réservation existante.";
+        } else {
+          errorBox.style.display = 'none';
+          errorBox.textContent = '';
+        }
+      }
 
       const total = sumPriceByNights(formatLocalDate(clickedStart), nights, persons, testPayment);
       if (priceDisplay) priceDisplay.textContent = `Montant total : ${total} €`;
+
       if (btnConfirm) btnConfirm.disabled = !ok;
     }
 
     if (inputNights) inputNights.addEventListener('input', updateModalPriceAndAvailability);
     if (inputPersons) inputPersons.addEventListener('input', updateModalPriceAndAvailability);
 
-    if (btnCancel) btnCancel.addEventListener('click', () => { if (modal) modal.style.display = 'none'; clickedStart = null; });
+    // Cancel modal
+    if (btnCancel) btnCancel.addEventListener('click', () => {
+      if (modal) modal.style.display = 'none';
+      clickedStart = null;
+    });
+
+    // Confirm reservation
     if (btnConfirm) btnConfirm.addEventListener('click', async () => {
       if (!clickedStart) return;
+
       const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
       const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
 
-      if (!isRangeAvailable(clickedStart, nights, reservedRanges)) { if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Période non disponible.'; } return; }
+      if (!isRangeAvailable(clickedStart, nights, reservedRanges)) {
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Période non disponible.'; }
+        return;
+      }
 
-      const name = inputName.value.trim();
-      const email = inputEmail.value.trim();
-      const phone = inputPhone.value.trim();
+      const name = inputName ? inputName.value.trim() : '';
+      const email = inputEmail ? inputEmail.value.trim() : '';
+      const phone = inputPhone ? inputPhone.value.trim() : '';
 
-      if (!name || !email || !phone) { if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir tous les champs.'; } return; }
+      if (!name || !email || !phone) {
+        if (errorBox) { errorBox.style.display = 'block'; errorBox.textContent = 'Veuillez remplir tous les champs.'; }
+        return;
+      }
 
       const startDate = formatLocalDate(clickedStart);
       const endDate = formatLocalDate(addDays(clickedStart, nights));
@@ -232,12 +319,24 @@
         });
 
         const data = await res.json();
-        if (data.url) { if (modal) modal.style.display = 'none'; location.href = data.url; }
-        else alert("Erreur lors de la création de la réservation.");
-      } catch (err) { alert("Erreur réseau lors de la réservation."); }
+        if (data.url) {
+          if (modal) modal.style.display = 'none';
+          location.href = data.url;
+        } else {
+          alert("Erreur lors de la création de la réservation.");
+        }
+      } catch (err) {
+        alert("Erreur réseau lors de la réservation.");
+      }
     });
 
-    if (modal) modal.addEventListener('click', (ev) => { if (ev.target === modal) { modal.style.display = 'none'; clickedStart = null; } });
+    // Close modal on outside click
+    if (modal) modal.addEventListener('click', (ev) => {
+      if (ev.target === modal) {
+        modal.style.display = 'none';
+        clickedStart = null;
+      }
+    });
 
   });
 
