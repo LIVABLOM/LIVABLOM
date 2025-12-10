@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-  /* ---------- Thème clair spécial LIVA ---------- */
+  /* Thème clair spécial LIVA */
   html, body {
     height: 100%;
     margin: 0;
@@ -52,7 +52,7 @@
     .back-button a { padding: 6px 12px; font-size: 0.9rem; }
   }
 
-  /* ---------- Modal en fond blanc ---------- */
+  /* Modal style – thème BLANC */
   .modal-bg {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
@@ -107,30 +107,23 @@
   #modal-price { font-weight:bold; margin-top:12px; }
   #res-error { color:#c00; margin-top:8px; display:none; }
 
-  /* ---------- FULLCALENDAR : Forcer le thème 100% BLANC ---------- */
-  #calendar .fc,
-  #calendar .fc-scrollgrid,
-  #calendar .fc-scrollgrid-section,
-  #calendar .fc-scrollgrid > table,
-  #calendar .fc-scrollgrid > div,
-  #calendar .fc-daygrid,
-  #calendar .fc-daygrid-body,
-  #calendar .fc-daygrid-day,
-  #calendar .fc-daygrid-day-frame,
-  #calendar .fc-daygrid-day-top,
-  #calendar .fc-col-header,
-  #calendar .fc-col-header th,
-  #calendar .fc-toolbar,
-  #calendar .fc-toolbar-chunk,
-  #calendar table,
-  #calendar td,
-  #calendar th {
+  /* FullCalendar fond blanc + réservés rouges */
+  .fc,
+  .fc .fc-scrollgrid,
+  .fc .fc-scrollgrid-section,
+  .fc .fc-daygrid,
+  .fc .fc-daygrid-body,
+  .fc .fc-daygrid-day {
     background: #ffffff !important;
-    background-image: none !important;
-    box-shadow: none !important;
-    border-color: #ddd !important;
     color: #000 !important;
   }
+
+  .fc-daygrid-day[data-reserved="true"] {
+    background-color: #ff4c4c !important; /* rouge réservations */
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
 </style>
 </head>
 <body>
@@ -149,7 +142,6 @@
     <h3 id="modal-title">Réserver LIVA</h3>
 
     <p id="modal-dates">--</p>
-    <p style="display:none">Arrivée : <strong id="modal-start">--</strong></p>
 
     <div class="modal-row">
       <label>
