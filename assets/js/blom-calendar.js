@@ -78,8 +78,8 @@
     if (testPayment) return 1;
     const d = new Date(dateStr);
     const day = d.getDay();
-    if (day === 5 || day === 6) return 169;   // vendredi / samedi
-    if (day === 0) return 190;                // dimanche
+    if (day === 5 || day === 6) return 169;
+    if (day === 0) return 190;
     return 150;
   }
 
@@ -105,15 +105,12 @@
     return total;
   }
 
-  // Check if selection overlaps reserved dates
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const selStart = new Date(startDate);
     selStart.setHours(0,0,0,0);
     const selEnd = addDays(selStart, nights); // exclusive
-
     const today = new Date(); today.setHours(0,0,0,0);
     if (selStart < today) return false;
-
     for (const r of reservedRanges) {
       if (selStart < r.end && selEnd > r.start) {
         return false;
@@ -174,14 +171,10 @@
           const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
           const data = await res.json();
 
-          // CORRECTION → ne plus ajouter 1 jour au end
           reservedRanges = data.map(e => {
             const s = new Date(e.start);
             const rawEnd = new Date(e.end);
-
-            // end = jour de départ → ne doit pas être réservé
-            const exEnd = rawEnd;  // <--- FIX
-
+            const exEnd = rawEnd;
             s.setHours(0,0,0,0);
             exEnd.setHours(0,0,0,0);
             return { start: s, end: exEnd };
@@ -207,8 +200,12 @@
       },
 
       dateClick(info) {
-        const dateClicked = new Date(info.dateStr);
-        dateClicked.setHours(0,0,0,0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        // Correction UTC -> utiliser getFullYear/month/date
+        const dateClicked = new Date(info.date.getFullYear(), info.date.getMonth(), info.date.getDate());
+        if(dateClicked < today) return; // bloque les dates passées
 
         const blocked = reservedRanges.some(r => dateClicked >= r.start && dateClicked < r.end);
         if (blocked) return;
@@ -294,9 +291,7 @@
       }
 
       const startDate = formatDateISO(clickedStart);
-      const endDateObj = addDays(clickedStart, nights);
-      const endDate = formatDateISO(endDateObj);
-
+      const endDate = formatDateISO(addDays(clickedStart, nights));
       const total = sumPriceByNights(startDate, nights, persons, testPayment);
 
       if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} (${nights} nuits) pour ${total} € ?`)) return;
@@ -305,16 +300,7 @@
         const res = await fetch(`${stripeBackend}/api/checkout`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            logement: "BLŌM",
-            startDate,
-            endDate,
-            amount: total,
-            personnes: persons,
-            name,
-            email,
-            phone
-          })
+          body: JSON.stringify({ logement: "BLŌM", startDate, endDate, amount: total, personnes: persons, name, email, phone })
         });
 
         const data = await res.json();
