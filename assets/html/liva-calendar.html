@@ -26,7 +26,7 @@
     padding: 10px; 
     background: #f9f9f9; 
     border-radius: 12px; 
-    height: calc(100vh - 140px); /* Ajusté pour le bouton retour et le prix */
+    height: calc(100vh - 160px);
   }
 
   h1 { 
@@ -71,14 +71,15 @@
     padding: 20px;
     border-radius: 12px;
     width: 90%;
-    max-width: 400px;
+    max-width: 420px;
   }
   .modal-content label { display:block; margin-top:10px; }
   .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
+  .modal-row { display:flex; gap:10px; margin-top:10px; }
+  .modal-row label { flex:1; }
   .modal-buttons { text-align:right; margin-top:15px; }
   .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
 
-  /* Prix dynamique */
   #modal-price { font-weight: bold; margin-top:10px; }
 </style>
 </head>
@@ -86,7 +87,6 @@
 
 <h1>Calendrier des disponibilités - LIVA</h1>
 
-<!-- Bouton Retour vers LIVA -->
 <div class="back-button">
   <a href="/liva/">← Retour vers LIVA</a>
 </div>
@@ -97,11 +97,14 @@
 <div class="modal-bg" id="reservationModal">
   <div class="modal-content">
     <h3>Réserver LIVA</h3>
-    <p id="modal-dates"></p>
+    <p id="modal-dates">--</p>
+    <div class="modal-row">
+      <label>Nuits <input type="number" id="res-nights" min="1" value="1"></label>
+      <label>Personnes <input type="number" id="res-persons" min="1" max="5" value="2"></label>
+    </div>
     <label>Nom complet<input type="text" id="res-name"></label>
     <label>Email<input type="email" id="res-email"></label>
     <label>Téléphone<input type="tel" id="res-phone"></label>
-    <label>Nombre de personnes (max 5)<input type="number" id="res-persons" min="1" max="5" value="2"></label>
     <p id="modal-price">Montant total : 0 €</p>
     <div class="modal-buttons">
       <button id="res-cancel">Annuler</button>
@@ -109,10 +112,6 @@
     </div>
   </div>
 </div>
-
-<script>
-  window.TEST_PAYMENT = true;
-</script>
 
 <script src="/assets/js/liva-calendar.js"></script>
 
