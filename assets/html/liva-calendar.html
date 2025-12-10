@@ -10,77 +10,127 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <style>
-  html, body { 
-    height: 100%; 
-    margin: 0; 
-    padding: 0; 
-    background: #fff; 
-    color: #000; 
-    font-family: Arial, sans-serif; 
+  /* ---------- Thème clair spécial LIVA ---------- */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
   }
 
-  #calendar { 
-    width: 100%; 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    padding: 10px; 
-    background: #f9f9f9; 
-    border-radius: 12px; 
-    height: calc(100vh - 160px);
+  h1 {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.8rem;
   }
 
-  h1 { 
-    text-align: center; 
-    margin: 10px 0; 
-    font-size: 1.8rem; 
-  }
-
-  .back-button {
-    text-align: center; 
-    margin-bottom: 10px;
-  }
-
+  .back-button { text-align: center; margin-bottom: 10px; }
   .back-button a {
-    padding: 8px 15px; 
-    background: #000; 
-    color: #fff; 
-    text-decoration: none; 
+    padding: 8px 15px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
   }
 
+  #calendar {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+    background: #ffffff; /* BLANC */
+    border-radius: 12px;
+    height: calc(100vh - 160px);
+  }
+
   @media (max-width: 768px) {
     h1 { font-size: 1.4rem; }
-    #calendar { padding: 5px; }
+    #calendar { padding: 5px; height: calc(100vh - 140px); }
     .back-button a { padding: 6px 12px; font-size: 0.9rem; }
   }
 
-  /* Modal style */
+  /* ---------- Modal en fond blanc ---------- */
   .modal-bg {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.4);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
   }
+
   .modal-content {
     background: #fff;
     color: #000;
     padding: 20px;
     border-radius: 12px;
-    width: 90%;
-    max-width: 420px;
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
   }
-  .modal-content label { display:block; margin-top:10px; }
-  .modal-content input { width:100%; padding:5px; margin-top:5px; border-radius:5px; border:1px solid #ccc; }
-  .modal-row { display:flex; gap:10px; margin-top:10px; }
-  .modal-row label { flex:1; }
-  .modal-buttons { text-align:right; margin-top:15px; }
-  .modal-buttons button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; cursor:pointer; }
 
-  #modal-price { font-weight: bold; margin-top:10px; }
+  .modal-row { display:flex; gap:10px; margin-top:10px; }
+  .modal-row label { flex:1; display:flex; flex-direction:column; font-size:0.95rem; }
+  .modal-row input {
+    width:100%; padding:8px; margin-top:6px;
+    border-radius:6px; border:1px solid #ccc; background:#fafafa; color:#000;
+  }
+
+  .modal-content label { display:block; margin-top:10px; }
+  .modal-content input {
+    width:100%; padding:8px; margin-top:6px;
+    border-radius:6px; border:1px solid #ccc; background:#fafafa; color:#000;
+    box-sizing:border-box;
+  }
+
+  .modal-buttons {
+    display:flex; justify-content:flex-end; gap:8px;
+    margin-top:14px;
+  }
+
+  #res-confirm {
+    background: #0077ff; color:#fff; border:none;
+    padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600;
+  }
+
+  #res-cancel {
+    background: #ccc; color:#000; border:none;
+    padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600;
+  }
+
+  #modal-price { font-weight:bold; margin-top:12px; }
+  #res-error { color:#c00; margin-top:8px; display:none; }
+
+  /* ---------- FULLCALENDAR : Forcer le thème 100% BLANC ---------- */
+  #calendar .fc,
+  #calendar .fc-scrollgrid,
+  #calendar .fc-scrollgrid-section,
+  #calendar .fc-scrollgrid > table,
+  #calendar .fc-scrollgrid > div,
+  #calendar .fc-daygrid,
+  #calendar .fc-daygrid-body,
+  #calendar .fc-daygrid-day,
+  #calendar .fc-daygrid-day-frame,
+  #calendar .fc-daygrid-day-top,
+  #calendar .fc-col-header,
+  #calendar .fc-col-header th,
+  #calendar .fc-toolbar,
+  #calendar .fc-toolbar-chunk,
+  #calendar table,
+  #calendar td,
+  #calendar th {
+    background: #ffffff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border-color: #ddd !important;
+    color: #000 !important;
+  }
 </style>
 </head>
 <body>
@@ -94,21 +144,43 @@
 <div id="calendar"></div>
 
 <!-- Modal réservation -->
-<div class="modal-bg" id="reservationModal">
-  <div class="modal-content">
-    <h3>Réserver LIVA</h3>
+<div class="modal-bg" id="reservationModal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title">Réserver LIVA</h3>
+
     <p id="modal-dates">--</p>
+    <p style="display:none">Arrivée : <strong id="modal-start">--</strong></p>
+
     <div class="modal-row">
-      <label>Nuits <input type="number" id="res-nights" min="1" value="1"></label>
-      <label>Personnes <input type="number" id="res-persons" min="1" max="5" value="2"></label>
+      <label>
+        Nuits
+        <input type="number" id="res-nights" min="1" value="1" />
+      </label>
+      <label>
+        Personnes
+        <input type="number" id="res-persons" min="1" max="5" value="2" />
+      </label>
     </div>
-    <label>Nom complet<input type="text" id="res-name"></label>
-    <label>Email<input type="email" id="res-email"></label>
-    <label>Téléphone<input type="tel" id="res-phone"></label>
+
+    <label>Nom complet
+      <input type="text" id="res-name">
+    </label>
+
+    <label>Email
+      <input type="email" id="res-email">
+    </label>
+
+    <label>Téléphone
+      <input type="tel" id="res-phone">
+    </label>
+
+    <div id="res-error" aria-live="polite"></div>
+
     <p id="modal-price">Montant total : 0 €</p>
+
     <div class="modal-buttons">
-      <button id="res-cancel">Annuler</button>
-      <button id="res-confirm" disabled>Confirmer</button>
+      <button id="res-cancel" type="button">Annuler</button>
+      <button id="res-confirm" type="button" disabled>Confirmer</button>
     </div>
   </div>
 </div>
