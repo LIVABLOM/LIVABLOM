@@ -203,7 +203,7 @@
         const today = new Date();
         today.setHours(0,0,0,0);
 
-        // Correction UTC -> utiliser getFullYear/month/date
+        // 🚀 Correction du décalage UTC : création de la date en mode local
         const dateClicked = new Date(info.date.getFullYear(), info.date.getMonth(), info.date.getDate());
         if(dateClicked < today) return; // bloque les dates passées
 
