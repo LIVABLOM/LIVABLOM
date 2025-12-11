@@ -175,8 +175,58 @@
     let reservedRanges = [];
     let clickedStart = null;
 
+    // initial values
     if (inputNights) inputNights.value = 1;
     if (inputPersons) inputPersons.value = 2;
+
+    // -------------------------------
+    // NEW: mobile-safe limits for inputs
+    // -------------------------------
+    // LIVA: max 5 persons, nights 1..30
+    const MAX_PERSONS = 5;
+    const MAX_NIGHTS = 30;
+
+    function clampNumberInput(el, min, max) {
+      if (!el) return;
+      // set attributes for native enforcement / UI hints
+      el.setAttribute('min', String(min));
+      el.setAttribute('max', String(max));
+      // ensure only digits and clamp value on input
+      el.addEventListener('input', () => {
+        // remove non-digit characters
+        const raw = el.value;
+        // allow empty while typing, but normalize when not numeric
+        if (raw === '') return;
+        // parse int safely
+        let n = parseInt(raw.replace(/[^\d-]/g, ''), 10);
+        if (isNaN(n)) {
+          el.value = min;
+          n = min;
+        }
+        if (n < min) {
+          el.value = String(min);
+        } else if (n > max) {
+          el.value = String(max);
+        } else {
+          el.value = String(n);
+        }
+        // trigger a custom event so existing logic updates price/availability
+        const ev = new Event('input', { bubbles: true });
+        el.dispatchEvent(ev);
+      }, { passive: true });
+      // also clamp on blur (in case of paste)
+      el.addEventListener('blur', () => {
+        if (el.value === '') el.value = String(min);
+        let n = parseInt(el.value, 10);
+        if (isNaN(n) || n < min) el.value = String(min);
+        if (n > max) el.value = String(max);
+        const ev = new Event('input', { bubbles: true });
+        el.dispatchEvent(ev);
+      });
+    }
+
+    clampNumberInput(inputPersons, 1, MAX_PERSONS);
+    clampNumberInput(inputNights, 1, MAX_NIGHTS);
 
     // -------------------------------
     // FullCalendar
@@ -255,7 +305,9 @@
     function updateModalPriceAndAvailability() {
       if (!clickedStart) return;
       const nights = Math.max(1, parseInt(inputNights.value, 10) || 1);
-      const persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
+      // clamp persons (defensive)
+      let persons = Math.max(1, parseInt(inputPersons.value, 10) || 1);
+      if (persons > MAX_PERSONS) { persons = MAX_PERSONS; inputPersons.value = MAX_PERSONS; }
 
       const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
 
