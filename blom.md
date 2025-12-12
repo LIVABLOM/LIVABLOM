@@ -172,56 +172,58 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
 
     <!-- Scripts carrousel + modal -->
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        let currentIndex = 0;
-        const carousel = document.getElementById("carousel");
-        const items = carousel.children;
-        const totalItems = items.length;
-        const fullTestimonials = [
-          {% for temoignage in site.data.avis_blom %}
-          {{ temoignage.texte | strip_newlines | escape }},
-          {% endfor %}
-        ];
+  document.addEventListener("DOMContentLoaded", () => {
+    let currentIndex = 0;
+    const carousel = document.getElementById("carousel");
+    const items = carousel.children;
+    const totalItems = items.length;
 
-        function showCarouselSlide(index) {
-          const offset = -index * 100;
-          carousel.style.transform = `translateX(${offset}%)`;
-        }
+    const fullTestimonials = [
+      {% for temoignage in site.data.avis_blom %}
+      "{{ temoignage.texte | strip_newlines | escape }}",
+      {% endfor %}
+    ];
 
-        setInterval(() => {
-          currentIndex = (currentIndex + 1) % totalItems;
-          showCarouselSlide(currentIndex);
-        }, 5000);
+    function showCarouselSlide(index) {
+      const offset = -index * 100;
+      carousel.style.transform = `translateX(${offset}%)`;
+    }
 
-        Array.from(items).forEach((item, i) => {
-          item.addEventListener("click", () => {
-            currentIndex = i;
-            updateModalText();
-            document.getElementById("testimonialModal").classList.remove("hidden");
-            document.getElementById("testimonialModal").classList.add("flex");
-          });
-        });
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalItems;
+      showCarouselSlide(currentIndex);
+    }, 5000);
 
-        function updateModalText() {
-          document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-        }
-
-        document.getElementById("prevBtn").addEventListener("click", () => {
-          currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-          updateModalText();
-        });
-
-        document.getElementById("nextBtn").addEventListener("click", () => {
-          currentIndex = (currentIndex + 1) % fullTestimonials.length;
-          updateModalText();
-        });
-
-        document.getElementById("closeBtn").addEventListener("click", () => {
-          document.getElementById("testimonialModal").classList.add("hidden");
-          document.getElementById("testimonialModal").classList.remove("flex");
-        });
+    Array.from(items).forEach((item, i) => {
+      item.addEventListener("click", () => {
+        currentIndex = i;
+        updateModalText();
+        document.getElementById("testimonialModal").classList.remove("hidden");
+        document.getElementById("testimonialModal").classList.add("flex");
       });
-    </script>
+    });
+
+    function updateModalText() {
+      document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+      updateModalText();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % fullTestimonials.length;
+      updateModalText();
+    });
+
+    document.getElementById("closeBtn").addEventListener("click", () => {
+      document.getElementById("testimonialModal").classList.add("hidden");
+      document.getElementById("testimonialModal").classList.remove("flex");
+    });
+  });
+</script>
+
 
     <div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
   <h2 class="text-2xl font-bold">Pourquoi choisir BLŌM ?</h2>
