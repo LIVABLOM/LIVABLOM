@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <h3 class="text-xl font-semibold">Où se situe BLŌM ?</h3>
     <p>Nous sommes à Guesnain (Douaisis), à 5 minutes de Douai, proche de Sin-le-Noble, Dechy et Waziers.</p>
   </div>
-</section>
+
 
 
     <!-- Appel à l'action : Réserver BLŌM -->
