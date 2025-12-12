@@ -147,16 +147,15 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
     <div class="mt-20 bg-black text-white">
       <h2 class="text-2xl font-bold text-center mb-6">Avis clients – Ils ont séjourné dans notre spa privatif à Guesnain</h2>
       <div class="relative max-w-3xl mx-auto overflow-hidden">
-        <div id="carousel" class="flex transition-transform duration-700">
-          {% for avis in site.data.avis_blom %}
-          <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
-            <p class="italic text-lg truncate">“{{ avis.texte | truncate: 100 }}”</p>
-            <span class="block mt-2 text-sm text-gray-400">– {{ avis.auteur }}</span>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+       <div id="carousel" class="flex transition-transform duration-700">
+  {% for avis in site.data.avis_blom %}
+  <div class="min-w-full px-4 cursor-pointer" onclick="openModal({{ forloop.index0 }})">
+    <p class="italic text-lg truncate">“{{ avis.texte | truncate: 100 }}”</p>
+    <span class="block mt-2 text-sm text-gray-400">– {{ avis.auteur }}, {{ avis.date }}</span>
+  </div>
+  {% endfor %}
+</div>
+
 
     <!-- Modal témoignages -->
     <div id="testimonialModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
@@ -172,57 +171,64 @@ Profitez également d’une salle de massage privative, d’un lit king size, d�
 
     <!-- Scripts carrousel + modal -->
     <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    let currentIndex = 0;
-    const carousel = document.getElementById("carousel");
-    const items = carousel.children;
-    const totalItems = items.length;
+document.addEventListener("DOMContentLoaded", () => {
+  let currentIndex = 0;
+  const carousel = document.getElementById("carousel");
+  const items = carousel.children;
 
-    const fullTestimonials = [
-      {% for temoignage in site.data.avis_blom %}
-      "{{ temoignage.texte | strip_newlines | escape }}",
-      {% endfor %}
-    ];
+  // Création du tableau complet avec texte, auteur et date
+  const fullTestimonials = [
+    {% for avis in site.data.avis_blom %}
+    {
+      texte: {{ avis.texte | jsonify }},
+      auteur: {{ avis.auteur | jsonify }},
+      date: {{ avis.date | jsonify }}
+    }{% if forloop.last == false %},{% endif %}
+    {% endfor %}
+  ];
 
-    function showCarouselSlide(index) {
-      const offset = -index * 100;
-      carousel.style.transform = `translateX(${offset}%)`;
-    }
+  function showCarouselSlide(index) {
+    const offset = -index * 100;
+    carousel.style.transform = `translateX(${offset}%)`;
+  }
 
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % totalItems;
-      showCarouselSlide(currentIndex);
-    }, 5000);
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % fullTestimonials.length;
+    showCarouselSlide(currentIndex);
+  }, 5000);
 
-    Array.from(items).forEach((item, i) => {
-      item.addEventListener("click", () => {
-        currentIndex = i;
-        updateModalText();
-        document.getElementById("testimonialModal").classList.remove("hidden");
-        document.getElementById("testimonialModal").classList.add("flex");
-      });
-    });
-
-    function updateModalText() {
-      document.getElementById("modalText").innerText = fullTestimonials[currentIndex];
-    }
-
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+  Array.from(items).forEach((item, i) => {
+    item.addEventListener("click", () => {
+      currentIndex = i;
       updateModalText();
-    });
-
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      currentIndex = (currentIndex + 1) % fullTestimonials.length;
-      updateModalText();
-    });
-
-    document.getElementById("closeBtn").addEventListener("click", () => {
-      document.getElementById("testimonialModal").classList.add("hidden");
-      document.getElementById("testimonialModal").classList.remove("flex");
+      document.getElementById("testimonialModal").classList.remove("hidden");
+      document.getElementById("testimonialModal").classList.add("flex");
     });
   });
+
+  function updateModalText() {
+    const avis = fullTestimonials[currentIndex];
+    document.getElementById("modalText").innerText = `"${avis.texte}"\n\n– ${avis.auteur}, ${avis.date}`;
+  }
+
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
+    updateModalText();
+  });
+
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % fullTestimonials.length;
+    updateModalText();
+  });
+
+  document.getElementById("closeBtn").addEventListener("click", () => {
+    document.getElementById("testimonialModal").classList.add("hidden");
+    document.getElementById("testimonialModal").classList.remove("flex");
+  });
+});
 </script>
+
+
 
 
     <div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
