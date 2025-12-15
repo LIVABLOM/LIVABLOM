@@ -1,11 +1,11 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS - Version corrigée pour Stripe
+// 🌸 BLŌM Calendar JS - Version corrigée avec limites mobiles
 // ========================================================
 
 (async function () {
 
   // -------------------------------
-  // 1) CSS
+  // 1) CSS (noir BLŌM conservé)
   // -------------------------------
   const css = `
     #calendar, #calendar * { touch-action: manipulation !important; -webkit-user-select: none !important; user-select: none !important; }
@@ -13,8 +13,15 @@
     #calendar .fc-daygrid-day { background: #181818 !important; border-color: #222 !important; transition: background 0.15s ease; pointer-events: auto !important; }
     @media (hover: hover) { #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) { background: #242424 !important; cursor: pointer; } }
     #calendar .fc-day-disabled { opacity: 0.35 !important; }
-    #calendar .fc-daygrid-day[data-reserved="true"] { background: #900 !important; opacity: 0.8; pointer-events: none !important; }
 
+    /* Jours réservés */
+    #calendar .fc-daygrid-day[data-reserved="true"] {
+      background: #4a0000 !important;
+      opacity: 0.8;
+      pointer-events: none !important;
+    }
+
+    /* Modal */
     #reservationModal {
       z-index: 2000;
       background: rgba(0,0,0,0.75);
@@ -47,6 +54,7 @@
     #res-cancel { background: #333; color: #fff; }
     #res-error { color: #ff8b8b; margin-top: 6px; display: none; }
   `;
+
   const styleNode = document.createElement("style");
   styleNode.type = "text/css";
   styleNode.appendChild(document.createTextNode(css));
@@ -103,7 +111,7 @@
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const selStart = new Date(startDate);
     selStart.setHours(0,0,0,0);
-    const selEnd = addDays(selStart, nights); // exclusive
+    const selEnd = addDays(selStart, nights);
     const today = new Date(); today.setHours(0,0,0,0);
     if (selStart < today) return false;
     for (const r of reservedRanges) {
@@ -146,8 +154,8 @@
     let reservedRanges = [];
     let clickedStart = null;
 
-    inputNights.value = 1;
-    inputPersons.value = 2;
+    if (inputNights) inputNights.value = 1;
+    if (inputPersons) inputPersons.value = 2;
 
     // -------------------------------
     // FullCalendar
@@ -165,7 +173,8 @@
 
           reservedRanges = data.map(e => {
             const s = new Date(e.start);
-            const exEnd = new Date(e.end); // exclusive
+            const rawEnd = new Date(e.end);
+            const exEnd = rawEnd;
             s.setHours(0,0,0,0);
             exEnd.setHours(0,0,0,0);
             return { start: s, end: exEnd };
@@ -180,7 +189,9 @@
             borderColor: "#900",
             allDay: true
           })));
-        } catch (err) { failure(err); }
+        } catch (err) {
+          failure(err);
+        }
       },
 
       dayCellDidMount(info) {
@@ -195,9 +206,11 @@
         clickedStart = new Date(info.date.getFullYear(), info.date.getMonth(), info.date.getDate());
         if (clickedStart < today) return;
 
-        if (!isRangeAvailable(clickedStart, 1, reservedRanges)) return;
+        const blocked = reservedRanges.some(r => clickedStart >= r.start && clickedStart < r.end);
+        if (blocked) return;
 
         modalStart.textContent = formatLocalDate(clickedStart);
+
         inputNights.value = 1;
         inputPersons.value = 2;
         errorBox.style.display = "none";
@@ -205,7 +218,6 @@
         const price = sumPriceByNights(formatLocalDate(clickedStart), 1, 2, testPayment);
         priceDisplay.textContent = `Montant total : ${price} €`;
 
-        btnConfirm.disabled = false;
         modal.style.display = "flex";
       }
     });
@@ -218,25 +230,25 @@
     function updateModal() {
       if (!clickedStart) return;
 
-      let nights = Math.max(1, parseInt(inputNights.value) || 1);
-      let persons = Math.max(1, parseInt(inputPersons.value) || 1);
-      if (persons > 2) persons = 2;
+      // 🔒 Limites mobiles
+      let nights = parseInt(inputNights.value) || 1;
+      let persons = parseInt(inputPersons.value) || 1;
+
+      if (nights < 1) nights = 1;
+      if (persons < 1) persons = 1;
+      if (persons > 2) persons = 2; // 🔥 BLŌM max 2 personnes
 
       inputNights.value = nights;
       inputPersons.value = persons;
 
-      const available = isRangeAvailable(clickedStart, nights, reservedRanges);
-      btnConfirm.disabled = !available;
-
-      if (!available) {
-        errorBox.style.display = "block";
-        errorBox.textContent = "La période sélectionnée chevauche une réservation existante.";
-      } else {
-        errorBox.style.display = "none";
-      }
+      const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
+      errorBox.style.display = ok ? "none" : "block";
+      if (!ok) errorBox.textContent = "La période sélectionnée chevauche une réservation existante.";
 
       const total = sumPriceByNights(formatLocalDate(clickedStart), nights, persons, testPayment);
       priceDisplay.textContent = `Montant total : ${total} €`;
+
+      btnConfirm.disabled = !ok;
     }
 
     inputNights.addEventListener("input", updateModal);
@@ -245,45 +257,54 @@
     // -------------------------------
     // Cancel
     // -------------------------------
-    btnCancel.addEventListener("click", () => { modal.style.display = "none"; });
+    btnCancel.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
 
     // -------------------------------
-    // Confirm -> Stripe
+    // CONFIRM
     // -------------------------------
     btnConfirm.addEventListener("click", async () => {
-      if (!clickedStart) return;
 
-      const nights = Math.max(1, parseInt(inputNights.value) || 1);
-      const persons = Math.max(1, parseInt(inputPersons.value) || 1);
-      if (persons > 2) persons = 2;
+      const nights = parseInt(inputNights.value);
+      const persons = parseInt(inputPersons.value);
 
-      if (!isRangeAvailable(clickedStart, nights, reservedRanges)) {
-        errorBox.style.display = "block";
-        errorBox.textContent = "Période non disponible.";
-        return;
-      }
+      if (!clickedStart || nights < 1 || persons < 1 || persons > 2) return;
+
+      const startDate = formatLocalDate(clickedStart);
+      const endDate = formatLocalDate(addDays(clickedStart, nights));
+      const total = sumPriceByNights(startDate, nights, persons, testPayment);
 
       const name = inputName.value.trim();
       const email = inputEmail.value.trim();
       const phone = inputPhone.value.trim();
+
       if (!name || !email || !phone) {
         errorBox.style.display = "block";
         errorBox.textContent = "Veuillez remplir tous les champs.";
         return;
       }
 
-      const startDate = formatLocalDate(clickedStart);
-      const endDate = formatLocalDate(addDays(clickedStart, nights));
-      const total = sumPriceByNights(startDate, nights, persons, testPayment);
-
-      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} (${nights} nuits) pour ${total} € ?`)) return;
+      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} (${nights} nuits) pour ${total} € ?`)) {
+        return;
+      }
 
       try {
         const res = await fetch(`${stripeBackend}/api/checkout`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ logement: "BLŌM", startDate, endDate, amount: total, personnes: persons, name, email, phone })
+          body: JSON.stringify({
+            logement: "BLŌM",
+            startDate,
+            endDate,
+            amount: total,
+            personnes: persons,
+            name,
+            email,
+            phone
+          })
         });
+
         const data = await res.json();
         if (data.url) {
           modal.style.display = "none";
@@ -296,7 +317,9 @@
       }
     });
 
-    modal.addEventListener("click", (ev) => { if (ev.target === modal) modal.style.display = "none"; });
+    modal.addEventListener("click", (ev) => {
+      if (ev.target === modal) modal.style.display = "none";
+    });
 
   });
 
