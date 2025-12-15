@@ -54,7 +54,7 @@ keywords: "spa propre Douai, spa hygiène Guesnain, eau vidée spa privatif, pro
     💬 Ce qu’en disent nos clients
   </h2>
   <div style="max-width:600px; margin:0 auto 40px auto; text-align:left; font-style:italic; color:#bfa14a;">
-    <p>“Propreté impeccable, on voit que tout est neuf à chaque fois !” – <span style="color:#FFD700;">Élodie, mai 2024</span></p>
+    <p>“Parfait ! La video du changement de l’eau avant notre arrivée signe le professionnalisme de ce propriétaire perfectionniste ! Logement impeccable on avait envie d’y rester.. rien à dire à part merci ” – <span style="color:#FFD700;">Ben, juin 2024</span></p>
     <p>“Vidéo reçue avant notre arrivée, très rassurant. Un vrai plus !” – <span style="color:#FFD700;">Thomas & Claire, février 2024</span></p>
     <p>“Le spa est d’une hygiène irréprochable, c’est rare de voir ça ailleurs.” – <span style="color:#FFD700;">Laura, décembre 2023</span></p>
   </div>
