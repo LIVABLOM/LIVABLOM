@@ -31,5 +31,3 @@ permalink: /
 
 </div>
 
-<!-- Inclure le moteur de recherche ici, sous les deux blocs -->
-{% include search.html %}
