@@ -1,5 +1,5 @@
 // ========================================================
-// 🌸 BLŌM Calendar JS – Version STABLE & DÉFINITIVE
+// 🌸 BLŌM Calendar JS – Version STABLE & CORRIGÉE
 // ========================================================
 
 (async function () {
@@ -105,12 +105,12 @@
   function addDays(date, days) {
     const d = new Date(date);
     d.setDate(d.getDate() + days);
-    d.setHours(0,0,0,0);
+    d.setHours(12,0,0,0); // ✅ 12h pour éviter décalage
     return d;
   }
 
   function formatLocalDate(date) {
-    return date.toISOString().split("T")[0];
+    return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
   }
 
   function getTarif(dateStr, testPayment = false) {
@@ -125,16 +125,17 @@
   function sumPrice(startStr, nights, testPayment) {
     let total = 0;
     let cur = new Date(startStr);
+    cur.setHours(12,0,0,0); // ✅ 12h pour éviter décalage
     for (let i = 0; i < nights; i++) {
       total += getTarif(formatLocalDate(cur), testPayment);
-      cur.setDate(cur.getDate() + 1);
+      cur = addDays(cur, 1);
     }
     return total;
   }
 
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const start = new Date(startDate);
-    start.setHours(0,0,0,0);
+    start.setHours(12,0,0,0); // ✅ 12h
     const end = addDays(start, nights);
     const today = new Date(); today.setHours(0,0,0,0);
 
@@ -208,10 +209,8 @@
           const data = await res.json();
 
           reservedRanges = data.map(e => {
-            const s = new Date(e.start);
-            const end = new Date(e.end);
-            s.setHours(0,0,0,0);
-            end.setHours(0,0,0,0);
+            const s = new Date(e.start); s.setHours(12,0,0,0);
+            const end = new Date(e.end); end.setHours(12,0,0,0);
             return { start: s, end };
           });
 
@@ -241,8 +240,8 @@
           return;
         }
 
-        clickedStart = new Date(info.date);
-        clickedStart.setHours(0,0,0,0);
+        const d = info.date;
+        clickedStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0); // ✅ 12h pour éviter décalage
 
         modalStart.textContent = formatLocalDate(clickedStart);
         errorBox.style.display = "none";
