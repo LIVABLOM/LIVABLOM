@@ -4,7 +4,7 @@ title: Politique de confidentialité
 permalink: /politique-confidentialite
 ---
 
-<div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+<section class="bg-black text-white min-h-screen py-12 px-6 w-full">
   <div class="max-w-4xl mx-auto">
 
     <h1 class="text-3xl font-bold mb-8 text-center">Politique de confidentialité</h1>
@@ -14,7 +14,7 @@ permalink: /politique-confidentialite
       <p><strong>LIVABLŌM</strong><br>
       338 boulevard Ambroise Croizat<br>
       59287 Guesnain – France<br>
-      Email : <a href="mailto:livablom59@gmail.com" class="underline text-yellow-300">livablom59@gmail.com</a></p>
+      Email : <a href="mailto:livablom59@gmail.com" class="underline hover:text-gray-400">livablom59@gmail.com</a></p>
     </section>
 
     <section class="mb-10">
@@ -66,8 +66,8 @@ permalink: /politique-confidentialite
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">7. Cookies</h2>
       <p>Des cookies peuvent être déposés lors de votre visite. Vous pouvez <strong>accepter ou refuser</strong> leur utilisation via la bannière de consentement.</p>
-      <p class="mt-2"><a href="#" class="underline text-yellow-300">Gérer mes cookies</a></p>
-      <p class="mt-2">Voir aussi notre <a href="/politique-cookies" class="underline text-yellow-300">politique sur les cookies</a>.</p>
+      <p class="mt-2"><a href="#" class="underline hover:text-gray-400">Gérer mes cookies</a></p>
+      <p class="mt-2">Voir aussi notre <a href="/politique-cookies" class="underline hover:text-gray-400">politique sur les cookies</a>.</p>
     </section>
 
     <section class="mb-10">
@@ -81,7 +81,7 @@ permalink: /politique-confidentialite
         <li>Droit d’opposition</li>
         <li>Droit à la portabilité</li>
       </ul>
-      <p class="mt-2">Pour exercer vos droits, contactez-nous à : <a href="mailto:livablom59@gmail.com" class="underline text-yellow-300">livablom59@gmail.com</a></p>
+      <p class="mt-2">Pour exercer vos droits, contactez-nous à : <a href="mailto:livablom59@gmail.com" class="underline hover:text-gray-400">livablom59@gmail.com</a></p>
     </section>
 
     <section class="mb-10">
@@ -91,12 +91,12 @@ permalink: /politique-confidentialite
 
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">10. Réclamations</h2>
-      <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez contacter la <a href="https://www.cnil.fr" class="underline text-yellow-300">CNIL</a>.</p>
+      <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez contacter la <a href="https://www.cnil.fr" class="underline hover:text-gray-400">CNIL</a>.</p>
     </section>
 
-    <p class="text-sm text-center text-yellow-300 mt-12">
+    <p class="text-sm text-center text-gray-400 mt-12">
       Dernière mise à jour : juillet 2025
     </p>
 
   </div>
-</div>
+</section>
