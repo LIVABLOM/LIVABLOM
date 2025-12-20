@@ -4,7 +4,7 @@ title: Politique de cookies
 permalink: /politique-cookies
 ---
 
-<div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+<section class="bg-black text-white min-h-screen py-12 px-6 w-full">
   <div class="max-w-4xl mx-auto">
 
     <h1 class="text-3xl font-bold mb-8 text-center">Politique de cookies</h1>
@@ -30,17 +30,17 @@ permalink: /politique-cookies
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">3. Consentement</h2>
       <p>Lors de votre première visite, une bannière vous demande d’accepter ou refuser l’usage des cookies non essentiels. Vous pouvez <strong>modifier votre choix à tout moment</strong>.</p>
-      <p class="mt-2"><a href="#" class="underline text-yellow-300">Gérer mes cookies</a></p>
+      <p class="mt-2"><a href="#" class="underline hover:text-gray-400">Gérer mes cookies</a></p>
     </section>
 
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">4. Désactivation manuelle</h2>
       <p>Vous pouvez désactiver les cookies à tout moment depuis les paramètres de votre navigateur :</p>
       <ul class="list-disc list-inside mt-2 space-y-1">
-        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" class="underline text-yellow-300">Chrome</a></li>
-        <li><a href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies" target="_blank" class="underline text-yellow-300">Firefox</a></li>
-        <li><a href="https://support.apple.com/fr-fr/HT201265" target="_blank" class="underline text-yellow-300">Safari</a></li>
-        <li><a href="https://support.microsoft.com/fr-fr/help/17442" target="_blank" class="underline text-yellow-300">Edge</a></li>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" class="underline hover:text-gray-400">Chrome</a></li>
+        <li><a href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies" target="_blank" class="underline hover:text-gray-400">Firefox</a></li>
+        <li><a href="https://support.apple.com/fr-fr/HT201265" target="_blank" class="underline hover:text-gray-400">Safari</a></li>
+        <li><a href="https://support.microsoft.com/fr-fr/help/17442" target="_blank" class="underline hover:text-gray-400">Edge</a></li>
       </ul>
     </section>
 
@@ -51,12 +51,12 @@ permalink: /politique-cookies
 
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">6. Contact</h2>
-      <p>Pour toute question concernant l’usage des cookies, vous pouvez nous écrire à <a href="mailto:livablom59@gmail.com" class="underline text-yellow-300">livablom59@gmail.com</a>.</p>
+      <p>Pour toute question concernant l’usage des cookies, vous pouvez nous écrire à <a href="mailto:livablom59@gmail.com" class="underline hover:text-gray-400">livablom59@gmail.com</a>.</p>
     </section>
 
-    <p class="text-sm text-center text-yellow-300 mt-12">
+    <p class="text-sm text-center text-gray-400 mt-12">
       Dernière mise à jour : juillet 2025
     </p>
 
   </div>
-</div>
+</section>
