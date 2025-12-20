@@ -4,7 +4,7 @@ title: Mentions légales & CGV
 permalink: /mentions
 ---
 
-<div class="bg-black text-yellow-400 min-h-screen py-12 px-6 w-full">
+<section class="bg-black text-white min-h-screen py-12 px-6 w-full">
   <div class="max-w-4xl mx-auto">
 
     <h1 class="text-3xl font-bold mb-8 text-center">Mentions légales & Conditions Générales de Vente</h1>
@@ -63,12 +63,12 @@ permalink: /mentions
     <section class="mb-10">
       <h2 class="text-2xl font-semibold mb-4">Données personnelles & RGPD</h2>
       <p>Nous collectons uniquement les données nécessaires au traitement des réservations et aux échanges via notre formulaire de contact (nom, email, message).</p>
-      <p>Aucune donnée n’est revendue. Pour toute demande de suppression ou de modification de vos données, veuillez nous contacter à l'adresse : <a href="mailto:livablom59@gmail.com" class="underline hover:text-yellow-200">livablom59@gmail.com</a>.</p>
+      <p>Aucune donnée n’est revendue. Pour toute demande de suppression ou de modification de vos données, veuillez nous contacter à l'adresse : <a href="mailto:livablom59@gmail.com" class="underline hover:text-gray-400">livablom59@gmail.com</a>.</p>
     </section>
 
-    <p class="text-sm text-center text-yellow-300 mt-12">
+    <p class="text-sm text-center text-gray-400 mt-12">
       Dernière mise à jour : juillet 2025
     </p>
 
   </div>
-</div>
+</section>
