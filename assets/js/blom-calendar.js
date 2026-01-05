@@ -330,12 +330,7 @@
         });
 
         const data = await res.json();
-        if (data.url) {
-  // 🔒 Empêche le retour navigateur vers une page 404
-  history.replaceState(null, "", location.pathname);
-  window.location.href = data.url;
-}
-
+        if (data.url) location.href = data.url;
         else alert("Erreur lors de la réservation.");
       } catch {
         alert("Erreur réseau.");
