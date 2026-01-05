@@ -294,56 +294,58 @@
     // -------------------------------
     btnConfirm.addEventListener("click", async () => {
 
-  if (btnConfirm.disabled) return;
+      if (btnConfirm.disabled) return;
 
-  const nights = parseInt(inputNights.value);
+      const nights = parseInt(inputNights.value);
+      const startDate = formatLocalDate(clickedStart);
+      const endDate = formatLocalDate(addDays(clickedStart, nights));
+      const total = sumPrice(startDate, nights, testPayment);
 
-  // ✅ Début : définir l'heure d'arrivée à 19h
-  const startDateTime = new Date(clickedStart);
-  startDateTime.setHours(19, 0, 0, 0); // 19h arrivée
+      const name = inputName.value.trim();
+      const email = inputEmail.value.trim();
+      const phone = inputPhone.value.trim();
 
-  // ✅ Définir l'heure de départ à 11h
-  const endDateTime = addDays(startDateTime, nights);
-  endDateTime.setHours(11, 0, 0, 0); // 11h départ
+      if (!name || !email || !phone) {
+        errorBox.style.display = "block";
+        errorBox.textContent = "Veuillez remplir tous les champs.";
+        return;
+      }
 
-  // Calcul du total
-  const total = sumPrice(formatLocalDate(startDateTime), nights, testPayment);
+      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} pour ${total} € ?`)) return;
 
-  const name = inputName.value.trim();
-  const email = inputEmail.value.trim();
-  const phone = inputPhone.value.trim();
+      try {
+        const res = await fetch(`${stripeBackend}/api/checkout`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            logement: "BLŌM",
+            startDate,
+            endDate,
+            amount: total,
+            personnes: 2,
+            name,
+            email,
+            phone
+          })
+        });
 
-  if (!name || !email || !phone) {
-    errorBox.style.display = "block";
-    errorBox.textContent = "Veuillez remplir tous les champs.";
-    return;
-  }
+        const data = await res.json();
+        if (data.url) {
+  // 🔒 Empêche le retour navigateur vers une page 404
+  history.replaceState(null, "", location.pathname);
+  window.location.href = data.url;
+}
 
-  if (!confirm(`Confirmer la réservation du ${formatLocalDate(startDateTime)} au ${formatLocalDate(endDateTime)} pour ${total} € ?`)) return;
-
-  try {
-    const res = await fetch(`${stripeBackend}/api/checkout`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        logement: "BLŌM",
-        startDate: startDateTime.toISOString(), // ✅ envoi heure correcte
-        endDate: endDateTime.toISOString(),     // ✅ envoi heure correcte
-        amount: total,
-        personnes: 2,
-        name,
-        email,
-        phone
-      })
+        else alert("Erreur lors de la réservation.");
+      } catch {
+        alert("Erreur réseau.");
+      }
     });
 
-    const data = await res.json();
-    if (data.url) {
-      // 🔒 Empêche le retour navigateur vers une page 404
-      history.replaceState(null, "", location.pathname);
-      window.location.href = data.url;
-    } else alert("Erreur lors de la réservation.");
-  } catch {
-    alert("Erreur réseau.");
-  }
-});
+    modal.addEventListener("click", e => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+
+  });
+
+})();
