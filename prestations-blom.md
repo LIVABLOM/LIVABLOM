@@ -51,7 +51,7 @@ permalink: /prestations-blom
 
         <div class="bg-black rounded-xl p-6 border border-gray-800">
           <h3 class="font-semibold mb-2">Spa privatif – 2 heures</h3>
-          <p class="text-xl font-bold">129 €</p>
+          <p class="text-xl font-bold">109 €</p>
           <p class="text-sm text-gray-400 mt-2">
             Accès jacuzzi + logement privatif
           </p>
@@ -59,7 +59,7 @@ permalink: /prestations-blom
 
         <div class="bg-black rounded-xl p-6 border border-gray-800">
           <h3 class="font-semibold mb-2">Journée bien-être – 4 heures</h3>
-          <p class="text-xl font-bold">219 €</p>
+          <p class="text-xl font-bold">169 €</p>
           <p class="text-sm text-gray-400 mt-2">
             Disponible du lundi au jeudi<br>
             Horaires : 11h – 16h
@@ -80,12 +80,13 @@ permalink: /prestations-blom
     </section>
 
     <!-- CTA -->
-    <div class="text-center mt-12">
-      <a href="/assets/html/blom-calendar.html"
-         class="inline-block bg-red-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:bg-red-700 transition">
-        Vérifier les disponibilités
-      </a>
-    </div>
+    <p class="mt-6 text-center">
+  <a href="{{ '/contact' | relative_url }}" 
+     class="inline-block bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition">
+    Nous contacter
+  </a>
+</p>
+
 
   </div>
 </section>
