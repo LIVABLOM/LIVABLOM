@@ -64,202 +64,136 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
   <div class="max-w-6xl mx-auto space-y-16">
 
     <!-- TITRE -->
-    <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">BLŌM – Détente & Évasion</h1>
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-10 animate-fadeIn">
+      BLŌM – Suite avec spa privatif à Guesnain près de Douai
+    </h1>
+
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
-Bienvenue à BLŌM, votre suite romantique avec spa privatif à Guesnain, au cœur du Douaisis. 
-Nous sommes l’un des rares logements du secteur à garantir une hygiène irréprochable : <strong>le spa est intégralement vidé, désinfecté et rempli avec une eau neuve pour chaque nouveau client.</strong>
-Profitez également d’une salle de massage privative, d’un lit king size, d’un coin salon cosy et d’une table romantique dressée sur demande.
-</p>
+      Bienvenue à <strong>BLŌM</strong>, votre suite romantique avec <strong>spa privatif à Guesnain</strong>, au cœur du <strong>Douaisis</strong>. Idéale pour un <strong>week-end romantique à deux</strong>, BLŌM vous offre une expérience unique : jacuzzi privatif, salle de massage privative, lit king size et table romantique sur demande.
+    </p>
 
-<p class="text-center mt-4">
-  🌸 <a href="/hygiene-spa-blom/" class="underline hover:text-gray-300">En savoir plus sur notre protocole d’hygiène spa</a>
-</p>
+    <p class="text-center mt-4">
+      🌸 <a href="/hygiene-spa-blom/" class="underline hover:text-gray-300">
+        En savoir plus sur notre protocole d’hygiène spa
+      </a>
+    </p>
 
-<!-- Bandeau hygiène -->
-<div class="bg-red-600 text-white text-sm px-6 py-3 rounded-full shadow-md text-center max-w-md mx-auto mb-6 animate-pulse">
-  Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
-</div>
+    <!-- Bandeau hygiène -->
+    <div class="bg-red-600 text-white text-sm px-6 py-3 rounded-full shadow-md text-center max-w-md mx-auto mb-6 animate-pulse">
+      Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
+    </div>
 
-<!-- Bloc Jacuzzi -->
-<div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200">
-  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-    <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif BLŌM à Guesnain" class="w-full h-auto object-cover brightness-75">
-    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-  </div>
-  <div class="w-full md:w-1/2 text-lg space-y-2">
-    <h2 class="text-2xl font-semibold">Jacuzzi privatif – Hygiène irréprochable</h2>
-    <p>L’eau est totalement vidée et renouvelée avant chaque arrivée. Ambiance tamisée, intimité garantie et détente absolue.</p>
-  </div>
-</div>
-
-<!-- Bloc Massage -->
-<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300">
-  <div class="w-full md:w-1/2 flex flex-col gap-4">
-    <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage manuelle BLŌM" class="rounded-xl shadow-lg brightness-75">
-    <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique BLŌM" class="rounded-xl shadow-lg brightness-75">
-  </div>
-  <div class="w-full md:w-1/2 text-lg space-y-2">
-    <h2 class="text-2xl font-semibold">Espace massage privatif</h2>
-    <p>Table électrique 16 programmes + massages manuels à partager en duo. Relaxation totale pour un moment romantique ou détente individuelle.</p>
-  </div>
-</div>
-
-<!-- Bloc Lit -->
-<div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400">
-  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-    <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon BLŌM" class="w-full h-auto object-cover brightness-75">
-    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-  </div>
-  <div class="w-full md:w-1/2 text-lg space-y-2">
-    <h2 class="text-2xl font-semibold">Suite romantique avec lit king size</h2>
-    <p>Lit king size, coin salon cosy avec TV connectée. Parfait pour un séjour romantique et confortable dans le Douaisis.</p>
-  </div>
-</div>
-
-<!-- Bloc Table romantique -->
-<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500">
-  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-    <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Table romantique BLŌM" class="w-full h-auto object-cover brightness-75">
-    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-  </div>
-  <div class="w-full md:w-1/2 text-lg space-y-2">
-    <h2 class="text-2xl font-semibold">Table romantique sur demande</h2>
-    <p>Vous souhaitez apporter votre dîner ? Une table romantique est dressée sur demande pour sublimer votre soirée.</p>
-  </div>
-</div>
-
-<!-- Avis clients -->
-<div class="mt-20 bg-black text-white">
-  <h2 class="text-2xl font-bold text-center mb-6">Avis clients</h2>
-  <div class="relative max-w-3xl mx-auto overflow-hidden">
-    <div id="carousel" class="flex transition-transform duration-700">
-      {% for avis in site.data.avis_blom %}
-      <div class="min-w-full px-4 cursor-pointer">
-        <p class="italic text-lg truncate">“{{ avis.texte | truncate: 100 }}”</p>
-        <span class="block mt-2 text-sm text-gray-400">– {{ avis.auteur }}, {{ avis.date }}</span>
+    <!-- Bloc Jacuzzi -->
+    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/image-jacuzzi.png" alt="Jacuzzi privatif BLŌM à Guesnain" class="w-full h-auto object-cover brightness-75">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
-      {% endfor %}
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Jacuzzi privatif – Hygiène irréprochable</h2>
+        <p>
+          Le jacuzzi privatif BLŌM est entièrement vidangé et désinfecté avant chaque séjour. Ambiance tamisée, intimité garantie et détente absolue pour un <strong>moment romantique à Guesnain</strong>.
+        </p>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- Modal témoignages -->
-<div id="testimonialModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-  <div class="bg-black text-white max-w-2xl p-6 rounded-xl relative">
-    <button id="closeBtn" class="absolute top-2 right-2 text-white text-xl">✖</button>
-    <div id="modalText" class="whitespace-pre-line"></div>
-    <div class="flex justify-between mt-4">
-      <button id="prevBtn" class="px-4 py-2 bg-gray-700 rounded">◀</button>
-      <button id="nextBtn" class="px-4 py-2 bg-gray-700 rounded">▶</button>
+    <!-- Bloc Massage -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300">
+      <div class="w-full md:w-1/2 flex flex-col gap-4">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage manuelle BLŌM" class="rounded-xl shadow-lg brightness-75">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique BLŌM" class="rounded-xl shadow-lg brightness-75">
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Salle de massage privative</h2>
+        <p>
+          Détendez-vous grâce à notre <strong>table de massage électrique 16 programmes</strong>, ou profitez de massages manuels à partager en duo. Un espace <strong>bien-être privatif à Guesnain</strong> conçu pour votre confort.
+        </p>
+      </div>
     </div>
-  </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  let currentIndex = 0;
-  const carousel = document.getElementById("carousel");
-  const items = carousel.children;
+    <!-- Bloc Lit -->
+    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon BLŌM" class="w-full h-auto object-cover brightness-75">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Suite romantique avec lit king size</h2>
+        <p>
+          Profitez d’un <strong>lit king size confortable</strong>, d’un coin salon cosy avec TV et d’une décoration raffinée. Idéal pour un <strong>séjour romantique avec spa près de Douai</strong>.
+        </p>
+      </div>
+    </div>
 
-  const fullTestimonials = [
-    {% for avis in site.data.avis_blom %}
-    { texte: {{ avis.texte | jsonify }}, auteur: {{ avis.auteur | jsonify }}, date: {{ avis.date | jsonify }} }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
+    <!-- Bloc Table romantique -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500">
+      <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Table romantique BLŌM" class="w-full h-auto object-cover brightness-75">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      </div>
+      <div class="w-full md:w-1/2 text-lg space-y-2">
+        <h2 class="text-2xl font-semibold">Table romantique sur demande</h2>
+        <p>
+          Vous souhaitez apporter votre dîner ? Nous dressons une <strong>table romantique pour votre soirée</strong> afin de créer une expérience inoubliable dans le Douaisis.
+        </p>
+      </div>
+    </div>
 
-  function showCarouselSlide(index) {
-    carousel.style.transform = `translateX(-${index * 100}%)`;
-  }
+    <!-- Pourquoi choisir BLŌM -->
+    <div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
+      <h2 class="text-2xl font-bold">Pourquoi choisir BLŌM ?</h2>
+      <p>BLŌM est l’un des rares logements du Douaisis à garantir une hygiène spa irréprochable.</p>
+      <ul class="space-y-2 text-lg">
+        <li>• Spa privatif entièrement vidangé, désinfecté et rempli pour chaque client</li>
+        <li>• Suite 100 % privative pour couples uniquement</li>
+        <li>• Table romantique dressée sur demande</li>
+        <li>• Salle de massage privative (table électrique + massages en duo)</li>
+        <li>• À proximité de Douai, Sin-le-Noble, Dechy et Waziers</li>
+        <li>• Idéal pour un <strong>week-end romantique ou séjour détente à Guesnain</strong></li>
+      </ul>
+    </div>
 
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % fullTestimonials.length;
-    showCarouselSlide(currentIndex);
-  }, 5000);
+    <!-- FAQ complète -->
+    <section class="mt-20 max-w-4xl mx-auto text-white space-y-6">
+      <h2 class="text-2xl font-bold text-center">FAQ – BLŌM, spa privatif à Guesnain</h2>
 
-  Array.from(items).forEach((item, i) => {
-    item.addEventListener("click", () => {
-      currentIndex = i;
-      updateModalText();
-      testimonialModal.classList.replace("hidden", "flex");
-    });
-  });
+      <div>
+        <h3 class="text-xl font-semibold">L’eau du spa est-elle changée entre chaque client ?</h3>
+        <p>Oui, c’est notre engagement principal. Le jacuzzi est entièrement vidé, désinfecté et rempli d’eau neuve avant chaque arrivée. Vidéo envoyée le jour de votre arrivée.</p>
+      </div>
 
-  function updateModalText() {
-    const avis = fullTestimonials[currentIndex];
-    document.getElementById("modalText").innerText =
-      `"${avis.texte}"\n\n– ${avis.auteur}, ${avis.date}`;
-  }
+      <div>
+        <h3 class="text-xl font-semibold">BLŌM est-il vraiment privatif ?</h3>
+        <p>Oui, toute la suite vous est entièrement réservée : spa, massage, salon et espace nuit.</p>
+      </div>
 
-  prevBtn.addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + fullTestimonials.length) % fullTestimonials.length;
-    updateModalText();
-  });
+      <div>
+        <h3 class="text-xl font-semibold">Peut-on apporter son repas pour le dîner romantique ?</h3>
+        <p>Oui. Nous dressons une table romantique sur demande pour sublimer votre soirée.</p>
+      </div>
 
-  nextBtn.addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % fullTestimonials.length;
-    updateModalText();
-  });
+      <div>
+        <h3 class="text-xl font-semibold">Y a t-il des places de parking ?</h3>
+        <p>Oui. Places de parkings dans un espace privé et sécurisé.</p>
+      </div>
 
-  closeBtn.addEventListener("click", () => {
-    testimonialModal.classList.replace("flex", "hidden");
-  });
-});
-</script>
+      <div>
+        <h3 class="text-xl font-semibold">Où se situe BLŌM ?</h3>
+        <p>Nous sommes à Guesnain (Douaisis), à 5 minutes de Douai, proche de Sin-le-Noble, Dechy et Waziers.</p>
+      </div>
+    </section>
 
-<!-- Pourquoi choisir BLŌM -->
-<div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
-  <h2 class="text-2xl font-bold">Pourquoi choisir BLŌM ?</h2>
-  <p>BLŌM est l’un des rares logements du Douaisis à garantir une hygiène spa irréprochable.</p>
-  <ul class="space-y-2 text-lg">
-    <li>• Eau du spa entièrement vidée, désinfectée et remplacée à chaque client</li>
-    <li>• Suite 100 % privative pour couples uniquement</li>
-    <li>• Table romantique dressée sur demande</li>
-    <li>• Salle de massage privative (table électrique + massages en duo)</li>
-    <li>• Proximité Douai, Sin-le-Noble, Dechy, Waziers</li>
-  </ul>
-</div>
-
-<!-- FAQ complète -->
-<section class="mt-20 max-w-4xl mx-auto text-white space-y-6">
-  <h2 class="text-2xl font-bold text-center">FAQ – BLŌM, spa privatif à Guesnain</h2>
-
-  <div>
-    <h3 class="text-xl font-semibold">L’eau du spa est-elle changée entre chaque client ?</h3>
-    <p>Oui, c’est notre engagement principal. Le jacuzzi est entièrement vidé, désinfecté et rempli d’eau neuve avant chaque arrivée. Envoi d'une vidéo le jour de votre arrivée.</p>
-  </div>
-
-  <div>
-    <h3 class="text-xl font-semibold">BLŌM est-il vraiment privatif ?</h3>
-    <p>Oui, toute la suite vous est entièrement réservée : spa, massage, salon et espace nuit.</p>
-  </div>
-
-  <div>
-    <h3 class="text-xl font-semibold">Peut-on apporter son repas pour le dîner romantique ?</h3>
-    <p>Oui. Nous dressons une table romantique sur demande pour sublimer votre soirée.</p>
-  </div>
-
-  <div>
-    <h3 class="text-xl font-semibold">Y a t il des place de parkings ?</h3>
-    <p>Oui. Places de parkings dans un espace privé et sécurisée.</p>
-  </div>
-
-  <div>
-    <h3 class="text-xl font-semibold">Où se situe BLŌM ?</h3>
-    <p>Nous sommes à Guesnain (Douaisis), à 5 minutes de Douai, proche de Sin-le-Noble, Dechy et Waziers.</p>
-  </div>
-</section>
-
-<!-- Réserver BLŌM -->
-<div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
-  <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
-  <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
-  <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
-    <a href="/assets/html/blom-calendar.html" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
-      Réserver maintenant
-    </a>
-    {% include share.html %}
-  </div>
-</div>
+    <!-- Réserver BLŌM -->
+    <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
+      <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
+      <p class="mb-4">Logement avec spa privatif et prestations bien-être</p>
+      <div class="flex flex-col sm:flex-row sm:justify-center gap-4 mt-4">
+        <a href="/assets/html/blom-calendar.html" class="inline-block bg-black text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition text-center">
+          Réserver maintenant
+        </a>
+        {% include share.html %}
+      </div>
+    </div>
 
   </div>
 </section>
