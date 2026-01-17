@@ -79,9 +79,10 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     </p>
 
     <!-- Bandeau hygiène -->
-    <div class="bg-red-600 text-white text-sm px-6 py-3 rounded-full shadow-md text-center max-w-md mx-auto mb-6 animate-pulse">
-      Le spa est vidé, désinfecté et rempli pour chaque client – Vidéo envoyée le jour de votre arrivée 📹
-    </div>
+    <div class="bg-white/15 backdrop-blur text-white text-sm px-6 py-3 rounded-full shadow-lg text-center max-w-md mx-auto mb-6 animate-pulse"
+     aria-label="Jacuzzi privatif préparé avec eau neuve à chaque séjour">
+  ♨️ Le jacuzzi privatif BLŌM est entièrement préparé avant chaque séjour : vidangé, nettoyé, puis rempli d’une eau neuve, chauffée spécialement pour votre arrivée.
+</div>
 
     <!-- Bloc Jacuzzi -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200">
@@ -92,7 +93,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
       <div class="w-full md:w-1/2 text-lg space-y-2">
         <h2 class="text-2xl font-semibold">Jacuzzi privatif – Hygiène irréprochable</h2>
         <p>
-          Le jacuzzi privatif BLŌM est entièrement vidangé et désinfecté avant chaque séjour. Ambiance tamisée, intimité garantie et détente absolue pour un <strong>moment romantique à Guesnain</strong>.
+          Le jacuzzi privatif BLŌM est entièrement préparé avant chaque séjour : vidangé, nettoyé, puis rempli d’une eau neuve, chauffée spécialement pour votre arrivée.
         </p>
       </div>
     </div>
