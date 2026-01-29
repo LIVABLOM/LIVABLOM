@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title | default: site.title }}</title>
-  <link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}">
 
-  <!-- SEO & Open Graph -->
+  <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description | escape }}">
+
+  <!-- Canonical URL (SEO CRITIQUE) -->
+  <link rel="canonical" href="https://livablom.fr{{ page.url | replace:'index.html','' }}">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="{{ page.title | default: site.title }}">
   <meta property="og:description" content="{{ page.description | default: site.description }}">
-  <meta property="og:image" content="{{ site.url }}{{ page.image | default: '/assets/images/photolivablom1.jpg' }}">
+  <meta property="og:image" content="https://livablom.fr{{ page.image | default: '/assets/images/photolivablom1.jpg' }}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:url" content="https://livablom.fr{{ page.url | replace:'index.html','' }}">
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ page.title }}">
-  <meta name="twitter:description" content="{{ page.description }}">
-  <meta name="twitter:image" content="{{ site.url }}{{ page.image }}">
+  <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+  <meta name="twitter:image" content="https://livablom.fr{{ page.image | default: '/assets/images/photolivablom1.jpg' }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}">
 
   <!-- CSS externes -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
@@ -24,7 +32,7 @@
   <link href="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/css/lightbox.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/share.css">
 
-  <!-- Styles animations -->
+  <!-- Animations -->
   <style>
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(20px); }
@@ -37,10 +45,6 @@
     .delay-400 { animation-delay: 0.4s; }
     .delay-500 { animation-delay: 0.5s; }
   </style>
-
-  {% if page.url %}
-    <link rel="canonical" href="https://www.livablom.fr{{ page.url | replace:'index.html','' }}">
-  {% endif %}
 </head>
 
 <body class="bg-white text-gray-900 m-0 p-0 overflow-x-hidden">
@@ -64,18 +68,6 @@
 
     if (!isAdmin && maintenanceActive) {
       document.getElementById("maintenance-banner").classList.remove("hidden");
-      // Bloquer le scroll si nécessaire
-      // document.body.style.overflow = 'hidden';
-    }
-
-    if (isAdmin) {
-      document.querySelectorAll('a[href^="/"]').forEach(link => {
-        const url = new URL(link.href, window.location.origin);
-        if (!url.searchParams.has("admin")) {
-          url.searchParams.set("admin", "true");
-          link.href = url.toString();
-        }
-      });
     }
   </script>
 
@@ -86,7 +78,6 @@
       <h1 class="text-xl font-extrabold tracking-wide">LIVABLŌM</h1>
     </div>
 
-    <!-- Menu desktop -->
     <nav class="hidden sm:flex space-x-6">
       <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
       <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
@@ -94,14 +85,12 @@
       <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
     </nav>
 
-    <!-- Hamburger mobile -->
     <button id="menu-toggle" class="sm:hidden focus:outline-none" aria-label="Ouvrir le menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
 
-    <!-- Menu mobile -->
     <div id="mobile-menu" class="hidden absolute right-0 top-16 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50 w-48 sm:hidden">
       <a href="{{ site.baseurl }}/" class="block hover:underline">Accueil</a>
       <a href="{{ site.baseurl }}/galerie" class="block hover:underline">Galerie</a>
@@ -110,27 +99,17 @@
     </div>
   </header>
 
-  <!-- ================= Main ================= -->
   <main class="flex-grow">
     {{ content }}
   </main>
 
-  <!-- ================= Footer ================= -->
   <footer class="bg-black text-white text-center py-6">
     <p>© 2025 <strong>LIVABLŌM</strong>. Tous droits réservés.</p>
-    <div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 text-sm">
-      <a href="{{ site.baseurl }}/mentions" class="underline hover:text-gray-300 transition">Mentions légales & CGV</a>
-      <a href="{{ site.baseurl }}/politique-confidentialite" class="underline hover:text-gray-300 transition">Politique de confidentialité</a>
-      <a href="{{ site.baseurl }}/politique-cookies" class="underline hover:text-gray-300 transition">Politique cookies</a>
-    </div>
   </footer>
 
-  <!-- ================= Scripts ================= -->
-  <script>window.BACKEND_URL = "{{ site.backend_url | default: 'http://localhost:3000' }}";</script>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
 
-  <!-- Menu mobile toggle -->
   <script>
     const toggleButton = document.getElementById("menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
@@ -138,33 +117,6 @@
     toggleButton.addEventListener("click", () => {
       mobileMenu.classList.toggle("hidden");
       mobileMenu.classList.toggle("flex");
-    });
-
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-      });
-    });
-  </script>
-
-  <!-- CookieConsent -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
-  <script>
-    window.addEventListener("load", function() {
-      window.cookieconsent.initialise({
-        palette: { popup: { background: "#000" }, button: { background: "#fbbf24", text: "#000" } },
-        theme: "classic",
-        type: "opt-in",
-        content: {
-          message: "Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous l’utilisation des cookies analytiques ?",
-          allow: "Accepter",
-          deny: "Refuser",
-          link: "En savoir plus",
-          href: "/politique-confidentialite"
-        }
-      });
     });
   </script>
 
