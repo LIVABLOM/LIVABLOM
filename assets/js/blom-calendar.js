@@ -117,9 +117,9 @@
     if (testPayment) return 1;
     const d = new Date(dateStr);
     const day = d.getDay();
-    if (day === 5 || day === 6) return 169;
+    if (day === 5 || day === 6) return 175;
     if (day === 0) return 190;
-    return 150;
+    return 165;
   }
 
   function sumPrice(startStr, nights, testPayment) {
