@@ -69,83 +69,42 @@ permalink: /prestations-blom
       </div>
     </section>
 
-    <!-- DECORATION ANNIVERSAIRE / EXTRAS -->
-    <section class="border border-gray-700 rounded-2xl p-8 space-y-8">
-      <h2 class="text-2xl font-bold text-center">🎉 Décoration Anniversaire & Extras</h2>
+<section class="border border-gray-700 rounded-2xl p-8 space-y-8">
 
-      <p class="text-center text-gray-300 max-w-2xl mx-auto">
-        Pour célébrer un moment spécial, nous proposons des prestations supplémentaires
-        pour personnaliser votre séjour. Tout est installé avant votre arrivée pour un effet surprise ✨
+  <h2 class="text-3xl font-bold text-center">✨ Options d’ambiance romantique</h2>
+
+  <p class="text-center text-gray-300 max-w-2xl mx-auto">
+    Votre séjour inclut déjà une ambiance tamisée et une table romantique dressée gratuitement
+    si vous apportez votre repas.  
+    Pour aller plus loin, vous pouvez ajouter des options de décoration personnalisées.
+  </p>
+
+  <div class="grid md:grid-cols-3 gap-8">
+
+    <div class="bg-black p-6 rounded-xl border border-gray-800">
+      <h3 class="text-xl font-semibold mb-2">🌹 Pétales de rose</h3>
+      <p class="text-sm text-gray-400">
+        Disposition sur le lit (effet cœur ou romantique) pour une arrivée pleine de surprise.
       </p>
+    </div>
 
-      <div class="grid md:grid-cols-3 gap-8 text-center text-lg">
-
-        <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Décoration simple</h3>
-          <p class="text-xl font-bold">60 €</p>
-          <p class="text-sm text-gray-400 mt-2">
-            Ballons, message "Joyeux anniversaire", quelques pétales et bougies LED
-          </p>
-        </div>
-
-        <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Ambiance complète</h3>
-          <p class="text-xl font-bold">80 €</p>
-          <p class="text-sm text-gray-400 mt-2">
-            Ballons, message, pétales, bougies LED et mise en scène du lit
-          </p>
-        </div>
-
-        <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Premium personnalisé</h3>
-          <p class="text-xl font-bold">120 € et +</p>
-          <p class="text-sm text-gray-400 mt-2">
-            Tout le pack + options personnalisées (couleurs, prénom, surprises)
-          </p>
-        </div>
-
-      </div>
-
-      <div class="text-center text-gray-400 text-lg mt-6">
-        <p>Exemple : décoration pour les 30 ans de votre conjoint – formule simple ou ambiance complète selon votre choix.</p>
-      </div>
-    </section>
-    
-        <!-- EXPERIENCE ROMANTIQUE -->
-    <section class="border border-gray-700 rounded-2xl p-8 space-y-8">
-      <h2 class="text-2xl font-bold text-center">❤️ Expérience Romantique</h2>
-
-      <p class="text-center text-gray-300 max-w-2xl mx-auto">
-        Offrez-vous une mise en scène romantique pensée pour créer un effet "waouh" dès votre arrivée.
-        Tout est préparé avec soin avant votre venue pour une surprise inoubliable ✨
+    <div class="bg-black p-6 rounded-xl border border-gray-800">
+      <h3 class="text-xl font-semibold mb-2">🎈 Ballons décoratifs</h3>
+      <p class="text-sm text-gray-400">
+        Ballons cœur ou ronds, gonflés à l’hélium ou à l’air, disposés dans la pièce pour une ambiance festive ou romantique.
       </p>
+    </div>
 
-      <div class="grid md:grid-cols-2 gap-8 text-center text-lg">
+    <div class="bg-black p-6 rounded-xl border border-gray-800">
+      <h3 class="text-xl font-semibold mb-2">🕯️ Bougies LED</h3>
+      <p class="text-sm text-gray-400">
+        Bougies LED autour du lit et dans la salle de massage pour une ambiance chaleureuse et sécurisée.
+      </p>
+    </div>
 
-        <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Ambiance romantique</h3>
-          <p class="text-xl font-bold">49 €</p>
-          <p class="text-sm text-gray-400 mt-2">
-            Pétales de rose sur le lit, bougies LED avec photophores et ambiance lumineuse tamisée
-          </p>
-        </div>
+  </div>
 
-        <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Expérience romantique complète</h3>
-          <p class="text-xl font-bold">79 €</p>
-          <p class="text-sm text-gray-400 mt-2">
-            Mise en scène complète : pétales de rose, ambiance bougies premium, décoration du lit et ballons cœur à l’hélium
-          </p>
-        </div>
-
-      </div>
-
-      <div class="text-center text-gray-400 text-lg mt-6">
-        <p>
-          Idéal pour une surprise, une première rencontre ou simplement partager un moment hors du temps à deux.
-        </p>
-      </div>
-    </section>
+</section>
 
     <!-- EXPLICATION STRATEGIQUE -->
     <section class="text-center max-w-3xl mx-auto text-gray-400 text-lg">
