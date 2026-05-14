@@ -75,21 +75,7 @@ permalink: /
         Une expérience romantique, intime et relaxante pensée uniquement pour deux.
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-
-        <a href="{{ site.baseurl }}/blom"
-           class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl">
-          Découvrir l’expérience
-        </a>
-
-        <a href="{{ site.baseurl }}/contact"
-           class="border border-white px-8 py-4 rounded-xl hover:bg-white hover:text-black transition duration-300">
-          Réserver maintenant
-        </a>
-
-      </div>
-
-    </div>
+          </div>
 
   </div>
 </div>
