@@ -9,6 +9,8 @@ permalink: /
 <style>
   .hero-blom {
     height: calc(100vh - 80px);
+    background-size: cover;
+    background-position: center top;
     animation: zoomHero 18s ease-in-out infinite alternate;
   }
 
@@ -31,6 +33,16 @@ permalink: /
     max-width: 400px;
   }
 
+  @media (max-width: 767px) {
+  .hero-blom {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: black;
+    height: 70vh;
+  }
+}
+
   @media (min-width: 768px) {
     .floating-book-btn {
       display: none;
@@ -39,10 +51,10 @@ permalink: /
 </style>
 
 <!-- HERO -->
-<div class="relative overflow-hidden">
+<div class="relative overflow-hidden bg-black">
 
   <!-- Image de fond -->
-  <div class="hero-blom flex items-center justify-center bg-cover bg-top text-white"
+  <div class="hero-blom flex items-center justify-center text-white"
        style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/blom.jpeg');">
 
     <!-- Overlay -->
