@@ -97,6 +97,11 @@ permalink: /
         Une expérience romantique, intime et relaxante pensée uniquement pour deux.
       </p>
 
+<a href="{{ site.baseurl }}/blom/"
+   class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block mt-4">
+  Découvrir la suite BLŌM
+</a>
+
   </div>
 
   </div>
