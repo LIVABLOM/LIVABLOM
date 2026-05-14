@@ -23,8 +23,8 @@ permalink: /
 /* MOBILE FIX GLOBAL */
 @media (max-width: 767px) {
   .hero-blom {
-    height: 85svh; /* 👈 IMPORTANT (corrige le bug mobile) */
-    background-size: contain;
+    height: 100dvh;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center top;
     background-color: black;
