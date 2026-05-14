@@ -10,13 +10,18 @@ permalink: /mentions
     <h1 class="text-3xl font-bold mb-8 text-center">Mentions légales & Conditions Générales de Vente</h1>
 
     <!-- Informations légales -->
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold mb-4">Identité</h2>
-      <p><strong>Nom de la société :</strong> LIVABLŌM</p>
-      <p><strong>Gérant :</strong> BENHDACH Abdelkader</p>
-      <p><strong>SIRET :</strong> 953 343 019 00014</p>
-      <p><strong>Adresse :</strong> 338 boulevard Ambroise Croizat, 59287 GUESNAIN</p>
-    </section>
+    <section class="mb-10 text-sm text-gray-300">
+  <h2 class="text-2xl font-semibold mb-4 text-white">Éditeur du site</h2>
+
+  <p><strong>LIVABLŌM</strong></p>
+  <p>Entreprise individuelle</p>
+  <p>SIRET : 953 343 019 00014</p>
+  <p>Adresse : 338 boulevard Ambroise Croizat, 59287 GUESNAIN</p>
+
+  <p class="mt-4 text-xs text-gray-400">
+    Responsable de publication : information disponible sur demande
+  </p>
+</section>
 
     <!-- Règlement intérieur -->
     <section class="mb-10">
