@@ -81,7 +81,7 @@
     <nav class="hidden sm:flex items-center space-x-6">
   <a href="{{ site.baseurl }}/" class="hover:underline">Accueil</a>
   <a href="{{ site.baseurl }}/galerie" class="hover:underline">Galerie</a>
-  <a href="{{ site.baseurl }}/prestations" class="hover:underline">Prestations</a>
+  <a href="{{ site.baseurl }}/prestations-blom" class="hover:underline">Prestations</a>
   <a href="{{ site.baseurl }}/contact" class="hover:underline">Contact</a>
 
   <!-- Bouton Réserver -->
@@ -99,7 +99,7 @@
     <div id="mobile-menu" class="hidden absolute right-0 top-16 bg-black rounded shadow-lg flex-col space-y-2 text-sm p-4 z-50 w-48 sm:hidden">
       <a href="{{ site.baseurl }}/" class="block hover:underline">Accueil</a>
       <a href="{{ site.baseurl }}/galerie" class="block hover:underline">Galerie</a>
-      <a href="{{ site.baseurl }}/prestations" class="block hover:underline">Prestations</a>
+      <a href="{{ site.baseurl }}/prestations-blom" class="block hover:underline">Prestations</a>
       <a href="{{ site.baseurl }}/contact" class="block hover:underline">Contact</a>
       <a href="https://www.livablom.fr/assets/html/blom-calendar.html" class="block bg-white text-black text-center px-4 py-2 rounded-full font-semibold hover:bg-gray-200 transition mt-2">
   Réserver
@@ -127,6 +127,30 @@
       mobileMenu.classList.toggle("flex");
     });
   </script>
+
+<footer class="bg-black text-gray-400 text-sm py-10 px-6 border-t border-white/10">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+
+    <p>© {{ site.time | date: "%Y" }} BLŌM – LIVABLŌM</p>
+
+    <div class="flex flex-wrap gap-4 justify-center text-center">
+
+      <a href="{{ site.baseurl }}/politique-confidentialite/" class="hover:text-white">
+        Politique de confidentialité
+      </a>
+
+      <a href="{{ site.baseurl }}/politique-cookies/" class="hover:text-white">
+        Cookies
+      </a>
+
+      <a href="{{ site.baseurl }}/mentions/" class="hover:text-white">
+        Mentions légales
+      </a>
+
+    </div>
+
+  </div>
+</footer>
 
 </body>
 </html>
