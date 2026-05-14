@@ -83,7 +83,7 @@ permalink: /
     <div class="absolute inset-0 bg-black/50"></div>
 
     <!-- Contenu -->
-    <div class="relative z-10 text-center px-6 max-w-2xl">
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 max-w-2xl mx-auto">
 
       <h1 class="text-5xl md:text-7xl font-bold tracking-[0.2em] mb-6">
         BLŌM
