@@ -75,7 +75,7 @@ permalink: /
         Une expérience romantique, intime et relaxante pensée uniquement pour deux.
       </p>
 
-          </div>
+  </div>
 
   </div>
 </div>
