@@ -160,12 +160,23 @@ permalink: /
     Réservez votre moment BLŌM et profitez d’une expérience unique à deux.
   </p>
 
- <a href="{{ site.baseurl }}/contact"
-   class="bg-white text-black px-10 py-5 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block hidden md:inline-block">
-  Réserver maintenant
-</a>
+  <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
 
-</section>
+    <!-- Découvrir BLŌM -->
+    <a href="{{ site.baseurl }}/blom/"
+       class="bg-white text-black px-10 py-5 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block">
+      Découvrir BLŌM
+    </a>
+
+    <!-- Réserver -->
+    <a href="{{ site.baseurl }}/contact"
+       class="border border-white text-white px-10 py-5 rounded-xl hover:bg-white hover:text-black transition duration-300 inline-block hidden md:inline-block">
+      Réserver maintenant
+    </a>
+
+  </div>
+
+
 
 <!-- BOUTON MOBILE FIXE -->
 <div class="floating-book-btn md:hidden">
