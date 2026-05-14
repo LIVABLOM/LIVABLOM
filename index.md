@@ -133,10 +133,10 @@ permalink: /
     Réservez votre moment BLŌM et profitez d’une expérience unique à deux.
   </p>
 
-  <a href="{{ site.baseurl }}/contact"
-     class="bg-white text-black px-10 py-5 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block">
-    Réserver maintenant
-  </a>
+ <a href="{{ site.baseurl }}/contact"
+   class="bg-white text-black px-10 py-5 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block hidden md:inline-block">
+  Réserver maintenant
+</a>
 
 </section>
 
