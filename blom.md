@@ -68,6 +68,18 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
       BLŌM – Suite avec spa privatif à Guesnain près de Douai
     </h1>
 
+    <div class="text-center mt-6 mb-10">
+  <a href="/assets/html/blom-calendar.html"
+     class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition shadow-xl inline-block">
+    Réserver BLŌM
+  </a>
+
+  <a href="{{ site.baseurl }}/"
+     class="ml-0 md:ml-4 mt-4 md:mt-0 inline-block border border-white text-white px-6 py-3 rounded-xl hover:bg-white hover:text-black transition">
+    Retour accueil
+  </a>
+</div>
+
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
       Bienvenue à <strong>BLŌM</strong>, votre suite romantique avec <strong>spa privatif à Guesnain</strong>, au cœur du <strong>Douaisis</strong>. Idéale pour un <strong>week-end romantique à deux</strong>, BLŌM vous offre une expérience unique : jacuzzi privatif, salle de massage privative, lit king size et table romantique sur demande.
     </p>
@@ -153,6 +165,13 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
         <li>• Idéal pour un <strong>week-end romantique ou séjour détente à Guesnain</strong></li>
       </ul>
     </div>
+
+    <div class="text-center mt-16 mb-10">
+  <a href="/assets/html/blom-calendar.html"
+     class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition shadow-xl inline-block">
+    Vérifier les disponibilités
+  </a>
+</div>
 
     <!-- FAQ complète -->
     <section class="mt-20 max-w-4xl mx-auto text-white space-y-6">
