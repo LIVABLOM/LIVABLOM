@@ -53,7 +53,7 @@ permalink: /
 <div class="relative overflow-hidden bg-black">
 
   <!-- Image de fond -->
-  <div class="hero-blom flex items-center justify-center text-white"
+  <div class="hero-blom flex items-start justify-center pt-24 text-white"
        style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/blom.jpeg');">
 
     <!-- Overlay -->
