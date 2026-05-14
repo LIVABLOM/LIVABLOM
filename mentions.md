@@ -49,10 +49,10 @@ permalink: /mentions
 
       <h3 class="text-xl font-semibold mt-4">BLŌM (logement spa pour couples)</h3>
       <ul class="list-disc list-inside space-y-2">
-        <li><strong>Nuitée :</strong> Vendredi & samedi : 169 €</li>
+        <li><strong>Nuitée :</strong> Vendredi & samedi : 175 €</li>
         <li><strong>Nuitée :</strong> Dimanche : 190 €</li>
-        <li><strong>Nuitée :</strong> Lundi à jeudi : 150 €</li>
-        <li><strong>Formule journée :</strong> 11h00 à 16h00 – 130 € (sur demande et après validation)</li>
+        <li><strong>Nuitée :</strong> Lundi à jeudi : 165 €</li>
+        <li><strong>Formule journée :</strong> 11h00 à 16h00 – 139 € (sur demande et après validation)</li>
         <li><strong>Formule 4h :</strong> sur demande uniquement</li>
       </ul>
 
