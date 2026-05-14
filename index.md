@@ -1,33 +1,151 @@
 ---
 layout: default
-title: Confort moderne ou spa privé, choisissez votre séjour.
-description:"LIVABLŌM à Guesnain : deux logements haut de gamme pour tous vos séjours. BLŌM, escapade romantique avec spa privatif et petit-déjeuner inclus. LIVA, hébergement moderne tout équipé pour familles, couples et professionnels."
-image: /assets/images/photolivablom1.png
+title: BLŌM – Suite avec spa privatif à Guesnain
+description: "BLŌM : suite romantique avec spa privatif, lit king-size et petit-déjeuner inclus. Expérience bien-être à Guesnain."
+image: /assets/galerie/blom/blom.jpeg
 permalink: /
 ---
 
-<!-- Contenu principal pleine hauteur (moins header) -->
-<div class="flex flex-col md:flex-row w-screen overflow-hidden" style="height: calc(100vh - 80px);">
+<style>
+  .hero-blom {
+    height: calc(100vh - 80px);
+    animation: zoomHero 18s ease-in-out infinite alternate;
+  }
 
-  <!-- Partie LIVA -->
-  <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center text-white flex flex-col items-center justify-center p-6 text-center" style="background-image: url('{{ site.baseurl }}/assets/galerie/liva/salon1.jpg');">
-    <div class="bg-black/70 p-4 rounded-lg">
-      <h2 class="text-3xl font-bold mb-4">LIVA – Logement tout confort</h2>
-      <p class="mb-6 text-lg max-w-xs">
-        <strong>Pour familles, couples ou professionnels. Espace spacieux, cuisine équipée, ambiance moderne.</strong>
+  @keyframes zoomHero {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.05);
+    }
+  }
+
+  .floating-book-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    width: calc(100% - 32px);
+    max-width: 400px;
+  }
+
+  @media (min-width: 768px) {
+    .floating-book-btn {
+      display: none;
+    }
+  }
+</style>
+
+<!-- HERO -->
+<div class="relative overflow-hidden">
+
+  <!-- Image de fond -->
+  <div class="hero-blom flex items-center justify-center bg-cover bg-top text-white"
+       style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/blom.jpeg');">
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- Contenu -->
+    <div class="relative z-10 text-center px-6 max-w-2xl">
+
+      <h1 class="text-5xl md:text-7xl font-bold tracking-[0.2em] mb-6">
+        BLŌM
+      </h1>
+
+      <p class="text-xl md:text-2xl mb-4 font-light">
+        Suite avec spa privatif à Guesnain
       </p>
-      <a href="{{ site.baseurl }}/liva" class="bg-white text-black py-2 px-4 rounded hover:bg-gray-200">Découvrir LIVA</a>
-    </div>
-  </div>
 
-  <!-- Partie BLŌM -->
-  <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center text-white flex flex-col items-center justify-center p-6 text-center" style="background-image: url('{{ site.baseurl }}/assets/galerie/blom/blom10.jpg');">
-    <div class="bg-black/70 p-4 rounded-lg">
-      <h2 class="text-3xl font-bold mb-4">BLŌM – Évasion romantique</h2>
-      <p class="mb-6 text-lg max-w-xs">Conçu pour les couples en quête de détente. Spa privatif, lit king-size, petit-déjeuner inclus.</p>
-      <a href="{{ site.baseurl }}/blom" class="bg-white text-black py-2 px-4 rounded hover:bg-gray-200">Découvrir BLŌM</a>
-    </div>
-  </div>
+      <p class="text-base md:text-lg text-gray-200 mb-10 leading-relaxed max-w-xl mx-auto">
+        Une expérience romantique, intime et relaxante pensée uniquement pour deux.
+      </p>
 
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+
+        <a href="{{ site.baseurl }}/blom"
+           class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl">
+          Découvrir l’expérience
+        </a>
+
+        <a href="{{ site.baseurl }}/contact"
+           class="border border-white px-8 py-4 rounded-xl hover:bg-white hover:text-black transition duration-300">
+          Réserver maintenant
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
 </div>
 
+<!-- SECTION EXPERIENCE -->
+<section class="bg-black text-white py-20 px-6">
+
+  <div class="max-w-6xl mx-auto text-center">
+
+    <h2 class="text-3xl md:text-5xl font-bold mb-6">
+      Une nuit hors du temps
+    </h2>
+
+    <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg">
+      Profitez d’un espace entièrement privatif conçu pour le bien-être, la détente et les moments à deux.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+        <h3 class="text-2xl font-semibold mb-4">Spa privatif</h3>
+        <p class="text-gray-300 leading-relaxed">
+          Un espace bien-être accessible en toute intimité pour un moment de relaxation absolue.
+        </p>
+      </div>
+
+      <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+        <h3 class="text-2xl font-semibold mb-4">Ambiance romantique</h3>
+        <p class="text-gray-300 leading-relaxed">
+          Lumières tamisées, décoration soignée et atmosphère chaleureuse.
+        </p>
+      </div>
+
+      <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+        <h3 class="text-2xl font-semibold mb-4">Confort premium</h3>
+        <p class="text-gray-300 leading-relaxed">
+          Lit king-size, arrivée autonome et équipements pensés pour votre confort.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CTA FINAL -->
+<section class="bg-black text-white py-24 px-6 text-center border-t border-white/10">
+
+  <h2 class="text-4xl md:text-5xl font-bold mb-6">
+    Laissez le quotidien à la porte
+  </h2>
+
+  <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
+    Réservez votre moment BLŌM et profitez d’une expérience unique à deux.
+  </p>
+
+  <a href="{{ site.baseurl }}/contact"
+     class="bg-white text-black px-10 py-5 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block">
+    Réserver maintenant
+  </a>
+
+</section>
+
+<!-- BOUTON MOBILE FIXE -->
+<div class="floating-book-btn md:hidden">
+  <a href="{{ site.baseurl }}/contact"
+     class="block text-center bg-white text-black py-4 rounded-2xl font-bold shadow-2xl">
+    Réserver maintenant
+  </a>
+</div>
