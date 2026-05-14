@@ -25,8 +25,8 @@ permalink: /
   .hero-blom {
     height: 100dvh;
     background-size: cover;
+    background-position: center 20%;
     background-repeat: no-repeat;
-    background-position: center top;
     background-color: black;
   }
 }
