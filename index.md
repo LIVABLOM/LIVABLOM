@@ -47,6 +47,13 @@ permalink: /
     display: none;
   }
 }
+@media (max-width: 767px) and (orientation: portrait) {
+  .hero-blom {
+    height: 75dvh;
+    background-size: cover;
+    background-position: center 25%;
+  }
+}
 </style>
 
 <!-- HERO -->
