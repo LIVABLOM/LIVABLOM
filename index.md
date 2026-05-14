@@ -7,47 +7,46 @@ permalink: /
 ---
 
 <style>
+ .hero-blom {
+  height: calc(100vh - 80px);
+  background-size: cover;
+  background-position: center top;
+  animation: zoomHero 18s ease-in-out infinite alternate;
+}
+
+/* DESKTOP animation */
+@keyframes zoomHero {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* MOBILE FIX GLOBAL */
+@media (max-width: 767px) {
   .hero-blom {
-    height: calc(100vh - 80px);
-    background-size: cover;
-    background-position: center top;
-    animation: zoomHero 18s ease-in-out infinite alternate;
-  }
-
-  @keyframes zoomHero {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.05);
-    }
-  }
-
-  .floating-book-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    width: calc(100% - 32px);
-    max-width: 400px;
-  }
-
-  @media (max-width: 767px) {
-  .hero-blom {
+    height: 85svh; /* 👈 IMPORTANT (corrige le bug mobile) */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center top;
     background-color: black;
-    height: 70vh;
   }
 }
 
-  @media (min-width: 768px) {
-    .floating-book-btn {
-      display: none;
-    }
+/* FLOATING BUTTON */
+.floating-book-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  width: calc(100% - 32px);
+  max-width: 400px;
+}
+
+@media (min-width: 768px) {
+  .floating-book-btn {
+    display: none;
   }
+}
 </style>
 
 <!-- HERO -->
