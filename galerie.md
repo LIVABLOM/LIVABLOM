@@ -11,9 +11,6 @@ permalink: /galerie
 <!-- HERO SIMPLE -->
 <div class="py-20 md:py-28 px-6 text-center border-b border-white/10">
 
-  <h1 class="text-5xl md:text-7xl font-bold tracking-[0.2em] mb-6">
-    GALERIE
-  </h1>
 
   <p class="text-lg md:text-2xl max-w-2xl mx-auto text-gray-300 leading-relaxed">
     Découvrez l’univers BLŌM à travers une sélection de photos immersives.
