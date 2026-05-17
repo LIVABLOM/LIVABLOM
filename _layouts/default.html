@@ -151,6 +151,58 @@
 
   </div>
 </footer>
+<!-- COOKIE BANNER -->
+<div id="cookie-banner"
+     class="fixed bottom-0 left-0 w-full bg-black text-white border-t border-white/10 p-4 z-50 hidden">
 
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+
+    <p class="text-sm text-gray-300 text-center md:text-left">
+      Ce site utilise des cookies pour améliorer votre expérience utilisateur.
+      En continuant votre navigation, vous acceptez leur utilisation.
+      <a href="{{ site.baseurl }}/politique-cookies"
+         class="underline hover:text-white">
+         En savoir plus
+      </a>
+    </p>
+
+    <div class="flex gap-3">
+
+  <button id="refuse-cookies"
+          class="border border-white px-6 py-2 rounded-lg hover:bg-white hover:text-black transition">
+    Refuser
+  </button>
+
+  <button id="accept-cookies"
+          class="bg-white text-black px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">
+    Accepter
+  </button>
+
+</div>
+
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    if (!localStorage.getItem("cookieChoice")) {
+      document.getElementById("cookie-banner").classList.remove("hidden");
+    }
+
+    document.getElementById("accept-cookies").addEventListener("click", function () {
+      localStorage.setItem("cookieChoice", "accepted");
+      document.getElementById("cookie-banner").style.display = "none";
+    });
+
+    document.getElementById("refuse-cookies").addEventListener("click", function () {
+      localStorage.setItem("cookieChoice", "refused");
+      document.getElementById("cookie-banner").style.display = "none";
+    });
+
+  });
+</script>
+</script>
 </body>
 </html>
