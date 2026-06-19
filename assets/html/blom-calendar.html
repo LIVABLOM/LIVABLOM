@@ -88,6 +88,10 @@
     /* Correction : overlay transparent */
     #calendar .fc-scrollgrid { background: transparent !important; }
     #calendar .fc-daygrid-day { background: #111; }
+    #promo-msg {
+  margin-top: 4px;
+  font-size: 0.85rem;
+}
   </style>
 </head>
 <body>
@@ -121,6 +125,14 @@
       </div>
 
       <p id="modal-price">Montant total : 0 €</p>
+      
+<div class="promo-box">
+  <label>
+    Code promo
+    <input type="text" id="res-promo" placeholder="Ex: BLOM10" />
+  </label>
+  <small id="promo-msg"></small>
+</div>
 
       <label>
         Nom complet

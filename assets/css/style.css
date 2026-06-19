@@ -1,223 +1,204 @@
 /* =========================================================
-   🌸 STYLES GÉNÉRAUX
+   🎁 PAGE CARTE CADEAU - PREMIUM / LUXE CLEAN
    ========================================================= */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+
+/* Section générale */
+section {
   font-family: 'Helvetica Neue', sans-serif;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  background: #000;
+}
+
+/* =========================
+   TITRES
+   ========================= */
+
+section h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
   color: #fff;
 }
 
-/* =========================================================
-   🏠 CONTENEUR PRINCIPAL
-   ========================================================= */
-.home-container {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  position: relative;
-}
-
-/* =========================================================
-   🟩 SECTIONS LIVA ET BLŌM
-   ========================================================= */
-.section-liva,
-.section-blom {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+section h2 {
+  font-size: 2rem;
+  font-weight: 600;
   text-align: center;
+  color: #fff;
+  margin-bottom: 2rem;
 }
 
-.section-liva {
-  background-color: #f7f7f7;
-  color: #000;
+section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
 }
 
-.section-blom {
+/* Texte */
+section p,
+section li {
+  color: #ddd;
+  line-height: 1.6;
+}
+
+/* Bloc infos */
+section .bg-gray-900 {
+  background-color: #111 !important;
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* =========================
+   LISTES
+   ========================= */
+
+section ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* =========================
+   STRIPE BUTTON
+   ========================= */
+
+.paiement {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.paiement stripe-buy-button {
+  width: 100%;
+  max-width: 220px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paiement stripe-buy-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(255,255,255,0.25);
+}
+
+/* Icônes montants */
+.paiement span {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* =========================
+   ANIMATION LUMIÈRE
+   ========================= */
+
+@keyframes glow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+.animate-glow {
+  background: radial-gradient(circle, rgba(255, 200, 150, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  width: 400px;
+  height: 200px;
+  animation: glow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* =========================
+   PAGE THANK YOU
+   ========================= */
+
+.thank-page {
+  min-height: 100vh;
   background-color: #000;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
 }
 
-/* =========================================================
-   🌺 LOGO CENTRAL
-   ========================================================= */
-.logo-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+.thank-container {
+  max-width: 720px;
   text-align: center;
 }
 
-.logo-center img {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 1rem;
+.thank-title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
 }
 
-.logo-center h1 {
-  font-size: 2rem;
-  font-weight: bold;
+.thank-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: #eaeaea;
 }
 
+.thank-note {
+  font-size: 0.95rem;
+  color: #bdbdbd;
+  margin-top: 2.5rem;
+}
+
+.thank-note a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.thank-button {
+  display: inline-block;
+  margin-top: 3rem;
+  padding: 0.9rem 2.2rem;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+.thank-button:hover {
+  background-color: #fff;
+  color: #000;
+}
 /* =========================================================
-   📱 RESPONSIVE MOBILE
+   🎟️ PROMO BOX CLEAN
    ========================================================= */
-@media (max-width: 768px) {
-  .mobile-stack {
-    flex-direction: column;
-    height: 100vh;
-  }
 
-  .half-screen {
-    height: 50vh;
-    width: 100%;
-  }
-
-  .center-logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    text-align: center;
-  }
-
-  .center-logo img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 0.5rem;
-  }
-
-  .center-logo h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: black;
-  }
-}
-
-/* =========================================================
-   📅 FULLCALENDAR - PERSONNALISATION
-   ========================================================= */
-#calendar {
+.promo-box {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.promo-box label {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+#res-promo {
+  width: 100%;
   padding: 10px;
-  background: #111;
-  color: #fff;
-  border-radius: 12px;
-  height: calc(100vh - 140px);
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Jours du calendrier */
-.fc-daygrid-day {
-  background: #111;
-  color: #fff;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  pointer-events: auto;
+  margin-top: 6px;
   border-radius: 6px;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+  box-sizing: border-box;
 }
 
-/* Jours réservés */
-.fc-event,
-.fc-event-background {
-  background-color: #ff0000 !important;
-  border-color: #ff0000 !important;
-  color: #fff !important;
-}
-
-/* Jours passés grisés */
-.fc-daygrid-day.past-day {
-  background-color: #333 !important;
-  color: #777 !important;
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-/* Jours sélectionnés */
-.fc-daygrid-day.fc-day-selected {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 1px solid #fff !important;
-}
-
-/* En-têtes (jours de la semaine, titre du mois) */
-.fc .fc-col-header-cell-cushion,
-.fc .fc-toolbar-title {
-  color: #fff;
-}
-
-/* Hover visuel */
-.fc .fc-daygrid-day:hover:not(.past-day) {
-  filter: brightness(1.02);
-}
-
-/* =========================================================
-   🪟 MODAL RÉSERVATION
-   ========================================================= */
-.modal-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #222;
-  color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-}
-
-.modal-content label {
-  display: block;
-  margin-top: 10px;
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 5px;
+#promo-msg {
   margin-top: 5px;
-  border-radius: 5px;
-  border: 1px solid #555;
-  background: #111;
-  color: #fff;
-}
-
-.modal-buttons {
-  text-align: right;
-  margin-top: 15px;
-}
-
-.modal-buttons button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#modal-price {
-  font-weight: bold;
-  margin-top: 10px;
+  font-size: 0.85rem;
+  min-height: 16px;
 }

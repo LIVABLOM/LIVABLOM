@@ -68,7 +68,7 @@
     #reservationModal select {
       width: 100%;
       padding: 8px;
-      margin: 6px 0 12px;
+      margin: 0;
       border-radius: 6px;
       background: #2a2a2a;
       border: 1px solid #444;
@@ -95,17 +95,22 @@
     }
   `;
 
-  const styleNode = document.createElement("style");
-  styleNode.appendChild(document.createTextNode(css));
-  document.head.appendChild(styleNode);
+  document.head.appendChild(Object.assign(document.createElement("style"), {
+    textContent: css
+  }));
 
   // -------------------------------
-  // 2) Helpers
+  // 2) VARIABLES PROMO (🔥 AJOUT IMPORTANT)
+  // -------------------------------
+  let currentDiscount = 0; // % de réduction (0 à 1)
+
+  // -------------------------------
+  // Helpers
   // -------------------------------
   function addDays(date, days) {
     const d = new Date(date);
     d.setDate(d.getDate() + days);
-    d.setHours(12,0,0,0); // ✅ 12h pour éviter décalage
+    d.setHours(12,0,0,0);
     return d;
   }
 
@@ -125,7 +130,8 @@
   function sumPrice(startStr, nights, testPayment) {
     let total = 0;
     let cur = new Date(startStr);
-    cur.setHours(12,0,0,0); // ✅ 12h pour éviter décalage
+    cur.setHours(12,0,0,0);
+
     for (let i = 0; i < nights; i++) {
       total += getTarif(formatLocalDate(cur), testPayment);
       cur = addDays(cur, 1);
@@ -135,9 +141,11 @@
 
   function isRangeAvailable(startDate, nights, reservedRanges) {
     const start = new Date(startDate);
-    start.setHours(12,0,0,0); // ✅ 12h
+    start.setHours(12,0,0,0);
+
     const end = addDays(start, nights);
-    const today = new Date(); today.setHours(0,0,0,0);
+    const today = new Date(); 
+    today.setHours(0,0,0,0);
 
     if (start < today) return false;
 
@@ -149,6 +157,7 @@
       const backend = location.hostname.includes("localhost")
         ? "http://localhost:3000"
         : "https://livablom-stripe-production.up.railway.app";
+
       const res = await fetch(`${backend}/api/config`);
       return await res.json();
     } catch {
@@ -157,7 +166,7 @@
   }
 
   // -------------------------------
-  // 3) DOM READY
+  // DOM READY
   // -------------------------------
   document.addEventListener("DOMContentLoaded", async () => {
 
@@ -172,6 +181,9 @@
     const inputName = document.getElementById("res-name");
     const inputEmail = document.getElementById("res-email");
     const inputPhone = document.getElementById("res-phone");
+    const promoInput = document.getElementById("res-promo");
+    const promoMsg = document.getElementById("promo-msg");
+
     const btnCancel = document.getElementById("res-cancel");
     const btnConfirm = document.getElementById("res-confirm");
     const errorBox = document.getElementById("res-error");
@@ -185,6 +197,7 @@
       : "https://livablom-stripe-production.up.railway.app";
 
     const config = await getConfig();
+    const promoEnabled = config.promoEnabled;
     const testPayment = config.testPayment;
 
     let reservedRanges = [];
@@ -195,7 +208,7 @@
     inputPersons.value = 2;
 
     // -------------------------------
-    // FullCalendar
+    // CALENDAR
     // -------------------------------
     const cal = new FullCalendar.Calendar(el, {
       initialView: "dayGridMonth",
@@ -235,13 +248,10 @@
       },
 
       dateClick(info) {
-        if (!reservationsLoaded) {
-          alert("Chargement du calendrier, veuillez patienter quelques secondes.");
-          return;
-        }
+        if (!reservationsLoaded) return;
 
         const d = info.date;
-        clickedStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0); // ✅ 12h pour éviter décalage
+        clickedStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
 
         modalStart.textContent = formatLocalDate(clickedStart);
         errorBox.style.display = "none";
@@ -254,27 +264,27 @@
     cal.render();
 
     // -------------------------------
-    // Modal logic
+    // 🔥 UPDATE MODAL (REMIS À JOUR)
     // -------------------------------
     function updateModal() {
+
       if (!clickedStart || !reservationsLoaded) {
         btnConfirm.disabled = true;
         return;
       }
 
       let nights = Math.max(1, parseInt(inputNights.value) || 1);
-      let persons = Math.min(2, Math.max(1, parseInt(inputPersons.value) || 1));
 
-      inputNights.value = nights;
-      inputPersons.value = persons;
+      const baseTotal = sumPrice(formatLocalDate(clickedStart), nights, testPayment);
+
+      let total = Math.round(baseTotal * (1 - currentDiscount));
+
+      priceDisplay.textContent = `Montant total : ${total} €`;
 
       const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
 
       errorBox.style.display = ok ? "none" : "block";
       if (!ok) errorBox.textContent = "La période sélectionnée n'est pas disponible.";
-
-      const total = sumPrice(formatLocalDate(clickedStart), nights, testPayment);
-      priceDisplay.textContent = `Montant total : ${total} €`;
 
       btnConfirm.disabled = !ok;
     }
@@ -282,63 +292,74 @@
     inputNights.addEventListener("input", updateModal);
     inputPersons.addEventListener("input", updateModal);
 
-    // -------------------------------
-    // Cancel
-    // -------------------------------
-    btnCancel.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
+   // -------------------------------
+// -------------------------------
+// 🔥 PROMO FIX PROPRE
+// -------------------------------
+if (promoInput && promoMsg) {
 
+  promoInput.addEventListener("input", () => {
+
+    const code = promoInput.value.trim().toUpperCase();
+
+    currentDiscount = 0;
+
+    if (code === "BLOM10") {
+      currentDiscount = 0.10;
+      promoMsg.textContent = "✅ -10% appliqué";
+      promoMsg.style.color = "#8fffaa";
+    } 
+    else if (code === "LOVE15") {
+      currentDiscount = 0.15;
+      promoMsg.textContent = "✅ -15% appliqué";
+      promoMsg.style.color = "#8fffaa";
+    } 
+    else if (code.length > 0) {
+      promoMsg.textContent = "❌ Code invalide";
+      promoMsg.style.color = "#ff8b8b";
+    } 
+    else {
+      promoMsg.textContent = "";
+    }
+
+    updateModal();
+  });
+
+}
     // -------------------------------
-    // Confirm
+    // CONFIRM
     // -------------------------------
     btnConfirm.addEventListener("click", async () => {
-
-      if (btnConfirm.disabled) return;
 
       const nights = parseInt(inputNights.value);
       const startDate = formatLocalDate(clickedStart);
       const endDate = formatLocalDate(addDays(clickedStart, nights));
-      const total = sumPrice(startDate, nights, testPayment);
 
-      const name = inputName.value.trim();
-      const email = inputEmail.value.trim();
-      const phone = inputPhone.value.trim();
+      const baseTotal = sumPrice(startDate, nights, testPayment);
+      const finalTotal = Math.round(baseTotal * (1 - currentDiscount));
 
-      if (!name || !email || !phone) {
-        errorBox.style.display = "block";
-        errorBox.textContent = "Veuillez remplir tous les champs.";
-        return;
-      }
+      const res = await fetch(`${stripeBackend}/api/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          logement: "BLŌM",
+          startDate,
+          endDate,
+          amount: finalTotal,
+          personnes: 2,
+          name: inputName.value,
+          email: inputEmail.value,
+          phone: inputPhone.value,
+          promoCode: promoInput.value.trim()
+        })
+      });
 
-      if (!confirm(`Confirmer la réservation du ${startDate} au ${endDate} pour ${total} € ?`)) return;
-
-      try {
-        const res = await fetch(`${stripeBackend}/api/checkout`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            logement: "BLŌM",
-            startDate,
-            endDate,
-            amount: total,
-            personnes: 2,
-            name,
-            email,
-            phone
-          })
-        });
-
-        const data = await res.json();
-        if (data.url) location.href = data.url;
-        else alert("Erreur lors de la réservation.");
-      } catch {
-        alert("Erreur réseau.");
-      }
+      const data = await res.json();
+      if (data.url) location.href = data.url;
     });
 
-    modal.addEventListener("click", e => {
-      if (e.target === modal) modal.style.display = "none";
+        btnCancel.addEventListener("click", () => {
+      modal.style.display = "none";
     });
 
   });
