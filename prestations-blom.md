@@ -28,7 +28,7 @@ permalink: /prestations-blom
 </ul>
 
       <div class="text-center text-xl font-semibold space-y-1 mt-6">
-        <p>Lundi au jeudi : <strong>165 €</strong></p>
+        <p>Lundi au jeudi : <strong>150 €</strong></p>
         <p>Vendredi & samedi : <strong>175 €</strong></p>
         <p>Dimanche : <strong>190 €</strong></p>
       </div>
