@@ -123,8 +123,8 @@
     const d = new Date(dateStr);
     const day = d.getDay();
     if (day === 5 || day === 6) return 175;
-    if (day === 0) return 190;
-    return 165;
+    if (day === 0) return 175;
+    return 150;
   }
 
   function sumPrice(startStr, nights, testPayment) {
