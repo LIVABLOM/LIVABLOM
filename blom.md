@@ -113,8 +113,8 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <!-- Bloc Massage -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-300">
       <div class="w-full md:w-1/2 flex flex-col gap-4">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom31.jpg" alt="Table de massage manuelle BLŌM" class="rounded-xl shadow-lg brightness-75">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom37.jpg" alt="Table de massage électrique BLŌM" class="rounded-xl shadow-lg brightness-75">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/salle de massage3.jpeg" alt="Table de massage manuelle BLŌM" class="rounded-xl shadow-lg brightness-75">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/salle de massage9.jpeg" alt="Table de massage électrique BLŌM" class="rounded-xl shadow-lg brightness-75">
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
         <h2 class="text-2xl font-semibold">Salle de massage privative</h2>
@@ -127,7 +127,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <!-- Bloc Lit -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-400">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom13.jpg" alt="Lit king size et coin salon BLŌM" class="w-full h-auto object-cover brightness-75">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/chambre principal.jpeg" alt="Lit king size et coin salon BLŌM" class="w-full h-auto object-cover brightness-75">
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
@@ -141,7 +141,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <!-- Bloc Table romantique -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/blom10.jpg" alt="Table romantique BLŌM" class="w-full h-auto object-cover brightness-75">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/table romantique salon deco.jpeg" alt="Table romantique BLŌM" class="w-full h-auto object-cover brightness-75">
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
