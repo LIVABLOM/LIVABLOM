@@ -123,7 +123,6 @@ permalink: /prestations-blom
       <ul class="text-sm text-gray-400 space-y-2 mb-6">
         <li>• Ballons cœur à l’hélium</li>
         <li>• Pétales de rose sur le lit</li>
-        <li>• Plus de 70 bougies LED décoratives</li>
         <li>• Mise en lumière romantique</li>
         <li>• Ambiance dans la suite et l’espace massage</li>
       </ul>
@@ -149,7 +148,7 @@ permalink: /prestations-blom
         <li>• Décoration personnalisée</li>
         <li>• Ballons décoratifs & hélium</li>
         <li>• Pétales de rose</li>
-        <li>• Bougies LED & ambiance immersive</li>
+        <li>• Plus de 70 bougies LED décoratives & ambiance immersive</li>
         <li>• Mise en scène complète de la suite</li>
       </ul>
 
