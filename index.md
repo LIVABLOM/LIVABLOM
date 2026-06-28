@@ -77,7 +77,7 @@ permalink: /
 
   <!-- Image de fond -->
   <div class="hero-blom flex items-start justify-center pt-24 text-white"
-       style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/spa peignoir ciel etoile.jpeg');">
+       style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/spa ciel peignoir.png');">
 
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black/50"></div>
