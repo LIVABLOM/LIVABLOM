@@ -52,10 +52,10 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
   "priceRange": "€130 - €190",
   "amenityFeature": [
     {"@type": "LocationFeatureSpecification","name": "Spa privatif","description": "Jacuzzi intérieur avec eau changée après chaque client"},
-    {"@type": "LocationFeatureSpecification","name": "Salle de massage privative","description": "Table de massage électronique à 16 programmes ou massages en duo"},
+    {"@type": "LocationFeatureSpecification","name": "Salle de massage privative","description": "Espace massage privatif avec table électrique 16 programmes"}
     {"@type": "LocationFeatureSpecification","name": "Table romantique dressée sur demande","description": "Possibilité de dîner sur place, table dressée pour les couples"},
     {"@type": "LocationFeatureSpecification","name": "Lit King Size et salon TV","description": "Chambre cosy et coin salon avec TV connectée"},
-    {"@type": "LocationFeatureSpecification","name": "Petit-déjeuner offert","description": "Inclus ou sur demande selon la formule"}
+    {"@type": "LocationFeatureSpecification","name": "Petit-déjeuner inclus","description": "Petit-déjeuner inclus dans le séjour"}
   ]
 }
 </script>
@@ -119,7 +119,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
       <div class="w-full md:w-1/2 text-lg space-y-2">
         <h2 class="text-2xl font-semibold">Salle de massage privative</h2>
         <p>
-          Détendez-vous grâce à notre <strong>table de massage électrique 16 programmes</strong>, ou profitez de massages manuels à partager en duo. Un espace <strong>bien-être privatif à Guesnain</strong> conçu pour votre confort.
+          Détendez-vous grâce à notre <strong>table de massage électrique 16 programmes</strong>. Un espace <strong>bien-être privatif à Guesnain</strong> conçu pour profiter d’un moment calme et intime à deux.
         </p>
       </div>
     </div>
@@ -160,7 +160,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
         <li>• Spa privatif entièrement vidangé, désinfecté et rempli pour chaque client</li>
         <li>• Suite 100 % privative pour couples uniquement</li>
         <li>• Table romantique dressée sur demande</li>
-        <li>• Salle de massage privative (table électrique + massages en duo)</li>
+       <li>• Salle de massage privative avec table électrique 16 programmes</li>
         <li>• À proximité de Douai, Sin-le-Noble, Dechy et Waziers</li>
         <li>• Idéal pour un <strong>week-end romantique ou séjour détente à Guesnain</strong></li>
       </ul>
