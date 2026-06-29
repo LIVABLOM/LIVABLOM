@@ -1,8 +1,8 @@
 ---
 layout: default
 title: BLŌM – Suite romantique avec spa privatif près de Douai
-description: "BLŌM : suite romantique avec spa privatif, lit king-size et petit-déjeuner inclus. Expérience bien-être à Guesnain."
-image: /assets/galerie/blom/blom.jpeg
+description: "BLŌM : suite romantique avec spa privatif près de Douai, lit king-size, salle de massage et petit-déjeuner inclus à Guesnain."
+image: /assets/galerie/blom/spa ciel peignoir.png
 permalink: /
 ---
 
@@ -47,13 +47,7 @@ permalink: /
     display: none;
   }
 }
-@media (max-width: 767px) and (orientation: portrait) {
-  .hero-blom {
-    height: 75dvh;
-    background-size: cover;
-    background-position: center 25%;
-  }
-}
+
 @media (max-width: 767px) and (orientation: portrait) {
   .hero-blom {
     height: 78dvh;
@@ -185,3 +179,4 @@ permalink: /
     Réserver maintenant
   </a>
 </div>
+</section>
