@@ -210,6 +210,25 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
   </div>
 </div>
 
+<!-- Bloc Arrivée -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-700">
+  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+    <img src="{{ site.baseurl }}/assets/galerie/blom/portail.png"
+         alt="Entrée privée et parking sécurisé BLŌM"
+         class="w-full h-auto object-cover brightness-75">
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  </div>
+
+  <div class="w-full md:w-1/2 text-lg space-y-2">
+    <h2 class="text-2xl font-semibold">Arrivée autonome & parking privé</h2>
+
+    <p>
+      Arrivez en toute autonomie grâce à l'entrée privative
+      et profitez d'un stationnement sécurisé pendant toute la durée de votre séjour.
+    </p>
+  </div>
+</div>
+
     <!-- Pourquoi choisir BLŌM -->
     <div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
       <h2 class="text-2xl font-bold">Pourquoi choisir BLŌM ?</h2>
@@ -229,6 +248,41 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
      class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition shadow-xl inline-block">
     Vérifier les disponibilités
   </a>
+</div>
+
+<!-- Points forts -->
+<h2 class="text-2xl font-bold text-center mb-8">
+  Tout est réuni pour votre séjour romantique
+</h2>
+
+<div class="mt-16 mb-16">
+  <div class="flex flex-wrap justify-center gap-4">
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+      ♨️ Spa privatif
+    </span>
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+      💆 Salle de massage
+    </span>
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+      🛏️ Lit King Size
+    </span>
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+      🥐 Petit-déjeuner inclus
+    </span>
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+      🚗 Parking privé
+    </span>
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+      🔑 Arrivée autonome
+    </span>
+
+  </div>
 </div>
 
     <!-- FAQ complète -->
