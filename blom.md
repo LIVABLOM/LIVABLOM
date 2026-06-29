@@ -165,8 +165,47 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <h2 class="text-2xl font-semibold">Petit-déjeuner inclus</h2>
 
     <p>
-      Commencez votre journée en douceur avec un <strong>petit-déjeuner inclus</strong>,
-      préparé avec soin afin de profiter pleinement de votre séjour en toute intimité.
+      Après votre nuit, nous préparons votre petit-déjeuner selon vos préférences, que vous nous indiquez avant votre arrivée. Viennoiseries fraîches de la boulangerie, boissons et accompagnements sont soigneusement disposés afin que vous puissiez profiter d'un réveil gourmand en toute tranquillité.
+      🥐 Petit-déjeuner personnalisé selon vos envies (questionnaire envoyé avant votre arrivée). 
+      
+    </p>
+  </div>
+</div>
+
+<!-- Bloc Salle de bain -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-600">
+  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+    <img src="{{ site.baseurl }}/assets/galerie/blom/vasque.png"
+         alt="Salle de bain élégante BLŌM"
+         class="w-full h-auto object-cover brightness-75">
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  </div>
+
+  <div class="w-full md:w-1/2 text-lg space-y-2">
+    <h2 class="text-2xl font-semibold">Salle de bain élégante</h2>
+
+    <p>
+      Une salle de bain moderne et chaleureuse,
+      pensée pour prolonger votre moment de détente après le spa.
+    </p>
+  </div>
+</div>
+
+<!-- Bloc Douche -->
+<div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-650">
+  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+    <img src="{{ site.baseurl }}/assets/galerie/blom/douche.png"
+         alt="Douche à l'italienne BLŌM"
+         class="w-full h-auto object-cover brightness-75">
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  </div>
+
+  <div class="w-full md:w-1/2 text-lg space-y-2">
+    <h2 class="text-2xl font-semibold">Douche </h2>
+
+    <p>
+      Profitez d'une douche spacieuse dans une ambiance douce et tamisée,
+      idéale après un moment de relaxation.
     </p>
   </div>
 </div>
