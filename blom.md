@@ -138,6 +138,25 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
       </div>
     </div>
 
+    <!-- Bloc Petit-déjeuner -->
+<div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-550">
+  <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+    <img src="{{ site.baseurl }}/assets/galerie/blom/petitdej.png"
+         alt="Petit-déjeuner inclus BLŌM"
+         class="w-full h-auto object-cover brightness-75">
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  </div>
+
+  <div class="w-full md:w-1/2 text-lg space-y-2">
+    <h2 class="text-2xl font-semibold">Petit-déjeuner inclus</h2>
+
+    <p>
+      Commencez votre journée en douceur avec un <strong>petit-déjeuner inclus</strong>,
+      préparé avant votre arrivée afin de profiter pleinement de votre séjour en toute intimité.
+    </p>
+  </div>
+</div>
+
     <!-- Bloc Table romantique -->
     <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-12 animate-fadeIn delay-500">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
