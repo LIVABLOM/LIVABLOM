@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "BLŌM – Gîte avec spa privatif à Guesnain (Douaisis) | Suite Romantique"
-description: "Découvrez BLŌM à Guesnain : gîte romantique avec spa privatif, jacuzzi, salle de massage, lit king size, petit-déjeuner inclus. Séjour ultra propre dans le Douaisis."
-image: "/assets/galerie/blom/blom22.jpg"
+title: "BLŌM – Suite romantique avec spa privatif près de Douai"
+description: "BLŌM à Guesnain : suite romantique avec spa privatif près de Douai, jacuzzi, lit king-size, salle de massage et petit-déjeuner inclus."
+image: "/assets/galerie/blom/spa-ciel-peignoir.png"
 permalink: /blom/
 keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement couple Douai, jacuzzi privatif Guesnain, spa ultra propre, eau changée, salle massage privative, BLŌM, LIVABLŌM"
 ---
@@ -99,7 +99,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <!-- Bloc Jacuzzi -->
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 animate-fadeIn delay-200">
       <div class="relative w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-        <img src="{{ site.baseurl }}/assets/galerie/blom/spa ciel peignoir.png" alt="Jacuzzi privatif BLŌM à Guesnain" class="w-full h-auto object-cover brightness-75">
+        <img src="{{ site.baseurl }}/assets/galerie/blom/spa-ciel-peignoir.png" alt="Jacuzzi privatif BLŌM à Guesnain" class="w-full h-auto object-cover brightness-75">
         <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
       <div class="w-full md:w-1/2 text-lg space-y-2">
