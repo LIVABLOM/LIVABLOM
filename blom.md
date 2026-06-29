@@ -152,7 +152,7 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
 
     <p>
       Commencez votre journée en douceur avec un <strong>petit-déjeuner inclus</strong>,
-      préparé avant votre arrivée afin de profiter pleinement de votre séjour en toute intimité.
+      préparé avec soin afin de profiter pleinement de votre séjour en toute intimité.
     </p>
   </div>
 </div>
