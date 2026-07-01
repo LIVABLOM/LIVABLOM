@@ -88,12 +88,33 @@
 
     #res-cancel { background: #333; color: #fff; }
 
-    #res-error {
-      color: #ff8b8b;
-      margin-top: 6px;
-      display: none;
-    }
-  `;
+   #res-error {
+  color: #ff8b8b;
+  margin-top: 6px;
+  display: none;
+}
+
+#same-day-warning {
+  display: none;
+  background: #3a2f00;
+  color: #fff3cd;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 12px 0;
+  line-height: 1.45;
+  border: 1px solid #7a6400;
+}
+
+#same-day-warning a {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  padding: 9px 13px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+`;
 
   document.head.appendChild(Object.assign(document.createElement("style"), {
     textContent: css
@@ -117,6 +138,20 @@
   function formatLocalDate(date) {
     return `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
   }
+
+  function todayParisISO() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Paris",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
+
+function isSameDayBooking(date) {
+  if (!date) return false;
+  return formatLocalDate(date) === todayParisISO();
+}
 
   function getTarif(dateStr, testPayment = false) {
     if (testPayment) return 1;
@@ -183,6 +218,7 @@
     const inputPhone = document.getElementById("res-phone");
     const promoInput = document.getElementById("res-promo");
     const promoMsg = document.getElementById("promo-msg");
+    const sameDayWarning = document.getElementById("same-day-warning");
 
     const btnCancel = document.getElementById("res-cancel");
     const btnConfirm = document.getElementById("res-confirm");
@@ -266,28 +302,41 @@
     // -------------------------------
     // 🔥 UPDATE MODAL (REMIS À JOUR)
     // -------------------------------
-    function updateModal() {
+   function updateModal() {
 
-      if (!clickedStart || !reservationsLoaded) {
-        btnConfirm.disabled = true;
-        return;
-      }
+  if (!clickedStart || !reservationsLoaded) {
+    btnConfirm.disabled = true;
+    return;
+  }
 
-      let nights = Math.max(1, parseInt(inputNights.value) || 1);
+  const sameDay = isSameDayBooking(clickedStart);
 
-      const baseTotal = sumPrice(formatLocalDate(clickedStart), nights, testPayment);
+  if (sameDayWarning) {
+    sameDayWarning.style.display = sameDay ? "block" : "none";
+  }
 
-      let total = Math.round(baseTotal * (1 - currentDiscount));
+  if (sameDay) {
+    priceDisplay.textContent = "Réservation immédiate indisponible pour une arrivée aujourd’hui.";
+    errorBox.style.display = "none";
+    btnConfirm.disabled = true;
+    return;
+  }
 
-      priceDisplay.textContent = `Montant total : ${total} €`;
+  let nights = Math.max(1, parseInt(inputNights.value) || 1);
 
-      const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
+  const baseTotal = sumPrice(formatLocalDate(clickedStart), nights, testPayment);
 
-      errorBox.style.display = ok ? "none" : "block";
-      if (!ok) errorBox.textContent = "La période sélectionnée n'est pas disponible.";
+  let total = Math.round(baseTotal * (1 - currentDiscount));
 
-      btnConfirm.disabled = !ok;
-    }
+  priceDisplay.textContent = `Montant total : ${total} €`;
+
+  const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
+
+  errorBox.style.display = ok ? "none" : "block";
+  if (!ok) errorBox.textContent = "La période sélectionnée n'est pas disponible.";
+
+  btnConfirm.disabled = !ok;
+}
 
     inputNights.addEventListener("input", updateModal);
     inputPersons.addEventListener("input", updateModal);
@@ -329,10 +378,16 @@ if (promoInput && promoMsg) {
     // -------------------------------
     // CONFIRM
     // -------------------------------
-    btnConfirm.addEventListener("click", async () => {
+  btnConfirm.addEventListener("click", async () => {
 
-      const nights = parseInt(inputNights.value);
-      const startDate = formatLocalDate(clickedStart);
+  if (isSameDayBooking(clickedStart)) {
+    if (sameDayWarning) sameDayWarning.style.display = "block";
+    btnConfirm.disabled = true;
+    return;
+  }
+
+  const nights = parseInt(inputNights.value);
+  const startDate = formatLocalDate(clickedStart);
       const endDate = formatLocalDate(addDays(clickedStart, nights));
 
       const baseTotal = sumPrice(startDate, nights, testPayment);
