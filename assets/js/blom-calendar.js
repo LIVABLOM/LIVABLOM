@@ -410,7 +410,22 @@ if (promoInput && promoMsg) {
       });
 
       const data = await res.json();
-      if (data.url) location.href = data.url;
+
+if (data.url) {
+  location.href = data.url;
+  return;
+}
+
+if (data.error === "same_day_not_allowed") {
+  if (sameDayWarning) sameDayWarning.style.display = "block";
+  errorBox.style.display = "block";
+  errorBox.textContent = data.message || "Pour une arrivée aujourd’hui, merci de nous contacter directement.";
+  btnConfirm.disabled = true;
+  return;
+}
+
+errorBox.style.display = "block";
+errorBox.textContent = data.error || "Impossible de créer la réservation. Merci de nous contacter.";
     });
 
         btnCancel.addEventListener("click", () => {
