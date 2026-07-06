@@ -50,13 +50,33 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
   "url": "https://www.livablom.fr/blom/",
   "telephone": "+33 6 95 19 37 80",
   "priceRange": "€130 - €190",
-  "amenityFeature": [
-    {"@type": "LocationFeatureSpecification","name": "Spa privatif","description": "Jacuzzi intérieur avec eau changée après chaque client"},
-    {"@type": "LocationFeatureSpecification","name": "Salle de massage privative","description": "Espace massage privatif avec table électrique 16 programmes"}
-    {"@type": "LocationFeatureSpecification","name": "Table romantique dressée sur demande","description": "Possibilité de dîner sur place, table dressée pour les couples"},
-    {"@type": "LocationFeatureSpecification","name": "Lit King Size et salon TV","description": "Chambre cosy et coin salon avec TV connectée"},
-    {"@type": "LocationFeatureSpecification","name": "Petit-déjeuner inclus","description": "Petit-déjeuner inclus dans le séjour"}
-  ]
+ "amenityFeature": [
+  {
+    "@type": "LocationFeatureSpecification",
+    "name": "Spa privatif",
+    "description": "Jacuzzi intérieur avec eau changée après chaque client"
+  },
+  {
+    "@type": "LocationFeatureSpecification",
+    "name": "Salle de massage privative",
+    "description": "Espace massage privatif avec table électrique 16 programmes"
+  },
+  {
+    "@type": "LocationFeatureSpecification",
+    "name": "Table romantique dressée sur demande",
+    "description": "Possibilité de dîner sur place, table dressée pour les couples"
+  },
+  {
+    "@type": "LocationFeatureSpecification",
+    "name": "Lit King Size et salon TV",
+    "description": "Chambre cosy et coin salon avec TV connectée"
+  },
+  {
+    "@type": "LocationFeatureSpecification",
+    "name": "Petit-déjeuner inclus",
+    "description": "Petit-déjeuner inclus dans le séjour"
+  }
+]
 }
 </script>
 
