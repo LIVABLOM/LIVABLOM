@@ -47,19 +47,11 @@ permalink: /prestations-blom
         sans hébergement.
       </p>
 
-      <div class="grid md:grid-cols-2 gap-8 text-center text-lg">
+      <div class="grid md:grid-cols-1 gap-8 text-center text-lg">
 
         <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Spa privatif – 2 heures</h3>
-          <p class="text-xl font-bold">99 €</p>
-          <p class="text-sm text-gray-400 mt-2">
-            Accès jacuzzi + logement privatif
-          </p>
-        </div>
-
-        <div class="bg-black rounded-xl p-6 border border-gray-800">
-          <h3 class="font-semibold mb-2">Journée bien-être – 4 heures</h3>
-          <p class="text-xl font-bold">139 €</p>
+          <h3 class="font-semibold mb-2">Journée bien-être – 3 heures</h3>
+          <p class="text-xl font-bold">109 €</p>
           <p class="text-sm text-gray-400 mt-2">
             Disponible du lundi au jeudi<br>
             Horaires : 11h – 16h
