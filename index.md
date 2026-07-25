@@ -1,7 +1,7 @@
 ---
 layout: default
 title: BLŌM – Suite romantique avec spa privatif près de Douai
-description: "BLŌM : suite romantique avec spa privatif près de Douai, lit king-size, salle de massage et petit-déjeuner inclus à Guesnain."
+description: "BLŌM : suite romantique et spa privatif près de Douai. Nuitée avec lit king-size ou formule sans nuitée de 3 heures à 109 € pour deux à Guesnain."
 image: /assets/galerie/blom/spa-ciel-peignoir.png
 permalink: /
 ---
@@ -135,6 +135,71 @@ permalink: /
         <p class="text-gray-300 leading-relaxed">
           Lit king-size, arrivée autonome et équipements pensés pour votre confort.
         </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- OFFRE SPA SANS NUITÉE -->
+<section class="bg-black text-white py-20 px-6 border-t border-white/10">
+
+  <div class="max-w-5xl mx-auto">
+
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+
+      <div>
+        <p class="text-sm uppercase tracking-[0.25em] text-gray-400 mb-4">
+          BLŌM aussi sans nuitée
+        </p>
+
+        <h2 class="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+          Spa privatif pendant 3 heures près de Douai
+        </h2>
+
+        <p class="text-gray-300 text-lg leading-relaxed mb-6">
+          Privatisez BLŌM pour deux personnes et profitez du jacuzzi intérieur
+          72 jets, du salon, de la table romantique et de la salle de massage
+          en autonomie, sans réserver de nuitée.
+        </p>
+
+        <p class="text-2xl font-bold mb-2">
+          3 heures – 109 € pour deux
+        </p>
+
+        <p class="text-gray-400 mb-8">
+          Sur réservation et selon les créneaux disponibles.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+
+          <a href="{{ site.baseurl }}/prestations-blom/"
+             class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 text-center">
+            Découvrir l’offre 3 heures
+          </a>
+
+          <a href="{{ site.baseurl }}/contact"
+             class="border border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-black transition duration-300 text-center">
+            Demander un créneau
+          </a>
+
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
+        <h3 class="text-2xl font-semibold mb-6">
+          Votre parenthèse privative comprend
+        </h3>
+
+        <ul class="space-y-4 text-gray-300">
+          <li>✓ Jacuzzi intérieur privatif 72 jets</li>
+          <li>✓ Salon et table romantique</li>
+          <li>✓ Salle de massage en autonomie, sans praticien</li>
+          <li>✓ Espace entièrement réservé à deux personnes</li>
+        </ul>
       </div>
 
     </div>
