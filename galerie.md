@@ -38,7 +38,7 @@ permalink: /galerie
       <!-- IMAGE -->
       <div class="rounded-3xl overflow-hidden shadow-2xl">
 
-        <img src="{{ site.baseurl }}/assets/galerie/blom/romantique.jpeg"
+        <img src="{{ site.baseurl }}/assets/galerie/blom/blom-story.png"
              alt="Suite romantique BLŌM"
              class="w-full h-full object-cover hover:scale-105 transition duration-700">
 
