@@ -64,20 +64,23 @@ permalink: /prestations-blom
 <section class="border border-gray-700 rounded-2xl p-8 space-y-10">
 
   <h2 class="text-3xl font-bold text-center">
-    ✨ Ambiances & Décorations personnalisées
+    ✨ Ambiances & Décorations
   </h2>
 
   <p class="text-center text-gray-300 max-w-3xl mx-auto">
-    Votre séjour inclut déjà une ambiance tamisée et une table romantique dressée gratuitement
-    si vous apportez votre repas.
+    Votre séjour inclut déjà une ambiance tamisée.
     <br><br>
-    Pour rendre votre expérience encore plus mémorable, BLŌM propose plusieurs mises en ambiance personnalisées préparées avant votre arrivée.
+    Si vous apportez votre repas, une table romantique peut être dressée avant votre arrivée.
+    <br>
+    <span class="text-sm text-gray-400">Le repas n’est pas fourni.</span>
+    <br><br>
+    Pour rendre votre expérience encore plus mémorable, BLŌM propose plusieurs mises en ambiance préparées avant votre arrivée.
   </p>
 
   <div class="grid md:grid-cols-3 gap-8">
 
     <!-- PACK ANNIVERSAIRE -->
-    <div class="bg-black p-6 rounded-2xl border border-gray-800 shadow-xl">
+    <div class="bg-black p-6 rounded-2xl border border-gray-800 shadow-xl flex flex-col">
 
       <h3 class="text-2xl font-semibold mb-4">
         🎉 Ambiance Anniversaire
@@ -89,27 +92,32 @@ permalink: /prestations-blom
 
       <ul class="text-sm text-gray-400 space-y-2 mb-6">
         <li>• Banderoles HAPPY BIRTHDAY</li>
-        <li>• Ballons décoratifs gonflés</li>
-        <li>• Mise en ambiance de la chambre</li>
-        <li>• Décoration de la table romantique</li>
-        <li>• Ambiance tamisée dans la suite</li>
+        <li>• Ballons beige & noir</li>
+        <li>• Décoration de la table</li>
+        <li>• Touches déco dans la chambre</li>
+        <li>• Ambiance préparée avant votre arrivée</li>
       </ul>
 
-      <p class="text-3xl font-bold text-white">
+      <p class="text-3xl font-bold text-white mb-6">
         40 €
       </p>
 
+      <img 
+        src="{{ '/assets/prestations/anniversaire-blom.png' | relative_url }}" 
+        alt="Ambiance Anniversaire BLŌM avec décoration Happy Birthday, ballons et table romantique"
+        class="mt-auto w-full rounded-xl border border-gray-800 shadow-lg"
+        loading="lazy">
     </div>
 
     <!-- PACK ROMANTIQUE -->
-    <div class="bg-black p-6 rounded-2xl border border-pink-500/30 shadow-xl">
+    <div class="bg-black p-6 rounded-2xl border border-pink-500/30 shadow-xl flex flex-col">
 
       <h3 class="text-2xl font-semibold mb-4">
         💘 Ambiance Romantique Premium
       </h3>
 
       <p class="text-gray-300 mb-4">
-        Une mise en scène romantique immersive pour transformer votre séjour en véritable parenthèse à deux.
+        Une ambiance romantique immersive pour transformer votre séjour en véritable parenthèse à deux.
       </p>
 
       <ul class="text-sm text-gray-400 space-y-2 mb-6">
@@ -117,37 +125,48 @@ permalink: /prestations-blom
         <li>• Pétales de rose sur le lit</li>
         <li>• Mise en lumière romantique</li>
         <li>• Ambiance dans la suite et l’espace massage</li>
+        <li>• Décor selon l’occasion</li>
       </ul>
 
-      <p class="text-3xl font-bold text-white">
+      <p class="text-3xl font-bold text-white mb-6">
         59 €
       </p>
 
+      <img 
+        src="{{ '/assets/prestations/romantique-premium-blom.png' | relative_url }}" 
+        alt="Ambiance Romantique Premium BLŌM avec spa, ballons cœur et lumière tamisée"
+        class="mt-auto w-full rounded-xl border border-pink-500/20 shadow-lg"
+        loading="lazy">
     </div>
 
     <!-- PACK SIGNATURE -->
-    <div class="bg-gradient-to-b from-white/10 to-black p-6 rounded-2xl border border-white/20 shadow-2xl">
+    <div class="bg-gradient-to-b from-white/10 to-black p-6 rounded-2xl border border-white/20 shadow-2xl flex flex-col">
 
       <h3 class="text-2xl font-semibold mb-4">
         👑 Expérience Signature BLŌM
       </h3>
 
       <p class="text-gray-300 mb-4">
-        Le pack le plus complet réunissant ambiance romantique et décoration personnalisée pour une expérience exceptionnelle.
+        Notre pack le plus complet pour créer un véritable effet waouh dès l’ouverture de la porte.
       </p>
 
       <ul class="text-sm text-gray-400 space-y-2 mb-6">
-        <li>• Décoration personnalisée</li>
+        <li>• Décor selon l’occasion</li>
         <li>• Ballons décoratifs & hélium</li>
-        <li>• Pétales de rose</li>
-        <li>• Plus de 70 bougies LED décoratives & ambiance immersive</li>
-        <li>• Mise en scène complète de la suite</li>
+        <li>• Plus de 70 bougies LED</li>
+        <li>• Musique personnalisée à votre arrivée</li>
+        <li>• Effet waouh à l’entrée</li>
       </ul>
 
-      <p class="text-3xl font-bold text-white">
+      <p class="text-3xl font-bold text-white mb-6">
         79 €
       </p>
 
+      <img 
+        src="{{ '/assets/prestations/signature-blom.png' | relative_url }}" 
+        alt="Expérience Signature BLŌM avec décor romantique, bougies LED, ballons et musique personnalisée"
+        class="mt-auto w-full rounded-xl border border-yellow-400/30 shadow-lg"
+        loading="lazy">
     </div>
 
   </div>
