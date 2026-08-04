@@ -54,9 +54,9 @@ permalink: /contact
 
       <div class="text-center">
         <button type="submit" id="submitBtn" disabled
-                class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition cursor-not-allowed">
-          Envoyer
-        </button>
+        class="bg-yellow-400 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-300 transition cursor-not-allowed opacity-60">
+  Envoyer
+</button>
       </div>
     </form>
 
