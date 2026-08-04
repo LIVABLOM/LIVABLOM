@@ -128,16 +128,10 @@
     {{ content }}
   </main>
 
-  <footer class="bg-black text-white text-center py-6">
-    <p>© {{ site.time | date: "%Y" }} LIVABLŌM. Expérience bien-être & hébergements.</p>
-  </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox-plus-jquery.min.js"></script>
   
 
- 
-</script>
 
   <script>
     const toggleButton = document.getElementById("menu-toggle");
@@ -150,12 +144,39 @@
   </script>
 
 <footer class="bg-black text-gray-400 text-sm py-10 px-6 border-t border-white/10">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+  <div class="max-w-6xl mx-auto flex flex-col items-center gap-6 text-center">
 
-    <p>© {{ site.time | date: "%Y" }} BLŌM – LIVABLŌM</p>
+    <div class="space-y-2">
+      <p class="text-white font-semibold">
+        BLŌM – Suite spa privatif à Guesnain, près de Douai
+      </p>
+      <p class="text-gray-400">
+        Expérience romantique, jacuzzi privatif, salle de massage et ambiance intimiste.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="https://www.facebook.com/profile.php?id=61579274982150"
+         target="_blank"
+         rel="noopener"
+         class="hover:text-white transition">
+        Facebook LIVABLŌM
+      </a>
+
+      <a href="https://www.instagram.com/livablom"
+         target="_blank"
+         rel="noopener"
+         class="hover:text-white transition">
+        Instagram LIVABLŌM
+      </a>
+
+      <a href="{{ site.baseurl }}/contact"
+         class="hover:text-white transition">
+        Contact
+      </a>
+    </div>
 
     <div class="flex flex-wrap gap-4 justify-center text-center">
-
       <a href="{{ site.baseurl }}/politique-confidentialite" class="hover:text-white">
         Politique de confidentialité
       </a>
@@ -167,8 +188,11 @@
       <a href="{{ site.baseurl }}/mentions" class="hover:text-white">
         Mentions légales
       </a>
-
     </div>
+
+    <p class="text-xs text-gray-500">
+      © {{ site.time | date: "%Y" }} LIVABLŌM. Tous droits réservés.
+    </p>
 
   </div>
 </footer>
@@ -263,7 +287,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Body class (pour design futur)
+  if (data.className) {
   document.body.classList.add(data.className);
+}
 
   
 });
