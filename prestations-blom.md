@@ -103,7 +103,7 @@ permalink: /prestations-blom
       </p>
 
       <img 
-        src="{{ '/assets/prestations/anniversaire-blom.png' | relative_url }}" 
+        src="{{ '/assets/prestations/deco anniversaire.png' | relative_url }}" 
         alt="Ambiance Anniversaire BLŌM avec décoration Happy Birthday, ballons et table romantique"
         class="mt-auto w-full rounded-xl border border-gray-800 shadow-lg"
         loading="lazy">
@@ -133,7 +133,7 @@ permalink: /prestations-blom
       </p>
 
       <img 
-        src="{{ '/assets/prestations/romantique-premium-blom.png' | relative_url }}" 
+        src="{{ '/assets/prestations/pack romantique premium.png' | relative_url }}" 
         alt="Ambiance Romantique Premium BLŌM avec spa, ballons cœur et lumière tamisée"
         class="mt-auto w-full rounded-xl border border-pink-500/20 shadow-lg"
         loading="lazy">
@@ -163,7 +163,7 @@ permalink: /prestations-blom
       </p>
 
       <img 
-        src="{{ '/assets/prestations/signature-blom.png' | relative_url }}" 
+        src="{{ '/assets/prestations/pack signature 2.png' | relative_url }}" 
         alt="Expérience Signature BLŌM avec décor romantique, bougies LED, ballons et musique personnalisée"
         class="mt-auto w-full rounded-xl border border-yellow-400/30 shadow-lg"
         loading="lazy">
