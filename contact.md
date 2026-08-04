@@ -4,7 +4,7 @@ title: Contact
 permalink: /contact
 ---
 
-<a href="https://m.me/livablom59" target="_blank" class="fixed top-20 right-6 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition">
+<a href="https://m.me/61579274982150" target="_blank" class="fixed top-20 right-6 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-500 transition">
   💬 Messenger
 </a>
 
@@ -34,9 +34,9 @@ permalink: /contact
       <!-- Sélecteur de dates -->
       <div>
         <label for="dates" class="block text-sm font-semibold mb-1">Dates souhaitées</label>
-        <input type="text" id="dates" name="dates" required placeholder="Cliquez pour choisir" readonly
+        <input type="text" id="dates" name="dates" placeholder="Cliquez pour choisir si demande de réservation" readonly
                class="w-full p-3 rounded bg-gray-900 text-white border border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
-        <p class="text-xs text-yellow-300 mt-2">Sélectionnez une plage (arrivée → départ).</p>
+        <p class="text-xs text-yellow-300 mt-2">Optionnel : sélectionnez une plage si votre message concerne une réservation.</p>
       </div>
 
       <div>
@@ -46,7 +46,11 @@ permalink: /contact
       </div>
 
       <!-- reCAPTCHA visible -->
-      <div class="g-recaptcha" data-sitekey="6LcYg6ErAAAAALJjzA7BQOPxvqtdbnebR_d9Lepu" data-callback="enableSubmit"></div>
+      <div class="g-recaptcha"
+     data-sitekey="6LcYg6ErAAAAALJjzA7BQOPxvqtdbnebR_d9Lepu"
+     data-callback="enableSubmit"
+     data-expired-callback="disableSubmit">
+</div>
 
       <div class="text-center">
         <button type="submit" id="submitBtn" disabled
@@ -86,6 +90,13 @@ permalink: /contact
   function enableSubmit() {
     const btn = document.getElementById('submitBtn');
     btn.disabled = false;
-    btn.classList.remove('cursor-not-allowed');
+    btn.classList.remove('cursor-not-allowed', 'opacity-60');
+  }
+
+  // Désactive le bouton si le captcha expire
+  function disableSubmit() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.classList.add('cursor-not-allowed', 'opacity-60');
   }
 </script>
