@@ -114,14 +114,25 @@ permalink: /
       Profitez d’un espace entièrement privatif conçu pour le bien-être, la détente et les moments à deux.
     </p>
 
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+  <h3 class="text-2xl font-semibold mb-4">
+    Spa privatif – eau neuve à chaque séjour
+  </h3>
 
-      <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
-        <h3 class="text-2xl font-semibold mb-4">Spa privatif</h3>
-        <p class="text-gray-300 leading-relaxed">
-          Un espace bien-être accessible en toute intimité pour un moment de relaxation absolue.
-        </p>
-      </div>
+  <p class="text-gray-300 leading-relaxed mb-5">
+    Après chaque départ, le spa est entièrement vidé, nettoyé et désinfecté,
+    puis rempli d’eau neuve pour votre arrivée.
+  </p>
+
+  <p class="text-gray-200 font-medium mb-5">
+    Une vidéo de sa préparation vous est envoyée le jour de votre arrivée.
+  </p>
+
+  <a href="{{ site.baseurl }}/hygiene-spa-blom/"
+     class="text-white underline underline-offset-4 hover:text-gray-300 transition">
+    Découvrir notre protocole d’hygiène →
+  </a>
+</div>
 
       <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
         <h3 class="text-2xl font-semibold mb-4">Ambiance romantique</h3>
