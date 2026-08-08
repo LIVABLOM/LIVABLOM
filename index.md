@@ -111,49 +111,53 @@ permalink: /
     </h2>
 
     <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg">
-      Profitez d’un espace entièrement privatif conçu pour le bien-être, la détente et les moments à deux.
+      Profitez d’un espace entièrement privatif conçu pour le bien-être,
+      la détente et les moments à deux.
     </p>
 
     <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
-  <h3 class="text-2xl font-semibold mb-4">
-    Spa privatif – eau neuve à chaque séjour
-  </h3>
+      <h3 class="text-2xl font-semibold mb-4">
+        Spa privatif – eau neuve à chaque séjour
+      </h3>
 
-  <p class="text-gray-300 leading-relaxed mb-5">
-    Après chaque départ, le spa est entièrement vidé, nettoyé et désinfecté,
-    puis rempli d’eau neuve pour votre arrivée.
-  </p>
+      <p class="text-gray-300 leading-relaxed mb-5">
+        Après chaque départ, le spa est entièrement vidé, nettoyé et désinfecté,
+        puis rempli d’eau neuve pour votre arrivée.
+      </p>
 
-  <p class="text-gray-200 font-medium mb-5">
-    Une vidéo de sa préparation vous est envoyée le jour de votre arrivée.
-  </p>
+      <p class="text-gray-200 font-medium mb-5">
+        Une vidéo de sa préparation vous est envoyée le jour de votre arrivée.
+      </p>
 
-  <a href="{{ site.baseurl }}/hygiene-spa-blom/"
-     class="text-white underline underline-offset-4 hover:text-gray-300 transition">
-    Découvrir notre protocole d’hygiène →
-  </a>
-</div>
+      <a href="{{ site.baseurl }}/hygiene-spa-blom/"
+         class="text-white underline underline-offset-4 hover:text-gray-300 transition">
+        Découvrir notre protocole d’hygiène →
+      </a>
+    </div>
 
-      <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
-        <h3 class="text-2xl font-semibold mb-4">Ambiance romantique</h3>
-        <p class="text-gray-300 leading-relaxed">
-          Lumières tamisées, décoration soignée et atmosphère chaleureuse.
-        </p>
-      </div>
+    <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+      <h3 class="text-2xl font-semibold mb-4">
+        Ambiance romantique
+      </h3>
 
-      <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
-        <h3 class="text-2xl font-semibold mb-4">Confort premium</h3>
-        <p class="text-gray-300 leading-relaxed">
-          Lit king-size, arrivée autonome et équipements pensés pour votre confort.
-        </p>
-      
+      <p class="text-gray-300 leading-relaxed">
+        Lumières tamisées, décoration soignée et atmosphère chaleureuse.
+      </p>
+    </div>
 
-    
+    <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
+      <h3 class="text-2xl font-semibold mb-4">
+        Confort premium
+      </h3>
+
+      <p class="text-gray-300 leading-relaxed">
+        Lit king-size, arrivée autonome et équipements pensés pour votre confort.
+      </p>
+    </div>
 
   </div>
 
 </section>
-
 
 <!-- OFFRE SPA SANS NUITÉE -->
 <section class="bg-black text-white py-20 px-6 border-t border-white/10">
@@ -162,10 +166,8 @@ permalink: /
 
     <div class="grid md:grid-cols-2 gap-10 items-center">
 
+      <!-- Colonne de gauche -->
       <div>
-        <p class="text-sm uppercase tracking-[0.25em] text-gray-400 mb-4">
-          BLŌM aussi sans nuitée
-        </p>
 
         <h2 class="text-3xl md:text-5xl font-bold mb-6 leading-tight">
           Spa privatif pendant 3 heures près de Douai
@@ -198,20 +200,24 @@ permalink: /
           </a>
 
         </div>
-      
 
+      </div>
+
+      <!-- Colonne de droite -->
       <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
+
         <h3 class="text-2xl font-semibold mb-6">
           Votre parenthèse privative comprend
         </h3>
 
         <ul class="space-y-4 text-gray-300">
-  <li>✓ Jacuzzi intérieur privatif 72 jets</li>
-  <li>✓ Eau entièrement renouvelée avant votre arrivée</li>
-  <li>✓ Salon et table romantique</li>
-  <li>✓ Salle de massage en autonomie, sans praticien</li>
-  <li>✓ Espace entièrement réservé à deux personnes</li>
-</ul>
+          <li>✓ Jacuzzi intérieur privatif 72 jets</li>
+          <li>✓ Eau entièrement renouvelée avant votre arrivée</li>
+          <li>✓ Salon et table romantique</li>
+          <li>✓ Salle de massage en autonomie, sans praticien</li>
+          <li>✓ Espace entièrement réservé à deux personnes</li>
+        </ul>
+
       </div>
 
     </div>
