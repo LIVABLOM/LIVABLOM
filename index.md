@@ -146,9 +146,9 @@ permalink: /
         <p class="text-gray-300 leading-relaxed">
           Lit king-size, arrivée autonome et équipements pensés pour votre confort.
         </p>
-      </div>
+      
 
-    </div>
+    
 
   </div>
 
@@ -198,7 +198,7 @@ permalink: /
           </a>
 
         </div>
-      </div>
+      
 
       <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
         <h3 class="text-2xl font-semibold mb-6">
@@ -206,11 +206,12 @@ permalink: /
         </h3>
 
         <ul class="space-y-4 text-gray-300">
-          <li>✓ Jacuzzi intérieur privatif 72 jets</li>
-          <li>✓ Salon et table romantique</li>
-          <li>✓ Salle de massage en autonomie, sans praticien</li>
-          <li>✓ Espace entièrement réservé à deux personnes</li>
-        </ul>
+  <li>✓ Jacuzzi intérieur privatif 72 jets</li>
+  <li>✓ Eau entièrement renouvelée avant votre arrivée</li>
+  <li>✓ Salon et table romantique</li>
+  <li>✓ Salle de massage en autonomie, sans praticien</li>
+  <li>✓ Espace entièrement réservé à deux personnes</li>
+</ul>
       </div>
 
     </div>
