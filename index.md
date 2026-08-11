@@ -269,7 +269,7 @@ permalink: /
 
         <div class="flex flex-col sm:flex-row gap-4">
 
-          <a href="{{ site.baseurl }}/prestations-blom"
+         <a href="{{ site.baseurl }}/spa-privatif-douai/"
              class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 text-center">
             Découvrir l’offre 3 heures
           </a>
