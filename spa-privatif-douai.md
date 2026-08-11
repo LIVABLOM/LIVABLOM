@@ -124,7 +124,7 @@ permalink: /spa-privatif-douai/
     </p>
 
     <p class="text-gray-200 font-medium mb-8">
-      Une vidéo de la préparation du spa peut vous être envoyée le jour de votre venue.
+      Une vidéo de la préparation du spa vous sera envoyée le jour de votre venue.
     </p>
 
     <a href="{{ site.baseurl }}/hygiene-spa-blom/"
