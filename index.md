@@ -1,6 +1,6 @@
 ---
 layout: default
-title: BLŌM – Suite romantique avec spa privatif près de Douai
+title: BLŌM – Love Room & Spa privatif près de Douai
 description: "BLŌM : suite romantique et spa privatif près de Douai. Nuitée avec lit king-size ou formule sans nuitée de 3 heures à 109 € pour deux à Guesnain."
 image: /assets/galerie/blom/spa-ciel-peignoir.png
 permalink: /
@@ -109,14 +109,14 @@ permalink: /
     <h2 class="text-3xl md:text-5xl font-bold mb-6">
       Une nuit hors du temps
     </h2>
+    
 
-    <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg">
-      <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg leading-relaxed">
+         <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg leading-relaxed">
   Située à Guesnain, à seulement quelques minutes de Douai, BLŌM est une
   love room et suite romantique entièrement privative pensée pour les couples.
   Profitez d’un spa privatif 72 jets, d’une salle de massage, d’un lit king-size
   et d’un petit-déjeuner inclus dans une atmosphère intimiste.
-</p>
+
     </p>
 
     <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
@@ -161,6 +161,82 @@ permalink: /
 
   </div>
 
+</section>
+
+<section class="bg-black text-white py-20 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">
+        Ils ont séjourné chez BLŌM
+      </h2>
+
+      <p class="text-gray-300 max-w-2xl mx-auto text-lg">
+        Des couples partagent leur expérience après un séjour dans notre suite
+        romantique avec spa privatif près de Douai.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Avis 1 : hygiène du spa -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
+        <div class="text-yellow-400 text-xl mb-4">
+          ★★★★★
+        </div>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+          « Tout était parfait. Un grand professionnalisme sur la prestation
+          proposée, une propreté irréprochable notamment avec la vidange
+          systématique du spa, vidéo à l'appui. »
+        </p>
+
+        <p class="text-sm text-gray-400">
+          Kevin -  Avis publié sur Airbnb
+        </p>
+      </div>
+
+
+      <!-- Avis 2 : expérience romantique -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
+        <div class="text-yellow-400 text-xl mb-4">
+          ★★★★★
+        </div>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+          « Nous avons passé un excellent moment dans la Suite SPA BLŌM.
+          Table romantique dressée à l’arrivée avec un fond de musique,
+          jacuzzi sous un joli ciel étoilé et à bonne température.
+          Tout est très propre et bien pensé. »
+        </p>
+
+        <p class="text-sm text-gray-400">
+          Sandrine – Avis publié sur Airbnb
+        </p>
+      </div>
+
+
+      <!-- Avis 3 : qualité / équipements -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
+        <div class="text-yellow-400 text-xl mb-4">
+          ★★★★★
+        </div>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+          « Le rapport qualité/prix est juste énorme. Pour le même tarif
+          que les autres gîtes avec spa, vous avez en plus une salle de massage
+          et un petit déjeuner de champion. Le gros plus : l’eau propre du spa,
+          changée à chaque fois. »
+        </p>
+
+        <p class="text-sm text-gray-400">
+          Fabrice – Avis publié sur Airbnb
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
 <!-- OFFRE SPA SANS NUITÉE -->
