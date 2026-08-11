@@ -84,7 +84,7 @@ permalink: /
       </h1>
 
       <p class="text-xl md:text-2xl mb-4 font-light">
-        Suite romantique avec spa privatif près de Douai
+       Love Room & Spa privatif près de Douai
       </p>
 
       <p class="text-base md:text-lg text-gray-200 mb-10 leading-relaxed max-w-xl mx-auto">
@@ -111,8 +111,12 @@ permalink: /
     </h2>
 
     <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg">
-      Profitez d’un espace entièrement privatif conçu pour le bien-être,
-      la détente et les moments à deux.
+      <p class="text-gray-300 max-w-2xl mx-auto mb-16 text-lg leading-relaxed">
+  Située à Guesnain, à seulement quelques minutes de Douai, BLŌM est une
+  love room et suite romantique entièrement privative pensée pour les couples.
+  Profitez d’un spa privatif 72 jets, d’une salle de massage, d’un lit king-size
+  et d’un petit-déjeuner inclus dans une atmosphère intimiste.
+</p>
     </p>
 
     <div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
