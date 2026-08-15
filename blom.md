@@ -249,19 +249,48 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
   </div>
 </div>
 
-    <!-- Pourquoi choisir BLŌM -->
-    <div class="mt-20 text-center max-w-4xl mx-auto space-y-4">
-      <h2 class="text-2xl font-bold">Pourquoi choisir BLŌM ?</h2>
-      <p>BLŌM est l’un des rares logements du Douaisis à garantir une hygiène spa irréprochable.</p>
-      <ul class="space-y-2 text-lg">
-        <li>• Spa privatif entièrement vidangé, désinfecté et rempli pour chaque client</li>
-        <li>• Suite 100 % privative pour couples uniquement</li>
-        <li>• Table romantique dressée sur demande</li>
-       <li>• Salle de massage privative avec table électrique 16 programmes</li>
-        <li>• À proximité de Douai, Sin-le-Noble, Dechy et Waziers</li>
-        <li>• Idéal pour un <strong>week-end romantique ou séjour détente à Guesnain</strong></li>
-      </ul>
-    </div>
+    <!-- Engagement hygiène BLŌM -->
+<div class="mt-20 max-w-4xl mx-auto bg-white/10 border border-white/20 rounded-2xl px-6 py-8 md:px-10 text-center shadow-xl">
+
+  <h2 class="text-2xl md:text-3xl font-bold mb-5">
+    Avant de réserver un spa privatif, posez cette question
+  </h2>
+
+  <p class="text-xl font-semibold mb-6">
+    L’eau du spa est-elle réellement renouvelée entre deux réservations ?
+  </p>
+
+  <p class="text-lg mb-4">
+    L’eau chaude, les buses et les circuits d’un spa nécessitent une attention particulière.
+    C’est pourquoi chez <strong>BLŌM</strong>, nous avons fait un choix simple :
+    ne pas conserver l’eau d’une réservation à l’autre.
+  </p>
+
+  <p class="text-lg mb-6">
+    Après chaque départ, notre spa est
+    <strong>entièrement vidé, nettoyé et désinfecté</strong>,
+    puis rempli avec une <strong>eau neuve</strong> spécialement chauffée pour votre arrivée.
+  </p>
+
+  <div class="bg-black/40 rounded-xl px-5 py-5 my-6">
+    <p class="text-xl font-bold">
+      ♨️ Spa vidé • nettoyé • désinfecté • eau neuve
+    </p>
+    <p class="mt-2 text-lg">
+      avant chaque nouvelle réservation
+    </p>
+  </div>
+
+  <p class="text-lg">
+    Et vous n’avez pas à nous croire sur parole :
+    <strong>une vidéo de la préparation de votre spa vous est envoyée le jour de votre arrivée.</strong>
+  </p>
+
+  <p class="mt-6 text-xl font-semibold">
+    Chez BLŌM, la propreté du spa ne se promet pas. Elle se montre.
+  </p>
+
+</div>
 
     <div class="text-center mt-16 mb-10">
   <a href="/assets/html/blom-calendar.html"
