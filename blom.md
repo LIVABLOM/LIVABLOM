@@ -306,35 +306,65 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
 </div>
 
     <!-- FAQ complète -->
-    <section class="mt-20 max-w-4xl mx-auto text-white space-y-6">
-      <h2 class="text-2xl font-bold text-center">FAQ – BLŌM, spa privatif à Guesnain</h2>
+<section class="mt-20 max-w-4xl mx-auto text-white space-y-6">
+  <h2 class="text-2xl font-bold text-center">FAQ – BLŌM, spa privatif près de Douai</h2>
 
-      <div>
-        <h3 class="text-xl font-semibold">L’eau du spa est-elle changée entre chaque client ?</h3>
-        <p>Oui, c’est notre engagement principal. Le jacuzzi est entièrement vidé, désinfecté et rempli d’eau neuve avant chaque arrivée. Vidéo envoyée le jour de votre arrivée.</p>
-      </div>
+  <div>
+    <h3 class="text-xl font-semibold">L’eau du spa privatif est-elle changée entre chaque réservation ?</h3>
+    <p>
+      Oui. Chez BLŌM, le spa est entièrement vidé, nettoyé et désinfecté après chaque départ, puis rempli d’une eau neuve avant votre arrivée. Une vidéo de sa préparation vous est envoyée le jour de votre venue.
+    </p>
+  </div>
 
-      <div>
-        <h3 class="text-xl font-semibold">BLŌM est-il vraiment privatif ?</h3>
-        <p>Oui, toute la suite vous est entièrement réservée : spa, massage, salon et espace nuit.</p>
-      </div>
+  <div>
+    <h3 class="text-xl font-semibold">Peut-on réserver un spa privatif près de Douai sans passer la nuit ?</h3>
+    <p>
+      Oui. BLŌM propose également une formule de 3 heures sans nuitée à 109 € pour deux personnes. Vous profitez du jacuzzi privatif 72 jets, du salon, de la table romantique et de la salle de massage en autonomie. Cette formule est disponible sur réservation selon les créneaux disponibles.
+    </p>
+  </div>
 
-      <div>
-        <h3 class="text-xl font-semibold">Peut-on apporter son repas pour le dîner romantique ?</h3>
-        <p>Oui. Nous dressons une table romantique sur demande pour sublimer votre soirée.</p>
-      </div>
+  <div>
+    <h3 class="text-xl font-semibold">BLŌM est-il entièrement privatif ?</h3>
+    <p>
+      Oui. Pendant votre réservation, les espaces BLŌM vous sont entièrement réservés. Vous profitez du spa privatif, du salon, de la salle de massage et, pour les séjours avec nuitée, de l’espace nuit. Aucun de ces espaces n’est partagé avec d’autres clients.
+    </p>
+  </div>
 
-      <div>
-        <h3 class="text-xl font-semibold">Y a t-il des places de parking ?</h3>
-        <p>Oui. Places de parkings dans un espace privé et sécurisé.</p>
-      </div>
+  <div>
+    <h3 class="text-xl font-semibold">Qu’est-ce qui est compris dans une nuit chez BLŌM ?</h3>
+    <p>
+      Votre séjour comprend notamment le jacuzzi intérieur privatif 72 jets, la salle de massage, le lit king-size et le petit-déjeuner. Vous bénéficiez également d’une arrivée autonome et d’un parking privé.
+    </p>
+  </div>
 
-      <div>
-        <h3 class="text-xl font-semibold">Où se situe BLŌM ?</h3>
-        <p>Nous sommes à Guesnain (Douaisis), à 5 minutes de Douai, proche de Sin-le-Noble, Dechy et Waziers.</p>
-      </div>
-    </section>
+  <div>
+    <h3 class="text-xl font-semibold">Peut-on profiter de la salle de massage en autonomie ?</h3>
+    <p>
+      Oui. BLŌM dispose d’une salle de massage privative accessible pendant votre séjour. Vous pouvez ainsi prolonger votre moment de détente à deux en toute intimité.
+    </p>
+  </div>
 
+  <div>
+    <h3 class="text-xl font-semibold">Peut-on apporter son repas pour un dîner romantique ?</h3>
+    <p>
+      Oui. Vous pouvez apporter votre repas et nous pouvons dresser une table romantique sur demande afin de préparer votre soirée avant votre arrivée.
+    </p>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-semibold">Y a-t-il un parking privé ?</h3>
+    <p>
+      Oui. Vous pouvez stationner votre véhicule dans un espace privé et sécurisé pendant toute la durée de votre réservation.
+    </p>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-semibold">Où se trouve BLŌM par rapport à Douai ?</h3>
+    <p>
+      BLŌM se situe à Guesnain, dans le Douaisis, à seulement quelques minutes de Douai et à proximité de Sin-le-Noble, Dechy et Waziers. C’est une adresse idéale pour profiter d’un spa privatif et d’un séjour romantique près de Douai.
+    </p>
+  </div>
+</section>
     <!-- Réserver BLŌM -->
     <div class="mt-16 bg-white text-black py-6 px-4 text-center rounded-xl shadow-xl max-w-4xl mx-auto animate-fadeIn delay-600">
       <h3 class="text-2xl font-bold mb-2">Réservez BLŌM</h3>
