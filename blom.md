@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "BLŌM – Suite romantique avec spa privatif près de Douai"
-description: "BLŌM à Guesnain : suite romantique avec spa privatif près de Douai, jacuzzi, lit king-size, salle de massage et petit-déjeuner inclus."
+title: "Spa privatif près de Douai – Nuit romantique | BLŌM"
+description: "Réservez BLŌM à Guesnain, près de Douai : nuit romantique avec spa privatif, jacuzzi 72 jets, lit king-size, salle de massage et petit-déjeuner inclus."
 image: "/assets/galerie/blom/spa-ciel-peignoir.png"
 permalink: /blom/
 keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement couple Douai, jacuzzi privatif Guesnain, spa ultra propre, eau changée, salle massage privative, BLŌM, LIVABLŌM"
@@ -103,6 +103,18 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <p class="text-lg text-center max-w-2xl mx-auto mt-4 animate-fadeIn delay-50">
       Bienvenue à <strong>BLŌM</strong>, votre suite romantique avec <strong>spa privatif à Guesnain</strong>, au cœur du <strong>Douaisis</strong>. Idéale pour un <strong>week-end romantique à deux</strong>, BLŌM vous offre une expérience unique : jacuzzi privatif, salle de massage privative, lit king size et table romantique sur demande.
     </p>
+
+    <div class="max-w-3xl mx-auto text-center bg-white/10 border border-white/10 rounded-2xl px-6 py-6 mt-8">
+  <h2 class="text-2xl md:text-3xl font-bold mb-4">
+    Spa privatif près de Douai pour une nuit romantique
+  </h2>
+
+  <p class="text-gray-300 text-lg leading-relaxed">
+    Situé à Guesnain, à quelques minutes de Douai, BLŌM est une adresse pensée pour les couples
+    qui recherchent une nuit romantique avec spa privatif, jacuzzi intérieur, lit King Size,
+    salle de massage privative et ambiance intimiste.
+  </p>
+</div>
 
     <p class="text-center mt-4">
       🌸 <a href="/hygiene-spa-blom/" class="underline hover:text-gray-300">
@@ -310,6 +322,14 @@ keywords: "spa privatif Douaisis, week-end romantique Guesnain, hébergement cou
     <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
       ♨️ Spa privatif
     </span>
+
+    <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+  💘 Nuit romantique
+</span>
+
+<span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
+  ❤️ Love room près de Douai
+</span>
 
     <span class="bg-white/10 border border-white/20 px-5 py-3 rounded-full">
       💆 Salle de massage
