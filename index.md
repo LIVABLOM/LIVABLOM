@@ -306,6 +306,43 @@ permalink: /
 
 </section>
 
+<!-- CARTE CADEAU -->
+<section class="bg-black text-white py-20 px-6 border-t border-white/10">
+
+  <div class="max-w-5xl mx-auto">
+
+    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 text-center">
+
+      <div class="text-4xl mb-5">
+        🎁
+      </div>
+
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">
+        Offrez BLŌM en cadeau
+      </h2>
+
+      <p class="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto mb-5">
+        Anniversaire, Noël, Saint-Valentin ou simplement pour faire plaisir :
+        offrez une <strong>carte cadeau BLŌM</strong> et laissez le bénéficiaire
+        choisir son expérience.
+      </p>
+
+      <p class="text-gray-400 mb-8">
+        Cartes cadeaux de <strong class="text-white">50 €, 100 € ou 150 €</strong>,
+        valables 12 mois et envoyées par e-mail après paiement.
+      </p>
+
+      <a href="{{ site.baseurl }}/carte-cadeau/"
+         class="bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300 shadow-xl inline-block">
+        Découvrir les cartes cadeaux
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
 <!-- CTA FINAL -->
 <section class="bg-black text-white py-24 px-6 text-center border-t border-white/10">
 
