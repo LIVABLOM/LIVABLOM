@@ -11,18 +11,26 @@
   <link rel="canonical" href="https://livablom.fr{{ page.url | replace:'index.html','' }}">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="{{ page.title | default: site.title }}">
-  <meta property="og:description" content="{{ page.description | default: site.description }}">
-  <meta property="og:image" content="https://livablom.fr{{ page.image | default: '/assets/images/photolivablom1.jpg' }}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://livablom.fr{{ page.url | replace:'index.html','' }}">
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.livablom.fr{{ page.url | replace:'index.html','' }}">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ page.title | default: site.title }}">
-  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
-  <meta name="twitter:image" content="https://livablom.fr{{ page.image | default: '/assets/images/photolivablom1.jpg' }}">
+{% if page.image %}
+<meta property="og:image" content="{{ page.image | absolute_url }}">
+<meta property="og:image:secure_url" content="{{ page.image | absolute_url }}">
+{% endif %}
 
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title | default: site.title }}">
+<meta name="twitter:description" content="{{ page.description | default: site.description }}">
+
+{% if page.image %}
+<meta name="twitter:image" content="{{ page.image | absolute_url }}">
+{% endif %}
+
+<meta name="robots" content="max-image-preview:large">
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}">
 
