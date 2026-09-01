@@ -36,6 +36,24 @@ permalink: /spa-privatif-douai/
   </div>
 </section>
 
+<!-- PHOTO PRINCIPALE SPA PRIVATIF -->
+<section class="bg-black text-white py-12 px-6">
+  <div class="max-w-5xl mx-auto">
+
+    <img
+      src="{{ site.baseurl }}/assets/galerie/blom/spa-ciel-peignoir.png"
+      alt="Spa privatif près de Douai chez BLŌM à Guesnain avec jacuzzi intérieur, ciel étoilé et peignoirs"
+      class="w-full h-auto rounded-2xl shadow-2xl border border-white/10 brightness-90"
+      loading="lazy">
+
+    <p class="text-center text-gray-400 text-sm mt-4">
+      Jacuzzi privatif 72 jets, ambiance romantique et eau renouvelée avant chaque réservation.
+    </p>
+
+  </div>
+</section>
+
+
 <!-- PRESENTATION -->
 <section class="bg-black text-white py-20 px-6">
   <div class="max-w-5xl mx-auto">
@@ -45,12 +63,12 @@ permalink: /spa-privatif-douai/
         Votre spa privatif à quelques minutes de Douai
       </h2>
 
-      <p class="text-gray-300 max-w-3xl mx-auto text-lg leading-relaxed">
-        Situé à Guesnain, à proximité immédiate de Douai, BLŌM vous permet
-        de profiter d’un spa privatif pendant 3 heures dans une atmosphère
-        intime et romantique. L’espace est entièrement réservé à deux personnes
-        pendant toute la durée de votre séance.
-      </p>
+     <p class="text-gray-300 max-w-3xl mx-auto text-lg leading-relaxed">
+  Vous recherchez un <strong>spa privatif près de Douai</strong> pour un moment à deux ?
+  Situé à Guesnain, dans le Douaisis, BLŌM vous permet de profiter d’un
+  <strong>jacuzzi privatif</strong> pendant 3 heures, dans une atmosphère intime,
+  romantique et entièrement réservée aux couples.
+</p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8">
@@ -73,7 +91,7 @@ permalink: /spa-privatif-douai/
 
         <p class="text-gray-300 leading-relaxed mb-5">
           Après chaque utilisation, le spa est entièrement vidé, nettoyé
-          et désinfecté avant d’être rempli d’eau neuve pour les clients suivants.
+          et désinfecté avant d’être rempli d’eau neuve pour chaque nouvelle réservation.
         </p>
 
         <a href="{{ site.baseurl }}/hygiene-spa-blom/"
@@ -104,6 +122,35 @@ permalink: /spa-privatif-douai/
         </p>
       </div>
 
+    </div>
+
+  </div>
+</section>
+
+<!-- FORMULE SANS NUITEE -->
+<section class="bg-black text-white py-20 px-6 border-t border-white/10">
+  <div class="max-w-4xl mx-auto text-center">
+
+    <h2 class="text-3xl md:text-5xl font-bold mb-6">
+      Un spa privatif sans nuitée près de Douai
+    </h2>
+
+    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+      La formule 3 heures est idéale si vous souhaitez profiter d’un moment romantique
+      avec spa privatif, sans réserver une nuit complète. Vous bénéficiez du jacuzzi,
+      du salon, de la table romantique et de la salle de massage en autonomie.
+    </p>
+
+    <p class="text-gray-300 text-lg leading-relaxed">
+      Pour une expérience plus complète avec nuit sur place et petit-déjeuner inclus,
+      vous pouvez également découvrir la suite BLŌM en formule nuitée.
+    </p>
+
+    <div class="mt-8">
+      <a href="{{ site.baseurl }}/blom/"
+         class="border border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-black transition duration-300 inline-block">
+        Découvrir la nuitée BLŌM
+      </a>
     </div>
 
   </div>
@@ -209,11 +256,13 @@ permalink: /spa-privatif-douai/
 
       <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
         <h3 class="text-xl font-semibold mb-3">
-          Où se trouve BLŌM ?
+          Où trouver un spa privatif près de Douai ?
         </h3>
         <p class="text-gray-300 leading-relaxed">
-          BLŌM se situe à Guesnain, dans le Douaisis, à seulement quelques minutes de Douai.
-        </p>
+  BLŌM se situe à Guesnain, dans le Douaisis, à seulement quelques minutes de Douai.
+  C’est une adresse pensée pour les couples qui recherchent un spa privatif,
+  un jacuzzi intérieur et une ambiance romantique près de Douai.
+</p>
       </div>
 
       <div class="bg-white/5 border border-white/10 rounded-2xl p-7">
@@ -222,7 +271,7 @@ permalink: /spa-privatif-douai/
         </h3>
         <p class="text-gray-300 leading-relaxed">
           Oui. Le jacuzzi est vidé, nettoyé et désinfecté puis rempli d’eau neuve
-          avant les clients suivants.
+          avant chaque nouvelle réservation.
         </p>
       </div>
 
