@@ -35,6 +35,10 @@ photos_signature:
 - "/assets/galerie/blom/SDB2.jpg"
 - "/assets/galerie/blom/SDB3.jpg"
 
+photos_anniversaire:
+- "/assets/galerie/blom/happy birthday.png"
+- "/assets/galerie/blom/chambre anniversaire.png"
+
 photos_autres:
   - "/assets/galerie/blom/table romantique.png"
 ---
@@ -216,6 +220,57 @@ photos_autres:
 
     {% endif %}
 
+<!-- ========================= -->
+<!-- ANNIVERSAIRE -->
+<!-- ========================= -->
+
+{% if page.photos_anniversaire.size > 0 %}
+
+  <div class="mb-16">
+
+    <div class="text-center mb-7">
+
+      <h3 class="text-2xl font-semibold">
+        Décoration Anniversaire
+      </h3>
+
+      <p class="text-gray-400 mt-2">
+        Une mise en scène spécialement préparée pour l’occasion · 40 € · En option
+      </p>
+
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+
+      {% for image in page.photos_anniversaire %}
+
+        <div class="relative overflow-hidden rounded shadow">
+
+          <a href="{{ site.baseurl }}{{ image }}"
+             data-lightbox="blom-anniversaire"
+             data-title="Décoration Anniversaire BLŌM – En option">
+
+            <img
+              src="{{ site.baseurl }}{{ image }}"
+              alt="Décoration Anniversaire BLŌM"
+              class="w-full h-full object-cover"
+              loading="lazy">
+
+            <div class="absolute bottom-0 left-0 right-0 bg-black/80 text-white text-xs sm:text-sm text-center py-2 px-2">
+              Décoration Anniversaire · En option
+            </div>
+
+          </a>
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+{% endif %}
 
     <!-- ========================= -->
     <!-- TABLE ROMANTIQUE -->
