@@ -20,15 +20,10 @@ photos_ambiance:
   - "/assets/galerie/blom/chambre romantique 1.jpeg"
   - "/assets/galerie/blom/chambre romantique 4.jpeg"
   - "/assets/galerie/blom/SDB2.jpg"
-  - "/assets/galerie/blom/SDB3.jpg"
 
 photos_signature:
 - "/assets/galerie/blom/pack-signature-blom.png"
-- "/assets/galerie/blom/table romantique.png"
-- "/assets/galerie/blom/chambre romantique.jpeg"
-- "/assets/galerie/blom/chambre romantique 4.jpeg"
 - "/assets/galerie/blom/sdm.png"
-- "/assets/galerie/blom/SDB2.jpg"
 - "/assets/galerie/blom/SDB3.jpg"
 
 photos_anniversaire:
@@ -43,7 +38,7 @@ photos_autres:
 <!-- GALERIE BLŌM STANDARD -->
 <!-- ========================= -->
 
-<section class="px-6 py-14 bg-zinc-950 text-white">
+<section class="px-6 py-14 bg-gray-900 text-white">
   <div class="max-w-6xl mx-auto">
 
     <div class="text-center mb-10">
@@ -65,19 +60,23 @@ photos_autres:
 
       {% for image in page.photos_standard %}
 
-        <a href="{{ site.baseurl }}{{ image }}"
-           data-lightbox="blom-standard"
-           data-title="BLŌM">
+  <div class="relative overflow-hidden rounded-xl shadow-lg group aspect-[4/3]">
 
-          <img
-            src="{{ site.baseurl }}{{ image }}"
-            alt="BLŌM – Suite et spa privatif près de Douai"
-            class="rounded shadow w-full h-full object-cover"
-            loading="lazy">
+    <a href="{{ site.baseurl }}{{ image }}"
+       data-lightbox="blom-standard"
+       data-title="BLŌM">
 
-        </a>
+      <img
+        src="{{ site.baseurl }}{{ image }}"
+        alt="BLŌM – Suite et spa privatif près de Douai"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy">
 
-      {% endfor %}
+    </a>
+
+  </div>
+
+{% endfor %}
 
     </div>
 

@@ -124,7 +124,7 @@ permalink: /prestations-blom
         <li>• Ballons cœur à l’hélium</li>
         <li>• Pétales de rose sur le lit</li>
         <li>• Mise en lumière romantique</li>
-        <li>• Ambiance dans la suite et l’espace Salle de bain</li>
+        <li>• Ambiance dans la suite et la salle de bain</li>
         <li>• Décor selon l’occasion</li>
       </ul>
 
@@ -140,22 +140,22 @@ permalink: /prestations-blom
     </div>
 
     <!-- PACK SIGNATURE -->
-    <div class="bg-gradient-to-b from-white/10 to-black p-6 rounded-2xl border border-white/20 shadow-2xl flex flex-col">
+    <div class="bg-gradient-to-b from-yellow-400/10 to-black p-6 rounded-2xl border border-yellow-400/40 shadow-2xl flex flex-col">
 
       <h3 class="text-2xl font-semibold mb-4">
         👑 Expérience Signature BLŌM
       </h3>
 
       <p class="text-gray-300 mb-4">
-        Notre pack le plus complet pour créer un véritable effet waouh dès l’ouverture de la porte.
-      </p>
+  Notre mise en scène la plus complète, pensée pour créer une ambiance romantique dans l’ensemble de BLŌM.
+</p>
 
       <ul class="text-sm text-gray-400 space-y-2 mb-6">
         <li>• Décor selon l’occasion</li>
         <li>• Ballons décoratifs & hélium</li>
         <li>• Plus de 70 bougies LED</li>
         <li>• Musique personnalisée à votre arrivée</li>
-        <li>• Ambiance dans toutes les pieces</li>
+        <li>• Ambiance dans toutes les pièces</li>
       </ul>
 
       <p class="text-3xl font-bold text-white mb-6">
@@ -192,3 +192,4 @@ permalink: /prestations-blom
 
   </div>
 </section>
+</div>
