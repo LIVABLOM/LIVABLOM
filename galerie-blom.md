@@ -16,10 +16,24 @@ photos_standard:
 
 photos_ambiance:
   - "/assets/galerie/blom/pack-romantique-blom.png"
+  - "/assets/galerie/blom/chambre romantique.jpeg"
+  - "/assets/galerie/blom/chambre romantique 1.jpeg"
+  - "/assets/galerie/blom/chambre romantique 4.jpeg"
+  - "/assets/galerie/blom/SDB.jpg"
+  - "/assets/galerie/blom/SDB1.jpg"
+  - "/assets/galerie/blom/SDB2.jpg"
+  - "/assets/galerie/blom/SDB3.jpg"
 
 photos_signature:
 - "/assets/galerie/blom/pack-signature-blom.png"
+- "/assets/galerie/blom/chambre romantique.jpeg"
+- "/assets/galerie/blom/chambre romantique 1.jpeg"
+- "/assets/galerie/blom/chambre romantique 4.jpeg"
 - "/assets/galerie/blom/sdm.png"
+- "/assets/galerie/blom/SDB.jpg"
+- "/assets/galerie/blom/SDB1.jpg"
+- "/assets/galerie/blom/SDB2.jpg"
+- "/assets/galerie/blom/SDB3.jpg"
 
 photos_autres:
   - "/assets/galerie/blom/table romantique.png"
