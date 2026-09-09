@@ -362,11 +362,11 @@ permalink: /
       Découvrir BLŌM
     </a>
 
-    <!-- Réserver -->
-    <a href="{{ site.baseurl }}/contact"
-       class="border border-white text-white px-10 py-5 rounded-xl hover:bg-white hover:text-black transition duration-300 inline-block hidden md:inline-block">
-      Réserver maintenant
-    </a>
+   <!-- Réserver -->
+<a href="{{ site.baseurl }}/assets/html/blom-calendar.html"
+   class="border border-white text-white px-10 py-5 rounded-xl hover:bg-white hover:text-black transition duration-300 inline-block hidden md:inline-block">
+  Réserver maintenant
+</a>
 
   </div>
 
