@@ -374,7 +374,7 @@ permalink: /
 
 <!-- BOUTON MOBILE FIXE -->
 <div class="floating-book-btn md:hidden">
-  <a href="{{ site.baseurl }}/contact"
+  <a href="{{ site.baseurl }}/assets/html/blom-calendar.html"
      class="block text-center bg-white text-black py-4 rounded-2xl font-bold shadow-2xl">
     Réserver maintenant
   </a>
