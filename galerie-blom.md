@@ -27,8 +27,8 @@ photos_signature:
 - "/assets/galerie/blom/SDB3.jpg"
 
 photos_anniversaire:
-- "/assets/galerie/blom/happy birthday.png"
-- "/assets/galerie/blom/chambre anniversaire.png"
+- "/assets/galerie/blom/happy birthday1.png"
+- "/assets/galerie/blom/chambre anniversaire1.png"
 
 photos_autres:
   - "/assets/galerie/blom/table romantique.png"
