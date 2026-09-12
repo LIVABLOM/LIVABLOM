@@ -2,15 +2,15 @@
 layout: default
 title: BLŌM – Love Room & Spa privatif près de Douai
 description: "BLŌM : suite romantique et spa privatif près de Douai. Nuitée avec lit king-size ou formule sans nuitée de 3 heures à 109 € pour deux à Guesnain."
-image: /assets/galerie/blom/spa-ciel-peignoir.png
+image: /assets/galerie/blom/spa-ciel-peignoir1.png
 permalink: /
 ---
 
 <style>
- .hero-blom {
+.hero-blom {
   height: calc(100vh - 80px);
   background-size: cover;
-  background-position: center top;
+  background-position: center 70%;
   animation: zoomHero 18s ease-in-out infinite alternate;
 }
 
@@ -71,7 +71,7 @@ permalink: /
 
   <!-- Image de fond -->
   <div class="hero-blom flex items-start justify-center pt-24 text-white"
-       style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/spa-ciel-peignoir.png');">
+       style="background-image:url('{{ site.baseurl }}/assets/galerie/blom/spa-ciel-peignoir1.png');">
 
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black/50"></div>
