@@ -153,9 +153,38 @@ function isSameDayBooking(date) {
   return formatLocalDate(date) === todayParisISO();
 }
 
+  // Tarifs spéciaux prioritaires sur les tarifs habituels
+  const specialRates = {
+    "2026-12-24": 199,
+    "2026-12-25": 199,
+    "2026-12-31": 229,
+    "2027-01-01": 199,
+    "2027-02-13": 249,
+    "2027-02-14": 199
+  };
+
+  function isSpecialRateDate(dateStr) {
+    return Object.prototype.hasOwnProperty.call(specialRates, dateStr);
+  }
+
+  function rangeHasSpecialRate(startStr, nights) {
+    let cur = new Date(startStr);
+    cur.setHours(12,0,0,0);
+
+    for (let i = 0; i < nights; i++) {
+      if (isSpecialRateDate(formatLocalDate(cur))) return true;
+      cur = addDays(cur, 1);
+    }
+    return false;
+  }
+
   function getTarif(dateStr, testPayment = false) {
     if (testPayment) return 1;
-    const d = new Date(dateStr);
+
+    // Un tarif spécial prend toujours la priorité
+    if (isSpecialRateDate(dateStr)) return specialRates[dateStr];
+
+    const d = new Date(`${dateStr}T12:00:00`);
     const day = d.getDay();
     if (day === 5 || day === 6) return 175;
     if (day === 0) return 175;
@@ -324,11 +353,34 @@ function isSameDayBooking(date) {
 
   let nights = Math.max(1, parseInt(inputNights.value) || 1);
 
-  const baseTotal = sumPrice(formatLocalDate(clickedStart), nights, testPayment);
+  const startDateStr = formatLocalDate(clickedStart);
+  const baseTotal = sumPrice(startDateStr, nights, testPayment);
+  const hasSpecialRate = rangeHasSpecialRate(startDateStr, nights);
+  const effectiveDiscount = hasSpecialRate ? 0 : currentDiscount;
 
-  let total = Math.round(baseTotal * (1 - currentDiscount));
+  let total = Math.round(baseTotal * (1 - effectiveDiscount));
 
   priceDisplay.textContent = `Montant total : ${total} €`;
+
+  if (promoInput && promoMsg) {
+    const code = promoInput.value.trim().toUpperCase();
+
+    if (hasSpecialRate && code.length > 0) {
+      promoMsg.textContent = "ℹ️ Les codes promo ne sont pas valables sur les dates spéciales.";
+      promoMsg.style.color = "#ffd27a";
+    } else if (code === "BLOM10") {
+      promoMsg.textContent = "✅ -10% appliqué";
+      promoMsg.style.color = "#8fffaa";
+    } else if (code === "LOVE15") {
+      promoMsg.textContent = "✅ -15% appliqué";
+      promoMsg.style.color = "#8fffaa";
+    } else if (code.length > 0) {
+      promoMsg.textContent = "❌ Code invalide";
+      promoMsg.style.color = "#ff8b8b";
+    } else {
+      promoMsg.textContent = "";
+    }
+  }
 
   const ok = isRangeAvailable(clickedStart, nights, reservedRanges);
 
@@ -352,24 +404,8 @@ if (promoInput && promoMsg) {
     const code = promoInput.value.trim().toUpperCase();
 
     currentDiscount = 0;
-
-    if (code === "BLOM10") {
-      currentDiscount = 0.10;
-      promoMsg.textContent = "✅ -10% appliqué";
-      promoMsg.style.color = "#8fffaa";
-    } 
-    else if (code === "LOVE15") {
-      currentDiscount = 0.15;
-      promoMsg.textContent = "✅ -15% appliqué";
-      promoMsg.style.color = "#8fffaa";
-    } 
-    else if (code.length > 0) {
-      promoMsg.textContent = "❌ Code invalide";
-      promoMsg.style.color = "#ff8b8b";
-    } 
-    else {
-      promoMsg.textContent = "";
-    }
+    if (code === "BLOM10") currentDiscount = 0.10;
+    else if (code === "LOVE15") currentDiscount = 0.15;
 
     updateModal();
   });
@@ -391,7 +427,9 @@ if (promoInput && promoMsg) {
       const endDate = formatLocalDate(addDays(clickedStart, nights));
 
       const baseTotal = sumPrice(startDate, nights, testPayment);
-      const finalTotal = Math.round(baseTotal * (1 - currentDiscount));
+      const hasSpecialRate = rangeHasSpecialRate(startDate, nights);
+      const effectiveDiscount = hasSpecialRate ? 0 : currentDiscount;
+      const finalTotal = Math.round(baseTotal * (1 - effectiveDiscount));
 
       const res = await fetch(`${stripeBackend}/api/checkout`, {
         method: "POST",
@@ -405,7 +443,7 @@ if (promoInput && promoMsg) {
           name: inputName.value,
           email: inputEmail.value,
           phone: inputPhone.value,
-          promoCode: promoInput.value.trim()
+          promoCode: hasSpecialRate ? "" : promoInput.value.trim()
         })
       });
 
