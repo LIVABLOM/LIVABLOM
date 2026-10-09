@@ -157,7 +157,7 @@ function isSameDayBooking(date) {
   const specialRates = {
     "2026-12-24": 199,
     "2026-12-25": 199,
-    "2026-12-31": 229,
+    "2026-12-31": 249,
     "2027-01-01": 199,
     "2027-02-13": 249,
     "2027-02-14": 199
@@ -218,14 +218,17 @@ function isSameDayBooking(date) {
 
   async function getConfig() {
     try {
-      const backend = location.hostname.includes("localhost")
-        ? "http://localhost:3000"
+      const backend = ["localhost", "127.0.0.1"].includes(location.hostname)
+        ? "http://localhost:5002"
         : "https://livablom-stripe-production.up.railway.app";
 
       const res = await fetch(`${backend}/api/config`);
-      return await res.json();
+      if (!res.ok) throw new Error("Configuration indisponible");
+      const config = await res.json();
+      if (typeof config.testPayment !== "boolean") throw new Error("Configuration invalide");
+      return config;
     } catch {
-      return { testPayment: true };
+      return null;
     }
   }
 
@@ -253,21 +256,28 @@ function isSameDayBooking(date) {
     const btnConfirm = document.getElementById("res-confirm");
     const errorBox = document.getElementById("res-error");
 
-    const calendarBackend = location.hostname.includes("localhost")
-      ? "http://localhost:4000"
+    const calendarBackend = ["localhost", "127.0.0.1"].includes(location.hostname)
+      ? "http://localhost:5001"
       : "https://calendar-proxy-production-ed46.up.railway.app";
 
-    const stripeBackend = location.hostname.includes("localhost")
-      ? "http://localhost:3000"
+    const stripeBackend = ["localhost", "127.0.0.1"].includes(location.hostname)
+      ? "http://localhost:5002"
       : "https://livablom-stripe-production.up.railway.app";
 
     const config = await getConfig();
-    const promoEnabled = config.promoEnabled;
-    const testPayment = config.testPayment;
+    const promoEnabled = config?.promoEnabled !== false;
+    const testPayment = config?.testPayment === true;
 
     let reservedRanges = [];
     let reservationsLoaded = false;
     let clickedStart = null;
+    let submitting = false;
+    const status = document.createElement("p");
+    status.setAttribute("role", "status");
+    status.style.textAlign = "center";
+    el.before(status);
+    status.textContent = config ? "Chargement des disponibilités…" : "Impossible de charger les tarifs. Rechargez la page.";
+
 
     inputNights.value = 1;
     inputPersons.value = 2;
@@ -283,16 +293,23 @@ function isSameDayBooking(date) {
 
       events: async (_, success, failure) => {
         try {
-          const res = await fetch(`${calendarBackend}/api/reservations/BLOM`);
+          reservationsLoaded = false;
+          updateModal();
+          const res = await fetch(`${calendarBackend}/api/reservations/BLOM`, { cache: "no-store" });
+          if (!res.ok) throw new Error("Disponibilités indisponibles");
           const data = await res.json();
 
+          if (!Array.isArray(data)) throw new Error("Calendrier invalide");
           reservedRanges = data.map(e => {
-            const s = new Date(e.start); s.setHours(12,0,0,0);
-            const end = new Date(e.end); end.setHours(12,0,0,0);
+            const s = new Date(String(e.start).slice(0,10) + "T12:00:00");
+            const end = new Date(String(e.end).slice(0,10) + "T12:00:00");
+            if (!Number.isFinite(+s) || !Number.isFinite(+end) || end <= s) throw new Error("Dates invalides");
             return { start: s, end };
           });
 
           reservationsLoaded = true;
+          status.textContent = config ? "Choisissez une date disponible." : "Impossible de charger les tarifs. Rechargez la page.";
+          updateModal();
 
           success(reservedRanges.map(r => ({
             start: r.start,
@@ -302,18 +319,21 @@ function isSameDayBooking(date) {
             backgroundColor: "#900"
           })));
         } catch (err) {
+          reservationsLoaded = false;
+          btnConfirm.disabled = true;
+          status.textContent = "Impossible de vérifier les disponibilités. Rechargez la page.";
           failure(err);
         }
       },
 
       dayCellDidMount(info) {
-        if (reservedRanges.some(r => info.date >= r.start && info.date < r.end)) {
+        if (reservedRanges.some(r => formatLocalDate(info.date) >= formatLocalDate(r.start) && formatLocalDate(info.date) < formatLocalDate(r.end))) {
           info.el.setAttribute("data-reserved", "true");
         }
       },
 
       dateClick(info) {
-        if (!reservationsLoaded) return;
+        if (!reservationsLoaded || !config || submitting) return;
 
         const d = info.date;
         clickedStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
@@ -333,7 +353,7 @@ function isSameDayBooking(date) {
     // -------------------------------
    function updateModal() {
 
-  if (!clickedStart || !reservationsLoaded) {
+  if (!clickedStart || !reservationsLoaded || !config || submitting) {
     btnConfirm.disabled = true;
     return;
   }
@@ -351,12 +371,18 @@ function isSameDayBooking(date) {
     return;
   }
 
-  let nights = Math.max(1, parseInt(inputNights.value) || 1);
+  const nights = Number(inputNights.value);
+  if (!Number.isInteger(nights) || nights < 1 || nights > 90) {
+    btnConfirm.disabled = true;
+    errorBox.style.display = "block";
+    errorBox.textContent = "Indiquez un nombre de nuits entre 1 et 90.";
+    return;
+  }
 
   const startDateStr = formatLocalDate(clickedStart);
   const baseTotal = sumPrice(startDateStr, nights, testPayment);
   const hasSpecialRate = rangeHasSpecialRate(startDateStr, nights);
-  const effectiveDiscount = hasSpecialRate ? 0 : currentDiscount;
+  const effectiveDiscount = hasSpecialRate || !promoEnabled ? 0 : currentDiscount;
 
   let total = Math.round(baseTotal * (1 - effectiveDiscount));
 
@@ -415,56 +441,51 @@ if (promoInput && promoMsg) {
     // CONFIRM
     // -------------------------------
   btnConfirm.addEventListener("click", async () => {
-
-  if (isSameDayBooking(clickedStart)) {
-    if (sameDayWarning) sameDayWarning.style.display = "block";
+    if (submitting) return;
+    updateModal();
+    if (btnConfirm.disabled) return;
+    if (!inputName.value.trim() || !inputEmail.value.trim() || !inputEmail.checkValidity() || !inputPhone.value.trim()) {
+      errorBox.style.display = "block";
+      errorBox.textContent = "Renseignez votre nom, un email valide et votre téléphone.";
+      return;
+    }
+    const nights = Number(inputNights.value);
+    const startDate = formatLocalDate(clickedStart);
+    const endDate = formatLocalDate(addDays(clickedStart, nights));
+    const hasSpecialRate = rangeHasSpecialRate(startDate, nights);
+    const discount = hasSpecialRate || !promoEnabled ? 0 : currentDiscount;
+    const amount = Math.round(sumPrice(startDate, nights, testPayment) * (1 - discount));
+    submitting = true;
     btnConfirm.disabled = true;
-    return;
-  }
-
-  const nights = parseInt(inputNights.value);
-  const startDate = formatLocalDate(clickedStart);
-      const endDate = formatLocalDate(addDays(clickedStart, nights));
-
-      const baseTotal = sumPrice(startDate, nights, testPayment);
-      const hasSpecialRate = rangeHasSpecialRate(startDate, nights);
-      const effectiveDiscount = hasSpecialRate ? 0 : currentDiscount;
-      const finalTotal = Math.round(baseTotal * (1 - effectiveDiscount));
-
+    btnConfirm.textContent = "Vérification…";
+    btnCancel.disabled = true;
+    try {
       const res = await fetch(`${stripeBackend}/api/checkout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          logement: "BLŌM",
-          startDate,
-          endDate,
-          amount: finalTotal,
-          personnes: 2,
-          name: inputName.value,
-          email: inputEmail.value,
-          phone: inputPhone.value,
-          promoCode: hasSpecialRate ? "" : promoInput.value.trim()
-        })
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ logement: "BLŌM", startDate, endDate, amount, personnes: 2,
+          name: inputName.value.trim(), email: inputEmail.value.trim(), phone: inputPhone.value.trim(),
+          promoCode: hasSpecialRate || !promoEnabled ? "" : (promoInput?.value || "").trim() })
       });
-
       const data = await res.json();
-
-if (data.url) {
-  location.href = data.url;
-  return;
-}
-
-if (data.error === "same_day_not_allowed") {
-  if (sameDayWarning) sameDayWarning.style.display = "block";
-  errorBox.style.display = "block";
-  errorBox.textContent = data.message || "Pour une arrivée aujourd’hui, merci de nous contacter directement.";
-  btnConfirm.disabled = true;
-  return;
-}
-
-errorBox.style.display = "block";
-errorBox.textContent = data.error || "Impossible de créer la réservation. Merci de nous contacter.";
-    });
+      if (!res.ok || !data.url) {
+        if (data.error === "dates_unavailable") cal.refetchEvents();
+        throw new Error(data.message || "Impossible de créer la réservation. Merci de nous contacter.");
+      }
+      const destination = new URL(data.url);
+      if (destination.protocol !== "https:" || destination.hostname !== "checkout.stripe.com") throw new Error("Lien de paiement invalide.");
+      location.href = destination.href;
+    } catch (err) {
+      errorBox.style.display = "block";
+      errorBox.textContent = err.message === "Failed to fetch" ? "Connexion interrompue. Vérifiez les serveurs locaux avant de réessayer." : err.message;
+    } finally {
+      submitting = false;
+      btnConfirm.textContent = "Confirmer";
+      btnCancel.disabled = false;
+      // La réservation temporaire éventuellement créée sera vérifiée par le serveur.
+      // Conserver le message d’erreur après la requête.
+      btnConfirm.disabled = !reservationsLoaded || !config;
+    }
+  });
 
         btnCancel.addEventListener("click", () => {
       modal.style.display = "none";
