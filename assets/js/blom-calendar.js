@@ -272,6 +272,8 @@ function isSameDayBooking(date) {
     let reservationsLoaded = false;
     let clickedStart = null;
     let submitting = false;
+    // Bloque les nouvelles tentatives après une erreur de création du paiement.
+    let checkoutRetryLocked = false;
     const status = document.createElement("p");
     status.setAttribute("role", "status");
     status.style.textAlign = "center";
@@ -333,7 +335,7 @@ function isSameDayBooking(date) {
       },
 
       dateClick(info) {
-        if (!reservationsLoaded || !config || submitting) return;
+        if (!reservationsLoaded || !config || submitting || checkoutRetryLocked) return;
 
         const d = info.date;
         clickedStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
@@ -353,7 +355,7 @@ function isSameDayBooking(date) {
     // -------------------------------
    function updateModal() {
 
-  if (!clickedStart || !reservationsLoaded || !config || submitting) {
+  if (!clickedStart || !reservationsLoaded || !config || submitting || checkoutRetryLocked) {
     btnConfirm.disabled = true;
     return;
   }
@@ -475,15 +477,21 @@ if (promoInput && promoMsg) {
       if (destination.protocol !== "https:" || destination.hostname !== "checkout.stripe.com") throw new Error("Lien de paiement invalide.");
       location.href = destination.href;
     } catch (err) {
+      // Une erreur réseau peut se produire après création d'une session Stripe.
+      checkoutRetryLocked = true;
       errorBox.style.display = "block";
-      errorBox.textContent = err.message === "Failed to fetch" ? "Connexion interrompue. Vérifiez les serveurs locaux avant de réessayer." : err.message;
+      errorBox.textContent = `${err.message || "Impossible de finaliser la demande."} Ne relancez pas immédiatement le paiement : vérifiez d'abord vos e-mails ou contactez-nous pour confirmer votre réservation.`;
     } finally {
       submitting = false;
       btnConfirm.textContent = "Confirmer";
       btnCancel.disabled = false;
-      // La réservation temporaire éventuellement créée sera vérifiée par le serveur.
-      // Conserver le message d’erreur après la requête.
-      btnConfirm.disabled = !reservationsLoaded || !config;
+      // Après un échec, une nouvelle tentative requiert le rechargement de la page.
+      // Ne pas écraser le message d'erreur ni réactiver le bouton.
+      if (checkoutRetryLocked) {
+        btnConfirm.disabled = true;
+      } else {
+        updateModal();
+      }
     }
   });
 
