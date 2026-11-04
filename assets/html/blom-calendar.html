@@ -369,17 +369,129 @@ h1 {
   }
 }
 
+
+/* BANDEAU PHOTO BLŌM */
+
+.blom-hero {
+  height: 330px;
+}
+
+.blom-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+}
+
+.blom-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.88),
+    rgba(0,0,0,.08) 75%
+  );
+  pointer-events: none;
+}
+
+.blom-hero-content {
+  position: absolute;
+  z-index: 1;
+  bottom: 22px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+}
+
+.blom-hero-content h1 {
+  margin: 0 0 9px;
+  color: #fff;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  text-shadow: 0 2px 12px #000;
+}
+
+.blom-hero-content p {
+  margin: 0;
+  color: #f0dfb9;
+  font-size: .92rem;
+  line-height: 1.5;
+  text-shadow: 0 2px 8px #000;
+}
+
+.calendar-heading {
+  margin: 12px 12px 22px;
+  color: #d8bc85;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+/* ADAPTATION MOBILE */
+
+@media (max-width: 768px) {
+  .blom-hero {
+    height: 200px;
+  }
+
+  .blom-hero img {
+    object-position: center 60%;
+  }
+}
+
+  .blom-hero-content {
+    bottom: 14px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .blom-hero-content h1 {
+    font-size: 1.2rem;
+  }
+
+  .blom-hero-content p {
+    font-size: .76rem;
+  }
+
+  .calendar-heading {
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+  }
+}
+
+
   </style>
 </head>
 <body>
 
-  <h1>Calendrier des disponibilités - BLŌM</h1>
+  
+<div class="back-button">
+  <a href="/blom/">← Retour vers BLŌM</a>
+</div>
 
-  <div class="back-button">
-    <a href="/blom/">← Retour vers BLŌM</a>
+<section class="blom-hero">
+  <img
+    src="/assets/images/blom-spa-bandeau.webp"
+    alt="Spa privatif BLŌM avec ciel étoilé et peignoirs"
+    fetchpriority="high"
+  >
+
+  <div class="blom-hero-content">
+    <h1>BLŌM — Votre parenthèse à deux</h1>
+    <p>
+      Spa privatif intérieur · Suite romantique ·
+      Petit-déjeuner inclus
+    </p>
   </div>
+</section>
 
-  <div id="calendar"></div>
+<h2 class="calendar-heading">
+  Choisissez votre date de séjour
+</h2>
+
+<div id="calendar"></div>
+
 
   <!-- Modal réservation -->
   <div class="modal-bg" id="reservationModal">
