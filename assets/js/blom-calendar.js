@@ -7,115 +7,48 @@
   // -------------------------------
   // 1) CSS
   // -------------------------------
+  // Le CSS principal se trouve dans blom-calendar.html.
+  // Ici : uniquement les éléments générés dynamiquement par le JavaScript.
   const css = `
-    #calendar, #calendar * {
-      touch-action: manipulation !important;
-      -webkit-user-select: none !important;
-      user-select: none !important;
+    #calendar .fc-daygrid-day-frame { position: relative; }
+    #calendar .fc-daygrid-day-top { position: relative; z-index: 2; }
+    #calendar .blom-day-price {
+      display: block; width: fit-content; margin: 2px 6px 5px auto;
+      padding: 4px 7px; border-radius: 7px;
+      background: #30291e; color: #f0dfb9;
+      font-size: .76rem; font-weight: 700; line-height: 1.15;
+      white-space: nowrap; pointer-events: none;
     }
-
-    #calendar .fc {
-      background: #111 !important;
-      color: #fff !important;
-      font-family: "Inter", sans-serif;
+    #calendar .blom-day-price.is-special {
+      background: #51402b; color: #fff0cf;
     }
-
-    #calendar .fc-daygrid-day {
-      background: #181818 !important;
-      border-color: #222 !important;
-      transition: background 0.15s ease;
-      pointer-events: auto !important;
+    #calendar .fc-daygrid-day[data-reserved="true"] {
+      background: #34251f !important; cursor: not-allowed;
     }
-
-    @media (hover: hover) {
-      #calendar .fc-daygrid-day:hover:not([data-reserved="true"]) {
-        background: #242424 !important;
-        cursor: pointer;
+    #calendar .fc-daygrid-day[data-reserved="true"] .blom-day-price {
+      background: #57352d; color: #ffe0d4;
+    }
+    #calendar .fc-daygrid-day[data-past="true"] {
+      opacity: .38; cursor: not-allowed;
+    }
+    #calendar .fc-daygrid-day:not([data-reserved="true"]):not([data-past="true"]):hover {
+      background: #29251c !important; cursor: pointer;
+    }
+    #calendar .fc-bg-event { opacity: .18; pointer-events: none; }
+    #calendar .fc-daygrid-day[data-reserved="true"] .fc-daygrid-day-number {
+      color: #edc7bb;
+    }
+    #same-day-warning { display: none; }
+    @media (max-width: 768px) {
+      #calendar .blom-day-price {
+        font-size: .62rem; padding: 3px 3px;
+        margin: 0 1px 3px auto; letter-spacing: -.015em;
       }
     }
-
-    #calendar .fc-day-disabled {
-      opacity: 0.35 !important;
+    @media (max-width: 370px) {
+      #calendar .blom-day-price { font-size: .55rem; padding: 2px; }
     }
-
-    #calendar .fc-daygrid-day[data-reserved="true"] {
-      background: #4a0000 !important;
-      opacity: 0.8;
-      pointer-events: none !important;
-    }
-
-    #reservationModal {
-      z-index: 2000;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    #reservationModal .modal-content {
-      background: #1b1b1b;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 480px;
-      color: #fff;
-      border: 1px solid #333;
-    }
-
-    #reservationModal input,
-    #reservationModal select {
-      width: 100%;
-      padding: 8px;
-      margin: 0;
-      border-radius: 6px;
-      background: #2a2a2a;
-      border: 1px solid #444;
-      color: #fff;
-    }
-
-    #reservationModal button {
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      margin-top: 8px;
-      width: 100%;
-    }
-
-    #res-confirm { background: #6f4cff; color: #fff; }
-    #res-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    #res-cancel { background: #333; color: #fff; }
-
-   #res-error {
-  color: #ff8b8b;
-  margin-top: 6px;
-  display: none;
-}
-
-#same-day-warning {
-  display: none;
-  background: #3a2f00;
-  color: #fff3cd;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 12px 0;
-  line-height: 1.45;
-  border: 1px solid #7a6400;
-}
-
-#same-day-warning a {
-  display: inline-block;
-  background: #fff;
-  color: #000;
-  padding: 9px 13px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-}
-`;
-
+  `;
   document.head.appendChild(Object.assign(document.createElement("style"), {
     textContent: css
   }));
@@ -208,7 +141,7 @@ function isSameDayBooking(date) {
     start.setHours(12,0,0,0);
 
     const end = addDays(start, nights);
-    const today = new Date(); 
+    const today = new Date();
     today.setHours(0,0,0,0);
 
     if (start < today) return false;
@@ -217,6 +150,13 @@ function isSameDayBooking(date) {
   }
 
   async function getConfig() {
+
+    if (["localhost", "127.0.0.1"].includes(location.hostname)) {
+  return {
+    testPayment: false,
+    promoEnabled: true
+  };
+}
     try {
       const backend = ["localhost", "127.0.0.1"].includes(location.hostname)
         ? "http://localhost:5002"
@@ -256,9 +196,8 @@ function isSameDayBooking(date) {
     const btnConfirm = document.getElementById("res-confirm");
     const errorBox = document.getElementById("res-error");
 
-    const calendarBackend = ["localhost", "127.0.0.1"].includes(location.hostname)
-      ? "http://localhost:5001"
-      : "https://calendar-proxy-production-ed46.up.railway.app";
+   const calendarBackend =
+  "https://calendar-proxy-production-ed46.up.railway.app";
 
     const stripeBackend = ["localhost", "127.0.0.1"].includes(location.hostname)
       ? "http://localhost:5002"
@@ -283,6 +222,49 @@ function isSameDayBooking(date) {
 
     inputNights.value = 1;
     inputPersons.value = 2;
+
+    // Les étiquettes de tarif sont purement visuelles : aucune réservation
+    // n'est autorisée tant que les API n'ont pas répondu correctement.
+    function isReservedDate(dateStr) {
+      return reservedRanges.some(r =>
+        dateStr >= formatLocalDate(r.start) && dateStr < formatLocalDate(r.end)
+      );
+    }
+
+    function updateDayAppearance(dayCell) {
+      const dateStr = dayCell.getAttribute("data-date");
+      if (!dateStr) return;
+
+      const past = dateStr < todayParisISO();
+      const reserved = reservationsLoaded && isReservedDate(dateStr);
+      if (past) dayCell.setAttribute("data-past", "true");
+      else dayCell.removeAttribute("data-past");
+      if (reserved) dayCell.setAttribute("data-reserved", "true");
+      else dayCell.removeAttribute("data-reserved");
+
+      let label = dayCell.querySelector(".blom-day-price");
+      if (!label) {
+        label = document.createElement("span");
+        label.className = "blom-day-price";
+        const top = dayCell.querySelector(".fc-daygrid-day-top");
+        if (!top) return;
+        top.insertAdjacentElement("afterend", label);
+      }
+      if (reserved) {
+        label.textContent = "Réservé";
+        label.classList.remove("is-special");
+      } else if (past) {
+        label.textContent = "";
+        label.classList.remove("is-special");
+      } else {
+        label.textContent = `${getTarif(dateStr)} €`;
+        label.classList.toggle("is-special", isSpecialRateDate(dateStr));
+      }
+    }
+
+    function refreshDayAppearances() {
+      el.querySelectorAll(".fc-daygrid-day[data-date]").forEach(updateDayAppearance);
+    }
 
     // -------------------------------
     // CALENDAR
@@ -310,6 +292,7 @@ function isSameDayBooking(date) {
           });
 
           reservationsLoaded = true;
+          refreshDayAppearances();
           status.textContent = config ? "Choisissez une date disponible." : "Impossible de charger les tarifs. Rechargez la page.";
           updateModal();
 
@@ -322,22 +305,23 @@ function isSameDayBooking(date) {
           })));
         } catch (err) {
           reservationsLoaded = false;
+          reservedRanges = [];
+          refreshDayAppearances();
           btnConfirm.disabled = true;
-          status.textContent = "Impossible de vérifier les disponibilités. Rechargez la page.";
+          status.textContent = "Disponibilités non vérifiées : réservation désactivée. Vérifiez les serveurs locaux 5001 et 5002.";
           failure(err);
         }
       },
 
       dayCellDidMount(info) {
-        if (reservedRanges.some(r => formatLocalDate(info.date) >= formatLocalDate(r.start) && formatLocalDate(info.date) < formatLocalDate(r.end))) {
-          info.el.setAttribute("data-reserved", "true");
-        }
+        updateDayAppearance(info.el);
       },
 
       dateClick(info) {
         if (!reservationsLoaded || !config || submitting || checkoutRetryLocked) return;
 
         const d = info.date;
+        if (info.dateStr < todayParisISO() || isReservedDate(info.dateStr)) return;
         clickedStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
 
         modalStart.textContent = formatLocalDate(clickedStart);
@@ -415,7 +399,10 @@ function isSameDayBooking(date) {
   errorBox.style.display = ok ? "none" : "block";
   if (!ok) errorBox.textContent = "La période sélectionnée n'est pas disponible.";
 
-  btnConfirm.disabled = !ok;
+ const isLocal = ["localhost", "127.0.0.1"]
+  .includes(location.hostname);
+
+btnConfirm.disabled = !ok || isLocal;
 }
 
     inputNights.addEventListener("input", updateModal);
