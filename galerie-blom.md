@@ -230,7 +230,7 @@ photos_autres:
       </h3>
 
       <p class="text-gray-400 mt-2">
-        Une mise en scène spécialement préparée pour l’occasion · 40 € · En option
+        Une mise en scène spécialement préparée pour l’occasion · 49 € · En option
       </p>
 
     </div>
